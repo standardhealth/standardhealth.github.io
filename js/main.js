@@ -1,8 +1,4 @@
 
-
-// // Make home page fullscreen
-// $(".full-screen").superslides();
-
 // Activate scrolling for objects
 //
 $(window).scroll(function(event) {
@@ -64,5 +60,5 @@ $(window).resize(eqHeight);
 
 // Close the menu on click of button
 $('#site-menu li a').on('click', function(){
-        $("#site-menu").collapse('hide');
-    });
+    $("#site-menu").collapse('hide');
+});
