@@ -42,7 +42,7 @@ function setActive(str) {
 function parseSectionActive() {
     switch ($(window)[0].location.pathname) { 
         case ("/"):
-            switch($window[0].location.hash) { 
+            switch($(window)[0].location.hash) { 
                 case("#home"): 
                     setActive("HOME");
                     break;
@@ -70,9 +70,40 @@ function parseSectionActive() {
             setActive("FAQ");
             break;
         default:
-            alert('on a new section of homepage: ' + $window[0].location.hash);
+            alert('on a new section of homepage: ' + $(window)[0].location.hash);
             break;
     }
 }
-
 $(document).ready(parseSectionActive);
+
+$(window).scroll(function(event) {
+        updateActive();
+}); 
+// $(document).click(function(event) {
+//         updateActive();
+// });
+// Update the active location in the nav bar
+function updateActive() {
+    var linkTops = [];
+    var wTop     = $(window).scrollTop();
+    var rangeTop = 5;
+    console.log("here");
+    $('#faq_nav').find('a').each(function(){
+        console.log("elem: " + this)
+        linkTops.push($(this.hash).offset().top - 50);
+    });
+    if ($(window).scrollTop() + $(window).height() + 15 >= $(document).height()) {
+        $("#faq_nav li")
+            .removeClass('active')
+            .eq(linkTops.length -1).addClass('active');
+        
+    } else {
+        $.each( linkTops, function(i) {
+            if ( wTop > linkTops[i] - rangeTop ){
+                $('#faq_nav li')
+                    .removeClass('active')     // Drop any active elems (of which there are one)
+                    .eq(i).addClass('active'); // Add active to the current element                 
+            }
+        });
+    }
+};
