@@ -43,8 +43,6 @@ function eqHeight(){
             var maxH = 0;
             elems.each(function() {
                 // find max inner height
-                console.log(this);
-                console.log($(this).innerHeight);
                 maxH = $(this).innerHeight() > maxH ? $(this).innerHeight() : maxH;
             });
             // Change accordingly 
