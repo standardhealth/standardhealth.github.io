@@ -26,7 +26,11 @@ $(window).resize(eqHeight);
 
 // Close the menu on click of button
 $('#site-menu li a').on('click', function(){
-    $("#site-menu").collapse('hide');
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        return;
+    } else {
+        $("#site-menu").collapse('hide');
+    }
 });
 
 function setActive(str) { 

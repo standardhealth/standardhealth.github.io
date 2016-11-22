@@ -26,14 +26,19 @@ $(window).resize(eqHeight);
 
 // Close the menu on click of button
 $('#site-menu li a').on('click', function(){
-    $("#site-menu").collapse('hide');
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        return;
+    } else {
+        $("#site-menu").collapse('hide');
+    }
 });
 
+
 function setActive() { 
-    $("nav li")
+    $("#site-menu li")
         .removeClass('active')
-        .find('a')
-        .filter (function (elem) { return this.innerHTML == "SPEC"})
+        .find('a').not(".dropdown-elem")
+        .filter (function (elem) { console.log(elem); console.log(this); return $(this).text().indexOf("SPEC") >= 0})
         .parent()
         .addClass('active');
     return;
