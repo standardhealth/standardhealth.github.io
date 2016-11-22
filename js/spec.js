@@ -38,7 +38,7 @@ function setActive() {
     $("#site-menu li")
         .removeClass('active')
         .find('a').not(".dropdown-elem")
-        .filter (function (elem) { console.log(elem); console.log(this); return $(this).text().indexOf("SPEC") >= 0})
+        .filter (function (elem) { return $(this).text().indexOf("SPEC") >= 0})
         .parent()
         .addClass('active');
     return;
