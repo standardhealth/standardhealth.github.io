@@ -1,9 +1,9 @@
 // Disable double click function on IOS
-// $('a').on('touchend', function(e) {
-//     var el = $(this);
-//     var link = el.attr('href');
-//     window.location = link;
-// });
+$('a').on('touchend', function(e) {
+    var el = $(this);
+    var link = el.attr('href');
+    window.location = link;
+});
 // Scroll to nav link if possible
 //
 $('.scroll a').on('click',function() {      
