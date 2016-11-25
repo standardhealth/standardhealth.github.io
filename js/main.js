@@ -1,5 +1,5 @@
 // Disable double click function on IOS
-$('a').on('touchend', function(e) {
+$('#site-menu a').on('touchend', function(e) {
     var el = $(this);
     var link = el.attr('href');
     window.location = link;
