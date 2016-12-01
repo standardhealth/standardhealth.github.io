@@ -7,9 +7,9 @@ $('#site-menu a').on('touchend', function(e) {
 
 // Scroll to nav link if possible
 //
-$('.scroll a').on('click',function() {      
-    $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
-});
+// $('.scroll a').on('click',function() {      
+//     $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
+// });
 
 $(window).scroll(function(event) {
         updateActive();
