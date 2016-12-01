@@ -4,12 +4,12 @@ $('#site-menu a').on('touchend', function(e) {
     var link = el.attr('href');
     window.location = link;
 });
+
 // Scroll to nav link if possible
 //
-$('.scroll a').on('click',function() {      
-    $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
-        return false;
-});
+// $('.scroll a').on('click',function() {      
+//     $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
+// });
 
 $(window).scroll(function(event) {
         updateActive();
