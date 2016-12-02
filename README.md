@@ -22,10 +22,10 @@ bundle exec jekyll serve
 
 ##Testing the Project:
 After making changes to the website, one should run a local instance of the project and walk through the following checklist to test the website before integrating into production:
-- [] View on Google Chrome
-- [] View on Safari
-- [] View on IE
-- [] View on Firefox
+- [ ] View on Google Chrome
+- [ ] View on Safari
+- [ ] View on IE
+- [ ] View on Firefox
 
 ##Pushing the Project:
 1. Run all of the tests mentioned above.
