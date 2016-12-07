@@ -2,12 +2,7 @@
 //
 // Set active element in list based on current page
 $(document).ready(parseSectionActive);
-// Set active section of homepage based on scrolling location
-$(window).scroll(function(event) {
-    if (window.location.pathname == "/") { 
-        updateActive();
-    }
-}); 
+
 function parseSectionActive() {
     switch (window.location.pathname.split('/')[1]) { 
         case (""):
@@ -29,7 +24,7 @@ function parseSectionActive() {
                     break;
             } 
             break; 
-        case ("evidence.html"):
+        case ("evidence-nav.html"):
             setActive("EVIDENCE");
             break;
         case ("spec.html"):
