@@ -80,8 +80,6 @@ $(document).ready(function () {
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass("dropdown-elem")) {
             $("button.navbar-toggle").click();
-        } else { 
-            alert(clickover.text());
         }
     });
 });
