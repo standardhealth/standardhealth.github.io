@@ -56,7 +56,7 @@ $(window).load(eqHeight);
 
 
 // Close the menu on click of button
-$('#site-menu li a').on('touchend', function(){
+$('#site-menu li a').on('click', function(){
     if ($(this).text().indexOf("SPEC") >= 0) {
         return;
     } else {
@@ -78,7 +78,7 @@ $(document).ready(function () {
     $(document).on('touchend', function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && !clickover.hasClass("navbar-toggle")) {
+        if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle")) {
             $("button.navbar-toggle").click();
         }
     });
