@@ -2,11 +2,16 @@
 // Navbar menu functionality" 
 //
 // Disable double click function on IOS
-// $('#site-menu a').on('touchend', function(e) {
-//     const el = $(this);
-//     const link = el.attr('href');
-//     window.location = link;
-// });
+$('#site-menu a').on('touchend', function(e) {
+    const el = $(this);
+    const link = el.attr('href');
+    window.location = link;
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        return;
+    } else {
+        $("#site-menu").collapse('hide');
+    }   
+});
 // Close then menu when clicking off of it
 $(document).ready(function () {
     $(document).click(function (event) {
@@ -23,7 +28,7 @@ $('#site-menu li a').on('click', function(){
         return;
     } else {
         $("#site-menu").collapse('hide');
-    }
+    }   
 });
 
 // Equal height functionality for homepage
@@ -56,6 +61,10 @@ function eqHeight(){
 //
 // Set active element in list based on current page
 $(document).ready(parseSectionActive);
+// Set active section of homepage based on scrolling location
+$(window).scroll(function(event) {
+    updateActive();
+}); 
 function parseSectionActive() {
     switch ($(window)[0].location.pathname.split('/')[1]) { 
         case (""):
@@ -102,4 +111,27 @@ function setActive(str) {
         .parent()
         .addClass('active');
     return;
+};
+// Update the active location in the nav bar
+function updateActive() {
+    let linkTops = [];
+    const wTop     = $(window).scrollTop();
+    const rangeTop = 5;
+    $('nav').find('.scroll a').each(function(){
+        linkTops.push($(this.hash).offset().top - 200);
+    });
+    if ($(window).scrollTop() + $(window).height() + 15 >= $(document).height()) {
+        $("nav li.scroll")
+            .removeClass('active')
+            .eq(linkTops.length -1).addClass('active');
+        
+    } else {
+        $.each( linkTops, function(i) {
+            if ( wTop > linkTops[i] - rangeTop ){
+                $('nav li.scroll')
+                    .removeClass('active')     // Drop any active elems (of which there are one)
+                    .eq(i).addClass('active'); // Add active to the current element                 
+            }
+        });
+    }
 };
