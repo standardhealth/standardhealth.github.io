@@ -2,16 +2,16 @@
 // Navbar menu functionality" 
 //
 // Disable double click function on IOS
-$('#site-menu a').on('touchend', function(e) {
-    const el = $(this);
-    const link = el.attr('href');
-    window.location = link;
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        return;
-    } else {
-        $("#site-menu").collapse('hide');
-    }   
-});
+// $('#site-menu a').on('touchend', function(e) {
+//     const el = $(this);
+//     const link = el.attr('href');
+//     window.location = link;
+//     if ($(this).text().indexOf("SPEC") >= 0) {
+//         return;
+//     } else {
+//         $("#site-menu").collapse('hide');
+//     }   
+// });
 // Close then menu when clicking off of it
 $(document).ready(function () {
     $(document).click(function (event) {
@@ -64,7 +64,7 @@ $(document).ready(parseSectionActive);
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {
     if ($(window)[0].location.pathname == "/") { 
-            updateActive();
+        updateActive();
     }
 }); 
 function parseSectionActive() {
