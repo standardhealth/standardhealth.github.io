@@ -57,9 +57,9 @@ function eqHeight(){
 // Set active element in list based on current page
 $(document).ready(parseSectionActive);
 function parseSectionActive() {
-    switch ($(window)[0].location.pathname.split('/')[1]) { 
+    switch (window.location.pathname.split('/')[1]) { 
         case (""):
-            switch($(window)[0].location.hash) { 
+            switch(window.location.hash) { 
                 case("#home"): 
                     setActive("HOME");
                     break;
@@ -73,7 +73,7 @@ function parseSectionActive() {
                     setActive("HOME");
                     break;    
                 default: 
-                    alert('on a new section of homepage: ' + $(window)[0].location.hash);
+                    alert('on a new section of homepage: ' + window.location.hash);
                     break;
             } 
             break; 
@@ -90,7 +90,7 @@ function parseSectionActive() {
             setActive("FAQ");
             break;
         default:
-            alert('on a new section of page: ' + $(window)[0].location.pathname.split('/')[1]);
+            alert('on a new section of page: ' + window.location.pathname.split('/')[1]);
             break;
     }
 }
