@@ -45,7 +45,7 @@ function eqHeight(){
         elems.height('auto');
 
         // If the viewport is large, find biggest innerheight and normalize to that
-        if ($window.innerWidth >= 992) {
+        if (window.innerWidth >= 992) {
             let maxH = 0;
             elems.each(function() {
                 // find max inner height
