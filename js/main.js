@@ -5,15 +5,8 @@
 $('#site-menu a').on('touchend', function(e) {
     const el = $(this);
     const link = el.attr('href');
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        window.location = link;
-        alert('in spec section ')
-        return;
-    } else {  
-        alert('in else with ' + $(this).text())  
-        window.location = link;
-        $("#site-menu").collapse('hide');
-    }
+    window.location = link;
+    
 });
 // Close then menu when clicking off of it
 $(document).ready(function () {
