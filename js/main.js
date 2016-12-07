@@ -144,18 +144,18 @@
 // };
 
 // Disable double click function on IOS
-$('#site-menu a').on('touchend', function(e) {
-    var el = $(this);
-    var link = el.attr('href');
-    window.location = link;
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        console.log("here1");
-        return;
-    } else {
-        console.log("here2");
-        $("#site-menu").collapse('hide');
-    }
-});
+// $('#site-menu a').on('touchend', function(e) {
+//     var el = $(this);
+//     var link = el.attr('href');
+//     window.location = link;
+//     if ($(this).text().indexOf("SPEC") >= 0) {
+//         console.log("here1");
+//         return;
+//     } else {
+//         console.log("here2");
+//         $("#site-menu").collapse('hide');
+//     }
+// });
 
 $(window).scroll(function(event) {
         updateActive();
