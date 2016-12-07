@@ -77,7 +77,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(document).on('touchend', function (event) {
         const clickover = $(event.target);
-        alert("clickover");
+        alert("clickover " + clickover);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle")) {
             $("button.navbar-toggle").click();
