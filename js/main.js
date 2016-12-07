@@ -75,13 +75,13 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $(document).on('touchend', function (event) {
+    $(document).on('click touchend', function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && (!clickover.hasClass("navbar-toggle")  || !clickover.hasClass("dropdown-toggle"))) {
+        if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass("dropdown-elem")) {
             $("button.navbar-toggle").click();
         } else { 
-            alert(clickover.text())
+            alert(clickover.text());
         }
     });
 });
