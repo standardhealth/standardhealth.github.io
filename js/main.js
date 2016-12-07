@@ -207,6 +207,18 @@ $('#site-menu li a').on('click', function(){
 $(document).ready(function () {
     $(document).click(function (event) {
         const clickover = $(event.target);
+        console.log(clickover);
+        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+        if (_opened && !clickover.hasClass("navbar-toggle")) {
+            $("button.navbar-toggle").click();
+        }
+    });
+});
+
+$(document).ready(function () {
+    $(document).on('touchend', function (event) {
+        const clickover = $(event.target);
+        console.log(clickover);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle")) {
             $("button.navbar-toggle").click();
