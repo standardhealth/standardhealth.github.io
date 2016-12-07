@@ -148,14 +148,14 @@ $('#site-menu a').on('touchend', function(e) {
     var el = $(this);
     var link = el.attr('href');
     window.location = link;
-    $("#site-menu").collapse('hide');
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        console.log("here1");
+        return;
+    } else {
+        console.log("here2");
+        $("#site-menu").collapse('hide');
+    }
 });
-
-// Scroll to nav link if possible
-//
-// $('.scroll a').on('click',function() {      
-//     $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
-// });
 
 $(window).scroll(function(event) {
         updateActive();
