@@ -214,7 +214,7 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $(document).on('touchend', function (event) {
+    $(document).on('click touchend', function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle")) {
