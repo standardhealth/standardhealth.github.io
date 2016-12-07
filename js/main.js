@@ -220,7 +220,7 @@ $(document).ready(function () {
         const clickover = $(event.target);
         console.log(clickover);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && !clickover.hasClass("navbar-toggle") && $(clickover).text().indexOf("SPEC") < 0) {
+        if (_opened && !clickover.hasClass("navbar-toggle") && clickover[0].text().indexOf("SPEC") < 0) {
             $("button.navbar-toggle").click();
         }
     });
