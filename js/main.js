@@ -2,7 +2,7 @@
 // Navbar menu functionality" 
 //
 // Disable double click function on IOS
-$('#site-menu a').on('touchend', function(e) {
+$('#site-menu a').on('click touchend', function(e) {
     const el = $(this);
     const link = el.attr('href');
     window.location = link;
