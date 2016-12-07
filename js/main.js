@@ -1,7 +1,18 @@
 
 // Navbar menu functionality" 
 //
-// // Close then menu when clicking off of it
+// Disable double click function on IOS
+$('#site-menu a').on('touchend', function(e) {
+    const el = $(this);
+    const link = el.attr('href');
+    window.location = link;
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        return;
+    } else {
+        $("#site-menu").collapse('hide');
+    }   
+});
+// Close then menu when clicking off of it
 $(document).ready(function () {
     $(document).click(function (event) {
         const clickover = $(event.target);
