@@ -57,9 +57,9 @@ function eqHeight(){
 // Set active element in list based on current page
 $(document).ready(parseSectionActive);
 function parseSectionActive() {
-    switch (window.location.pathname.split('/')[1]) { 
+    switch ($(window)[0].location.pathname.split('/')[1]) { 
         case (""):
-            switch(window.location.hash) { 
+            switch($(window)[0].location.hash) { 
                 case("#home"): 
                     setActive("HOME");
                     break;
