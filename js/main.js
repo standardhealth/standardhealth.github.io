@@ -2,14 +2,15 @@
 // Navbar menu functionality" 
 //
 // Disable double click function on IOS
-$('#site-menu a').on('click touchend', function(e) {
+$('#site-menu a').on('touchend', function(e) {
     const el = $(this);
     const link = el.attr('href');
     if ($(this).text().indexOf("SPEC") >= 0) {
         window.location = link;
-    
+        alert('in spec section ')
         return;
-    } else {    
+    } else {  
+        alert('in else with ' + $(this).text())  
         window.location = link;
         $("#site-menu").collapse('hide');
     }
