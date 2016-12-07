@@ -2,11 +2,11 @@
 // Navbar menu functionality" 
 //
 // Disable double click function on IOS
-$('#site-menu a').on('touchend', function(e) {
-    const el = $(this);
-    const link = el.attr('href');
-    window.location = link;
-});
+// $('#site-menu a').on('touchend', function(e) {
+//     const el = $(this);
+//     const link = el.attr('href');
+//     window.location = link;
+// });
 // Close then menu when clicking off of it
 $(document).ready(function () {
     $(document).click(function (event) {
@@ -56,12 +56,6 @@ function eqHeight(){
 //
 // Set active element in list based on current page
 $(document).ready(parseSectionActive);
-// Set active section of homepage based on scrolling location
-$(window).scroll(function(event) {
-    if (window.location.pathname == "/") { 
-            updateActive();
-    }
-}); 
 function parseSectionActive() {
     switch ($(window)[0].location.pathname.split('/')[1]) { 
         case (""):
