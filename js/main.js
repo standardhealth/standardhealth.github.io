@@ -143,20 +143,6 @@
 //     return;
 // };
 
-// Disable double click function on IOS
-// $('#site-menu a').on('touchend', function(e) {
-//     var el = $(this);
-//     var link = el.attr('href');
-//     window.location = link;
-//     if ($(this).text().indexOf("SPEC") >= 0) {
-//         console.log("here1");
-//         return;
-//     } else {
-//         console.log("here2");
-//         $("#site-menu").collapse('hide');
-//     }
-// });
-
 $(window).scroll(function(event) {
         updateActive();
 }); 
@@ -220,6 +206,15 @@ $('#site-menu li a').on('click', function(){
 
 $(document).ready(function () {
     $(document).click(function (event) {
+        const clickover = $(event.target);
+        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+        if (_opened && !clickover.hasClass("navbar-toggle")) {
+            $("button.navbar-toggle").click();
+        }
+    });
+});
+$(document).ready(function () {
+    $(document).on('click touchend', function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle")) {
