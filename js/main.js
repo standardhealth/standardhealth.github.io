@@ -56,7 +56,7 @@ $(window).load(eqHeight);
 
 
 // Close the menu on click of button
-$('#site-menu li a').on('click', function(){
+$('#site-menu li a').on('touchend', function(){
     if ($(this).text().indexOf("SPEC") >= 0) {
         return;
     } else {
