@@ -5,7 +5,14 @@
 $('#site-menu a').on('click touchend', function(e) {
     const el = $(this);
     const link = el.attr('href');
-    window.location = link;
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        window.location = link;
+    
+        return;
+    } else {    
+        window.location = link;
+        $("#site-menu").collapse('hide');
+    }
 });
 // Close then menu when clicking off of it
 $(document).ready(function () {
@@ -16,14 +23,6 @@ $(document).ready(function () {
             $("button.navbar-toggle").click();
         }
     });
-});
-// Close the menu on click of button
-$('#site-menu li a').on('click', function(){
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        return;
-    } else {
-        $("#site-menu").collapse('hide');
-    }
 });
 
 // Equal height functionality for homepage
