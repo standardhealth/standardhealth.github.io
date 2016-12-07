@@ -214,11 +214,15 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $(document).on('click touchend', function (event) {
+    $(document).on('touchend', function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle")) {
-            $("button.navbar-toggle").click();
+            if ($(this).text().indexOf("SPEC") >= 0) {
+                return;
+            } else {
+                $("button.navbar-toggle").click();
+            }
         }
     });
 });
