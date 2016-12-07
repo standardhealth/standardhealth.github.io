@@ -129,7 +129,7 @@ function parseSectionActive() {
             setActive("FAQ");
             break;
         default:
-            alert('on a new section of page: ' + window.location.pathname.split('/')[1]);
+            alert('on a new section of page: ' + window.location.pathname.split('/')[0]);
             break;
     }
 }
