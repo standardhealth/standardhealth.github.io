@@ -7,23 +7,23 @@ $('#site-menu a').on('touchend', function(e) {
     const link = el.attr('href');
     window.location = link;
 });
-// Close then menu when clicking off of it
-$(document).ready(function () {
-    $(document).click(function (event) {
-        const clickover = $(event.target);
-        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && !clickover.hasClass("navbar-toggle")) {
-            $("button.navbar-toggle").click();
-        }
-    });
-});
+// // Close then menu when clicking off of it
+// $(document).ready(function () {
+//     $(document).click(function (event) {
+//         const clickover = $(event.target);
+//         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+//         if (_opened && !clickover.hasClass("navbar-toggle")) {
+//             $("button.navbar-toggle").click();
+//         }
+//     });
+// });
 // Close the menu on click of button
 $('#site-menu li a').on('click', function(){
     if ($(this).text().indexOf("SPEC") >= 0) {
         return;
     } else {
         $("#site-menu").collapse('hide');
-    }
+    }   
 });
 
 // Equal height functionality for homepage
