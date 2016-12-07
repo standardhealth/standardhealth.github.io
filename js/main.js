@@ -96,7 +96,7 @@ $(window).scroll(function(event) {
     }
 }); 
 function parseSectionActive() {
-    switch (window.location.pathname.split('/')[1]) { 
+    switch (window.location.pathname.split('/')[0]) { 
         case (""):
             switch(window.location.hash) { 
                 case("#home"): 
