@@ -195,14 +195,6 @@ $(window).resize(eqHeight);
 $(window).load(eqHeight);
 
 
-// Close the menu on click of button
-$('#site-menu li a').on('click', function(){
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        return;
-    } else {
-        $("#site-menu").collapse('hide');
-    }
-});
 
 $(document).ready(function () {
     $(document).click(function (event) {
@@ -212,4 +204,13 @@ $(document).ready(function () {
             $("button.navbar-toggle").click();
         }
     });
+});
+
+// Close the menu on click of button
+$('#site-menu li a').on('click', function(){
+    if ($(this).text().indexOf("SPEC") >= 0) {
+        return;
+    } else {
+        $("#site-menu").collapse('hide');
+    }
 });
