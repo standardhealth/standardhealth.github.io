@@ -58,10 +58,12 @@ function eqHeight(){
 $(document).ready(parseSectionActive);
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {
-        updateActive();
+    if ($(window)[0].location.pathname == "/") { 
+            updateActive();
+    }
 }); 
 function parseSectionActive() {
-    switch ($(window)[0].location.pathname.split('/')[1]) { 
+    switch (window.location.pathname.split('/')[1]) { 
         case (""):
             switch($(window)[0].location.hash) { 
                 case("#home"): 
