@@ -1,18 +1,10 @@
-// Disable double click function on IOS
-$('#site-menu a').on('touchend', function(e) {
-    var el = $(this);
-    var link = el.attr('href');
-    window.location = link;
-});
 
-// Scroll to nav link if possible
-//
-// $('.scroll a').on('click',function() {      
-//     $('html, body').animate({scrollTop: $(this.hash).offset().top - 50}, 1000);
-// });
-
-$(window).scroll(function(event) {
+// // Navbar menu functionality" 
+// Set active section of homepage based on scrolling location
+$(window).scroll(function(event) {    
+    if (window.location.pathname == "/") { 
         updateActive();
+    }
 }); 
 // Update the active location in the nav bar
 function updateActive() {
@@ -72,3 +64,22 @@ $('#site-menu li a').on('click', function(){
     }
 });
 
+$(document).ready(function () {
+    $(document).click(function (event) {
+        const clickover = $(event.target);
+        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+        if (_opened && !clickover.hasClass("navbar-toggle")) {
+            $("button.navbar-toggle").click();
+        }
+    });
+});
+
+$(document).ready(function () {
+    $(document).on('click touchend', function (event) {
+        const clickover = $(event.target);
+        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+        if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass("dropdown-elem")) {
+            $("button.navbar-toggle").click();
+        }
+    });
+});
