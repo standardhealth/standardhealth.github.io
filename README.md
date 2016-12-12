@@ -51,7 +51,7 @@ After making changes to the website, one should run a local instance of the proj
 - [ ] View on Firefox.
 - [ ] View on Android.
 - [ ] View on IOS.
-- [ ] Go throught this [Section 508 Checklist](http://www.hhs.gov/web/section-508/making-files-accessible/checklist/html/index.html) to make sure
+- [ ] Go through this [Section 508 Checklist](http://www.hhs.gov/web/section-508/making-files-accessible/checklist/html/index.html) to confirm compliance	
 - [ ] Check colors used for [proper contrasting](http://webaim.org/resources/contrastchecker/) if they have been changed
 - [ ] Perform accessibility testing using the [WAVE chrome extension](http://wave.webaim.org/extension/) and [Code Sniffer](http://squizlabs.github.io/HTML_CodeSniffer/).
 
