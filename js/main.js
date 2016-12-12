@@ -2,7 +2,7 @@
 // // Navbar menu functionality" 
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {    
-    if (window.location.pathname == "/") { 
+    if (window.location.pathname == "/" || window.location.pathname == "/faq.html") { 
         updateActive();
     }
 }); 
