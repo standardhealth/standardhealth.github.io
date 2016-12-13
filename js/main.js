@@ -2,7 +2,7 @@
 // // Navbar menu functionality" 
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {    
-    if (window.location.pathname == "/" || window.location.pathname == "/faq.html") { 
+    if (window.location.pathname == "/" || window.location.pathname == "/faq.html" || window.location.pathname == "/evidence.html") { 
         updateActive();
     }
 }); 
@@ -57,7 +57,7 @@ $(window).load(eqHeight);
 
 // Close the menu on click of button
 $('#site-menu li a').on('click', function(){
-    if ($(this).text().indexOf("SPEC") >= 0) {
+    if ($(this).hasClass("dropdown-toggle")) {
         return;
     } else {
         $("#site-menu").collapse('hide');
@@ -82,4 +82,14 @@ $(document).ready(function () {
             $("button.navbar-toggle").click();
         }
     });
+});
+
+
+$(window).load(function () { 
+    console.log($("html").height());
+    console.log(window.innerHeight);
+    if ($("html").height() <= window.innerHeight) {
+        $("html").height("100%");
+        $("body").height("100%");
+    } 
 });
