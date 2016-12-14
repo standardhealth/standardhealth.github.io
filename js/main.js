@@ -81,7 +81,7 @@ $(function () {
     // Stick footer if small enough
     stickOnSmall();
     //
-    // disableTouchOnEvent('click touchend');
+    disableTouchOnEvent('touchend');
     //
     disableTouchOnEvent('click');
     //Stablize heights
