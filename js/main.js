@@ -3,6 +3,8 @@
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {    
     if (window.location.pathname == "/" || window.location.pathname == "/faq.html" || window.location.pathname == "/evidence.html") { 
+        // Gets overwritten in faq and evidence to update the proper nav bars. 
+        // TODO: parametrize fn and pass label for nav based on pathname
         updateActive();
     }
 }); 
@@ -80,9 +82,9 @@ function stickOnSmall() {
 $(function () {
     // Stick footer if small enough
     stickOnSmall();
-    //
+    // Disable menu when touchend is picked up on non-menu elementes
     disableTouchOnEvent('touchend');
-    //
+    // Disable menu when click is picked up on non-menu elementes
     disableTouchOnEvent('click');
     //Stablize heights
     eqHeight();
