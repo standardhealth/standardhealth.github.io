@@ -64,32 +64,45 @@ $('#site-menu li a').on('click', function(){
     }
 });
 
-$(document).ready(function () {
-    $(document).click(function (event) {
-        const clickover = $(event.target);
-        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && !clickover.hasClass("navbar-toggle")) {
-            $("button.navbar-toggle").click();
-        }
-    });
-});
+// // Clicking off navbar closes dropdown
+// $(document).ready(function () {
+//     $(document).click(function (event) {
+//         const clickover = $(event.target);
+//         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+//         if (_opened && !clickover.hasClass("navbar-toggle")) {
+//             $("button.navbar-toggle").click();
+//         }
+//     });
+// });
 
-$(document).ready(function () {
-    $(document).on('click touchend', function (event) {
+// Treat touchend as event, close menu when clicking off unintended elem
+function disableTouchOnEvent(eventType) {
+    $(document).on(eventType, function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass("dropdown-elem")) {
             $("button.navbar-toggle").click();
         }
     });
+}
+
+// Creater sticky footer 
+function stickOnSmall() {
+    if ($("html").height() <= window.innerHeight) {
+        $("body").height("100%");
+    }
+} 
+// Enable/disable sticky footer based on browser size
+$(window).resize(function () { 
+    if ($(".wrapper").height() > window.innerHeight) {
+        $("body").height("");
+    }  else { 
+        $("body").height("100%");
+    }
 });
 
-
-$(window).load(function () { 
-    console.log($("html").height());
-    console.log(window.innerHeight);
-    if ($("html").height() <= window.innerHeight) {
-        $("html").height("100%");
-        $("body").height("100%");
-    } 
+$(function () {
+    stickOnSmall();
+    disableTouchOnEvent('click touchend');
+    disableTouchOnEvent('click');
 });
