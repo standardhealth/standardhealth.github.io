@@ -6,6 +6,8 @@ $(window).scroll(function(event) {
         updateActive();
     }
 }); 
+
+
 // Update the active location in the nav bar
 function updateActive() {
     var linkTops = [];
@@ -29,6 +31,8 @@ function updateActive() {
         });
     }
 };
+
+
 // Used to equalize height across eq-h-rows
 function eqHeight(){
     $('.eq-h-row').each(function() {
@@ -49,33 +53,8 @@ function eqHeight(){
     });
 } 
 
-// Stablize heights on doc.ready and resizing
-$(document).ready(eqHeight);
-$(window).resize(eqHeight);
-$(window).load(eqHeight);
 
-
-// Close the menu on click of button
-$('#site-menu li a').on('click', function(){
-    if ($(this).hasClass("dropdown-toggle")) {
-        return;
-    } else {
-        $("#site-menu").collapse('hide');
-    }
-});
-
-// // Clicking off navbar closes dropdown
-// $(document).ready(function () {
-//     $(document).click(function (event) {
-//         const clickover = $(event.target);
-//         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-//         if (_opened && !clickover.hasClass("navbar-toggle")) {
-//             $("button.navbar-toggle").click();
-//         }
-//     });
-// });
-
-// Treat touchend as event, close menu when clicking off unintended elem
+// On particular event, close menu if target not an opening elem 
 function disableTouchOnEvent(eventType) {
     $(document).on(eventType, function (event) {
         const clickover = $(event.target);
@@ -86,23 +65,34 @@ function disableTouchOnEvent(eventType) {
     });
 }
 
+
 // Creater sticky footer 
 function stickOnSmall() {
-    if ($("html").height() <= window.innerHeight) {
-        $("body").height("100%");
-    }
-} 
-// Enable/disable sticky footer based on browser size
-$(window).resize(function () { 
     if ($(".wrapper").height() > window.innerHeight) {
         $("body").height("");
     }  else { 
         $("body").height("100%");
     }
+} 
+
+
+// When doc is ready...
+$(function () {
+    // Stick footer if small enough
+    stickOnSmall();
+    //
+    // disableTouchOnEvent('click touchend');
+    //
+    disableTouchOnEvent('click');
+    //Stablize heights
+    eqHeight();
 });
 
-$(function () {
+
+// When window is resizing...
+$(window).resize(function () { 
+    // Stick footer if small enough
     stickOnSmall();
-    disableTouchOnEvent('click touchend');
-    disableTouchOnEvent('click');
+    // Stablize heights on doc.ready and resizing
+    eqHeight();
 });
