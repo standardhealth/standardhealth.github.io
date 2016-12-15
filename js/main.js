@@ -2,10 +2,14 @@
 // // Navbar menu functionality" 
 // Set active section of homepage based on scrolling location
 $(window).scroll(function(event) {    
-    if (window.location.pathname == "/" || window.location.pathname == "/faq.html") { 
+    if (window.location.pathname == "/" || window.location.pathname == "/faq.html" || window.location.pathname == "/evidence.html") { 
+        // Gets overwritten in faq and evidence to update the proper nav bars. 
+        // TODO: parametrize fn and pass label for nav based on pathname
         updateActive();
     }
 }); 
+
+
 // Update the active location in the nav bar
 function updateActive() {
     var linkTops = [];
@@ -29,6 +33,8 @@ function updateActive() {
         });
     }
 };
+
+
 // Used to equalize height across eq-h-rows
 function eqHeight(){
     $('.eq-h-row').each(function() {
@@ -49,37 +55,46 @@ function eqHeight(){
     });
 } 
 
-// Stablize heights on doc.ready and resizing
-$(document).ready(eqHeight);
-$(window).resize(eqHeight);
-$(window).load(eqHeight);
 
-
-// Close the menu on click of button
-$('#site-menu li a').on('click', function(){
-    if ($(this).text().indexOf("SPEC") >= 0) {
-        return;
-    } else {
-        $("#site-menu").collapse('hide');
-    }
-});
-
-$(document).ready(function () {
-    $(document).click(function (event) {
-        const clickover = $(event.target);
-        const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (_opened && !clickover.hasClass("navbar-toggle")) {
-            $("button.navbar-toggle").click();
-        }
-    });
-});
-
-$(document).ready(function () {
-    $(document).on('click touchend', function (event) {
+// On particular event, close menu if target not an opening elem 
+function disableTouchOnEvent(eventType) {
+    $(document).on(eventType, function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass("dropdown-elem")) {
             $("button.navbar-toggle").click();
         }
     });
+}
+
+
+// Creater sticky footer 
+function stickOnSmall() {
+    if ($(".wrapper").height() > window.innerHeight) {
+        $("body").height("");
+    }  else { 
+        $("body").height("100%");
+    }
+} 
+
+
+// When doc is ready...
+$(function () {
+    // Stick footer if small enough
+    stickOnSmall();
+    // Disable menu when touchend is picked up on non-menu elementes
+    disableTouchOnEvent('touchend');
+    // Disable menu when click is picked up on non-menu elementes
+    disableTouchOnEvent('click');
+    //Stablize heights
+    eqHeight();
+});
+
+
+// When window is resizing...
+$(window).resize(function () { 
+    // Stick footer if small enough
+    stickOnSmall();
+    // Stablize heights on doc.ready and resizing
+    eqHeight();
 });
