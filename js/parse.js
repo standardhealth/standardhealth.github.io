@@ -27,8 +27,11 @@ function parseSectionActive() {
         case ("evidence.html"):
             setActive("EVIDENCE");
             break;
+        // case ("collaborative.html"):
+        //     setActive("ABOUT");
+        //     break;
         case ("collaborative.html"):
-            setActive("ABOUT");
+            setActive("INITIATIVES");
             break;
         case ("spec.html"):
             setActive("SPEC");
