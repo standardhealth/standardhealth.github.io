@@ -25,14 +25,17 @@ function parseSectionActive() {
             } 
             break; 
         case ("evidence.html"):
-            setActive("EVIDENCE");
+            setActive("ABOUT");
             break;
-        // case ("collaborative.html"):
-        //     setActive("ABOUT");
-        //     break;
         case ("collaborative.html"):
-            setActive("INITIATIVES");
+            setActive("ABOUT");
             break;
+        // case ("evidence.html"):
+        //     setActive("EVIDENCE");
+        //     break;
+        // case ("collaborative.html"):
+        //     setActive("INITIATIVES");
+        //     break;
         case ("spec.html"):
             setActive("SPEC");
             break;
