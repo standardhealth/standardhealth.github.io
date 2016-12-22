@@ -2,7 +2,6 @@
 layout: default
 title: evid
 ---
-
 <section id="evid">
   <div class="container"> 
     <div class="row"> 
@@ -17,152 +16,40 @@ title: evid
     <div class="row">
       <div class="col-sm-4">
         <div id="side_nav" class="side-nav" data-spy="affix">
-        <h2 class="side-nav-title">Impact Type</h2>
-        <ul class="nav evid-nav" id="evid_nav">
-          <li><a href="#evid1">Economics and Financial Aspects of Interoperability </a></li>
-          <li><a href="#evid2">Patient Empowerment and Consumer Rights</a></li>
-          <li><a href="#evid3">Health System Benefits</a></li>
-          <li><a href="#evid4">Quality and Safety Concerns</a></li>
-<!--           <li><a href="#evid5">Interoperability in Medical Devices</a></li> -->
-          <li><a href="#evid6">Efficacy of International Standards</a></li>
-        </ul>
+          <h2 class="side-nav-title">Impact Type</h2>
+          <ul class="nav evid-nav" id="evid_nav">
+            {% for type in site.evid_types %}
+              <li><a href="#evid{{type.num}}">{{type.title}}</a></li>
+            {% endfor %}
+          </ul>
         </div>
       </div>  
       <div class="col-sm-8">
         <hr visible-sm>
         <ul class="evids">
-          <li id="evid1">
-            <p class="title">Economics and Financial Aspects of Interoperability</p>
+          {% for type in site.evid_types %}
+          <li id="evid{{type.num}}">
+            <p class="title">
+              {{type.title}}
+            </p>
             <p>
-              "Potential savings and costs of widespread adoption of electronic medical record (EMR) systems, models important health and safety benefits, and concludes that effective EMR implementation and networking could eventually save more than $81 billion annually—by improving health care efficiency and safety. The adoption of interoperable EMR systems could produce efficiency and safety savings of $142–$371 billion."<sup>1</sup>
+              "{{type.quote}}"<sup>{{type.num}}</sup>
             </p> 
             <ul>
+            {% for link in type.links %}
               <li class="evid-link">              
                 <p class="citation"> 
-                  <sup>1</sup><a href="http://content.healthaffairs.org/content/24/5/1103.full"> Can Electronic Medical Record Systems Transform Health Care? Potential Health Benefits, Savings, And Costs.</a> Health Affairs, 2005.
+                  {% if link.num == 1 %}<sup>{{type.num}}</sup>{% endif %}
+                  <a href="{{ link.href }}">{{link.title}}</a>. {{link.source}}, {{link.year}}.
                 </p>
               </li>
-              <li class="evid-link">
-                <!-- <p>"Annual savings in excess of $30 billion may be liberated by widespread adoption of functional interoperability for medical devices."<sup>2</sup></p>
-                <sup>2</sup>  - --> 
-                <p class="citation"> 
-                  <a href="http://8637-presscdn-0-19.pagely.netdna-cdn.com/wp-content/uploads/2015/02/The-Value-of-Medical-Device-Interoperability.pdf">The Value of Medical Device Interoperability.</a> West Health Institute, 2013.
-                </p>
-              </li>
-              <li class="evid-link">
-                <!-- <p>"Fully standardized HIEI could yield a net value of dollar 77.8 billion per year once fully implemented. Nonstandardized HIEI offers smaller positive financial returns."<sup>4</sup></p>
-                <sup>4</sup> - --> 
-                <p class="citation"> 
-                  <a href="http://content.healthaffairs.org/content/early/2005/01/19/hlthaff.w5.10">The Value Of Health Care Information Exchange And Interoperability</a> Health Affairs, 2005.
-                </p>
-              </li>
-              <li class="evid-link">
-                <!-- <p>"Fully standardized HIEI could yield a net value of dollar 77.8 billion per year once fully implemented. Nonstandardized HIEI offers smaller positive financial returns."<sup>4</sup></p>
-                <sup>4</sup> - --> 
-                <p class="citation"> 
-                  <a href="https://www.healthit.gov/sites/default/files/systematic_review_final_report_508_compliant.pdf">An Updated Systematic Review with a Focus on Meaningful Use Functionalities</a>  Annals of Internal Medicine, 2014.
-                </p>
-              </li>
+            {% endfor %}
             </ul>
-          </li>
-          <li id="evid2">
-            <p class="title">Patient Empowerment and Consumer Rights</p>
-             <p>
-              "While the United States has made substantial progress in digitizing health records, most patients are still unable to easily transfer their complete medical records to a new provider, share their records securely with other family members or caregivers, or donate their medical data for research."<sup>2</sup>
-            </p> 
-            <ul> 
-              <li class="evid-link">
-                <p class="citation"> 
-                  <sup>2</sup><a href="https://itif.org/events/2016/09/30/future-health-data-sharing-giving-consumers-private-and-portable-access-their-own">The Future of Health Data Sharing: Giving Consumers Private and Portable Access to Their Own Medical Records.</a> The Future of Health Data Sharing: Giving Consumers Private and Portable Access to Their Own Medical Records, 2016.
-                </p>
-              </li>
-              <li class="evid-link">
-                <!-- <p>"An essential step to usercentered design is incorporating end-user feedback into the design and improvement of a product. EHR technology should facilitate this feedback."</p> --> 
-                <p class="citation"> 
-                  <a href="https://www.aace.com/files/ehr-priorities.pdf">Improving Care: Priorities to Improve Electronic Health Record Usability.</a> American Medical Association, 2014.
-                </p>
-              </li>
-              <li class="evid-link">
-                <!-- <p>"Team-based care that works puts the patient at the center and addresses the patient’s needs and concerns ahead of those of the provider or payer."</p> --> 
-                <p class="citation"> 
-                  <a href="https://thedoctorweighsin.com/what-do-patients-think-about-team-based-care/">What Do Patients Think About Team-Based Care?</a> The Doctor Weighs In, 2016. 
-                </p>
-              </li>
-            </ul>
-
-          </li>
-          <li id="evid3">
-            <p class="title">Health System Benefits</p>
-            <p>
-              "EHR design and configuration must: (1) facilitate clinical staff to perform work as necessary and to the extent their licensure and privileges permit and (2) allow physicians to dynamically allocate and delegate work to appropriate members of the care team as permitted by institutional policies."<sup>3</sup>
-            </p>
-            <ul> 
-              <li class="evid-link">
-                <p class="citation"> 
-                  <sup>3</sup><a href="https://www.aace.com/files/ehr-priorities.pdf">Improving Care: Priorities to Improve Electronic Health Record Usability.</a> American Medical Association, 2014.
-                </p>
-              </li>
-              <li class="evid-link">
-<!--                 <p>"In 2015 more than eight in 10 hospitals electronically exchanged laboratory results, radiology reports, clinical care summaries, or medication lists with ambulatory care providers or hospitals outside their organization."</p>  -->
-                <p class="citation"> 
-                  <a href="http://healthaffairs.org/blog/2016/09/29/by-the-numbers-our-progress-in-digitizing-health-care/">By The Numbers: Our Progress In Digitizing Health Care.</a> Health Affairs, 2016.  
-                </p>
-              </li>
-              <li class="evid-link">
-                <!-- <p>"The total cost of preventable adverse events is between $17 and $29 billion [...] with the most common types of preventable errors being technical errors (44 percent)."<sup>3</sup></p>
-                <sup>3</sup> - --> 
-                <p class="citation"> 
-                  <a href="https://www.ncbi.nlm.nih.gov/books/NBK225187/">To Err is Human: Building a Safer Health System.</a> Institute of Medicine (US) Committee on Quality of Health Care in America, 2000. 
-                </p>
-              </li>
-            </ul>
-          </li>
-          <li id="evid4">
-            <p class="title">Quality and Safety Concerns</p>
-            <p>
-              "An estimated 80% of serious medical errors involve miscommunication between caregivers during the transfer of patients."<sup>4</sup>
-            </p>
-            <ul> 
-              <li class="evid-link">
-                <p class="citation"> 
-                  <sup>4</sup><a href="https://www.jointcommission.org/assets/1/6/tst_hoc_persp_08_12.pdf">Joint Commission Center for Transforming Healthcare Releases Targeted Solutions Tool for Hand-Off Communications.</a> Joint Commission Perspectives, August 2012.
-                </p>
-              </li>
-              <li class="evid-link">
-<!--                 <p>"Better coordinated care from admission to discharge [...] reduces the risk of harm reaching patients."</p>  -->
-                <p class="citation"> 
-                  <a href="http://www.ahrq.gov/news/blog/ahrqviews/020916.html">Can Electronic Health Records Prevent Harm to Patients?</a> Agency for Healthcare Research and Quality, 2016.
-                </p>
-              </li>
-            </ul>
-          </li>
-<!--           <li id="evid5">
-            <p class="title">Interoperability in Medical Devices</p>
-            <ul> 
-              <li class="evid-link">
-                <p>" "</p> <sup></sup>
-                <sup></sup> - <a href=""> </a> 
-              </li>
-            </ul>`
-          </li> -->
-          <li id="evid6">
-            <p class="title">Efficacy of International Standards</p>
-            <p>
-              "Regarding England's Summary Care Records (SCR) standard: "In 87% of encounters where SCR was accessed, it provided information which would otherwise have been unknown."<sup>5</sup>
-            </p>
-            <ul> 
-              <li class="evid-link">
-                <p class="citation"> 
-                  <sup>5</sup><a href="http://webarchive.nationalarchives.gov.uk/20160921135209/http://systems.digital.nhs.uk/scr/pharmacy/cppilot.pdf">Community Pharmacy Access to Summary Care Records.</a> Health and Social Care Information Centre, 2015.
-                </p>
-              </li>
-            </ul>
-          </li>
+          {% endfor %}  
         </ul>
       </div>
     </div>
   </div>  
-<!-- <p><a href="#top" class='back-to-top'>Back to top</a></p> -->
 </section>  
 <script>
   $(document).ready(function() {
