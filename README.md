@@ -60,7 +60,7 @@ After making changes to the website, one should run a local instance of the proj
 
 1. Run browser tests mentioned above on localhost.
 2. Push changes to your GitHub Project repository.
-3. Run tests on mobile devices when `your-account-name.github.io` has been updtaed.
+3. Run tests on mobile devices when `your-account-name.github.io` has been updated.
 4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealthrecord.org`.
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
@@ -77,3 +77,10 @@ Below you will find a comprehensive list of the technologies and tools the Colla
 - [Bootstrap Material Design](http://fezvrasta.github.io/bootstrap-material-design/), a material design inspired, bootstrap compatible styling library.
 - [jQuery](https://jquery.com/), a JavaScript library enabling quick navigation and manipulation of HTML.
 - [FontAwesome](http://fontawesome.io/), a library of scalable vector icons that can instantly be customized.
+
+
+##About the Team Behind the Standard Health Record
+
+###[The MITRE Corporation](https://www.mitre.org/)
+
+The MITRE Corporation is a not-for-profit organization working in the public interest that operates federally funded research and development centers to provide innovative solutions to national problems.
