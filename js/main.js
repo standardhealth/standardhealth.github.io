@@ -21,7 +21,6 @@ function updateActive(navName, elemOffset, bottomOffset) {
     const scrollMod = (navName == ".navbar-nav") ? ".scroll" : "";
     const navLink = navName + " li" + scrollMod;
     const anchor = scrollMod + ' a';
-    console.log($(navName))
     $(navName).find(anchor).each(function(){
         linkTops.push($(this.hash).offset().top - elemOffset);
     });
