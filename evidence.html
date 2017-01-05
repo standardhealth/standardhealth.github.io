@@ -19,7 +19,8 @@ title: evid
         <div id="side_nav" class="side-nav" data-spy="affix">
           <h2 class="side-nav-title">Impact Type</h2>
           <ul class="nav evid-nav" id="evid_nav">
-            {% for type in site.evid_types %}
+            {% assign sorted_evid = site.evid_types | sort: "num" %}
+            {% for type in sorted_evid %}
               <li><a href="#evid{{type.num}}">{{type.title}}</a></li>
             {% endfor %}
           </ul>
@@ -28,7 +29,7 @@ title: evid
       <div class="col-sm-8">
         <hr visible-sm>
         <ul class="evids">
-          {% for type in site.evid_types %}
+          {% for type in sorted_evid %}
           <li id="evid{{type.num}}">
             <p class="title">
               {{type.title}}
