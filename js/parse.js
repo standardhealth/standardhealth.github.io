@@ -10,6 +10,7 @@ function parseSectionActive() {
                 case("#home"): 
                     setActive("HOME");
                     break;
+                // For when evid and collab are on separate tabs
                 // case("#about"): 
                 //     setActive("ABOUT");
                 //     break;
@@ -25,14 +26,18 @@ function parseSectionActive() {
             } 
             break; 
         case ("evidence.html"):
-            setActive("EVIDENCE");
+            setActive("ABOUT");
             break;
-        // case ("collaborative.html"):
-        //     setActive("ABOUT");
-        //     break;
         case ("collaborative.html"):
-            setActive("INITIATIVES");
+            setActive("ABOUT");
             break;
+        //  Separate Evid and collab
+        // case ("evidence.html"):
+        //     setActive("EVIDENCE");
+        //     break;
+        // case ("collaborative.html"):
+        //     setActive("INITIATIVES");
+        //     break;
         case ("spec.html"):
             setActive("SPEC");
             break;

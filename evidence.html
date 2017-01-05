@@ -2,6 +2,7 @@
 layout: default
 title: evid
 ---
+<a name="top"></a>
 <section id="evid">
   <div class="container"> 
     <div class="row"> 
@@ -18,7 +19,8 @@ title: evid
         <div id="side_nav" class="side-nav" data-spy="affix">
           <h2 class="side-nav-title">Impact Type</h2>
           <ul class="nav evid-nav" id="evid_nav">
-            {% for type in site.evid_types %}
+            {% assign sorted_evid = site.evid_types | sort: "num" %}
+            {% for type in sorted_evid %}
               <li><a href="#evid{{type.num}}">{{type.title}}</a></li>
             {% endfor %}
           </ul>
@@ -27,7 +29,7 @@ title: evid
       <div class="col-sm-8">
         <hr visible-sm>
         <ul class="evids">
-          {% for type in site.evid_types %}
+          {% for type in sorted_evid %}
           <li id="evid{{type.num}}">
             <p class="title">
               {{type.title}}
@@ -40,11 +42,12 @@ title: evid
               <li class="evid-link">              
                 <p class="citation"> 
                   {% if link.num == 1 %}<sup>{{type.num}}</sup>{% endif %}
-                  <a href="{{ link.href }}">{{link.title}}</a>. {{link.source}}, {{link.year}}.
+                  <a href="{{ link.href }}">{{link.title}}</a> {{link.source}}, {{link.year}}.
                 </p>
               </li>
             {% endfor %}
             </ul>
+            <a href="#top" class="back-to-top" onclick="updateActive">Back to top</a>
           {% endfor %}  
         </ul>
       </div>

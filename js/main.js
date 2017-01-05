@@ -1,32 +1,38 @@
-
-// // Navbar menu functionality" 
-// Set active section of homepage based on scrolling location
-$(window).scroll(function(event) {    
-    if (window.location.pathname == "/" || window.location.pathname == "/faq.html" || window.location.pathname == "/evidence.html") { 
-        // Gets overwritten in faq and evidence to update the proper nav bars. 
-        // TODO: parametrize fn and pass label for nav based on pathname
-        updateActive();
+// Runs updateActive based on current page
+function updateActiveOnPage(page) { 
+    if (page == "/") { 
+        updateActive(".navbar-nav", 100, 30);
+    } else if (page == "/faq.html") {
+        updateActive(".faq-nav", 200, 30);
+    } else if (page == "/evidence.html") {
+        updateActive(".evid-nav", 200, 30);
+    } else { 
+        return
     }
-}); 
+}
 
-
-// Update the active location in the nav bar
-function updateActive() {
+// Update the active location in the nav bar based on the navbar name, 
+// how far above an element counts as a new-element trigger, and how far above 
+// the bottom of the page counts as the bottom-of-the-page trigger
+function updateActive(navName, elemOffset, bottomOffset) {
     var linkTops = [];
     var wTop     = $(window).scrollTop();
     var rangeTop = 5;
-    $('nav').find('.scroll a').each(function(){
-        linkTops.push($(this.hash).offset().top - 200);
+    const scrollMod = (navName == ".navbar-nav") ? ".scroll" : "";
+    const navLink = navName + " li" + scrollMod;
+    const anchor = scrollMod + ' a';
+    $(navName).find(anchor).each(function(){
+        linkTops.push($(this.hash).offset().top - elemOffset);
     });
-    if ($(window).scrollTop() + $(window).height() + 15 >= $(document).height()) {
-        $("nav li.scroll")
+    if ($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height()) {
+        $(navLink)
             .removeClass('active')
             .eq(linkTops.length -1).addClass('active');
         
     } else {
         $.each( linkTops, function(i) {
             if ( wTop > linkTops[i] - rangeTop ){
-                $('nav li.scroll')
+                $(navLink)
                     .removeClass('active')     // Drop any active elems (of which there are one)
                     .eq(i).addClass('active'); // Add active to the current element                 
             }
@@ -88,6 +94,8 @@ $(function () {
     disableTouchOnEvent('click');
     //Stablize heights
     eqHeight();
+    // Determine how to update the page based on the current page
+    updateActiveOnPage(window.location.pathname);
 });
 
 
@@ -98,3 +106,10 @@ $(window).resize(function () {
     // Stablize heights on doc.ready and resizing
     eqHeight();
 });
+
+
+// When window is scrolling...
+$(window).scroll(function(event) {    
+    // Update active based on page
+    updateActiveOnPage(window.location.pathname);
+}); 
