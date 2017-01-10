@@ -26,7 +26,6 @@ function updateActive(navName, elemOffset, bottomOffset) {
     $(navName).find(anchor).each(function(){
         linkTops.push($(this.hash).offset().top - elemOffset);
     });
-    console.log($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height())
     if ($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height()) {
         $(navLink)
             .removeClass('active')
@@ -34,9 +33,6 @@ function updateActive(navName, elemOffset, bottomOffset) {
         
     } else {
         $.each( linkTops, function(i) {
-            console.log(wTop + " is wTop")
-            console.log("linkTops element " + linkTops[i])
-            console.log("Range top: " +  rangeTop)
             if ( wTop > linkTops[i] - rangeTop ){
                 $(navLink)
                     .removeClass('active')     // Drop any active elems (of which there are one)
@@ -90,6 +86,23 @@ function stickOnSmall() {
 } 
 
 
+function snackbarGeneration() { 
+    var d = new Date();
+    var himssEnds = new Date("2/24/2017");
+    var options =  {
+        content: "<p>We're going to be at <a href='http://www.himssconference.org/'>HIMSS 2017</a>! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
+
+        htmlAllowed: true, // allows HTML as content value
+        timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
+    };
+
+    // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
+    if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
+        setTimeout(function() {$.snackbar(options);}, 1000);
+    }
+}
+
+
 // When doc is ready...
 $(function () {
     // Stick footer if small enough
@@ -102,6 +115,8 @@ $(function () {
     eqHeight();
     // Determine how to update the page based on the current page
     updateActiveOnPage(window.location.pathname);
+    // generate snackbars if appropriate
+    snackbarGeneration();
 });
 
 
@@ -118,4 +133,6 @@ $(window).resize(function () {
 $(window).scroll(function(event) {    
     // Update active based on page
     updateActiveOnPage(window.location.pathname);
+
 }); 
+
