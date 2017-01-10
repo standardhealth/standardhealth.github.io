@@ -1,8 +1,10 @@
 // Runs updateActive based on current page
+
 function updateActiveOnPage(page) { 
     if (page == "/") { 
         updateActive(".navbar-nav", 100, 30);
     } else if (page == "/faq.html") {
+        console.log('in faq branch');
         updateActive(".faq-nav", 200, 30);
     } else if (page == "/evidence.html") {
         updateActive(".evid-nav", 200, 30);
@@ -17,13 +19,14 @@ function updateActiveOnPage(page) {
 function updateActive(navName, elemOffset, bottomOffset) {
     var linkTops = [];
     var wTop     = $(window).scrollTop();
-    var rangeTop = 5;
+    var rangeTop = 15;
     const scrollMod = (navName == ".navbar-nav") ? ".scroll" : "";
     const navLink = navName + " li" + scrollMod;
     const anchor = scrollMod + ' a';
     $(navName).find(anchor).each(function(){
         linkTops.push($(this.hash).offset().top - elemOffset);
     });
+    console.log($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height())
     if ($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height()) {
         $(navLink)
             .removeClass('active')
@@ -31,6 +34,9 @@ function updateActive(navName, elemOffset, bottomOffset) {
         
     } else {
         $.each( linkTops, function(i) {
+            console.log(wTop + " is wTop")
+            console.log("linkTops element " + linkTops[i])
+            console.log("Range top: " +  rangeTop)
             if ( wTop > linkTops[i] - rangeTop ){
                 $(navLink)
                     .removeClass('active')     // Drop any active elems (of which there are one)
