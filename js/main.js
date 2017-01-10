@@ -90,7 +90,7 @@ function snackbarGeneration() {
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
     var options =  {
-        content: "<p>We're going to be at <a href='http://www.himssconference.org/'>HIMSS 2017</a>! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
+        content: "<p>We're going to be at <a href='http://www.himssconference.org/'>HIMSS in February 2017</a>! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
 
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
