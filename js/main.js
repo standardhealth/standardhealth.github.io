@@ -90,7 +90,7 @@ function snackbarGeneration() {
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
     var options =  {
-        content: "<p>We're going to be at <a href='http://www.himssconference.org/'>HIMSS in February 2017</a>! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
+        content: "<p>We're going to be at HIMSS in February! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
 
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
@@ -98,7 +98,14 @@ function snackbarGeneration() {
 
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
     if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
-        setTimeout(function() {$.snackbar(options);}, 1000);
+        setTimeout(function() {
+            $.snackbar(options);
+            $("#snackbar-container").on("click", function() {
+                console.log("here");
+                console.log($(this).find('a'));
+                window.open($(this).find('a')[0].href) 
+            })
+        }, 1000);
     }
 }
 
@@ -117,6 +124,7 @@ $(function () {
     updateActiveOnPage(window.location.pathname);
     // generate snackbars if appropriate
     snackbarGeneration();
+    //
 });
 
 
