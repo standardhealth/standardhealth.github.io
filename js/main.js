@@ -1,8 +1,10 @@
 // Runs updateActive based on current page
+
 function updateActiveOnPage(page) { 
     if (page == "/") { 
         updateActive(".navbar-nav", 100, 30);
     } else if (page == "/faq.html") {
+        console.log('in faq branch');
         updateActive(".faq-nav", 200, 30);
     } else if (page == "/evidence.html") {
         updateActive(".evid-nav", 200, 30);
@@ -17,7 +19,7 @@ function updateActiveOnPage(page) {
 function updateActive(navName, elemOffset, bottomOffset) {
     var linkTops = [];
     var wTop     = $(window).scrollTop();
-    var rangeTop = 5;
+    var rangeTop = 15;
     const scrollMod = (navName == ".navbar-nav") ? ".scroll" : "";
     const navLink = navName + " li" + scrollMod;
     const anchor = scrollMod + ' a';
@@ -84,6 +86,28 @@ function stickOnSmall() {
 } 
 
 
+function snackbarGeneration() { 
+    var d = new Date();
+    var himssEnds = new Date("2/24/2017");
+    var options =  {
+        content: "<p>We're going to be at HIMSS in February! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
+
+        htmlAllowed: true, // allows HTML as content value
+        timeout: 6000 // time in milliseconds after the snackbar autohides, 0 is disabled
+    };
+
+    // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
+    if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
+        setTimeout(function() {
+            $.snackbar(options);
+            $("#snackbar-container").on("click", function() {
+                window.open($(this).find('a')[0].href) 
+            })
+        }, 1000);
+    }
+}
+
+
 // When doc is ready...
 $(function () {
     // Stick footer if small enough
@@ -96,6 +120,8 @@ $(function () {
     eqHeight();
     // Determine how to update the page based on the current page
     updateActiveOnPage(window.location.pathname);
+    // generate snackbars if appropriate
+    // snackbarGeneration();
 });
 
 
@@ -112,4 +138,6 @@ $(window).resize(function () {
 $(window).scroll(function(event) {    
     // Update active based on page
     updateActiveOnPage(window.location.pathname);
+
 }); 
+
