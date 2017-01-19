@@ -121,7 +121,7 @@ $(function () {
     // Determine how to update the page based on the current page
     updateActiveOnPage(window.location.pathname);
     // generate snackbars if appropriate
-    // snackbarGeneration();
+//     snackbarGeneration();
 });
 
 
