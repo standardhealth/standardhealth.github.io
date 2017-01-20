@@ -90,10 +90,10 @@ function snackbarGeneration() {
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
     var options =  {
-        content: "<p>We're going to be at HIMSS in February! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
+        content: "<p>We're going to be at HIMSS, February 22, 2017! </br> <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for info on our 4 o'clock presentation on <br> Standard Health Records: The Legal and Policy Challenges.</p>", // text of the snackbar 
 
         htmlAllowed: true, // allows HTML as content value
-        timeout: 6000 // time in milliseconds after the snackbar autohides, 0 is disabled
+        timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
 
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
