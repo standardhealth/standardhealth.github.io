@@ -96,8 +96,8 @@ function snackbarGeneration() {
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
     var options =  {
-        content: "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
-
+        content: "<i class='snackbar-close fa fa-times' aria-hidden='true'></i>" + 
+                  "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
@@ -105,10 +105,14 @@ function snackbarGeneration() {
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
     if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
         setTimeout(function() {
-            $.snackbar(options);
-            $("#snackbar-container").on("click", function() {
-                window.open($(this).find('a')[0].href) 
-            })
+            var snackbarId = $.snackbar(options);
+            $("#snackbar-container").on("click", function(event) {
+                if ($(event.target).hasClass("snackbar-close")) {
+                    $("#snackbarId").snackbar("hide")
+                } else { 
+                    window.open($(this).find('a')[0].href);
+                }
+            });
         }, 1500);
     }
 }
