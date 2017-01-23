@@ -34,9 +34,15 @@ function updateActive(navName, elemOffset, bottomOffset) {
     } else {
         $.each( linkTops, function(i) {
             if ( wTop > linkTops[i] - rangeTop ){
-                $(navLink)
-                    .removeClass('active')     // Drop any active elems (of which there are one)
-                    .eq(i).addClass('active'); // Add active to the current element                 
+                if ($(navLink).eq(i)[0].innerText == "SHRC") {
+                    $(navLink).removeClass('active');
+                    $(navName + " li.aboutNav").addClass('active');
+                } else {
+                    $(navName + " li").removeClass('active');
+                    $(navLink)
+                        .removeClass('active')     // Drop any active elems (of which there are one)
+                        .eq(i).addClass('active'); // Add active to the current element                 
+                }
             }
         });
     }
@@ -138,6 +144,5 @@ $(window).resize(function () {
 $(window).scroll(function(event) {    
     // Update active based on page
     updateActiveOnPage(window.location.pathname);
-
 }); 
 
