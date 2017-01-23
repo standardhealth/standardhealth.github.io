@@ -34,7 +34,7 @@ function updateActive(navName, elemOffset, bottomOffset) {
     } else {
         $.each( linkTops, function(i) {
             if ( wTop > linkTops[i] - rangeTop ){
-                if ($(navLink).eq(i)[0].innerText == "SHRC") {
+                if ($(navLink).eq(i)[0].innerText == "SHR COLLABORATIVE") {
                     $(navLink).removeClass('active');
                     $(navName + " li.aboutNav").addClass('active');
                 } else {
@@ -96,7 +96,7 @@ function snackbarGeneration() {
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
     var options =  {
-        content: "<p>We're going to be at HIMSS, February 22, 2017! </br> <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for info on our 4 o'clock presentation on <br> Standard Health Records: The Legal and Policy Challenges.</p>", // text of the snackbar 
+        content: "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for info on our 4 o'clock presentation on \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
 
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
@@ -109,7 +109,7 @@ function snackbarGeneration() {
             $("#snackbar-container").on("click", function() {
                 window.open($(this).find('a')[0].href) 
             })
-        }, 1000);
+        }, 1500);
     }
 }
 
