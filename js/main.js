@@ -34,9 +34,15 @@ function updateActive(navName, elemOffset, bottomOffset) {
     } else {
         $.each( linkTops, function(i) {
             if ( wTop > linkTops[i] - rangeTop ){
-                $(navLink)
-                    .removeClass('active')     // Drop any active elems (of which there are one)
-                    .eq(i).addClass('active'); // Add active to the current element                 
+                if ($(navLink).eq(i)[0].innerText == "SHR COLLABORATIVE") {
+                    $(navLink).removeClass('active');
+                    $(navName + " li.aboutNav").addClass('active');
+                } else {
+                    $(navName + " li").removeClass('active');
+                    $(navLink)
+                        .removeClass('active')     // Drop any active elems (of which there are one)
+                        .eq(i).addClass('active'); // Add active to the current element                 
+                }
             }
         });
     }
@@ -89,21 +95,25 @@ function stickOnSmall() {
 function snackbarGeneration() { 
     var d = new Date();
     var himssEnds = new Date("2/24/2017");
-    var options =  {
-        content: "<p>We're going to be at HIMSS in February! </p>" + "<p><a href='http://www.himssconference.org/365/mitre-corporation'>Click here</a> to learn more about where we'll be.</p>", // text of the snackbar 
-
+    var options =  {    
+        content: "<i class='snackbar-close fa fa-times fa-lg' aria-hidden='true'></i>" + 
+                  "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
         htmlAllowed: true, // allows HTML as content value
-        timeout: 6000 // time in milliseconds after the snackbar autohides, 0 is disabled
+        timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
 
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
     if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
         setTimeout(function() {
-            $.snackbar(options);
-            $("#snackbar-container").on("click", function() {
-                window.open($(this).find('a')[0].href) 
-            })
-        }, 1000);
+            var snackbarId = $.snackbar(options);
+            $("#snackbar-container").on("click", function(event) {
+                if ($(event.target).hasClass("snackbar-close")) {
+                    $("#snackbarId").snackbar("hide")
+                } else { 
+                    window.open($(this).find('a')[0].href);
+                }
+            });
+        }, 1500);
     }
 }
 
@@ -121,7 +131,7 @@ $(function () {
     // Determine how to update the page based on the current page
     updateActiveOnPage(window.location.pathname);
     // generate snackbars if appropriate
-//     snackbarGeneration();
+    snackbarGeneration();
 });
 
 
@@ -138,6 +148,5 @@ $(window).resize(function () {
 $(window).scroll(function(event) {    
     // Update active based on page
     updateActiveOnPage(window.location.pathname);
-
 }); 
 
