@@ -14,7 +14,7 @@
 <tr>
 <td>Value: <a href="../core/index.html#Quantity"><code>Quantity</code></a></td>
 <td></td>
-<td>A measured or measurable amount</td>
+<td>A quantity with Units</td>
 </tr>
 </tbody>
 </table>
@@ -91,7 +91,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/FiveFrequencyScaleVS</td>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/QualitativeFrequencyVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
@@ -133,24 +133,6 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="AdministrationRoute"></a>AdministrationRoute</h3>
-<p>How a medication entered or should enter the body <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0013153">C0013153</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/route-codes</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
 <h3><a name="AmountOfMedication"></a>AmountOfMedication</h3>
 <p>A standardized measure or discrete amount of medication serving as a reference for dosing or strength, for example, 1 tablet.</p>
 <table>
@@ -165,7 +147,35 @@
 <tr>
 <td>Value: <a href="../core/index.html#Quantity"><code>Quantity</code></a></td>
 <td></td>
-<td>A measured or measurable amount</td>
+<td>A quantity with Units</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="AmountPerDose"></a>AmountPerDose</h3>
+<p>The amount of medication taken at each dose, as a quantity or range</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="../core/index.html#Quantity"><code>Quantity</code></a></td>
+<td>1</td>
+<td>A quantity with Units</td>
+</tr>
+<tr>
+<td>        | <code>Range</code> <em>(TBD)</em></td>
+<td>1</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -199,19 +209,9 @@
 </thead>
 <tbody>
 <tr>
-<td>Choice</td>
+<td><a href="#AmountPerDose"><code>AmountPerDose</code></a></td>
 <td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>        | <a href="#DoseAmountRange"><code>DoseAmountRange</code></a></td>
-<td>1</td>
-<td>The amount of medication taken at each dose, as a range</td>
-</tr>
-<tr>
-<td>        | <a href="#DoseAmountQuantity"><code>DoseAmountQuantity</code></a></td>
-<td>1</td>
-<td>The amount of medication taken at each dose, as a quantity</td>
+<td>The amount of medication taken at each dose, as a quantity or range</td>
 </tr>
 <tr>
 <td><a href="#TimingOfDoses"><code>TimingOfDoses</code></a></td>
@@ -234,9 +234,9 @@
 <td>Supplemental instructions - e.g. 'with meals'</td>
 </tr>
 <tr>
-<td><a href="#AdministrationRoute"><code>AdministrationRoute</code></a></td>
+<td><a href="#RouteIntoBody"><code>RouteIntoBody</code></a></td>
 <td>optional</td>
-<td>How a medication entered or should enter the body</td>
+<td>The way a substance enters an organism after contact, particularly, the route of drug administration.</td>
 </tr>
 <tr>
 <td><a href="#AdministrationMethod"><code>AdministrationMethod</code></a></td>
@@ -249,45 +249,9 @@
 <td>The anatomic site at which medical intervention is applied.</td>
 </tr>
 <tr>
-<td><a href="#MaximumDosePerPeriod"><code>MaximumDosePerPeriod</code></a></td>
+<td><a href="#MaximumDosePerTimePeriod"><code>MaximumDosePerTimePeriod</code></a></td>
 <td>0 or more</td>
 <td>The maximum amount of a medication to be taken in a given period of time.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="DoseAmountQuantity"></a>DoseAmountQuantity</h3>
-<p>The amount of medication taken at each dose, as a quantity</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Quantity"><code>Quantity</code></a></td>
-<td></td>
-<td>A measured or measurable amount</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="DoseAmountRange"></a>DoseAmountRange</h3>
-<p>The amount of medication taken at each dose, as a range</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>Range</code> <em>(TBD)</em></td>
-<td></td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -345,7 +309,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="MaximumDosePerPeriod"></a>MaximumDosePerPeriod</h3>
+<h3><a name="MaximumDosePerTimePeriod"></a>MaximumDosePerTimePeriod</h3>
 <p>The maximum amount of a medication to be taken in a given period of time.</p>
 <table>
 <thead>
@@ -380,12 +344,7 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../core/index.html#SpecificCode"><code>SpecificCode</code></a></td>
-<td>1</td>
-<td>A Coding from a controlled vocabulary that defines or further defines the data element in question</td>
-</tr>
-<tr>
-<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/RXN</td>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/RXN</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
@@ -418,9 +377,9 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="#MedicationTaken"><code>MedicationTaken</code></a></td>
+<td>Value: <a href="#MedicationStatement"><code>MedicationStatement</code></a></td>
 <td></td>
-<td>Report of a medication prescribed and/or consumed. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
+<td>Report of a medication used or not used. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
 </tr>
 </tbody>
 </table>
@@ -436,9 +395,9 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="#MedicationTaken"><code>MedicationTaken</code></a></td>
+<td>Value: <a href="#MedicationStatement"><code>MedicationStatement</code></a></td>
 <td></td>
-<td>Report of a medication prescribed and/or consumed. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
+<td>Report of a medication used or not used. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
 </tr>
 </tbody>
 </table>
@@ -481,7 +440,123 @@
 </tbody>
 </table>
 <h3><a name="MedicationNotAdministered"></a>MedicationNotAdministered [Entry]</h3>
-<p>A record of a medication not prescribed or administered. Recorded only when deviating from the normal expectation, care plan, or standard of care.</p>
+<p>A record of a medication NOT administered. Recorded when deviating from the care plan.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based On: <a href="#MedicationStatement"><code>MedicationStatement</code></a></td>
+<td></td>
+<td>Report of a medication used or not used. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
+</tr>
+<tr>
+<td><a href="#Medication"><code>Medication</code></a></td>
+<td>1</td>
+<td>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</td>
+</tr>
+<tr>
+<td><a href="#UsedOrNotUsed"><code>UsedOrNotUsed</code></a></td>
+<td>1</td>
+<td>Whether the medication stated was used or not used</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/not_administered">not_administered</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ReasonForUse"><code>ReasonForUse</code></a></td>
+<td>1</td>
+<td>The rationale for why the patient receives a medication or prescription</td>
+</tr>
+<tr>
+<td><a href="#ReasonMedicationNotGiven"><code>ReasonMedicationNotGiven</code></a></td>
+<td>1</td>
+<td>The rationale for NOT using particular medication treatment</td>
+</tr>
+<tr>
+<td><a href="#Dosage"><code>Dosage</code></a></td>
+<td>0</td>
+<td>The dosage of the medication as prescribed</td>
+</tr>
+<tr>
+<td><a href="#Adherence"><code>Adherence</code></a></td>
+<td>0</td>
+<td>A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#PeriodOfUse"><code>PeriodOfUse</code></a></td>
+<td>1</td>
+<td>A period of time when a device, medication, or other therapy is used.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="MedicationNotPrescribed"></a>MedicationNotPrescribed [Entry]</h3>
+<p>A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based On: <a href="#MedicationStatement"><code>MedicationStatement</code></a></td>
+<td></td>
+<td>Report of a medication used or not used. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</td>
+</tr>
+<tr>
+<td><a href="#Medication"><code>Medication</code></a></td>
+<td>1</td>
+<td>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</td>
+</tr>
+<tr>
+<td><a href="#UsedOrNotUsed"><code>UsedOrNotUsed</code></a></td>
+<td>1</td>
+<td>Whether the medication stated was used or not used</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/not_prescribed">not_prescribed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ReasonForUse"><code>ReasonForUse</code></a></td>
+<td>1</td>
+<td>The rationale for why the patient receives a medication or prescription</td>
+</tr>
+<tr>
+<td><a href="#ReasonMedicationNotGiven"><code>ReasonMedicationNotGiven</code></a></td>
+<td>1</td>
+<td>The rationale for NOT using particular medication treatment</td>
+</tr>
+<tr>
+<td><a href="#Dosage"><code>Dosage</code></a></td>
+<td>0</td>
+<td>The dosage of the medication as prescribed</td>
+</tr>
+<tr>
+<td><a href="#Adherence"><code>Adherence</code></a></td>
+<td>0</td>
+<td>A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#PeriodOfUse"><code>PeriodOfUse</code></a></td>
+<td>1</td>
+<td>A period of time when a device, medication, or other therapy is used.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="MedicationPrescribed"></a>MedicationPrescribed [Entry]</h3>
+<p>Report of a medication prescription.</p>
 <table>
 <thead>
 <tr>
@@ -497,14 +572,87 @@
 <td>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</td>
 </tr>
 <tr>
+<td><a href="#UsedOrNotUsed"><code>UsedOrNotUsed</code></a></td>
+<td>1</td>
+<td>Whether the medication stated was used or not used</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/prescribed">prescribed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
 <td><a href="#ReasonForUse"><code>ReasonForUse</code></a></td>
+<td>1</td>
+<td>The rationale for why the patient receives a medication or prescription</td>
+</tr>
+<tr>
+<td><a href="#ReasonMedicationNotGiven"><code>ReasonMedicationNotGiven</code></a></td>
+<td>1 to 0</td>
+<td>The rationale for NOT using particular medication treatment</td>
+</tr>
+<tr>
+<td><a href="#Dosage"><code>Dosage</code></a></td>
 <td>optional</td>
+<td>The dosage of the medication as prescribed</td>
+</tr>
+<tr>
+<td><a href="#Adherence"><code>Adherence</code></a></td>
+<td>0</td>
+<td>A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
+<td>1</td>
+<td>The point in time or span of time in which something happens.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="MedicationStatement"></a>MedicationStatement [Entry]</h3>
+<p>Report of a medication used or not used. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#Medication"><code>Medication</code></a></td>
+<td>1</td>
+<td>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</td>
+</tr>
+<tr>
+<td><a href="#UsedOrNotUsed"><code>UsedOrNotUsed</code></a></td>
+<td>1</td>
+<td>Whether the medication stated was used or not used</td>
+</tr>
+<tr>
+<td><a href="#ReasonForUse"><code>ReasonForUse</code></a></td>
+<td>1</td>
 <td>The rationale for why the patient receives a medication or prescription</td>
 </tr>
 <tr>
 <td><a href="#ReasonMedicationNotGiven"><code>ReasonMedicationNotGiven</code></a></td>
 <td>1</td>
 <td>The rationale for NOT using particular medication treatment</td>
+</tr>
+<tr>
+<td><a href="#Dosage"><code>Dosage</code></a></td>
+<td>optional</td>
+<td>The dosage of the medication as prescribed</td>
+</tr>
+<tr>
+<td><a href="#Adherence"><code>Adherence</code></a></td>
+<td>optional</td>
+<td>A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#PeriodOfUse"><code>PeriodOfUse</code></a></td>
+<td>1</td>
+<td>A period of time when a device, medication, or other therapy is used.</td>
 </tr>
 </tbody>
 </table>
@@ -528,44 +676,6 @@
 <td><a href="#AmountOfMedication"><code>AmountOfMedication</code></a></td>
 <td>1</td>
 <td>A standardized measure or discrete amount of medication serving as a reference for dosing or strength, for example, 1 tablet.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="MedicationTaken"></a>MedicationTaken [Entry]</h3>
-<p>Report of a medication prescribed and/or consumed. Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="#Medication"><code>Medication</code></a></td>
-<td>1</td>
-<td>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</td>
-</tr>
-<tr>
-<td><a href="#Dosage"><code>Dosage</code></a></td>
-<td>optional</td>
-<td>The dosage of the medication as prescribed</td>
-</tr>
-<tr>
-<td><a href="#Adherence"><code>Adherence</code></a></td>
-<td>optional</td>
-<td>A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#OccurrencePeriod"><code>OccurrencePeriod</code></a></td>
-<td>1</td>
-<td>The date and time span in which something happens.</td>
-</tr>
-<tr>
-<td><a href="#ReasonForUse"><code>ReasonForUse</code></a></td>
-<td>1</td>
-<td>The rationale for why the patient receives a medication or prescription</td>
 </tr>
 </tbody>
 </table>
@@ -623,6 +733,24 @@
 </tr>
 </tbody>
 </table>
+<h3><a name="RouteIntoBody"></a>RouteIntoBody</h3>
+<p>The way a substance enters an organism after contact, particularly, the route of drug administration. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0013153">C0013153</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/route-codes</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+</tbody>
+</table>
 <h3><a name="TimingOfDoses"></a>TimingOfDoses</h3>
 <p>When doses of medication should be administered</p>
 <table>
@@ -654,6 +782,24 @@
 <tbody>
 <tr>
 <td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/MedicationChangeTypeVS</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="UsedOrNotUsed"></a>UsedOrNotUsed</h3>
+<p>Whether the medication stated was used or not used</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://standardhealthrecord.org/medication/vs/UsedOrNotUsedVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>

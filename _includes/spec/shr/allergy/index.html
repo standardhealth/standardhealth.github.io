@@ -1,30 +1,7 @@
 <section id="spec">
 <h1>Allergy</h1>
-<h3><a name="AllergenIrritant"></a>AllergenIrritant</h3>
-<p>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as sources of intolerances and allergies. <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=105590001">105590001</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from AllergenIrritantVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-<tr>
-<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
-<td>optional</td>
-<td>Categorization of the risk substance as a food, drug, or environmental agent. Difficult-to-classify substances can be leave this empty or choose the most typical category.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="AllergyIntolerance"></a>AllergyIntolerance [Entry]</h3>
-<p>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=420134006">420134006</a> <em>(Propensity to adverse reactions)</em></p>
+<h3><a name="AdverseReactionRiskStatement"></a>AdverseReactionRiskStatement [Entry]</h3>
+<p>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false) <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=420134006">420134006</a> <em>(Propensity to adverse reactions)</em></p>
 <table>
 <thead>
 <tr>
@@ -36,37 +13,62 @@
 <tbody>
 <tr>
 <td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
-<td>1</td>
-<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+<td>optional</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as source of intolerances and allergies.</td>
 </tr>
 <tr>
-<td><a href="#AllergyIntoleranceType"><code>AllergyIntoleranceType</code></a></td>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>0 or more</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
 <td>optional</td>
 <td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
 </tr>
 <tr>
-<td><a href="#ExpectedManifestation"><code>ExpectedManifestation</code></a></td>
-<td>0 or more</td>
-<td>Expected or usual symptoms of a disease or condition</td>
-</tr>
-<tr>
-<td><a href="#Criticality"><code>Criticality</code></a></td>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
 <td>optional</td>
-<td>A clinical judgment as to the worst case result of a future exposure (including substance administration). When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#Onset"><code>Onset</code></a></td>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0 or more</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
 <td>optional</td>
 <td>The beginning or first appearance of a mental or physical disorder.</td>
 </tr>
 <tr>
-<td><a href="../adverse/index.html#AdverseReaction"><code>AdverseReaction</code></a></td>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>optional</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
 <td>0 or more</td>
-<td>An instance of an adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="AllergyIntoleranceType"></a>AllergyIntoleranceType</h3>
+<h3><a name="AdverseReactionType"></a>AdverseReactionType</h3>
 <p>Identification of the underlying physiological mechanism for a Reaction Risk.</p>
 <table>
 <thead>
@@ -84,8 +86,8 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="Criticality"></a>Criticality</h3>
-<p>A clinical judgment as to the worst case result of a future exposure (including substance administration). When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C3858539">C3858539</a> <em>(Criticality)</em></p>
+<h3><a name="AllergenIrritant"></a>AllergenIrritant</h3>
+<p>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies. <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=105590001">105590001</a></p>
 <table>
 <thead>
 <tr>
@@ -96,14 +98,14 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality</td>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from AllergenIrritantVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="ExpectedManifestation"></a>ExpectedManifestation</h3>
-<p>Expected or usual symptoms of a disease or condition</p>
+<h3><a name="DrugAllergyStatement"></a>DrugAllergyStatement [Entry]</h3>
+<p>An immune or biochemical adverse reaction to a medication <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0013182">C0013182</a></p>
 <table>
 <thead>
 <tr>
@@ -114,32 +116,125 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#SymptomReported"><code>SymptomReported</code></a></td>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
 <td></td>
-<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="FoodAllergy"></a>FoodAllergy [Entry]</h3>
-<p>An immune or biochemical adverse reaction to a food substance</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Based On: <a href="#AllergyIntolerance"><code>AllergyIntolerance</code></a></td>
-<td></td>
-<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances.</td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
 </tr>
 <tr>
 <td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
 <td>1</td>
-<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as sources of intolerances and allergies.</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from DrugAllergyVS</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>1</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/drug">drug</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/true">true</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
+<td>optional</td>
+<td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
+<td>optional</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0 or more</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
+<td>optional</td>
+<td>The beginning or first appearance of a mental or physical disorder.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>optional</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0 or more</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="ElevatedRiskExists"></a>ElevatedRiskExists</h3>
+<p>Whether the substance poses an elevated risk to the subject</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from ThreeValueLogicVS</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="FoodAllergyStatement"></a>FoodAllergyStatement [Entry]</h3>
+<p>An immune or biochemical adverse reaction to a food substance <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0016470">C0016470</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
+<td></td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
+</tr>
+<tr>
+<td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
+<td>1</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
 </tr>
 <tr>
 <td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from FoodSubstanceVS</td>
@@ -147,52 +242,69 @@
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
 <tr>
-<td><a href="#AllergyIntoleranceType"><code>AllergyIntoleranceType</code></a></td>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>1</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/food">food</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/true">true</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
 <td>optional</td>
 <td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
 </tr>
 <tr>
-<td><a href="#ExpectedManifestation"><code>ExpectedManifestation</code></a></td>
-<td>0 or more</td>
-<td>Expected or usual symptoms of a disease or condition</td>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
 <tr>
-<td><a href="#Criticality"><code>Criticality</code></a></td>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
 <td>optional</td>
-<td>A clinical judgment as to the worst case result of a future exposure (including substance administration). When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#Onset"><code>Onset</code></a></td>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0 or more</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
 <td>optional</td>
 <td>The beginning or first appearance of a mental or physical disorder.</td>
 </tr>
 <tr>
-<td><a href="../adverse/index.html#AdverseReaction"><code>AdverseReaction</code></a></td>
-<td>0 or more</td>
-<td>An instance of an adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
-</tr>
-<tr>
-<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/food">food</a></td>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
 <td>optional</td>
-<td>Categorization of the risk substance as a food, drug, or environmental agent. Difficult-to-classify substances can leave this empty or choose the most typical category.</td>
+<td>The end, remission or resolution.</td>
 </tr>
-</tbody>
-</table>
-<h3><a name="FoodSubstance"></a>FoodSubstance</h3>
-<p>A substance consumed as a source of nourishment by humans</p>
-<table>
-<thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>optional</td>
+<td>The time of the last or latest of a series of events</td>
 </tr>
-</thead>
-<tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from FoodSubstanceVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0 or more</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
 </tr>
 </tbody>
 </table>
@@ -208,24 +320,14 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: Choice</td>
+<td>Value: <a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
 <td></td>
-<td></td>
-</tr>
-<tr>
-<td>        | <code>dateTime</code></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>        | <a href="../core/index.html#OccurrencePeriod"><code>OccurrencePeriod</code></a></td>
-<td>1</td>
-<td>The date and time span in which something happens.</td>
+<td>The point in time or span of time in which something happens.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="NoKnownAllergyIntolerance"></a>NoKnownAllergyIntolerance [Entry]</h3>
-<p>A substance or classes of substances to which the subject is not known to be allergic or intolerance. <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=716186003">716186003</a></p>
+<h3><a name="NoKnownAllergy"></a>NoKnownAllergy [Entry]</h3>
+<p>The subject has no known allergies to drugs, foods, biologics, or environmental factors <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0262580">C0262580</a></p>
 <table>
 <thead>
 <tr>
@@ -235,20 +337,90 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
+<td></td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
+</tr>
 <tr>
 <td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
+<td>0</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+</tr>
+<tr>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>0 or more</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> includes <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/food">food</a> and <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/medication">medication</a> and <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/biologic">biologic</a> and <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/environment">environment</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
 <td>1</td>
-<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as sources of intolerances and allergies.</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
 </tr>
 <tr>
-<td><a href="#PriorExposures"><code>PriorExposures</code></a></td>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/false">false</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/unconfirmed">unconfirmed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
 <td>optional</td>
-<td>How frequently the patient has been previously exposed to the substance. Past exposures without adverse reaction lower the risk of future reactions.</td>
+<td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
+<td>0</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
+<td>0</td>
+<td>The beginning or first appearance of a mental or physical disorder.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>0</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="NoKnownAllergyIntoleranceCodedStatement"></a>NoKnownAllergyIntoleranceCodedStatement</h3>
-<p>A clinical statement asserting no known risk to a substance or classes of substances. <a href="https://uts.nlm.nih.gov/snomedctBrowser.html?conceptId=373572006">373572006</a></p>
+<h3><a name="NoKnownDrugAllergy"></a>NoKnownDrugAllergy [Entry]</h3>
+<p>The subject has no known allergies to any medications. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0262581">C0262581</a></p>
 <table>
 <thead>
 <tr>
@@ -259,19 +431,89 @@
 </thead>
 <tbody>
 <tr>
-<td>Based On: <a href="../core/index.html#ClinicalFindingAbsent"><code>ClinicalFindingAbsent</code></a></td>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
 <td></td>
-<td>A situation when an measurement or observation reveals no finding</td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
 </tr>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from NoKnownAllergyIntoleranceVS</td>
+<td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
+<td>0</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+</tr>
+<tr>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>1</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/drug">drug</a></td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/false">false</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/unconfirmed">unconfirmed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
+<td>optional</td>
+<td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
+<td>0</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
+<td>0</td>
+<td>The beginning or first appearance of a mental or physical disorder.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>0</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
+</tr>
 </tbody>
 </table>
-<h3><a name="NonDrugSubstance"></a>NonDrugSubstance</h3>
-<p>An encoding of a material, mixture, class or category of substance, including drugs, foods, environmental agents, etc.</p>
+<h3><a name="NoKnownEnvironmentalAllergy"></a>NoKnownEnvironmentalAllergy [Entry]</h3>
+<p>The subject has no known allergies to any environmental factors. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1998290">C1998290</a></p>
 <table>
 <thead>
 <tr>
@@ -282,14 +524,89 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from NonDrugSubstanceVS</td>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
+<td></td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
+</tr>
+<tr>
+<td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
+<td>0</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+</tr>
+<tr>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>1</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/environment">environment</a></td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/false">false</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/unconfirmed">unconfirmed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
+<td>optional</td>
+<td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
+<td>0</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
+<td>0</td>
+<td>The beginning or first appearance of a mental or physical disorder.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>0</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
+</tr>
 </tbody>
 </table>
-<h3><a name="PriorExposures"></a>PriorExposures</h3>
-<p>How frequently the patient has been previously exposed to the substance. Past exposures without adverse reaction lower the risk of future reactions.</p>
+<h3><a name="NoKnownFoodAllergy"></a>NoKnownFoodAllergy [Entry]</h3>
+<p>The subject has no known allergies to any foods <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1997970">C1997970</a></p>
 <table>
 <thead>
 <tr>
@@ -300,14 +617,89 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from FiveFrequencyScaleVS</td>
+<td>Based On: <a href="#AdverseReactionRiskStatement"><code>AdverseReactionRiskStatement</code></a></td>
+<td></td>
+<td>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (ElevatedRiskExists = false)</td>
+</tr>
+<tr>
+<td><a href="#AllergenIrritant"><code>AllergenIrritant</code></a></td>
+<td>0</td>
+<td>A material, mixture, class or category of substance, including drugs, foods, environmental agents, etc. that may be implicated as a source of intolerances and allergies.</td>
+</tr>
+<tr>
+<td><a href="#SubstanceCategory"><code>SubstanceCategory</code></a></td>
+<td>1</td>
+<td>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-category/food">food</a></td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#ElevatedRiskExists"><code>ElevatedRiskExists</code></a></td>
+<td>1</td>
+<td>Whether the substance poses an elevated risk to the subject</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/false">false</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#Verified"><code>Verified</code></a></td>
+<td>1</td>
+<td>Whether an assessment has been confirmed by testing or observation.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="null/unconfirmed">unconfirmed</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#AdverseReactionType"><code>AdverseReactionType</code></a></td>
+<td>optional</td>
+<td>Identification of the underlying physiological mechanism for a Reaction Risk.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> is <a href="http://hl7.org/fhir/ValueSet/allergy-intolerance-type/allergy">allergy</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Criticality"><code>Criticality</code></a></td>
+<td>0</td>
+<td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Manifestation"><code>Manifestation</code></a></td>
+<td>0</td>
+<td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Onset"><code>Onset</code></a></td>
+<td>0</td>
+<td>The beginning or first appearance of a mental or physical disorder.</td>
+</tr>
+<tr>
+<td><a href="../problem/index.html#Abatement"><code>Abatement</code></a></td>
+<td>optional</td>
+<td>The end, remission or resolution.</td>
+</tr>
+<tr>
+<td><a href="#MostRecentOccurrence"><code>MostRecentOccurrence</code></a></td>
+<td>0</td>
+<td>The time of the last or latest of a series of events</td>
+</tr>
+<tr>
+<td><a href="../adverse/index.html#AdverseReactionStatement"><code>AdverseReactionStatement</code></a></td>
+<td>0</td>
+<td>A statement about a possible adverse reaction attributed to exposure to a substance. It is not necessarily associated with a previously-recorded SubstanceRisk. This Entry could be used to record an adverse reaction to an immunization or food.</td>
 </tr>
 </tbody>
 </table>
 <h3><a name="SubstanceCategory"></a>SubstanceCategory</h3>
-<p>Categorization of the risk substance as a food, drug, or environmental agent. Difficult-to-classify substances can be leave this empty or choose the most typical category.</p>
+<p>Categorization of the risk substance as a food, drug, or environmental agent. In the case of difficult-to-classify substances, one can leave this empty or choose the most typical category.</p>
 <table>
 <thead>
 <tr>
@@ -319,6 +711,24 @@
 <tbody>
 <tr>
 <td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/allergy-intolerance-category</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Verified"></a>Verified</h3>
+<p>Whether an assessment has been confirmed by testing or observation.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from VerifiedVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
