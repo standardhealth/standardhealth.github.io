@@ -1,7 +1,7 @@
 <section id="spec">
 <h1>Demographics</h1>
-<h3><a name="AddressOfResidenceQualifier"></a>AddressOfResidenceQualifier</h3>
-<p>Describes how the residence is used, in particular, as a primary, secondary, or former address</p>
+<h3><a name="AddressUse"></a>AddressUse</h3>
+<p>Describes how the address is used, in particular, as a dwelling (primary, secondary, temporary), a former address, mailing address, etc.</p>
 <table>
 <thead>
 <tr>
@@ -12,14 +12,14 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from ResidenceAddressQualifierVS</td>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from AddressUseVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="AddressOfResidenceType"></a>AddressOfResidenceType</h3>
-<p>The type of residence, for example a private house, a skilled nursing facility, or homeless shelter</p>
+<h3><a name="AddressUsed"></a>AddressUsed</h3>
+<p>An address used by for dwelling, work, or other purposes. May be a physical location or an address used only for deliveries, such as a PO box. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0682130">C0682130</a></p>
 <table>
 <thead>
 <tr>
@@ -30,14 +30,29 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from ResidenceAddressDescriptionVS</td>
+<td>Value: <a href="../core/index.html#Address"><code>Address</code></a></td>
 <td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+<td>An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR)</td>
+</tr>
+<tr>
+<td><a href="#AddressUse"><code>AddressUse</code></a></td>
+<td>1 or more</td>
+<td>Describes how the address is used, in particular, as a dwelling (primary, secondary, temporary), a former address, mailing address, etc.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Setting"><code>Setting</code></a></td>
+<td>0 or more</td>
+<td>Description of the place or type of surroundings where something is positioned or where an event takes place.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
+<td>optional</td>
+<td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="AdministrativeGender"></a>AdministrativeGender [Entry]</h3>
-<p>Gender is used to refer to administrative sex rather than biological sex and therefore should easily be classified into female and male.  This attribute does not include terms related to clinical gender. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1550327">C1550327</a></p>
+<h3><a name="BirthSex"></a>BirthSex</h3>
+<p>Administrative sex assigned at birth and recorded on birth certificate. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C4086849">C4086849</a></p>
 <table>
 <thead>
 <tr>
@@ -48,7 +63,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/administrative-gender</td>
+<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/us/core/ValueSet/us-core-birthsex</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
@@ -72,35 +87,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="DateOfBirth"></a>DateOfBirth [Entry]</h3>
-<p>A date of birth or approximate year or period (year or date range), if estimated. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C2919018">C2919018</a>, <a href="http://s.details.loinc.org/LOINC/21112-8.html">21112-8</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: Choice</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>        | <code>date</code></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>        | <a href="../core/index.html#Period"><code>Period</code></a></td>
-<td>1</td>
-<td>A period of time defined by a start and end time, date, or year</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="DriversLicenseNumber"></a>DriversLicenseNumber [Entry]</h3>
+<h3><a name="DriversLicenseNumber"></a>DriversLicenseNumber</h3>
 <p>Identifying information from a drivers license</p>
 <table>
 <thead>
@@ -122,13 +109,13 @@
 <td>Issuing authority for a drivers license</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
 <td>optional</td>
 <td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="FathersName"></a>FathersName [Entry]</h3>
+<h3><a name="FathersName"></a>FathersName</h3>
 <p>The name of the father as it was or likely to have been recorded on the birth certificate of the subject; most likely the name of the father at the time of birth of the subject.</p>
 <table>
 <thead>
@@ -142,7 +129,7 @@
 <tr>
 <td>Value: <a href="../core/index.html#HumanName"><code>HumanName</code></a></td>
 <td></td>
-<td>A full name for a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
+<td>A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
 </tr>
 </tbody>
 </table>
@@ -168,14 +155,14 @@
 <td>Patient identifier at a healthcare provider, insurer, or other related organization.</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
 <td>optional</td>
 <td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="Heritage"></a>Heritage [Entry]</h3>
-<p>Subjective association of a person with a named category of humans sharing common history, traits, place of family origin, nationality, tribe, or other inherited background. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0034510">C0034510</a></p>
+<h3><a name="HomeTelephoneNumber"></a>HomeTelephoneNumber</h3>
+<p>A telephone number associated with a person's residence</p>
 <table>
 <thead>
 <tr>
@@ -186,45 +173,39 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/us/daf/ValueSet/daf-race</td>
-<td>1 or more</td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="HispanicOrign"></a>HispanicOrign [Entry]</h3>
-<p>Indicator of Hispanic or Latino origin. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0015031">C0015031</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>boolean</code></td>
+<td>Based On: <a href="#TelephoneNumber"><code>TelephoneNumber</code></a></td>
 <td></td>
+<td>A sequence of decimal digits (0-9) that is used for identifying a destination telephone line or other device in a telephone network.</td>
+</tr>
+<tr>
+<td>Value: <a href="#TelecomNumberOrAddress"><code>TelecomNumberOrAddress</code></a></td>
 <td></td>
+<td>A user name or other identifier on a telecommunication network, such as a telephone number (including country code and extension, if necessary), email address, or SkypeID</td>
 </tr>
-</tbody>
-</table>
-<h3><a name="HumanNameUse"></a>HumanNameUse</h3>
-<p>A qualifier specifying how a human name is used by a person, such as a legal name, alias, or nickname.</p>
-<table>
-<thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
+<td><a href="#TelecomType"><code>TelecomType</code></a></td>
+<td>1</td>
+<td>The type or channel of the communication, such as email or telephone. If an messaging app, such as Skype, name the application using string</td>
 </tr>
-</thead>
-<tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/name-use</td>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from TelephoneTypeVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#TelecomQualifier"><code>TelecomQualifier</code></a></td>
+<td>0 or more</td>
+<td>Provides more information about the type and uses of the telecom address</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> includes <a href="null/personal">personal</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
+<td>optional</td>
+<td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
@@ -246,58 +227,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="LanguageQualifier"></a>LanguageQualifier</h3>
-<p>Additional information about a person's use of language</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from LanguageQualifierVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="LanguageUsed"></a>LanguageUsed [Entry]</h3>
-<p>Language used for communication by a human, either the subject of record, parent, or other involved person.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../base/index.html#Language"><code>Language</code></a></td>
-<td></td>
-<td>A human language, spoken or written</td>
-</tr>
-<tr>
-<td><a href="#SpokenLanguageProficiency"><code>SpokenLanguageProficiency</code></a></td>
-<td>optional</td>
-<td>Accuracy and fluency in spoken communication in a language.</td>
-</tr>
-<tr>
-<td><a href="#WrittenProficiency"><code>WrittenProficiency</code></a></td>
-<td>optional</td>
-<td>Accuracy and fluency of reading and writing in a language.</td>
-</tr>
-<tr>
-<td><a href="#LanguageQualifier"><code>LanguageQualifier</code></a></td>
-<td>0 or more</td>
-<td>Additional information about a person's use of language</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="MaritalStatus"></a>MaritalStatus [Entry]</h3>
+<h3><a name="MaritalStatus"></a>MaritalStatus</h3>
 <p>The most recent marital status of a person. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0024819">C0024819</a></p>
 <table>
 <thead>
@@ -315,7 +245,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="MedicalInterpreterNeeded"></a>MedicalInterpreterNeeded [Entry]</h3>
+<h3><a name="MedicalInterpreterNeeded"></a>MedicalInterpreterNeeded</h3>
 <p>Whether the subject requires an interpreter to communicate with an English-speaking provider <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1442531">C1442531</a></p>
 <table>
 <thead>
@@ -338,7 +268,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="MothersMaidenName"></a>MothersMaidenName [Entry]</h3>
+<h3><a name="MothersMaidenName"></a>MothersMaidenName</h3>
 <p>The name of the mother as it was or likely to have been recorded on the birth certificate of the subject. This is most likely the name prior to marriage of the mother (aka the maiden name). <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0806887">C0806887</a></p>
 <table>
 <thead>
@@ -352,11 +282,34 @@
 <tr>
 <td>Value: <a href="../core/index.html#HumanName"><code>HumanName</code></a></td>
 <td></td>
-<td>A full name for a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
+<td>A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="MultipleBirthOrder"></a>MultipleBirthOrder [Entry]</h3>
+<h3><a name="MultipleBirth"></a>MultipleBirth</h3>
+<p>Indication if the person was part of a multiple birth event <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0026753">C0026753</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#MultipleBirthOrder"><code>MultipleBirthOrder</code></a></td>
+<td>optional</td>
+<td>Order of birth of the person in multiple birth event (if part of multiple birth)</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="MultipleBirthOrder"></a>MultipleBirthOrder</h3>
 <p>Order of birth of the person in multiple birth event (if part of multiple birth) <a href="http://s.details.loinc.org/LOINC/73771-8.html">73771-8</a></p>
 <table>
 <thead>
@@ -374,25 +327,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="PartOfMultipleBirth"></a>PartOfMultipleBirth [Entry]</h3>
-<p>Indication if the person was part of a multiple birth event <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0026753">C0026753</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>boolean</code></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="PassportNumber"></a>PassportNumber [Entry]</h3>
+<h3><a name="PassportNumber"></a>PassportNumber</h3>
 <p>Indicator of citizenship and identity <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1549737">C1549737</a></p>
 <table>
 <thead>
@@ -414,14 +349,14 @@
 <td>A country acting as an assuing authority for a document</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
 <td>optional</td>
 <td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="PersonOfRecordName"></a>PersonOfRecordName [Entry]</h3>
-<p>A name used by the person of record who is the subject of this Standard Health Record, aka the patient. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1299487">C1299487</a>, <a href="http://s.details.loinc.org/LOINC/54125-0.html">54125-0</a></p>
+<h3><a name="PersonOfRecord"></a>PersonOfRecord [Entry]</h3>
+<p>Extended demographic information about the subject of this SHR <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1299487">C1299487</a>, <a href="http://s.details.loinc.org/LOINC/54125-0.html">54125-0</a></p>
 <table>
 <thead>
 <tr>
@@ -432,23 +367,123 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#HumanName"><code>HumanName</code></a></td>
+<td>Based On: <a href="../actor/index.html#Person"><code>Person</code></a></td>
 <td></td>
-<td>A full name for a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
+<td>A person, particularly those relevant to the health or social situation of the subject (including the person of record).</td>
 </tr>
 <tr>
-<td><a href="#HumanNameUse"><code>HumanNameUse</code></a></td>
+<td>Value: <a href="../core/index.html#HumanName"><code>HumanName</code></a></td>
 <td>0 or more</td>
-<td>A qualifier specifying how a human name is used by a person, such as a legal name, alias, or nickname.</td>
+<td>A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
+<td><a href="../actor/index.html#Anonymized"><code>Anonymized</code></a></td>
 <td>optional</td>
-<td>The date and time span for which something is active, valid, or in force.</td>
+<td>Flag indicating if personally identifiable information has been withheld</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#FictionalPerson"><code>FictionalPerson</code></a></td>
+<td>optional</td>
+<td>Flag indicating if this record represents a fictional (synthetic, not real) person</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#DateOfBirth"><code>DateOfBirth</code></a></td>
+<td>1</td>
+<td>A date of birth or approximate year or period (year or date range), if estimated.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#AdministrativeGender"><code>AdministrativeGender</code></a></td>
+<td>1</td>
+<td>Gender is used to refer to administrative sex rather than biological sex and therefore should easily be classified into female and male.  This attribute does not include terms related to clinical gender.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#FamilialRelationship"><code>FamilialRelationship</code></a></td>
+<td>0</td>
+<td>The relationship of this person to the person of record, if the person is in the same (extended) family</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Race"><code>Race</code></a></td>
+<td>1</td>
+<td>Subjective association of a person with a named category of humans sharing common history, traits, place of family origin, nationality, tribe, or other inherited background.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Ethnicity"><code>Ethnicity</code></a></td>
+<td>1</td>
+<td>Indicator of Hispanic or Latino origin.</td>
+</tr>
+<tr>
+<td><a href="#AddressUsed"><code>AddressUsed</code></a></td>
+<td>1 or more</td>
+<td>An address used by for dwelling, work, or other purposes. May be a physical location or an address used only for deliveries, such as a PO box.</td>
+</tr>
+<tr>
+<td><a href="#Telecom"><code>Telecom</code></a></td>
+<td>1 or more</td>
+<td>An electronic means of contacting an organization or individual</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#LanguageUsed"><code>LanguageUsed</code></a></td>
+<td>1 or more</td>
+<td>Language used for communication by a human, either the subject of record, parent, or other involved person.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Deceased"><code>Deceased</code></a></td>
+<td>optional</td>
+<td>Date or time of death, or boolean indicates the person is deceased.</td>
+</tr>
+<tr>
+<td><a href="#PlaceOfBirth"><code>PlaceOfBirth</code></a></td>
+<td>1</td>
+<td>The location of a birth event. There may be multiple entries, but a person has only one place of birth.</td>
+</tr>
+<tr>
+<td><a href="#MultipleBirth"><code>MultipleBirth</code></a></td>
+<td>1</td>
+<td>Indication if the person was part of a multiple birth event</td>
+</tr>
+<tr>
+<td><a href="#BirthSex"><code>BirthSex</code></a></td>
+<td>1</td>
+<td>Administrative sex assigned at birth and recorded on birth certificate.</td>
+</tr>
+<tr>
+<td><a href="#MaritalStatus"><code>MaritalStatus</code></a></td>
+<td>1</td>
+<td>The most recent marital status of a person.</td>
+</tr>
+<tr>
+<td><a href="#MothersMaidenName"><code>MothersMaidenName</code></a></td>
+<td>1</td>
+<td>The name of the mother as it was or likely to have been recorded on the birth certificate of the subject. This is most likely the name prior to marriage of the mother (aka the maiden name).</td>
+</tr>
+<tr>
+<td><a href="#FathersName"><code>FathersName</code></a></td>
+<td>1</td>
+<td>The name of the father as it was or likely to have been recorded on the birth certificate of the subject; most likely the name of the father at the time of birth of the subject.</td>
+</tr>
+<tr>
+<td><a href="#SocialSecurityNumber"><code>SocialSecurityNumber</code></a></td>
+<td>1</td>
+<td>A US social security number (SSN)</td>
+</tr>
+<tr>
+<td><a href="#DriversLicenseNumber"><code>DriversLicenseNumber</code></a></td>
+<td>1 or more</td>
+<td>Identifying information from a drivers license</td>
+</tr>
+<tr>
+<td><a href="#PassportNumber"><code>PassportNumber</code></a></td>
+<td>0 or more</td>
+<td>Indicator of citizenship and identity</td>
+</tr>
+<tr>
+<td><a href="#MedicalInterpreterNeeded"><code>MedicalInterpreterNeeded</code></a></td>
+<td>1</td>
+<td>Whether the subject requires an interpreter to communicate with an English-speaking provider</td>
 </tr>
 </tbody>
 </table>
-<h3><a name="PlaceOfBirth"></a>PlaceOfBirth [Entry]</h3>
+<h3><a name="PlaceOfBirth"></a>PlaceOfBirth</h3>
 <p>The location of a birth event. There may be multiple entries, but a person has only one place of birth. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0032040">C0032040</a></p>
 <table>
 <thead>
@@ -466,40 +501,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="PlaceOfResidence"></a>PlaceOfResidence [Entry]</h3>
-<p>A location where a person lives or has lived <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0682130">C0682130</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Address"><code>Address</code></a></td>
-<td></td>
-<td>An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR)</td>
-</tr>
-<tr>
-<td><a href="#AddressOfResidenceType"><code>AddressOfResidenceType</code></a></td>
-<td>1</td>
-<td>The type of residence, for example a private house, a skilled nursing facility, or homeless shelter</td>
-</tr>
-<tr>
-<td><a href="#AddressOfResidenceQualifier"><code>AddressOfResidenceQualifier</code></a></td>
-<td>0 or more</td>
-<td>Describes how the residence is used, in particular, as a primary, secondary, or former address</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
-<td>optional</td>
-<td>The date and time span for which something is active, valid, or in force.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="SocialSecurityNumber"></a>SocialSecurityNumber [Entry]</h3>
+<h3><a name="SocialSecurityNumber"></a>SocialSecurityNumber</h3>
 <p>A US social security number (SSN) <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1301821">C1301821</a></p>
 <table>
 <thead>
@@ -514,24 +516,6 @@
 <td>Value: <code>string</code></td>
 <td></td>
 <td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="SpokenLanguageProficiency"></a>SpokenLanguageProficiency</h3>
-<p>Accuracy and fluency in spoken communication in a language. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0678997">C0678997</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from SimplePerformanceGradingScaleVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
 </tr>
 </tbody>
 </table>
@@ -553,8 +537,8 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="Telecom"></a>Telecom [Entry]</h3>
-<p>A means of contacting an individual electronically <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C2986441">C2986441</a></p>
+<h3><a name="Telecom"></a>Telecom</h3>
+<p>An electronic means of contacting an organization or individual <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C2986441">C2986441</a></p>
 <table>
 <thead>
 <tr>
@@ -577,10 +561,10 @@
 <tr>
 <td><a href="#TelecomQualifier"><code>TelecomQualifier</code></a></td>
 <td>0 or more</td>
-<td>Provides more information about the type and uses of the telephone number</td>
+<td>Provides more information about the type and uses of the telecom address</td>
 </tr>
 <tr>
-<td><a href="../core/index.html#EffectivePeriod"><code>EffectivePeriod</code></a></td>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
 <td>optional</td>
 <td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
@@ -605,7 +589,7 @@
 </tbody>
 </table>
 <h3><a name="TelecomQualifier"></a>TelecomQualifier</h3>
-<p>Provides more information about the type and uses of the telephone number</p>
+<p>Provides more information about the type and uses of the telecom address</p>
 <table>
 <thead>
 <tr>
@@ -650,8 +634,8 @@
 </tr>
 </tbody>
 </table>
-<h3><a name="WrittenProficiency"></a>WrittenProficiency</h3>
-<p>Accuracy and fluency of reading and writing in a language. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0586739">C0586739</a></p>
+<h3><a name="TelephoneNumber"></a>TelephoneNumber</h3>
+<p>A sequence of decimal digits (0-9) that is used for identifying a destination telephone line or other device in a telephone network. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1515258">C1515258</a></p>
 <table>
 <thead>
 <tr>
@@ -662,9 +646,82 @@
 </thead>
 <tbody>
 <tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from SimplePerformanceGradingScaleVS</td>
+<td>Based On: <a href="#Telecom"><code>Telecom</code></a></td>
+<td></td>
+<td>An electronic means of contacting an organization or individual</td>
+</tr>
+<tr>
+<td>Value: <a href="#TelecomNumberOrAddress"><code>TelecomNumberOrAddress</code></a></td>
+<td></td>
+<td>A user name or other identifier on a telecommunication network, such as a telephone number (including country code and extension, if necessary), email address, or SkypeID</td>
+</tr>
+<tr>
+<td><a href="#TelecomType"><code>TelecomType</code></a></td>
+<td>1</td>
+<td>The type or channel of the communication, such as email or telephone. If an messaging app, such as Skype, name the application using string</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from TelephoneTypeVS</td>
 <td></td>
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#TelecomQualifier"><code>TelecomQualifier</code></a></td>
+<td>0 or more</td>
+<td>Provides more information about the type and uses of the telecom address</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
+<td>optional</td>
+<td>The date and time span for which something is active, valid, or in force.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="WorkTelephoneNumber"></a>WorkTelephoneNumber</h3>
+<p>A telephone number associated with a person's residence</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based On: <a href="#TelephoneNumber"><code>TelephoneNumber</code></a></td>
+<td></td>
+<td>A sequence of decimal digits (0-9) that is used for identifying a destination telephone line or other device in a telephone network.</td>
+</tr>
+<tr>
+<td>Value: <a href="#TelecomNumberOrAddress"><code>TelecomNumberOrAddress</code></a></td>
+<td></td>
+<td>A user name or other identifier on a telecommunication network, such as a telephone number (including country code and extension, if necessary), email address, or SkypeID</td>
+</tr>
+<tr>
+<td><a href="#TelecomType"><code>TelecomType</code></a></td>
+<td>1</td>
+<td>The type or channel of the communication, such as email or telephone. If an messaging app, such as Skype, name the application using string</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> from TelephoneTypeVS</td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="#TelecomQualifier"><code>TelecomQualifier</code></a></td>
+<td>0 or more</td>
+<td>Provides more information about the type and uses of the telecom address</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Coding"><code>Coding</code></a> includes <a href="null/work">work</a></td>
+<td></td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#EffectiveTimePeriod"><code>EffectiveTimePeriod</code></a></td>
+<td>optional</td>
+<td>The date and time span for which something is active, valid, or in force.</td>
 </tr>
 </tbody>
 </table>
