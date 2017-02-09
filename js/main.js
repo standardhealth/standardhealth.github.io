@@ -27,14 +27,16 @@ function updateActive(navName, elemOffset, bottomOffset) {
         linkTops.push($(this.hash).offset().top - elemOffset);
     });
     if ($(window).scrollTop() + $(window).height() + bottomOffset >= $(document).height()) {
+        $(navName + " li").removeClass('active');
         $(navLink)
             .removeClass('active')
             .eq(linkTops.length -1).addClass('active');
-        
+        console.log("we're in the ")
     } else {
         $.each( linkTops, function(i) {
-            if ( wTop > linkTops[i] - rangeTop ){
+            if (wTop > linkTops[i] - rangeTop){
                 if ($(navLink).eq(i)[0].innerText == "SHR COLLABORATIVE") {
+                    $(navName + " li").removeClass('active');
                     $(navLink).removeClass('active');
                     $(navName + " li.aboutNav").addClass('active');
                 } else {
