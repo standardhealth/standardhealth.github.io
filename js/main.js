@@ -4,7 +4,6 @@ function updateActiveOnPage(page) {
     if (page == "/") { 
         updateActive(".navbar-nav", 100, 30);
     } else if (page == "/faq.html") {
-        console.log('in faq branch');
         updateActive(".faq-nav", 200, 30);
     } else if (page == "/evidence.html") {
         updateActive(".evid-nav", 200, 30);
@@ -31,7 +30,6 @@ function updateActive(navName, elemOffset, bottomOffset) {
         $(navLink)
             .removeClass('active')
             .eq(linkTops.length -1).addClass('active');
-        console.log("we're in the ")
     } else {
         $.each( linkTops, function(i) {
             if (wTop > linkTops[i] - rangeTop){
