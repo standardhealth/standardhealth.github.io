@@ -1,422 +1,775 @@
-<section id="spec">
-<h1>Encounter</h1>
-<h3><a name="DidEncounterHappen"></a>DidEncounterHappen</h3>
-<p>Whether the encounter actually occurred. Can be used to record missed appointments.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>boolean</code></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="EncounterStatement"></a>EncounterStatement [Entry]</h3>
-<p>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
-<td>optional</td>
-<td>The point in time or span of time in which something happens.</td>
-</tr>
-<tr>
-<td><a href="#ReferralDate"><code>ReferralDate</code></a></td>
-<td>optional</td>
-<td>The date when the provider received a referral for service. A referral includes an oral, written, faxed or electronic request for services made by the client or on the client's behalf.</td>
-</tr>
-<tr>
-<td><a href="#ReferralSourceType"><code>ReferralSourceType</code></a></td>
-<td>optional</td>
-<td>The type of person or entity that instigated the encounter.</td>
-</tr>
-<tr>
-<td><a href="#EncounterType"><code>EncounterType</code></a></td>
-<td>0 or more</td>
-<td></td>
-</tr>
-<tr>
-<td><a href="#DidEncounterHappen"><code>DidEncounterHappen</code></a></td>
-<td>1</td>
-<td>Whether the encounter actually occurred. Can be used to record missed appointments.</td>
-</tr>
-<tr>
-<td><a href="#ReasonEncounterDidNotHappen"><code>ReasonEncounterDidNotHappen</code></a></td>
-<td>optional</td>
-<td>If encounter did not occur, describes the reason it did not, e.g., patient hospitalized, cancelled, lost touch with patient, withdrew from trial, etc.</td>
-</tr>
-<tr>
-<td><a href="../actor/index.html#ParticipationStatement"><code>ParticipationStatement</code></a></td>
-<td>0 or more</td>
-<td>A statement about an actor who did or did not perform a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the performer is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement</td>
-</tr>
-<tr>
-<td><a href="#ProviderOrganization"><code>ProviderOrganization</code></a></td>
-<td>1 or more</td>
-<td></td>
-</tr>
-<tr>
-<td><a href="#Facility"><code>Facility</code></a></td>
-<td>optional</td>
-<td>Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility</td>
-</tr>
-<tr>
-<td><a href="#TreatmentParticipationQualifier"><code>TreatmentParticipationQualifier</code></a></td>
-<td>optional</td>
-<td></td>
-</tr>
-<tr>
-<td><code>HealthConcern</code> <em>(TBD)</em></td>
-<td>optional</td>
-<td></td>
-</tr>
-<tr>
-<td><code>PertinentFindings</code> <em>(TBD)</em></td>
-<td>0 or more</td>
-<td></td>
-</tr>
-<tr>
-<td><code>Diagnosis</code> <em>(TBD)</em></td>
-<td>0 or more</td>
-<td></td>
-</tr>
-<tr>
-<td><code>FullClinicalNote</code> <em>(TBD)</em></td>
-<td>optional</td>
-<td></td>
-</tr>
-<tr>
-<td><code>ClinicalSummary</code> <em>(TBD)</em></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td><code>TreatmentServicesRendered</code> <em>(TBD)</em></td>
-<td>1 or more</td>
-<td></td>
-</tr>
-<tr>
-<td><code>CompletionStatus</code> <em>(TBD)</em></td>
-<td>optional</td>
-<td></td>
-</tr>
-<tr>
-<td><a href="#PaymentSource"><code>PaymentSource</code></a></td>
-<td>optional</td>
-<td>The source of payment for the current encounter</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="EncounterType"></a>EncounterType</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from EncounterTypeVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="EpisodeOfCareCompletion"></a>EpisodeOfCareCompletion</h3>
-<p>Denotes how and why an episode of care ended.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from EpisodeOfCareCompletionVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="Facility"></a>Facility</h3>
-<p>Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1547538">C1547538</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="#FacilityName"><code>FacilityName</code></a></td>
-<td></td>
-<td>The DBA (doing business as) or most commonly-used name for a facility</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#Location"><code>Location</code></a></td>
-<td>1</td>
-<td>A position, site, or point in space where something can be found.</td>
-</tr>
-<tr>
-<td><a href="#MobileFacility"><code>MobileFacility</code></a></td>
-<td>optional</td>
-<td>A facility that moves from place to place, such as Meals-On-Wheels</td>
-</tr>
-<tr>
-<td><a href="../demographics/index.html#Telecom"><code>Telecom</code></a></td>
-<td>optional</td>
-<td>An electronic means of contacting an organization or individual</td>
-</tr>
-<tr>
-<td><a href="#ManagingOrganization"><code>ManagingOrganization</code></a></td>
-<td>1</td>
-<td>The organization that manages the operation of an activity, facility, or service provision</td>
-</tr>
-<tr>
-<td><a href="#FacilityType"><code>FacilityType</code></a></td>
-<td>1</td>
-<td>The type of function performed at the facility.</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="FacilityName"></a>FacilityName</h3>
-<p>The DBA (doing business as) or most commonly-used name for a facility <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C3261404">C3261404</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>string</code></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="FacilityType"></a>FacilityType</h3>
-<p>The type of function performed at the facility. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1547726">C1547726</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="ManagingOrganization"></a>ManagingOrganization</h3>
-<p>The organization that manages the operation of an activity, facility, or service provision <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0677351">C0677351</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../actor/index.html#Organization"><code>Organization</code></a></td>
-<td></td>
-<td>A social or legal structure formed by human beings</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="MobileFacility"></a>MobileFacility</h3>
-<p>A facility that moves from place to place, such as Meals-On-Wheels <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0231435">C0231435</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>boolean</code></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="PaymentSource"></a>PaymentSource</h3>
-<p>The source of payment for the current encounter <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0680269">C0680269</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>PaymentSourceVS</code> <em>(TBD)</em></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="ProviderOrganization"></a>ProviderOrganization</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../actor/index.html#Organization"><code>Organization</code></a></td>
-<td></td>
-<td>A social or legal structure formed by human beings</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="ReasonEncounterDidNotHappen"></a>ReasonEncounterDidNotHappen</h3>
-<p>If encounter did not occur, describes the reason it did not, e.g., patient hospitalized, cancelled, lost touch with patient, withdrew from trial, etc.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from ReasonEncounterDidNotHappenVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="ReferralDate"></a>ReferralDate</h3>
-<p>The date when the provider received a referral for service. A referral includes an oral, written, faxed or electronic request for services made by the client or on the client�s behalf. <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C2735614">C2735614</a></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <code>date</code></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3><a name="ReferralSourceType"></a>ReferralSourceType</h3>
-<p>The type of person or entity that instigated the encounter.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from ReferralSourceTypeVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="TreatmentCooperation"></a>TreatmentCooperation</h3>
-<p>The reason for the subject participating in treatment</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from TreatmentCooperationVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="TreatmentParticipationQualifier"></a>TreatmentParticipationQualifier</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from TreatmentParticipationQualifierVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-</tbody>
-</table>
-<h3><a name="TreatmentServiceRendered"></a>TreatmentServiceRendered</h3>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Value: <a href="../core/index.html#Coding"><code>Coding</code></a> from TreatmentServiceVS</td>
-<td></td>
-<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code</td>
-</tr>
-<tr>
-<td><code>UnitsOfService</code> <em>(TBD)</em></td>
-<td>1</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
+<section id="spec-viewer">
+	<div class="container markdown-body">
+	    <div class="row">
+	      <h1>Encounter</h1> 
+	      <h2 style="border: none;">The SHR Encounter domain contains definitions that capture interactions between the person of record and healthcare providers, including inpatient, ambulatory care, and telecare.</h2>
+	      <div class="spec-data-elements">
+	        
+	            <h3>
+	                <a class='paddedId' id="DidEncounterHappen"></a>DidEncounterHappen
+	            </h3>
+	            <p>
+	                    Whether the encounter actually occurred. Can be used to record missed appointments.
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="EncounterStatement"></a>EncounterStatement
+	            		[<a href="/shr/base/index.html#Entry">Entry</a>]
+	            </h3>
+	            <p>
+	                    A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.
+	            </p>
+	            <table>
+	              <tbody>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/core/index.html#OccurrenceTime"> <code>OccurrenceTime</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	The point in time or span of time in which something happens.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#ReferralDate"> <code>ReferralDate</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	The date when the provider received a referral for service. A referral includes an oral, written, FAXed or electronic request for services made by the client or on the client&#x27;s behalf.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#ReferralSourceType"> <code>ReferralSourceType</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	The type of person or entity that instigated the encounter.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#EncounterType"> <code>EncounterType</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		0 or more
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#DidEncounterHappen"> <code>DidEncounterHappen</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	Whether the encounter actually occurred. Can be used to record missed appointments.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#ReasonEncounterDidNotHappen"> <code>ReasonEncounterDidNotHappen</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	If encounter did not occur, describes the reason it did not, e.g., patient hospitalized, cancelled, lost touch with patient, withdrew from trial, etc.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/actor/index.html#ParticipationStatement"> <code>ParticipationStatement</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		0 or more
+	            		      </td>
+	            		      <td>
+	            		      	A statement about an actor who did or did not perform a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the performer is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#ProviderOrganization"> <code>ProviderOrganization</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		1 or more
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#Facility"> <code>Facility</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#TreatmentParticipationQualifier"> <code>TreatmentParticipationQualifier</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			HealthConcern
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			PertinentFindings
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		0 or more
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			Diagnosis
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		0 or more
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			FullClinicalNote
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			ClinicalSummary
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			TreatmentServicesRendered
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>		1 or more
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			CompletionStatus
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#PaymentSource"> <code>PaymentSource</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	The source of payment for the current encounter
+	            		      </td>
+	            		    </tr>
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="EncounterType"></a>EncounterType
+	            </h3>
+	            <p>
+	                    No Description 
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">EncounterTypeVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="EpisodeOfCareCompletion"></a>EpisodeOfCareCompletion
+	            </h3>
+	            <p>
+	                    Denotes how and why an episode of care ended.
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">EpisodeOfCareCompletionVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="Facility"></a>Facility
+	            </h3>
+	            <p>
+	                    Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1547538" title="http://uts.nlm.nih.gov/metathesaurus:C1547538">C1547538</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/encounter/index.html#FacilityName"> <code>FacilityName</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	The DBA (doing business as) or most commonly-used name for a facility
+	                        </td>
+	            
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/core/index.html#Location"> <code>Location</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	A position, site, or point in space where something can be found.
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#MobileFacility"> <code>MobileFacility</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	A facility that moves from place to place, such as Meals-On-Wheels
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/demographics/index.html#Telecom"> <code>Telecom</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>            optional
+	            		      </td>
+	            		      <td>
+	            		      	An electronic means of contacting an organization or individual
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#ManagingOrganization"> <code>ManagingOrganization</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	The organization that manages the operation of an activity, facility, or service provision
+	            		      </td>
+	            		    </tr>
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			<a href="/shr/encounter/index.html#FacilityType"> <code>FacilityType</code></a>
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	The type of function performed at the facility.
+	            		      </td>
+	            		    </tr>
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="FacilityName"></a>FacilityName
+	            </h3>
+	            <p>
+	                    The DBA (doing business as) or most commonly-used name for a facility
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C3261404" title="http://uts.nlm.nih.gov/metathesaurus:C3261404">C3261404</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="FacilityType"></a>FacilityType
+	            </h3>
+	            <p>
+	                    The type of function performed at the facility.
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C1547726" title="http://uts.nlm.nih.gov/metathesaurus:C1547726">C1547726</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a href="http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType"><code>http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="ManagingOrganization"></a>ManagingOrganization
+	            </h3>
+	            <p>
+	                    The organization that manages the operation of an activity, facility, or service provision
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0677351" title="http://uts.nlm.nih.gov/metathesaurus:C0677351">C0677351</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/actor/index.html#Organization"> <code>Organization</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	A social or legal structure formed by human beings
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="MobileFacility"></a>MobileFacility
+	            </h3>
+	            <p>
+	                    A facility that moves from place to place, such as Meals-On-Wheels
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0231435" title="http://uts.nlm.nih.gov/metathesaurus:C0231435">C0231435</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="PaymentSource"></a>PaymentSource
+	            </h3>
+	            <p>
+	                    The source of payment for the current encounter
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C0680269" title="http://uts.nlm.nih.gov/metathesaurus:C0680269">C0680269</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			PaymentSourceVS
+	                        (TBD)
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="ProviderOrganization"></a>ProviderOrganization
+	            </h3>
+	            <p>
+	                    No Description 
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/actor/index.html#Organization"> <code>Organization</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	A social or legal structure formed by human beings
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="ReasonEncounterDidNotHappen"></a>ReasonEncounterDidNotHappen
+	            </h3>
+	            <p>
+	                    If encounter did not occur, describes the reason it did not, e.g., patient hospitalized, cancelled, lost touch with patient, withdrew from trial, etc.
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">ReasonEncounterDidNotHappenVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="ReferralDate"></a>ReferralDate
+	            </h3>
+	            <p>
+	                    The date when the provider received a referral for service. A referral includes an oral, written, FAXed or electronic request for services made by the client or on the client&#x27;s behalf.
+	                    <a href="https://uts.nlm.nih.gov/metathesaurus.html?cui=C2735614" title="http://uts.nlm.nih.gov/metathesaurus:C2735614">C2735614</a>
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">date</code></a>
+	                        </td>
+	                        <td>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="ReferralSourceType"></a>ReferralSourceType
+	            </h3>
+	            <p>
+	                    The type of person or entity that instigated the encounter.
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">ReferralSourceTypeVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="TreatmentCooperation"></a>TreatmentCooperation
+	            </h3>
+	            <p>
+	                    The reason for the subject participating in treatment
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">TreatmentCooperationVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="TreatmentParticipationQualifier"></a>TreatmentParticipationQualifier
+	            </h3>
+	            <p>
+	                    No Description 
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">TreatmentParticipationQualifierVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	              </tbody>
+	            </table>
+	            <h3>
+	                <a class='paddedId' id="TreatmentServiceRendered"></a>TreatmentServiceRendered
+	            </h3>
+	            <p>
+	                    No Description 
+	            </p>
+	            <table>
+	              <tbody>
+	                        <td>
+	                        
+	                        Value:&nbsp;
+	                        
+	                        			<a href="/shr/core/index.html#Coding"> <code>Coding</code></a>
+	                        </td>
+	                        <td>
+	                        								from <a><code data-toggle="tooltip" data-placement="top" title="Valueset not yet available" data-original-title="Valueset not yet available">TreatmentServiceVS</code></a>
+	                        </td>
+	                        <td></td>
+	                        <td>
+	                        	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code
+	                        </td>
+	            
+	            		    <tr>
+	            		      <td>
+	            		      
+	            		      
+	            		      
+	            		      			UnitsOfService
+	            		      (TBD)
+	            		      </td>
+	            		      <td>
+	            		      </td>
+	            		      <td>				required
+	            		      </td>
+	            		      <td>
+	            		      	
+	            		      </td>
+	            		    </tr>
+	              </tbody>
+	            </table>
+	      </div>
+	    </div>
+	</div>
 
 </section>
