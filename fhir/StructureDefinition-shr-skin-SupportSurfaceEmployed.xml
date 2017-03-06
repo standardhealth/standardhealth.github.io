@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="shr-skin-SupportSurfaceEmployed"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+  <p><b>SHR SupportSurfaceEmployed Profile</b></p>
+  <p>A paricular instance of the use of a support surface in patient care.</p>
+  <p><b>SHR Mapping Summary</b></p>
+  <p><pre>shr.skin.SupportSurfaceEmployed maps to DeviceUseStatement:
+  Entry.FocalSubject maps to subject
+  Device maps to device
+  Reason maps to indication
+  PeriodOfUse maps to whenUsed
+</pre></p>
+</div>
+  </text>
+  <url value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceEmployed"/>
+  <identifier>
+    <system value="http://standardhealthrecord.org"/>
+    <value value="shr.skin.SupportSurfaceEmployed"/>
+  </identifier>
+  <name value="SHR SupportSurfaceEmployed Profile"/>
+  <status value="draft"/>
+  <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.standardhealthrecord.org"/>
+    </telecom>
+  </contact>
+  <date value="2017-02-23T21:26:39.854Z"/>
+  <description value="A paricular instance of the use of a support surface in patient care."/>
+  <fhirVersion value="1.8.0"/>
+  <mapping>
+    <identity value="quick"/>
+    <uri value="http://wiki.siframework.org/CQF"/>
+    <name value="Quality Improvement and Clinical Knowledge (QUICK)"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/w5"/>
+    <name value="W5 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="DeviceUseStatement"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/DeviceUseStatement"/>
+  <derivation value="constraint"/>
+  <snapshot>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed">
+      <path value="DeviceUseStatement"/>
+      <short value="SHR SupportSurfaceEmployed Profile"/>
+      <definition value="A paricular instance of the use of a support surface in patient care."/>
+      <min value="0"/>
+      <max value="*"/>
+      <constraint>
+        <key value="dom-2"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+        <expression value="contained.contained.empty()"/>
+        <xpath value="not(parent::f:contained and f:contained)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-1"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+        <expression value="contained.text.empty()"/>
+        <xpath value="not(parent::f:contained and f:text)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-4"/>
+        <severity value="error"/>
+        <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+        <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-3"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+        <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
+        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Entity. Role, or Act"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="DeviceUsePerformanceOccurrence"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="workflow.order"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.id">
+      <path value="DeviceUseStatement.id"/>
+      <short value="Logical id of this artifact"/>
+      <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
+      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="id"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.meta">
+      <path value="DeviceUseStatement.meta"/>
+      <short value="Metadata about the resource"/>
+      <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.meta"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Meta"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.implicitRules">
+      <path value="DeviceUseStatement.implicitRules"/>
+      <short value="A set of rules under which this content was created"/>
+      <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
+      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.implicitRules"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.language">
+      <path value="DeviceUseStatement.language"/>
+      <short value="Language of the resource content"/>
+      <definition value="The base language in which the resource is written."/>
+      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.language"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
+          </valueReference>
+        </extension>
+        <strength value="extensible"/>
+        <description value="A human language."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.text">
+      <path value="DeviceUseStatement.text"/>
+      <short value="Text summary of the resource, for human interpretation"/>
+      <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
+      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <alias value="narrative"/>
+      <alias value="html"/>
+      <alias value="xhtml"/>
+      <alias value="display"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.text"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Narrative"/>
+      </type>
+      <condition value="dom-1"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Act.text?"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.contained">
+      <path value="DeviceUseStatement.contained"/>
+      <short value="Contained, inline Resources"/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <alias value="inline resources"/>
+      <alias value="anonymous resources"/>
+      <alias value="contained resources"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.contained"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Resource"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension">
+      <path value="DeviceUseStatement.extension"/>
+      <slicing id="202">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:deviceusestatus">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="deviceusestatus"/>
+      <definition value="A code representing the patient or other source&#39;s judgment about the state of the device used that this statement is about. Generally this will be active or completed."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-DeviceUseStatus-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="implanted"/>
+      <definition value="Whether this device is implanted in the body."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Implanted-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted.id">
+      <path value="DeviceUseStatement.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted.extension:extension">
+      <path value="DeviceUseStatement.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted.url">
+      <path value="DeviceUseStatement.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Implanted-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted.valueBoolean">
+      <path value="DeviceUseStatement.extension.valueBoolean"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <fixedBoolean value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:immersiondepth">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="immersiondepth"/>
+      <definition value="Depth of penetration (sinking) into a support surface."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-ImmersionDepth-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.modifierExtension">
+      <path value="DeviceUseStatement.modifierExtension"/>
+      <slicing id="203">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.modifierExtension:nonoccurrencemodifier">
+      <path value="DeviceUseStatement.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.bodySite">
+      <path value="DeviceUseStatement.bodySite"/>
+      <short value="Target body site"/>
+      <definition value="Indicates the site on the subject&#39;s body where the device was used ( i.e. the target site)."/>
+      <requirements value="Knowing where the device is targeted is important for tracking if multiple sites are possible. If more information than just a code is required, use the extension [http://hl7.org/fhir/StructureDefinition/body-site-instance](null.html)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="example"/>
+        <description value="Codes describing anatomical locations. May include laterality."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/body-site"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="targetSiteCode"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.whenUsed">
+      <path value="DeviceUseStatement.whenUsed"/>
+      <short value="Period device was used"/>
+      <definition value="The time period over which the device was used."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-PeriodOfUse"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="Performance.performanceTime"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.done"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.device">
+      <path value="DeviceUseStatement.device"/>
+      <short value="Reference to device used"/>
+      <definition value="The details of the device used."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurface"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="DeviceUse.device"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.actor"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.identifier">
+      <path value="DeviceUseStatement.identifier"/>
+      <short value="External identifier for this record"/>
+      <definition value="An external identifier for this statement such as an IRI."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="id"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.indication">
+      <path value="DeviceUseStatement.indication"/>
+      <short value="Why device was used"/>
+      <definition value="Reason or justification for the use of the device."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="Action.indication.reason"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.notes">
+      <path value="DeviceUseStatement.notes"/>
+      <short value="Addition details (comments, instructions)"/>
+      <definition value="Details about the device statement that were not represented at all or sufficiently in one of the attributes provided in a class. These may include for example a comment, an instruction, or a note associated with the statement."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.additionalText"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.recordedOn">
+      <path value="DeviceUseStatement.recordedOn"/>
+      <short value="When statement was recorded"/>
+      <definition value="The time at which the statement was made/recorded."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.statementDateTime"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.recorded"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.subject">
+      <path value="DeviceUseStatement.subject"/>
+      <short value="Patient using device"/>
+      <definition value="The patient who used the device."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.subject"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.focus"/>
+      </mapping>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.timing[x]">
+      <path value="DeviceUseStatement.timing[x]"/>
+      <short value="How often  the device was used"/>
+      <definition value="How often the device was used."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="quick"/>
+        <map value="DeviceUse.applicationSchedule"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.done"/>
+      </mapping>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed">
+      <path value="DeviceUseStatement"/>
+      <short value="SHR SupportSurfaceEmployed Profile"/>
+      <definition value="A paricular instance of the use of a support surface in patient care."/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:deviceusestatus">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="deviceusestatus"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-DeviceUseStatus-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:implanted">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="implanted"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Implanted-extension"/>
+      </type>
+      <fixedBoolean value="false"/>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.extension:immersiondepth">
+      <path value="DeviceUseStatement.extension"/>
+      <sliceName value="immersiondepth"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-ImmersionDepth-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.modifierExtension:nonoccurrencemodifier">
+      <path value="DeviceUseStatement.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.whenUsed">
+      <path value="DeviceUseStatement.whenUsed"/>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-PeriodOfUse"/>
+      </type>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.device">
+      <path value="DeviceUseStatement.device"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurface"/>
+      </type>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.indication">
+      <path value="DeviceUseStatement.indication"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
+    <element id="DeviceUseStatement:shr-skin-SupportSurfaceEmployed.subject">
+      <path value="DeviceUseStatement.subject"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
