@@ -106,6 +106,8 @@ function snackbarGeneration() {
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
 
+
+
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
     if (window.location.pathname === "/" && (d.getTime() <= endDate.getTime())) { 
         setTimeout(function() {
