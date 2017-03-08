@@ -94,16 +94,20 @@ function stickOnSmall() {
 
 function snackbarGeneration() { 
     var d = new Date();
-    var himssEnds = new Date("2/24/2017");
+    var endDate = new Date("3/13/2017");
     var options =  {    
-        content: "<i class='snackbar-close fa fa-times fa-lg' aria-hidden='true'></i>" + 
-                  "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
+        // HIMSS Content: 
+        // content: "<i class='snackbar-close fa fa-times fa-lg' aria-hidden='true'></i>" + 
+        //           "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
+        // 
+        // HL7 Content
+        content: "<p> Synthetic Mass and Synthea are at HL7's FHIR Applications Roundtable, March 7-8, 2017. <a href='http://www.hl7.org/events/fhir/roundtable/2017/03/index_7.cfm#whatIsFHIR'> Click here to learn more about the event!</a></p>",
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
 
     // If HIMSS hasn't ended yet and we're on the home bottom-of-the-page 
-    if (window.location.pathname === "/" && (d.getTime() <= himssEnds.getTime())) { 
+    if (window.location.pathname === "/" && (d.getTime() <= endDate.getTime())) { 
         setTimeout(function() {
             var snackbarId = $.snackbar(options);
             $("#snackbar-container").on("click", function(event) {
@@ -116,6 +120,7 @@ function snackbarGeneration() {
         }, 1500);
     }
 }
+
 
 
 // When doc is ready...
