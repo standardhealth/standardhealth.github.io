@@ -44,6 +44,12 @@ function parseSectionActive() {
         case ("shr"):
             setActive("SPEC");
             break;
+        case ("vs"):
+            setActive("SPEC");
+            break;
+        case ("cs"):
+            setActive("SPEC");
+            break;
         case ("faq.html"):
             setActive("FAQ");
             break;
