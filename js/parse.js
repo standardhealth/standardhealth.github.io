@@ -7,7 +7,7 @@ function parseSectionActive() {
     switch (window.location.pathname.split('/')[1]) { 
         case (""):
             switch(window.location.hash) { 
-                case("#home"): 
+                case("#sitehomepage"): 
                     setActive("HOME");
                     break;
                 // For when evid and collab are on separate tabs
