@@ -38,6 +38,9 @@ function parseSectionActive() {
         // case ("collaborative.html"):
         //     setActive("INITIATIVES");
         //     break;
+		case ("spec_terminology.html"):
+			setActive("SPEC");
+			break;
         case ("spec.html"):
             setActive("SPEC");
             break;
