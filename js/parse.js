@@ -7,7 +7,7 @@ function parseSectionActive() {
     switch (window.location.pathname.split('/')[1]) { 
         case (""):
             switch(window.location.hash) { 
-                case("#home"): 
+                case("#sitehomepage"): 
                     setActive("HOME");
                     break;
                 // For when evid and collab are on separate tabs
@@ -38,10 +38,19 @@ function parseSectionActive() {
         // case ("collaborative.html"):
         //     setActive("INITIATIVES");
         //     break;
+		case ("spec_terminology.html"):
+			setActive("SPEC");
+			break;
         case ("spec.html"):
             setActive("SPEC");
             break;
         case ("shr"):
+            setActive("SPEC");
+            break;
+        case ("vs"):
+            setActive("SPEC");
+            break;
+        case ("cs"):
             setActive("SPEC");
             break;
         case ("faq.html"):
