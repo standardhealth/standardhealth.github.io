@@ -96,14 +96,17 @@ function stickOnSmall() {
 
 function snackbarGeneration() { 
     var d = new Date();
-    var endDate = new Date("3/13/2017");
+    var endDate = new Date("3/29/2017");
     var options =  {    
         // HIMSS Content: 
         // content: "<i class='snackbar-close fa fa-times fa-lg' aria-hidden='true'></i>" + 
         //           "<p>We're going to be at HIMSS, February 22, 2017! <a href='http://www.himssconference.org/session/standard-health-records-legal-and-policy-challenges'>Click here</a> for details on our presentation, \"Standard Health Records: The Legal and Policy Challenges.\"</p>", // text of the snackbar 
         // 
         // HL7 Content
-        content: "<p> Synthetic Mass and Synthea are at HL7's FHIR Applications Roundtable, March 7-8, 2017. <a href='http://www.hl7.org/events/fhir/roundtable/2017/03/index_7.cfm#whatIsFHIR'> Click here to learn more about the event!</a></p>",
+        // content: "<p> Synthetic Mass and Synthea are at HL7's FHIR Applications Roundtable, March 7-8, 2017. <a href='http://www.hl7.org/events/fhir/roundtable/2017/03/index_7.cfm#whatIsFHIR'> Click here to learn more about the event!</a></p>",
+        //
+        // Amia Datathon
+        content: "<p> Synthea and Synthetic Mass are at HL7-AMIA's Datathon, March 26, 2017. <a href='https://www.amia.org/jointsummits2017/datathon'> Click here to learn more about the event!</a></p>",
         htmlAllowed: true, // allows HTML as content value
         timeout: 10000 // time in milliseconds after the snackbar autohides, 0 is disabled
     };
