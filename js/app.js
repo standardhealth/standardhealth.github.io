@@ -16,6 +16,10 @@ var App = window.App = {
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
+    String.prototype.lowerCase = function () {
+        return this.charAt(0).toLowerCase() + this.slice(1);
+    }
+
     //
     //
     // Format a list to be searched by Fuse.js
@@ -31,7 +35,7 @@ var App = window.App = {
                 switch (sectionType) {
                     case "ValueSets":
                         // We want to search on valueset names, nothing else
-                        link = `/shr/${subSection.namespace.split('.')[1].capitalize()}/vs/#${subSection.label}`;
+                        link = `/shr/${subSection.namespace.split('.')[1].lowerCase()}/vs/#${subSection.label}`;
                         addObjToSearch(subSection.label,
                             subSection.description,
                             sectionType,
@@ -43,7 +47,7 @@ var App = window.App = {
                         // We want to search on individual codes
                         ns = subSection.namespace;
                         _.forEach(subSection.children, function (curElement) {
-                            link = `/shr/${ns.split('.')[1].capitalize()}/cs/#${curElement.code}`;
+                            link = `/shr/${ns.split('.')[1].lowerCase()}/cs/#${curElement.code}`;
                             // Current Elements can be an individual codes contained in a codesystem
                             // N.B. the code servs the role of label, and display servces the role of description.
                             addObjToSearch(curElement.code,
@@ -57,7 +61,7 @@ var App = window.App = {
                     case "Namespaces":
                         // We want to search on namespace names
                         ns = subSection.label;
-                        link = `/shr/${ns.split('.')[1].capitalize()}/`;
+                        link = `/shr/${ns.split('.')[1].lowerCase()}/`;
                         addObjToSearch(subSection.label,
                             subSection.description,
                             sectionType,
@@ -65,7 +69,7 @@ var App = window.App = {
                             link,
                             list);
                         _.forEach(subSection.children, function (curElement) {
-                            link = `/shr/${ns.split('.')[1].capitalize()}/#${curElement.label}`;
+                            link = `/shr/${ns.split('.')[1].lowerCase()}/#${curElement.label}`;
                             // We want to be able to search each individaul data element
                             addObjToSearch(curElement.label,
                                 curElement.description,
