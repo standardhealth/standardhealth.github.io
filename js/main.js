@@ -77,6 +77,9 @@ function disableTouchOnEvent(eventType) {
     $(document).on(eventType, function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
+        if (clickover.hasClass('dropdown-elem') && clickover.attr('href').substring(0,2) == '/#') {
+            $("button.navbar-toggle").click();
+        }
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass('dropdown-elem')) {
             $("button.navbar-toggle").click();
         }
@@ -119,7 +122,7 @@ function snackbarGeneration() {
             var snackbarId = $.snackbar(options);
             $("#snackbar-container").on("click", function(event) {
                 if ($(event.target).hasClass("snackbar-close")) {
-                    $("#snackbarId").snackbar("hide")
+                    $("#snackb/arId").snackbar("hide")
                 } else { 
                     window.open($(this).find('a')[0].href);
                 }
