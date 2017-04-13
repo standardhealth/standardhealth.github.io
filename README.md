@@ -1,14 +1,14 @@
-#StandardHealthRecord.org
+# StandardHealthRecord.org
 
 
-##Making Contributions:
+## Making Contributions:
 To make contributions to Standardhealthrecord.org, individuals can:
 
 1. Lodge any issues or comments you have on the [issue page here](https://github.com/standardhealth/standardhealth.github.io/issues). This will help the collaborative know about content you see missing from the site, weird styling bugs you notice, and ways the Standard Health Record can be improved.
 2. [Fork the project](https://help.github.com/articles/fork-a-repo/) on GitHub, make changes to your copy of the files, and [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) to the main repository. Note: *Never push changes directly to the repository without issuing a pull request*. This step is key in allowing individuals to review changes prior to merging with any live versions of the website. For a detailed guide on doing this, see below.
 
 
-##Downloading Project:
+## Downloading Project:
 Before getting started on any development, one will need to have the following installed:
 
 - [Git](https://git-scm.com/), our version controlling tool.
@@ -27,7 +27,7 @@ $ bundle install
 Finally, delete the CNAME file from your fork of the repository. This file will be added back later when you are making a pull request, but should be removed until then.
 
 
-##Building the Project:
+## Building the Project:
 To run the project on localhost run:
 ```
 bundle exec jekyll serve
@@ -41,7 +41,7 @@ To view the project on mobile browsers, you can serve the website up on your git
 5. Open up the page `your-account-name.github.io` on the browser of your choice.
 
 
-##Testing the Project:
+## Testing the Project:
 After making changes to the website, one should run a local instance of the project and walk through the following checklist to test the website before integrating into production:
 
 - [ ] Make sure your browser has been [hard-refreshed](http://refreshyourcache.com/en/cache/) to reflect new changes.
@@ -56,7 +56,7 @@ After making changes to the website, one should run a local instance of the proj
 - [ ] Perform accessibility testing using the [WAVE chrome extension](http://wave.webaim.org/extension/) and [Code Sniffer](http://squizlabs.github.io/HTML_CodeSniffer/).
 
 
-##Pushing Your Project Changes:
+## Pushing Your Project Changes:
 
 1. Run browser tests mentioned above on localhost.
 2. Push changes to your GitHub Project repository.
@@ -67,7 +67,7 @@ After making changes to the website, one should run a local instance of the proj
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
 
 
-##Technologies Used:
+## Technologies Used:
 Below you will find a comprehensive list of the technologies and tools the Collaborative's website is built with, along with a brief description and links to wher you can learn more:
 
 - [Ruby](https://www.ruby-lang.org/en/), the programming language needed for both bundle and jekyll to work, used to run bundler and manage all dependencies needed for the project.
@@ -79,8 +79,8 @@ Below you will find a comprehensive list of the technologies and tools the Colla
 - [FontAwesome](http://fontawesome.io/), a library of scalable vector icons that can instantly be customized, responsible for the icons we use on the page.
 
 
-##About the Team Behind the Standard Health Record
+## About the Team Behind the Standard Health Record
 
-###[The MITRE Corporation](https://www.mitre.org/)
+### [The MITRE Corporation](https://www.mitre.org/)
 
 The MITRE Corporation is a not-for-profit organization working in the public interest that operates federally funded research and development centers to provide innovative solutions to national problems.
