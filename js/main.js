@@ -77,9 +77,6 @@ function disableTouchOnEvent(eventType) {
     $(document).on(eventType, function (event) {
         const clickover = $(event.target);
         const _opened = $(".navbar-collapse").hasClass("navbar-collapse collapse in");
-        if (clickover.hasClass('dropdown-elem') && clickover.attr('href').substring(0,2) == '/#') {
-            $("button.navbar-toggle").click();
-        }
         if (_opened && !clickover.hasClass("navbar-toggle") && !clickover.hasClass("dropdown-toggle") && !clickover.hasClass('dropdown-elem')) {
             $("button.navbar-toggle").click();
         }
