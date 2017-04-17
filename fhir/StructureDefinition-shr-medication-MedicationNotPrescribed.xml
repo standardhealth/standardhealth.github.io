@@ -1,0 +1,1848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="shr-medication-MedicationNotPrescribed"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+  <p><b>SHR MedicationNotPrescribed Profile</b></p>
+  <p>A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care.</p>
+  <p><b>SHR Mapping Summary</b></p>
+  <p><pre>shr.medication.MedicationNotPrescribed maps to MedicationRequest:
+  Medication maps to medication[x].Reference
+  Reason maps to reasonCode
+  RequestStatus maps to status
+  RequestedPerformanceTime maps to dispenseRequest.validityPeriod
+  RequestedPerformer.Organization maps to dispenseRequest.performer
+  PerformerInstructions maps to note.text
+  NumberOfRepeatsAllowed maps to dispenseRequest.numberOfRepeatsAllowed
+  QuantityPerDispense maps to dispenseRequest.quantity
+  SupplyDuration maps to dispenseRequest.expectedSupplyDuration
+  Dosage.AmountPerDose.Quantity maps to dosageInstruction.dose[x].SimpleQuantity
+  Dosage.AmountPerDose.TBD &quot;Range&quot; maps to dosageInstruction.dose[x].Range
+  Dosage.TimingOfDoses maps to dosageInstruction.timing
+  Dosage.DoseAsNeededIndicator maps to dosageInstruction.asNeeded[x].boolean
+  Dosage.DoseInstructionsText maps to dosageInstruction.text
+  Dosage.AdditionalDoseInstruction maps to dosageInstruction.additionalInstructions
+  Dosage.RouteIntoBody maps to dosageInstruction.route
+  Dosage.AdministrationMethod maps to dosageInstruction.method
+  Dosage.AdministrationBodySite maps to dosageInstruction.site
+  Dosage.MaximumDosePerTimePeriod maps to dosageInstruction.maxDosePerPeriod
+</pre></p>
+</div>
+  </text>
+  <url value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribed"/>
+  <identifier>
+    <system value="http://standardhealthrecord.org"/>
+    <value value="shr.medication.MedicationNotPrescribed"/>
+  </identifier>
+  <name value="SHR MedicationNotPrescribed Profile"/>
+  <status value="draft"/>
+  <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.standardhealthrecord.org"/>
+    </telecom>
+  </contact>
+  <date value="2017-04-06T15:42:38.458Z"/>
+  <description value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
+  <fhirVersion value="1.8.0"/>
+  <mapping>
+    <identity value="script10.6"/>
+    <uri value="http://ncpdp.org/SCRIPT10_6"/>
+    <name value="Mapping to NCPDP SCRIPT 10.6"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/w5"/>
+    <name value="W5 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="MedicationRequest"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+  <derivation value="constraint"/>
+  <snapshot>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed">
+      <path value="MedicationRequest"/>
+      <short value="SHR MedicationNotPrescribed Profile"/>
+      <definition value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
+      <alias value="Prescription"/>
+      <alias value="Order"/>
+      <min value="0"/>
+      <max value="*"/>
+      <constraint>
+        <key value="dom-2"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+        <expression value="contained.contained.empty()"/>
+        <xpath value="not(parent::f:contained and f:contained)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-1"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+        <expression value="contained.text.empty()"/>
+        <xpath value="not(parent::f:contained and f:text)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-4"/>
+        <severity value="error"/>
+        <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+        <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-3"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+        <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
+        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Entity. Role, or Act"/>
+      </mapping>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CombinedMedicationRequest"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="clinical.medication"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.id">
+      <path value="MedicationRequest.id"/>
+      <short value="Logical id of this artifact"/>
+      <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
+      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="id"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.meta">
+      <path value="MedicationRequest.meta"/>
+      <short value="Metadata about the resource"/>
+      <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.meta"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Meta"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.implicitRules">
+      <path value="MedicationRequest.implicitRules"/>
+      <short value="A set of rules under which this content was created"/>
+      <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
+      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.implicitRules"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.language">
+      <path value="MedicationRequest.language"/>
+      <short value="Language of the resource content"/>
+      <definition value="The base language in which the resource is written."/>
+      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.language"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
+          </valueReference>
+        </extension>
+        <strength value="extensible"/>
+        <description value="A human language."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.text">
+      <path value="MedicationRequest.text"/>
+      <short value="Text summary of the resource, for human interpretation"/>
+      <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
+      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <alias value="narrative"/>
+      <alias value="html"/>
+      <alias value="xhtml"/>
+      <alias value="display"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.text"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Narrative"/>
+      </type>
+      <condition value="dom-1"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Act.text?"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.contained">
+      <path value="MedicationRequest.contained"/>
+      <short value="Contained, inline Resources"/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <alias value="inline resources"/>
+      <alias value="anonymous resources"/>
+      <alias value="contained resources"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.contained"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Resource"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension">
+      <path value="MedicationRequest.extension"/>
+      <slicing id="150">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:actioncode">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="actioncode"/>
+      <definition value="The code for the action, such as an intervention or test, to be carried out."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:occurrencetime">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="occurrencetime"/>
+      <definition value="The point in time or span of time in which something happens."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:participant">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="participant"/>
+      <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:priorityofrequest">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="priorityofrequest"/>
+      <definition value="Urgency level for which results must be reported to the requestor or responsible individual."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PriorityOfRequest-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:patientinstructions">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="patientinstructions"/>
+      <definition value="Information for the patient, such as, where to get the test, how to prepare for the test, etc."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PatientInstructions-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension">
+      <path value="MedicationRequest.modifierExtension"/>
+      <slicing id="151">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier">
+      <path value="MedicationRequest.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier">
+      <path value="MedicationRequest.modifierExtension"/>
+      <sliceName value="medicationnotprescribedmodifier"/>
+      <definition value="True, if the medication should not, or was not prescribed for a particular reason."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.id">
+      <path value="MedicationRequest.modifierExtension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension">
+      <path value="MedicationRequest.modifierExtension.extension"/>
+      <slicing id="22">
+        <discriminator value="url"/>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean">
+      <path value="MedicationRequest.modifierExtension.extension"/>
+      <sliceName value="boolean"/>
+      <definition value="True, if the medication should not, or was not prescribed for a particular reason."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.extension"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"/>
+      </type>
+      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.id">
+      <path value="MedicationRequest.modifierExtension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.extension:extension">
+      <path value="MedicationRequest.modifierExtension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.url">
+      <path value="MedicationRequest.modifierExtension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.valueBoolean">
+      <path value="MedicationRequest.modifierExtension.extension.valueBoolean"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <fixedBoolean value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason">
+      <path value="MedicationRequest.modifierExtension.extension"/>
+      <sliceName value="reason"/>
+      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.extension"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.id">
+      <path value="MedicationRequest.modifierExtension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.extension:extension">
+      <path value="MedicationRequest.modifierExtension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.url">
+      <path value="MedicationRequest.modifierExtension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.value[x]">
+      <path value="MedicationRequest.modifierExtension.extension.value[x]"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/fhir/ValueSet/shr-medication-ReasonMedicationNotUsedVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.url">
+      <path value="MedicationRequest.modifierExtension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.value[x]">
+      <path value="MedicationRequest.modifierExtension.value[x]"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="base64Binary"/>
+      </type>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="code"/>
+      </type>
+      <type>
+        <code value="date"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <type>
+        <code value="id"/>
+      </type>
+      <type>
+        <code value="instant"/>
+      </type>
+      <type>
+        <code value="integer"/>
+      </type>
+      <type>
+        <code value="markdown"/>
+      </type>
+      <type>
+        <code value="oid"/>
+      </type>
+      <type>
+        <code value="positiveInt"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="unsignedInt"/>
+      </type>
+      <type>
+        <code value="uri"/>
+      </type>
+      <type>
+        <code value="Address"/>
+      </type>
+      <type>
+        <code value="Age"/>
+      </type>
+      <type>
+        <code value="Annotation"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <type>
+        <code value="ContactPoint"/>
+      </type>
+      <type>
+        <code value="Count"/>
+      </type>
+      <type>
+        <code value="Distance"/>
+      </type>
+      <type>
+        <code value="Duration"/>
+      </type>
+      <type>
+        <code value="HumanName"/>
+      </type>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <type>
+        <code value="Money"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Signature"/>
+      </type>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <type>
+        <code value="Meta"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.identifier">
+      <path value="MedicationRequest.identifier"/>
+      <short value="External identifier"/>
+      <definition value="External identifier - one that would be used by another non-FHIR system - for example a re-imbursement system might issue its own id for each prescription that is created.  This is particularly important where FHIR only provides part of an entire workflow process where records have to be tracked through an entire system."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Header/PrescriberOrderNumber"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC-2-Placer Order Number / ORC-3-Filler Order Number"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="id"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="id"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.definition">
+      <path value="MedicationRequest.definition"/>
+      <short value="Protocol or definition"/>
+      <definition value="Protocol or definition followed by this request."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ActivityDefinition"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.basedOn">
+      <path value="MedicationRequest.basedOn"/>
+      <short value="What request fulfills"/>
+      <definition value="Plan/proposal/order fulfilled by this request."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DiagnosticRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ProcedureRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ReferralRequest"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.requisition">
+      <path value="MedicationRequest.requisition"/>
+      <short value="Identifier of composite"/>
+      <definition value="Composite request this is part of."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.status">
+      <path value="MedicationRequest.status"/>
+      <short value="active | on-hold | cancelled | completed | entered-in-error | stopped | draft"/>
+      <definition value="A code specifying the state of the order.  Generally this will be active or completed state."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <description value="A coded concept specifying the state of the prescribing event. Describes the lifecycle of the prescription"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-request-status"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="statusCode"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="status"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.stage">
+      <path value="MedicationRequest.stage"/>
+      <short value="proposal | plan | original-order"/>
+      <definition value="Whether the request is a proposal, plan, or an original order."/>
+      <comments value="It is expected that the type of requester will be restricted for different stages of a MedicationRequest.  For example, Proposals can be created by a patient, relatedPerson, Practitioner or Device.  Plans can be created by Practitioners, Patients, RelatedPersons and Devices.  Original orders can be created by a Practitioner only."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="example"/>
+        <description value="The kind of medication order"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-request-stage"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medication[x]">
+      <path value="MedicationRequest.medication[x]"/>
+      <short value="Medication to be taken"/>
+      <definition value="Identifies the medication being administered. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications."/>
+      <comments value="If only a code is specified, then it needs to be a code for a specific product.  If more information is required, then the use of the medication resource is recommended.  Note: do not use Medication.name to describe the prescribed medication. When the only available information is a text description of the medication, Medication.code.text should be used."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="example"/>
+        <description value="A coded concept identifying substance or product that can be ordered."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-codes"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribedMedication.code.coding.code = Message/Body/NewRx/MedicationPrescribed/DrugCoded/ProductCodeMedication.code.coding.system = Message/Body/NewRx/MedicationPrescribed/DrugCoded/ProductCodeQualifierMedication.code.coding.display = Message/Body/NewRx/MedicationPrescribed/DrugDescription"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXE-2-Give Code / RXO-1-Requested Give Code / RXC-2-Component Code"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="consumable.administrableMedication"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="what"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.patient">
+      <path value="MedicationRequest.patient"/>
+      <short value="Who prescription is for"/>
+      <definition value="A link to a resource representing the person to whom the medication will be given."/>
+      <comments value="The patient on a medicationRequest is mandatory.  For the secondary use case where the actual patient is not provided, there still must be an anonymyzed patient specified."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/Patient(need detail to link to specific patient … Patient.Identification in SCRIPT)"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PID-3-Patient ID List"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="subject.role"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.focus"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.context">
+      <path value="MedicationRequest.context"/>
+      <short value="Created during encounter/admission/stay"/>
+      <definition value="A link to a resource that identifies the particular occurrence or set oc occurences of contact between patient and health care provider."/>
+      <comments value="SubstanceAdministration-&gt;component-&gt;EncounterEvent."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PV1-19-Visit Number"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="componentOf.patientEncounter"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="context"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.supportingInformation">
+      <path value="MedicationRequest.supportingInformation"/>
+      <short value="Information to support ordering of the medication"/>
+      <definition value="Include additional information (for example, patient height and weight) that supports the ordering of the medication."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+      </type>
+      <mapping>
+        <identity value="w5"/>
+        <map value="context"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dateWritten">
+      <path value="MedicationRequest.dateWritten"/>
+      <short value="When prescription was initially authorized"/>
+      <definition value="The date (and perhaps time) when the prescription was initially written."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/WrittenDate"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXE-32-Original Order Date/Time / ORC-9-Date/Time of Transaction"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="author.time"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.recorded"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.requester">
+      <path value="MedicationRequest.requester"/>
+      <short value="Who ordered the initial medication(s)"/>
+      <definition value="The healthcare professional responsible for authorizing the initial prescription."/>
+      <comments value="It is expected that the type of requester will be restricted for different stages of a MedicationRequest.  For example, Proposals can be created by a patient, relatedPerson, Practitioner or Device.  Plans can be created by Practitioners, Patients, RelatedPersons and Devices.  Original orders can be created by a Practitioner only."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/Prescriber(need detail to link to specific prescriber … Prescriber.Identification in SCRIPT)"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXE-13-Ordering Provider&#39;s DEA Number / RXO-14-Ordering Provider&#39;s DEA Number / RXE-14-Pharmacist/Treatment Supplier&#39;s Verifier ID / RXO-15-Pharmacist/Treatment Supplier&#39;s Verifier ID / ORC-12-Ordering Provider / PRT-5-Participation Person: PRT-4-Participation=&#39;OP&#39; (all but last deprecated)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="author.role"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.actor"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.reasonCode">
+      <path value="MedicationRequest.reasonCode"/>
+      <short value="Reason or indication for writing the prescription"/>
+      <definition value="Can be the reason or the indication for writing the prescription."/>
+      <comments value="This could be a diagnosis code. If a full condition record exists or additional detail is needed, use reasonReference."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="example"/>
+        <description value="A coded concept indicating why the medication was ordered."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/condition-code"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Diagnosis/Primary/Value"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC-16-Order Control Code Reason /RXE-27-Give Indication/RXO-20-Indication / RXD-21-Indication / RXG-22-Indication / RXA-19-Indication"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="reason.observation.reasonCode"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.reasonReference">
+      <path value="MedicationRequest.reasonReference"/>
+      <short value="Condition or Observation that supports why the prescription is being written"/>
+      <definition value="Condition or observation that supports why the prescription is being written."/>
+      <comments value="This is a reference to a condition that is the reason for the medication order.  If only a code exists, use reasonCode."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="reason.observation[code=ASSERTION].value"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.note">
+      <path value="MedicationRequest.note"/>
+      <short value="Information about the prescription"/>
+      <definition value="Extra information about the prescription that could not be conveyed by the other attributes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Annotation"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Note"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".inboundRelationship[typeCode=SUBJ]/source[classCode=OBS,moodCode=EVN,code=&quot;annotation&quot;].value"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.category">
+      <path value="MedicationRequest.category"/>
+      <short value="Type of medication usage"/>
+      <definition value="Indicates where type of medication order and where the medication is expected to be consumed or administered."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="example"/>
+        <description value="A coded concept identifying where the medication ordered is expected to be consumed or administered"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-request-category"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Directionsor Message/Body/NewRx/MedicationPrescribed/StructuredSIG"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="not mapped"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dosageInstruction">
+      <path value="MedicationRequest.dosageInstruction"/>
+      <short value="How the medication should be taken"/>
+      <definition value="Indicates how the medication is to be used by the patient."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="DosageInstruction"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest">
+      <path value="MedicationRequest.dispenseRequest"/>
+      <short value="Medication supply authorization"/>
+      <definition value="Indicates the specific details for the dispense or medication supply part of a medication order (also known as a Medication Prescription).  Note that this information is NOT always sent with the order.  There may be in some settings (e.g. hospitals) institutional or system support for completing the dispense details in the pharmacy department."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/ExpirationDate"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="component.supplyEvent"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.id">
+      <path value="MedicationRequest.dispenseRequest.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.extension">
+      <path value="MedicationRequest.dispenseRequest.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.modifierExtension">
+      <path value="MedicationRequest.dispenseRequest.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.validityPeriod">
+      <path value="MedicationRequest.dispenseRequest.validityPeriod"/>
+      <short value="Time period supply is authorized for"/>
+      <definition value="This indicates the validity period of a prescription (stale dating the Prescription)."/>
+      <comments value="It reflects the prescriber perspective for the validity of the prescription. Dispenses must not be made against the prescription outside of this period. The lower-bound of the Dispensing Window signifies the earliest date that the prescription can be filled for the first time. If an upper-bound is not specified then the Prescription is open-ended or will default to a stale-date based on regulations."/>
+      <requirements value="Indicates when the Prescription becomes valid, and when it ceases to be a dispensable Prescription."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Refills"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="effectiveTime"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.numberOfRepeatsAllowed">
+      <path value="MedicationRequest.dispenseRequest.numberOfRepeatsAllowed"/>
+      <short value="Number of refills authorized"/>
+      <definition value="An integer indicating the number of times, in addition to the original dispense, (aka refills or repeats) that the patient can receive the prescribed medication. Usage Notes: This integer does NOT include the original order dispense. This means that if an order indicates dispense 30 tablets plus &quot;3 repeats&quot;, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets."/>
+      <comments value="If displaying &quot;number of authorized fills&quot;, add 1 to this number."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="positiveInt"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Quantity"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXE-12-Number of Refills"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="repeatNumber"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.quantity">
+      <path value="MedicationRequest.dispenseRequest.quantity"/>
+      <short value="Amount of medication to supply per dispense"/>
+      <definition value="The amount that is to be dispensed for one fill."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/DaysSupply"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXD-4-Actual Dispense Amount / RXD-5.1-Actual Dispense Units.code / RXD-5.3-Actual Dispense Units.name of coding system"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="quantity"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.expectedSupplyDuration">
+      <path value="MedicationRequest.dispenseRequest.expectedSupplyDuration"/>
+      <short value="Number of days supply per dispense"/>
+      <definition value="Identifies the period time over which the supplied product is expected to be used, or the length of time the dispense is expected to last."/>
+      <comments value="In some situations, this attribute may be used instead of quantity to identify the amount supplied by how long it is expected to last, rather than the physical quantity issued, e.g. 90 days supply of medication (based on an ordered dosage) When possible, it is always better to specify quantity, as this tends to be more precise. expectedSupplyDuration will always be an estimate that can be influenced by external factors."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Duration"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Duration"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="Message/Body/NewRx/MedicationPrescribed/Substitutions"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="expectedUseTime"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.performer">
+      <path value="MedicationRequest.dispenseRequest.performer"/>
+      <short value="Intended dispenser"/>
+      <definition value="Indicates the intended dispensing Organization specified by the prescriber."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
+      </type>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution">
+      <path value="MedicationRequest.substitution"/>
+      <short value="Any restrictions on medication substitution"/>
+      <definition value="Indicates whether or not substitution can or should be part of the dispense. In some cases substitution must happen, in other cases substitution must not happen, and in others it does not matter. This block explains the prescriber&#39;s intent. If nothing is specified substitution may be done."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="specific values within Message/Body/NewRx/MedicationPrescribed/Substitutions"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="subjectOf.substitutionPersmission"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution.id">
+      <path value="MedicationRequest.substitution.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution.extension">
+      <path value="MedicationRequest.substitution.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution.modifierExtension">
+      <path value="MedicationRequest.substitution.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution.allowed">
+      <path value="MedicationRequest.substitution.allowed"/>
+      <short value="Whether substitution is allowed or not"/>
+      <definition value="True if the prescriber allows a different drug to be dispensed from what was prescribed."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isModifier value="true"/>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="specific values within Message/Body/NewRx/MedicationPrescribed/Substitutions"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXO-9-Allow Substitutions / RXE-9-Substitution Status"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="code"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.substitution.reason">
+      <path value="MedicationRequest.substitution.reason"/>
+      <short value="Why should (not) substitution be made"/>
+      <definition value="Indicates the reason for the substitution, or why substitution must or must not be performed."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="example"/>
+        <description value="A coded concept describing the reason that a different medication should (or should not) be substituted from what was prescribed."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-SubstanceAdminSubstitutionReason"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="not mapped"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXE-9 Substition status"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="reasonCode"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.priorPrescription">
+      <path value="MedicationRequest.priorPrescription"/>
+      <short value="An order/prescription that this supersedes"/>
+      <definition value="A link to a resource representing an earlier order related order or prescription."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="not mapped"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=?RPLC or ?SUCC]/target[classCode=SBADM,moodCode=RQO]"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.eventHistory">
+      <path value="MedicationRequest.eventHistory"/>
+      <short value="A list of events of interest in the lifecycle"/>
+      <definition value="A summary of the events of interest that have occurred as the request is processed; e.g. when the order was verified or when it was completed."/>
+      <comments value="See usage notes in Request pattern in request history."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Provenance"/>
+      </type>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed">
+      <path value="MedicationRequest"/>
+      <short value="SHR MedicationNotPrescribed Profile"/>
+      <definition value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:actioncode">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="actioncode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:occurrencetime">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="occurrencetime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:participant">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:priorityofrequest">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="priorityofrequest"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PriorityOfRequest-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:patientinstructions">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="patientinstructions"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PatientInstructions-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier">
+      <path value="MedicationRequest.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier">
+      <path value="MedicationRequest.modifierExtension"/>
+      <sliceName value="medicationnotprescribedmodifier"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
+      </type>
+      <fixedBoolean value="true"/>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.status">
+      <path value="MedicationRequest.status"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medication[x]">
+      <path value="MedicationRequest.medication[x]"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.reasonCode">
+      <path value="MedicationRequest.reasonCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest">
+      <path value="MedicationRequest.dispenseRequest"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.validityPeriod">
+      <path value="MedicationRequest.dispenseRequest.validityPeriod"/>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.quantity">
+      <path value="MedicationRequest.dispenseRequest.quantity"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.expectedSupplyDuration">
+      <path value="MedicationRequest.dispenseRequest.expectedSupplyDuration"/>
+      <type>
+        <code value="Duration"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Duration"/>
+      </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dispenseRequest.performer">
+      <path value="MedicationRequest.dispenseRequest.performer"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
