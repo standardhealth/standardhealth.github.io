@@ -1,14 +1,10 @@
----
-redirect_from:
-  - /fhir/StructureDefinition/shr-actor-Practitioner-definitions/
----
 <!DOCTYPE HTML>
 
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -139,7 +135,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>Note that a cab driver no longer fits the bill. You probably would be interested in the organization rather than the individual?</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.id"> </a><a name="Practitioner.id"> </a><b>Practitioner.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -158,7 +154,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.language"> </a><a name="Practitioner.language"> </a><b>Practitioner.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -198,21 +195,35 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.extension:fictionalperson"> </a><b>Practitioner.extension (<a href="StructureDefinition-shr-actor-FictionalPerson-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-FictionalPerson-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Flag indicating if this record represents a fictional (synthetic, not real) person.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.extension:deceased"> </a><b>Practitioner.extension (<a href="StructureDefinition-shr-actor-Deceased-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Deceased-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>An indication that the person is no longer living, given by a date, time of death, or a boolean value which, when true, indicates the person is deceased.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.extension:affiliation"> </a><b>Practitioner.extension (<a href="StructureDefinition-shr-actor-Affiliation-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Affiliation-extension</a>)</b></td></tr>
+  <tr><td>Definition</td><td><p>Membership, association, or connection to an organization.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Organization.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization">SHR Organization Profile</a>))</td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.extension:medicalspecialty"> </a><b>Practitioner.extension (<a href="StructureDefinition-shr-actor-MedicalSpecialty-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-MedicalSpecialty-extension</a>)</b></td></tr>
+  <tr><td>Definition</td><td><p>A branch of medicine practiced by the provider.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.modifierExtension"> </a><a name="Practitioner.modifierExtension"> </a><b>Practitioner.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -300,102 +311,13 @@ Work addresses are not typically entered in this property as they are usually ro
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a></td></tr>
   <tr><td>Requirements</td><td><p>Many EHR systems have the capability to capture an image of patients and personnel. Fits with newer social media usage too.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role"> </a><a name="Practitioner.role"> </a><b>Practitioner.role</b></td></tr>
-  <tr><td>Definition</td><td><p>The list of roles/organizations that the practitioner is associated with.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
-  <tr><td>Comments</td><td><p>The address to be used for this PractitionerRole is in the referenced location (removing duplication across all the services provided at the location).</p>
-</td></tr>
-  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.id"> </a><a name="Practitioner.role.id"> </a><b>Practitioner.role.id</b></td></tr>
-  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.extension"> </a><a name="Practitioner.role.extension"> </a><b>Practitioner.role.extension</b></td></tr>
-  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
-  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.modifierExtension"> </a><a name="Practitioner.role.modifierExtension"> </a><b>Practitioner.role.modifierExtension</b></td></tr>
-  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
-  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.organization"> </a><a name="Practitioner.role.organization"> </a><b>Practitioner.role.organization</b></td></tr>
-  <tr><td>Definition</td><td><p>The organization where the Practitioner performs the roles associated.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Organization.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization">SHR Organization Profile</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.code"> </a><a name="Practitioner.role.code"> </a><b>Practitioner.role.code</b></td></tr>
-  <tr><td>Definition</td><td><p>Roles which this practitioner is authorized to perform for the organization.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The role a person plays representing an organization<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-practitioner-role.html">PractitionerRole</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td>Requirements</td><td><p>Need to know what authority the practitioner has - what can they do?</p>
-</td></tr>
-  <tr><td>Comments</td><td><p>A person may have more than one role. At least one role is required.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.specialty"> </a><a name="Practitioner.role.specialty"> </a><b>Practitioner.role.specialty</b></td></tr>
-  <tr><td>Definition</td><td><p>Specific specialty of the practitioner.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-c80-practice-codes.html">Practice Setting Code Value Set</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.identifier"> </a><a name="Practitioner.role.identifier"> </a><b>Practitioner.role.identifier</b></td></tr>
-  <tr><td>Definition</td><td><p>Business Identifiers that are specific to a role/location.</p>
-</td></tr>
-  <tr><td>Note</td><td>This is a business identifer, not a resource identifier (see <a href="http://hl7.org/fhir/2017Jan/resource.html#identifiers">discussion</a>)</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
-  <tr><td>Requirements</td><td><p>Some business identifiers are specific to a location and should be able to be associated.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.telecom"> </a><a name="Practitioner.role.telecom"> </a><b>Practitioner.role.telecom</b></td></tr>
-  <tr><td>Definition</td><td><p>Contact details that are specific to the role/location/service.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a></td></tr>
-  <tr><td>Requirements</td><td><p>Often practitioners have a dedicated line for each location (or service) that they work at, and need to be able to define separate contact details for each of these.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.period"> </a><a name="Practitioner.role.period"> </a><b>Practitioner.role.period</b></td></tr>
-  <tr><td>Definition</td><td><p>The period during which the person is authorized to act as a practitioner in these role(s) for the organization.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a></td></tr>
-  <tr><td>Requirements</td><td><p>Even after the agencies is revoked, the fact that it existed must still be recorded.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.location"> </a><a name="Practitioner.role.location"> </a><b>Practitioner.role.location</b></td></tr>
-  <tr><td>Definition</td><td><p>The location(s) at which this practitioner provides care.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/location.html" title="http://hl7.org/fhir/StructureDefinition/Location">Location</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.healthcareService"> </a><a name="Practitioner.role.healthcareService"> </a><b>Practitioner.role.healthcareService</b></td></tr>
-  <tr><td>Definition</td><td><p>The list of healthcare services that this worker provides for this role's Organization/Location(s).</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/healthcareservice.html" title="http://hl7.org/fhir/StructureDefinition/HealthcareService">HealthcareService</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.role.endpoint"> </a><a name="Practitioner.role.endpoint"> </a><b>Practitioner.role.endpoint</b></td></tr>
-  <tr><td>Definition</td><td><p>Technical endpoints providing access to services operated for the PractitonerRole.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/endpoint.html" title="http://hl7.org/fhir/StructureDefinition/Endpoint">Endpoint</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.qualification"> </a><a name="Practitioner.qualification"> </a><b>Practitioner.qualification</b></td></tr>
   <tr><td>Definition</td><td><p>Qualifications obtained by training and certification.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.qualification.id"> </a><a name="Practitioner.qualification.id"> </a><b>Practitioner.qualification.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -430,7 +352,7 @@ Work addresses are not typically entered in this property as they are usually ro
   <tr><td>Definition</td><td><p>Coded representation of the qualification.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Specific qualification the practitioner has to provide a service<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-anzsco-occupations.html">ANZSCO -- Australian and New Zealand Standard Classification of Occupations, 2013, Version 1.2</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Specific qualification the practitioner has to provide a service<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/v2/0360/2.7/index.html">v2 table 0360, Version 2.7</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Practitioner:shr-actor-Practitioner.qualification.period"> </a><a name="Practitioner.qualification.period"> </a><b>Practitioner.qualification.period</b></td></tr>
   <tr><td>Definition</td><td><p>Period during which the qualification is valid.</p>
@@ -478,8 +400,8 @@ Work addresses are not typically entered in this property as they are usually ro
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

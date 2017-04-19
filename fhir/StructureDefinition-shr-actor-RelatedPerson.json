@@ -12,8 +12,10 @@
       "value": "shr.actor.RelatedPerson"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR RelatedPerson Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:20.504Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,10 +27,9 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:37.933Z",
   "description": "A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.",
   "purpose": "Need to track persons related to the patient or the healthcare process.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "rim",
@@ -114,7 +115,7 @@
         "path": "RelatedPerson.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -153,7 +154,7 @@
         "path": "RelatedPerson.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -174,7 +175,7 @@
         "path": "RelatedPerson.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -194,6 +195,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -208,7 +217,7 @@
         "path": "RelatedPerson.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -242,7 +251,7 @@
         "path": "RelatedPerson.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -271,16 +280,19 @@
         "id": "RelatedPerson:shr-actor-RelatedPerson.extension",
         "path": "RelatedPerson.extension",
         "slicing": {
-          "id": "1",
+          "id": "8",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -309,6 +321,7 @@
         "path": "RelatedPerson.extension",
         "sliceName": "anonymized",
         "definition": "Flag indicating if personally identifiable information has been withheld.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -341,6 +354,7 @@
         "path": "RelatedPerson.extension",
         "sliceName": "fictionalperson",
         "definition": "Flag indicating if this record represents a fictional (synthetic, not real) person.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -373,6 +387,7 @@
         "path": "RelatedPerson.extension",
         "sliceName": "languageused",
         "definition": "Language used for communication by a human, either the subject of record, parent, or other involved person.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -405,6 +420,7 @@
         "path": "RelatedPerson.extension",
         "sliceName": "deceased",
         "definition": "An indication that the person is no longer living, given by a date, time of death, or a boolean value which, when true, indicates the person is deceased.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -437,7 +453,7 @@
         "path": "RelatedPerson.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -496,6 +512,7 @@
         "path": "RelatedPerson.active",
         "short": "Whether this related person's record is in active use",
         "definition": "Whether this related person record is in active use.",
+        "comment": "This element is labeled as a modifier because it may be used to mark that the resource was created in error.",
         "requirements": "Need to be able to mark a related person record as not to be used, such as if it was created in error.",
         "min": 0,
         "max": "1",
@@ -559,7 +576,13 @@
         ],
         "isSummary": true,
         "binding": {
-          "strength": "extensible",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "PatientRelationshipType"
+            }
+          ],
+          "strength": "preferred",
           "description": "The nature of the relationship between a patient and the related person",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype"
@@ -611,7 +634,7 @@
         "path": "RelatedPerson.telecom",
         "short": "A contact detail for the person",
         "definition": "A contact detail for the person, e.g. a telephone number or an email address.",
-        "comments": "Person may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification.",
+        "comment": "Person may have multiple ways to be contacted with different uses or applicable periods.  May need to have options for contacting the person urgently, and also to help with identification.",
         "requirements": "People have (primary) ways to contact them in some way such as phone, email.",
         "min": 0,
         "max": "*",
@@ -648,6 +671,16 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdministrativeGender"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
           "strength": "required",
           "description": "The gender of a person used for administrative purposes.",
           "valueSetReference": {

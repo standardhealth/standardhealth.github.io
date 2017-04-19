@@ -17,7 +17,7 @@
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-TreatmentCooperation-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-TreatmentCooperation-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-PaymentSource-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-PaymentSource-extension': maximum cardinality of 'extension' is 1</sch:assert>
-      <sch:assert test="count(f:patient) &gt;= 1">patient: minimum cardinality of 'patient' is 1</sch:assert>
+      <sch:assert test="count(f:subject) &gt;= 1">subject: minimum cardinality of 'subject' is 1</sch:assert>
       <sch:assert test="count(f:serviceProvider) &gt;= 1">serviceProvider: minimum cardinality of 'serviceProvider' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -37,8 +37,20 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
+    <sch:title>Encounter.classHistory</sch:title>
+    <sch:rule context="f:Encounter/f:classHistory">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
     <sch:title>Encounter.participant</sch:title>
     <sch:rule context="f:Encounter/f:participant">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Encounter.diagnosis</sch:title>
+    <sch:rule context="f:Encounter/f:diagnosis">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
     </sch:rule>
   </sch:pattern>

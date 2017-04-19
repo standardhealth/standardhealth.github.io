@@ -3,7 +3,7 @@
   "id": "shr-immunization-ImmunizationAdministered",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ImmunizationAdministered Profile</b></p>\n  <p>Represents an immunization that was administered to the subject.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.ImmunizationAdministered maps to Immunization:\n  Vaccine.CodeableConcept maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  ImmunizationNotGivenModifier maps to wasNotGiven\n  explanation is 0..1\n  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  TBD &quot;DoseSequenceNumber&quot; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ImmunizationAdministered Profile</b></p>\n  <p>Represents an immunization that was administered to the subject.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.ImmunizationAdministered maps to Immunization:\n  Vaccine.CodeableConcept maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  ImmunizationNotGivenModifier maps to notGiven\n  constrain explanation to 0..1\n  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  &lt;TBD &quot;DoseSequenceNumber&quot;&gt; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-immunization-ImmunizationAdministered",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.immunization.ImmunizationAdministered"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR ImmunizationAdministered Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.537Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,9 +27,8 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.545Z",
   "description": "Represents an immunization that was administered to the subject.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "v2",
@@ -43,6 +44,11 @@
       "identity": "w5",
       "uri": "http://hl7.org/fhir/w5",
       "name": "W5 Mapping"
+    },
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Mapping"
     },
     {
       "identity": "cda",
@@ -100,16 +106,16 @@
           {
             "key": "imm-2",
             "severity": "error",
-            "human": "If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent.",
-            "expression": "(wasNotGiven = true) or explanation.reasonNotGiven.empty()",
-            "xpath": "not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
+            "human": "If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent.",
+            "expression": "(notGiven = true) or explanation.reasonNotGiven.empty()",
+            "xpath": "not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
           },
           {
             "key": "imm-1",
             "severity": "error",
-            "human": "If immunization was not administered (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present",
-            "expression": "(wasNotGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
-            "xpath": "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
+            "human": "If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present",
+            "expression": "(notGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
+            "xpath": "not(f:notGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
           }
         ],
         "mapping": [
@@ -136,7 +142,7 @@
         "path": "Immunization.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -175,7 +181,7 @@
         "path": "Immunization.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -196,7 +202,7 @@
         "path": "Immunization.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -216,6 +222,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -230,7 +244,7 @@
         "path": "Immunization.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -264,7 +278,7 @@
         "path": "Immunization.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -294,7 +308,7 @@
         "path": "Immunization.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -323,7 +337,7 @@
         "path": "Immunization.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -362,6 +376,10 @@
         ],
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.identifier"
+          },
+          {
             "identity": "rim",
             "map": ".id"
           },
@@ -380,7 +398,7 @@
         "path": "Immunization.status",
         "short": "completed | entered-in-error",
         "definition": "Indicates the current status of the vaccination event.",
-        "comments": "Will generally be set to show that the immunization has been completed.",
+        "comment": "Will generally be set to show that the immunization has been completed.\n\nThis element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.",
         "min": 1,
         "max": "1",
         "type": [
@@ -391,6 +409,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ImmunizationStatus"
+            }
+          ],
           "strength": "required",
           "description": "A set of codes indicating the current status of an Immunization",
           "valueSetReference": {
@@ -398,6 +422,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.status"
+          },
           {
             "identity": "rim",
             "map": "statusCode"
@@ -409,34 +437,32 @@
         ]
       },
       {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.date",
-        "path": "Immunization.date",
-        "short": "Vaccination administration date",
-        "definition": "Date vaccine administered or was to be administered.",
-        "comments": "When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given.",
-        "min": 0,
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.notGiven",
+        "path": "Immunization.notGiven",
+        "short": "Flag for whether immunization was given",
+        "definition": "Indicates if the vaccination was or was not given.",
+        "comment": "This element is labeled as a modifier because it indicates that an immunization didn't happen.",
+        "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "dateTime"
+            "code": "boolean"
           }
         ],
+        "isModifier": true,
+        "isSummary": true,
         "mapping": [
           {
-            "identity": "v2",
-            "map": "RXA-3"
+            "identity": "workflow",
+            "map": "Event.notDone"
           },
           {
             "identity": "rim",
-            "map": ".effectiveTime"
-          },
-          {
-            "identity": "cda",
-            "map": "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/effectiveTime/value"
+            "map": "[actionNegationInd=true].reasonCode"
           },
           {
             "identity": "w5",
-            "map": "when.init"
+            "map": "status"
           }
         ]
       },
@@ -454,6 +480,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "VaccineCode"
+            }
+          ],
           "strength": "example",
           "description": "The code for vaccine product administered",
           "valueSetReference": {
@@ -461,6 +493,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.code"
+          },
           {
             "identity": "v2",
             "map": "RXA-5"
@@ -494,6 +530,10 @@
         ],
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.subject"
+          },
+          {
             "identity": "v2",
             "map": "PID-3"
           },
@@ -508,27 +548,70 @@
         ]
       },
       {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.wasNotGiven",
-        "path": "Immunization.wasNotGiven",
-        "short": "Flag for whether immunization was given",
-        "definition": "Indicates if the vaccination was or was not given.",
-        "min": 1,
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.encounter",
+        "path": "Immunization.encounter",
+        "short": "Encounter administered as part of",
+        "definition": "The visit or admission or other contact between patient and health care provider the immunization was performed as part of.",
+        "min": 0,
         "max": "1",
         "type": [
           {
-            "code": "boolean"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
           }
         ],
-        "isModifier": true,
-        "isSummary": true,
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.context"
+          },
+          {
+            "identity": "v2",
+            "map": "PV1-19"
+          },
+          {
             "identity": "rim",
-            "map": "[actionNegationInd=true].reasonCode"
+            "map": "component->EncounterEvent"
           },
           {
             "identity": "w5",
-            "map": "status"
+            "map": "context"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.date",
+        "path": "Immunization.date",
+        "short": "Vaccination administration date",
+        "definition": "Date vaccine administered or was to be administered.",
+        "comment": "When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.occurrence.occurrenceDateTime"
+          },
+          {
+            "identity": "v2",
+            "map": "RXA-3"
+          },
+          {
+            "identity": "rim",
+            "map": ".effectiveTime"
+          },
+          {
+            "identity": "cda",
+            "map": "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/effectiveTime/value"
+          },
+          {
+            "identity": "w5",
+            "map": "when.init"
           }
         ]
       },
@@ -537,7 +620,7 @@
         "path": "Immunization.primarySource",
         "short": "Indicates context the data was recorded in",
         "definition": "An indication that the content of the record is based on information from the person who administered the vaccine. This reflects the context under which the data was originally recorded.",
-        "comments": "Reflects the “reliability” of the content.",
+        "comment": "Reflects the “reliability” of the content.",
         "min": 1,
         "max": "1",
         "type": [
@@ -565,7 +648,7 @@
         "path": "Immunization.reportOrigin",
         "short": "Indicates the source of a secondarily reported record",
         "definition": "The source of the data when the report of the immunization event is not based on information from the person who administered the vaccine.",
-        "comments": "Should not be populated if primarySource = True, will not be required even if primarySource = False.",
+        "comment": "Should not be populated if primarySource = True, will not be required even if primarySource = False.",
         "min": 0,
         "max": "1",
         "type": [
@@ -574,6 +657,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ImmunizationReportOrigin"
+            }
+          ],
           "strength": "example",
           "description": "The source of the data for a record which is not from a primary source.",
           "valueSetReference": {
@@ -592,123 +681,6 @@
           {
             "identity": "w5",
             "map": "who.source"
-          }
-        ]
-      },
-      {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.performer",
-        "path": "Immunization.performer",
-        "short": "Who administered vaccine",
-        "definition": "Clinician who administered the vaccine.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "RXA-10"
-          },
-          {
-            "identity": "rim",
-            "map": ".participation[typeCode=PRF].COCT_MT090102UV"
-          },
-          {
-            "identity": "cda",
-            "map": "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/performer/assignedEntity/assignedPerson/name"
-          },
-          {
-            "identity": "w5",
-            "map": "who.actor"
-          }
-        ]
-      },
-      {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.requester",
-        "path": "Immunization.requester",
-        "short": "Who ordered vaccination",
-        "definition": "Clinician who ordered the vaccination.",
-        "comments": "Other participants - delegate to Provenance resource.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "ORC-12"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship.target[classCode=SBADM].participation[typeCode=AUT].COCT_MT090102UV"
-          },
-          {
-            "identity": "w5",
-            "map": "who.cause"
-          }
-        ]
-      },
-      {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.encounter",
-        "path": "Immunization.encounter",
-        "short": "Encounter administered as part of",
-        "definition": "The visit or admission or other contact between patient and health care provider the immunization was performed as part of.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "PV1-19"
-          },
-          {
-            "identity": "rim",
-            "map": "component->EncounterEvent"
-          },
-          {
-            "identity": "w5",
-            "map": "context"
-          }
-        ]
-      },
-      {
-        "id": "Immunization:shr-immunization-ImmunizationAdministered.manufacturer",
-        "path": "Immunization.manufacturer",
-        "short": "Vaccine manufacturer",
-        "definition": "Name of vaccine manufacturer.",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "RXA-17"
-          },
-          {
-            "identity": "rim",
-            "map": ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=ORG]"
-          },
-          {
-            "identity": "cda",
-            "map": "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacuturerOrganization/name"
           }
         ]
       },
@@ -737,6 +709,34 @@
           {
             "identity": "w5",
             "map": "where"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.manufacturer",
+        "path": "Immunization.manufacturer",
+        "short": "Vaccine manufacturer",
+        "definition": "Name of vaccine manufacturer.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "RXA-17"
+          },
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=ORG]"
+          },
+          {
+            "identity": "cda",
+            "map": "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacuturerOrganization/name"
           }
         ]
       },
@@ -806,7 +806,7 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         },
         "mapping": [
@@ -883,6 +883,198 @@
         ]
       },
       {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner",
+        "path": "Immunization.practitioner",
+        "short": "Who performed event",
+        "definition": "Indicates who or what performed the event.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer"
+          },
+          {
+            "identity": "v2",
+            "map": "ORC-12 / RXA-10"
+          },
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=PRF].role[scoper.determinerCode=INSTANCE]"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner.id",
+        "path": "Immunization.practitioner.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner.extension",
+        "path": "Immunization.practitioner.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner.modifierExtension",
+        "path": "Immunization.practitioner.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner.role",
+        "path": "Immunization.practitioner.role",
+        "short": "What type of performance was done",
+        "definition": "Describes the type of performance (e.g. ordering provider, administering provider, etc.).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ImmunizationRole"
+            }
+          ],
+          "strength": "extensible",
+          "description": "The role a practitioner plays in the immunization event",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/immunization-role"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer.role"
+          },
+          {
+            "identity": "rim",
+            "map": ".participation.functionCode"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-ImmunizationAdministered.practitioner.actor",
+        "path": "Immunization.practitioner.actor",
+        "short": "Individual who was performing",
+        "definition": "The device, practitioner, etc. who performed the action.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer.actor"
+          },
+          {
+            "identity": "rim",
+            "map": ".player"
+          },
+          {
+            "identity": "w5",
+            "map": "who.actor"
+          }
+        ]
+      },
+      {
         "id": "Immunization:shr-immunization-ImmunizationAdministered.note",
         "path": "Immunization.note",
         "short": "Vaccination notes",
@@ -896,6 +1088,10 @@
         ],
         "isSummary": true,
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.note"
+          },
           {
             "identity": "rim",
             "map": "note"
@@ -963,7 +1159,7 @@
         "path": "Immunization.explanation.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -992,7 +1188,7 @@
         "path": "Immunization.explanation.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1032,6 +1228,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ImmunizationReason"
+            }
+          ],
           "strength": "example",
           "description": "The reason why a vaccine was administered",
           "valueSetReference": {
@@ -1039,6 +1241,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.reasonCodeableConcept"
+          },
           {
             "identity": "rim",
             "map": "[actionNegationInd=false].reasonCode"
@@ -1059,6 +1265,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "NoImmunizationReason"
+            }
+          ],
           "strength": "example",
           "description": "The reason why a vaccine was not administered",
           "valueSetReference": {
@@ -1066,6 +1278,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.notDoneReason"
+          },
           {
             "identity": "v2",
             "map": "RXA-18"
@@ -1081,7 +1297,7 @@
         "path": "Immunization.reaction",
         "short": "Details of a reaction that follows immunization",
         "definition": "Categorical data indicating that an adverse event is associated in time to an immunization.",
-        "comments": "A reaction may be an indication of an allergy or intolerance and, if this is determined to be the case,  it should be recorded as a new [AllergyIntolerance](allergyintolerance.html) resource instance as most systems will not query against  past Immunization.reaction elements.",
+        "comment": "A reaction may be an indication of an allergy or intolerance and, if this is determined to be the case,  it should be recorded as a new [AllergyIntolerance](allergyintolerance.html) resource instance as most systems will not query against  past Immunization.reaction elements.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1142,7 +1358,7 @@
         "path": "Immunization.reaction.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1171,7 +1387,7 @@
         "path": "Immunization.reaction.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1333,7 +1549,7 @@
         "path": "Immunization.vaccinationProtocol.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1362,7 +1578,7 @@
         "path": "Immunization.vaccinationProtocol.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1498,6 +1714,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "VaccinationProtocoltargetDisease"
+            }
+          ],
           "strength": "example",
           "description": "The disease target of the vaccination protocol",
           "valueSetReference": {
@@ -1516,7 +1738,7 @@
         "path": "Immunization.vaccinationProtocol.doseStatus",
         "short": "Indicates if dose counts towards immunity",
         "definition": "Indicates if the immunization event should \"count\" against  the protocol.",
-        "comments": "May need to differentiate between status declarations by a provider vs. a CDS engine.",
+        "comment": "May need to differentiate between status declarations by a provider vs. a CDS engine.",
         "min": 1,
         "max": "1",
         "type": [
@@ -1525,6 +1747,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "VaccinationProtocolDoseStatus"
+            }
+          ],
           "strength": "example",
           "description": "The status of the vaccination protocol (i.e. should this count)",
           "valueSetReference": {
@@ -1551,6 +1779,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "VaccinationProtocolDoseStatusReason"
+            }
+          ],
           "strength": "example",
           "description": "The reason for the determining if a vaccination should count or why vaccination should not count.",
           "valueSetReference": {
@@ -1608,7 +1842,7 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         }
       },

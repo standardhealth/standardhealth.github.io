@@ -3,7 +3,7 @@
   "id": "shr-encounter-Encounter",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Encounter Profile</b></p>\n  <p>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.encounter.Encounter maps to Encounter:\n  Entry.FocalSubject maps to patient\n  OccurrenceTime maps to period\n  EncounterType maps to class\n  Participant maps to participant\n  Participant.Practitioner maps to participant.individual\n  Participant.RelatedPerson maps to participant.individual\n  Participant.OccurrenceTime maps to participant.period\n  Participant.ParticipationType maps to participant.type\n  ProviderOrganization maps to serviceProvider\n  TBD &quot;HealthConcern&quot; maps to indication\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Encounter Profile</b></p>\n  <p>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.encounter.Encounter maps to Encounter:\n  Entry.FocalSubject maps to subject\n  OccurrenceTime maps to period\n  EncounterType maps to class\n  Participant maps to participant\n  Participant.Practitioner maps to participant.individual\n  Participant.RelatedPerson maps to participant.individual\n  Participant.OccurrenceTime maps to participant.period\n  Participant.ParticipationType maps to participant.type\n  ProviderOrganization maps to serviceProvider\n  &lt;TBD &quot;HealthConcern&quot;&gt; maps to indication\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.encounter.Encounter"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR Encounter Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.509Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,9 +27,8 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.534Z",
   "description": "A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "rim",
@@ -116,7 +117,7 @@
         "path": "Encounter.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -155,7 +156,7 @@
         "path": "Encounter.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -176,7 +177,7 @@
         "path": "Encounter.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -196,6 +197,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -210,7 +219,7 @@
         "path": "Encounter.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -244,7 +253,7 @@
         "path": "Encounter.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -273,16 +282,19 @@
         "id": "Encounter:shr-encounter-Encounter.extension",
         "path": "Encounter.extension",
         "slicing": {
-          "id": "164",
+          "id": "202",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -311,6 +323,7 @@
         "path": "Encounter.extension",
         "sliceName": "referraldate",
         "definition": "The date when the provider received a referral for service. A referral includes an oral, written, faxed or electronic request for services made by the client or on the client�s behalf.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -343,6 +356,7 @@
         "path": "Encounter.extension",
         "sliceName": "referralsourcetype",
         "definition": "The type of person or entity that instigated the encounter.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -375,6 +389,7 @@
         "path": "Encounter.extension",
         "sliceName": "facility",
         "definition": "Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -407,6 +422,7 @@
         "path": "Encounter.extension",
         "sliceName": "treatmentcooperation",
         "definition": "Whether the patient is undergoing treatment voluntarily, or under a legal order.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -439,6 +455,7 @@
         "path": "Encounter.extension",
         "sliceName": "paymentsource",
         "definition": "The source of payment for the current encounter.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -470,16 +487,19 @@
         "id": "Encounter:shr-encounter-Encounter.modifierExtension",
         "path": "Encounter.modifierExtension",
         "slicing": {
-          "id": "165",
+          "id": "203",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -509,6 +529,7 @@
         "path": "Encounter.modifierExtension",
         "sliceName": "encounternonoccurrencemodifier",
         "definition": "True if the encounter did not occur.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -567,8 +588,9 @@
       {
         "id": "Encounter:shr-encounter-Encounter.status",
         "path": "Encounter.status",
-        "short": "planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error",
-        "definition": "planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.",
+        "short": "planned | arrived | triaged | in-progress | onleave | finished | cancelled +",
+        "definition": "planned | arrived | triaged | in-progress | onleave | finished | cancelled +.",
+        "comment": "Note that internal business rules will detemine the appropraite transitions that may occur between statuses (and also classes).\n\nThis element is labeled as a modifier because the status contains codes that mark the encounter as not currently valid.",
         "min": 1,
         "max": "1",
         "type": [
@@ -579,6 +601,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterStatus"
+            }
+          ],
           "strength": "required",
           "description": "Current state of the encounter",
           "valueSetReference": {
@@ -602,10 +630,16 @@
       },
       {
         "id": "Encounter:shr-encounter-Encounter.statusHistory",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name",
+            "valueString": "StatusHistory"
+          }
+        ],
         "path": "Encounter.statusHistory",
         "short": "List of past encounter statuses",
         "definition": "The status history permits the encounter resource to contain the status history without needing to read through the historical versions of the resource, or even have the server store them.",
-        "comments": "The current status is always found in the current version of the resource, not the status history.",
+        "comment": "The current status is always found in the current version of the resource, not the status history.",
         "min": 0,
         "max": "*",
         "type": [
@@ -662,7 +696,7 @@
         "path": "Encounter.statusHistory.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -691,7 +725,7 @@
         "path": "Encounter.statusHistory.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -721,8 +755,8 @@
       {
         "id": "Encounter:shr-encounter-Encounter.statusHistory.status",
         "path": "Encounter.statusHistory.status",
-        "short": "planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error",
-        "definition": "planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.",
+        "short": "planned | arrived | triaged | in-progress | onleave | finished | cancelled +",
+        "definition": "planned | arrived | triaged | in-progress | onleave | finished | cancelled +.",
         "min": 1,
         "max": "1",
         "type": [
@@ -731,6 +765,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterStatus"
+            }
+          ],
           "strength": "required",
           "description": "Current state of the encounter",
           "valueSetReference": {
@@ -780,7 +820,7 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-encounter-EncounterTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS"
           }
         },
         "mapping": [
@@ -799,11 +839,185 @@
         ]
       },
       {
+        "id": "Encounter:shr-encounter-Encounter.classHistory",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name",
+            "valueString": "ClassHistory"
+          }
+        ],
+        "path": "Encounter.classHistory",
+        "short": "List of past encounter classes",
+        "definition": "The class history permits the tracking of the encounters transitions without needing to go  through the resource history.\n\nThis would be used for a case where an admission starts of as an emergency encounter, then transisions into an inpatient scenario. Doing this and not restarting a new encounter ensures that any lab/diagnostic results can more easily follow the patient and not require re-processing and not get lost or cancelled during a kindof discharge from emergency to inpatient.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.classHistory.id",
+        "path": "Encounter.classHistory.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.classHistory.extension",
+        "path": "Encounter.classHistory.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.classHistory.modifierExtension",
+        "path": "Encounter.classHistory.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.classHistory.class",
+        "path": "Encounter.classHistory.class",
+        "short": "inpatient | outpatient | ambulatory | emergency +",
+        "definition": "inpatient | outpatient | ambulatory | emergency +.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterClass"
+            }
+          ],
+          "strength": "extensible",
+          "description": "Classification of the encounter",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/v3-ActEncounterCode"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.classHistory.period",
+        "path": "Encounter.classHistory.period",
+        "short": "The time that the episode was in the specified class",
+        "definition": "The time that the episode was in the specified class.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Period"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
         "id": "Encounter:shr-encounter-Encounter.type",
         "path": "Encounter.type",
         "short": "Specific type of encounter",
         "definition": "Specific type of encounter (e.g. e-mail consultation, surgical day-care, skilled nursing, rehabilitation).",
-        "comments": "Since there are many ways to further classify encounters, this element is 0..*.",
+        "comment": "Since there are many ways to further classify encounters, this element is 0..*.",
         "min": 0,
         "max": "*",
         "type": [
@@ -813,6 +1027,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterType"
+            }
+          ],
           "strength": "example",
           "description": "The type of encounter",
           "valueSetReference": {
@@ -847,6 +1067,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Priority"
+            }
+          ],
           "strength": "example",
           "description": "Indicates the urgency of the encounter.",
           "valueSetReference": {
@@ -869,11 +1095,11 @@
         ]
       },
       {
-        "id": "Encounter:shr-encounter-Encounter.patient",
-        "path": "Encounter.patient",
-        "short": "The patient present at the encounter",
-        "definition": "The patient present at the encounter.",
-        "comments": "While the encounter is always about the patient, the patient may not actually be known in all contexts of use.",
+        "id": "Encounter:shr-encounter-Encounter.subject",
+        "path": "Encounter.subject",
+        "short": "The patient ro group present at the encounter",
+        "definition": "The patient ro group present at the encounter.",
+        "comment": "While the encounter is always about the patient, the patient may not actually be known in all contexts of use, and there may be a group of patients that could be anonymous (such as in a group therapy for Alcoholics Anonymous - where the recording of the encounter could be used for billing on the number of people/staff and not important to the context of the specific patients) or alternately in veterinary care a herd of sheep receiving treatment (where the animals are not individually tracked).",
         "alias": [
           "patient"
         ],
@@ -883,6 +1109,10 @@
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
           }
         ],
         "isSummary": true,
@@ -1016,7 +1246,7 @@
         "path": "Encounter.participant.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1045,7 +1275,7 @@
         "path": "Encounter.participant.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1077,7 +1307,7 @@
         "path": "Encounter.participant.type",
         "short": "Role of participant in encounter",
         "definition": "Role of participant in encounter.",
-        "comments": "The participant type indicates how an individual partitipates in an encounter. It includes non-practitioner participants, and for practitioners this is to describe the action type in the context of this encounter (e.g. Admitting Dr, Attending Dr, Translator, Consulting Dr). This is different to the practitioner roles which are functional roles, derived from terms of employment, education, licensing, etc.",
+        "comment": "The participant type indicates how an individual partitipates in an encounter. It includes non-practitioner participants, and for practitioners this is to describe the action type in the context of this encounter (e.g. Admitting Dr, Attending Dr, Translator, Consulting Dr). This is different to the practitioner roles which are functional roles, derived from terms of employment, education, licensing, etc.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1088,6 +1318,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ParticipantType"
+            }
+          ],
           "strength": "extensible",
           "description": "Role of participant in encounter",
           "valueSetReference": {
@@ -1192,7 +1428,7 @@
         "path": "Encounter.period",
         "short": "The start and end time of the encounter",
         "definition": "The start and end time of the encounter.",
-        "comments": "If not (yet) known, the end of the Period may be omitted.",
+        "comment": "If not (yet) known, the end of the Period may be omitted.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1221,7 +1457,7 @@
         "path": "Encounter.length",
         "short": "Quantity of time the encounter lasted (less time absent)",
         "definition": "Quantity of time the encounter lasted. This excludes the time during leaves of absence.",
-        "comments": "May differ from the time the Encounter.period lasted because of leave of absence.",
+        "comment": "May differ from the time the Encounter.period lasted because of leave of absence.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1245,7 +1481,7 @@
         "path": "Encounter.reason",
         "short": "Reason the encounter takes place (code)",
         "definition": "Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.",
-        "comments": "For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).",
+        "comment": "For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).",
         "alias": [
           "Indication",
           "Admission diagnosis"
@@ -1259,7 +1495,13 @@
         ],
         "isSummary": true,
         "binding": {
-          "strength": "example",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterReason"
+            }
+          ],
+          "strength": "preferred",
           "description": "Reason why the encounter takes place.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/encounter-reason"
@@ -1281,16 +1523,142 @@
         ]
       },
       {
-        "id": "Encounter:shr-encounter-Encounter.indication",
-        "path": "Encounter.indication",
-        "short": "Reason the encounter takes place (resource)",
-        "definition": "Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.",
-        "comments": "For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).",
+        "id": "Encounter:shr-encounter-Encounter.diagnosis",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name",
+            "valueString": "Diagnosis"
+          }
+        ],
+        "path": "Encounter.diagnosis",
+        "short": "The list of diagnosis relevant to this encounter",
+        "definition": "The list of diagnosis relevant to this encounter.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".outboundRelationship[typeCode=RSON]"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.id",
+        "path": "Encounter.diagnosis.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.extension",
+        "path": "Encounter.diagnosis.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
-          "Admission diagnosis"
+          "extensions",
+          "user content"
         ],
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.modifierExtension",
+        "path": "Encounter.diagnosis.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.condition",
+        "path": "Encounter.diagnosis.condition",
+        "short": "Reason the encounter takes place (resource)",
+        "definition": "Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.",
+        "comment": "For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).",
+        "alias": [
+          "Admission diagnosis",
+          "discharge diagnosis",
+          "indication"
+        ],
+        "min": 1,
+        "max": "1",
         "type": [
           {
             "code": "Reference",
@@ -1317,11 +1685,66 @@
         ]
       },
       {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.role",
+        "path": "Encounter.diagnosis.role",
+        "short": "Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …)",
+        "definition": "Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DiagnosisRole"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "preferred",
+          "description": "The type of diagnosis this condition represents",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/diagnosis-role"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Encounter:shr-encounter-Encounter.diagnosis.rank",
+        "path": "Encounter.diagnosis.rank",
+        "short": "Ranking of the diagnosis (for each role type)",
+        "definition": "Ranking of the diagnosis (for each role type).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "positiveInt"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".outboundRelationship[typeCode=RSON].priority"
+          }
+        ]
+      },
+      {
         "id": "Encounter:shr-encounter-Encounter.account",
         "path": "Encounter.account",
         "short": "The set of accounts that may be used for billing for this Encounter",
         "definition": "The set of accounts that may be used for billing for this Encounter.",
-        "comments": "The billing system may choose to allocate billable items associated with the Encounter to different referenced Accounts based on internal business rules.",
+        "comment": "The billing system may choose to allocate billable items associated with the Encounter to different referenced Accounts based on internal business rules.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1342,7 +1765,7 @@
         "path": "Encounter.hospitalization",
         "short": "Details about the admission to a healthcare service",
         "definition": "Details about the admission to a healthcare service.",
-        "comments": "An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.\r\rThe duration recorded in the period of this encounter covers the entire scope of this hospitalization record.",
+        "comment": "An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.\r\rThe duration recorded in the period of this encounter covers the entire scope of this hospitalization record.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1399,7 +1822,7 @@
         "path": "Encounter.hospitalization.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1428,7 +1851,7 @@
         "path": "Encounter.hospitalization.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1511,6 +1934,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdmitSource"
+            }
+          ],
           "strength": "preferred",
           "description": "From where the patient was admitted.",
           "valueSetReference": {
@@ -1529,26 +1958,6 @@
         ]
       },
       {
-        "id": "Encounter:shr-encounter-Encounter.hospitalization.admittingDiagnosis",
-        "path": "Encounter.hospitalization.admittingDiagnosis",
-        "short": "The admitting diagnosis as reported by admitting practitioner",
-        "definition": "The admitting diagnosis field is used to record the diagnosis codes as reported by admitting practitioner. This could be different or in addition to the conditions reported as reason-condition(s) for the encounter.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".reason.A_ObservationDx"
-          }
-        ]
-      },
-      {
         "id": "Encounter:shr-encounter-Encounter.hospitalization.reAdmission",
         "path": "Encounter.hospitalization.reAdmission",
         "short": "The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission",
@@ -1561,6 +1970,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ReAdmissionType"
+            }
+          ],
           "strength": "example",
           "description": "The reason for re-admission of this hospitalization encounter.",
           "valueSetReference": {
@@ -1574,7 +1989,7 @@
           },
           {
             "identity": "rim",
-            "map": "Propose at harmonization"
+            "map": "n/a"
           }
         ]
       },
@@ -1583,7 +1998,7 @@
         "path": "Encounter.hospitalization.dietPreference",
         "short": "Diet preferences reported by the patient",
         "definition": "Diet preferences reported by the patient.",
-        "comments": "For example a patient may request both a dairy-free and nut-free diet preference (not mutually exclusive).",
+        "comment": "For example a patient may request both a dairy-free and nut-free diet preference (not mutually exclusive).",
         "requirements": "Used to track patient's diet restrictions and/or preference. For a complete description of the nutrition needs of a patient during their stay, one should use the nutritionOrder resource which links to Encounter.",
         "min": 0,
         "max": "*",
@@ -1593,6 +2008,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "PatientDiet"
+            }
+          ],
           "strength": "example",
           "description": "Medical, cultural or ethical food preferences to help with catering requirements.",
           "valueSetReference": {
@@ -1623,6 +2044,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Courtesies"
+            }
+          ],
           "strength": "preferred",
           "description": "Special courtesies",
           "valueSetReference": {
@@ -1644,7 +2071,7 @@
         "id": "Encounter:shr-encounter-Encounter.hospitalization.specialArrangement",
         "path": "Encounter.hospitalization.specialArrangement",
         "short": "Wheelchair, translator, stretcher, etc.",
-        "definition": "Wheelchair, translator, stretcher, etc.",
+        "definition": "Any special requests that have been made for this hospitalization encounter, such as the provision of specific equipment or other things.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1653,6 +2080,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Arrangements"
+            }
+          ],
           "strength": "preferred",
           "description": "Special arrangements",
           "valueSetReference": {
@@ -1707,6 +2140,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DischargeDisp"
+            }
+          ],
           "strength": "example",
           "description": "Discharge Disposition",
           "valueSetReference": {
@@ -1725,31 +2164,11 @@
         ]
       },
       {
-        "id": "Encounter:shr-encounter-Encounter.hospitalization.dischargeDiagnosis",
-        "path": "Encounter.hospitalization.dischargeDiagnosis",
-        "short": "The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete",
-        "definition": "The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".outboundRelationship[typeCode=OUT].target[classCode=OBS, moodCode=EVN, code=ASSERTION].value"
-          }
-        ]
-      },
-      {
         "id": "Encounter:shr-encounter-Encounter.location",
         "path": "Encounter.location",
         "short": "List of locations where the patient has been",
         "definition": "List of locations where  the patient has been during this encounter.",
-        "comments": "Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type \"kind\" such as \"client's home\" and an encounter.class = \"virtual\".",
+        "comment": "Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type \"kind\" such as \"client's home\" and an encounter.class = \"virtual\".",
         "min": 0,
         "max": "*",
         "type": [
@@ -1806,7 +2225,7 @@
         "path": "Encounter.location.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1835,7 +2254,7 @@
         "path": "Encounter.location.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1895,7 +2314,7 @@
         "path": "Encounter.location.status",
         "short": "planned | active | reserved | completed",
         "definition": "The status of the participants' presence at the specified location during the period specified. If the participant is is no longer at the location, then the period will have an end date/time.",
-        "comments": "When the patient is no longer active at a location, then the period end date is entered, and the status may be changed to completed.",
+        "comment": "When the patient is no longer active at a location, then the period end date is entered, and the status may be changed to completed.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1904,6 +2323,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "EncounterLocationStatus"
+            }
+          ],
           "strength": "required",
           "description": "The status of the location.",
           "valueSetReference": {
@@ -1965,7 +2390,7 @@
         "path": "Encounter.partOf",
         "short": "Another Encounter this encounter is part of",
         "definition": "Another Encounter of which this encounter is a part of (administratively or in time).",
-        "comments": "This is also used for associating a child's encounter back to the mother's encounter.\r\rRefer to the Notes section in the Patient resource for further details.",
+        "comment": "This is also used for associating a child's encounter back to the mother's encounter.\r\rRefer to the Notes section in the Patient resource for further details.",
         "min": 0,
         "max": "1",
         "type": [
@@ -2099,19 +2524,23 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-encounter-EncounterTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS"
           }
         }
       },
       {
-        "id": "Encounter:shr-encounter-Encounter.patient",
-        "path": "Encounter.patient",
+        "id": "Encounter:shr-encounter-Encounter.subject",
+        "path": "Encounter.subject",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
           }
         ]
       },

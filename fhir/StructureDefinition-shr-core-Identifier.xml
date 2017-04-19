@@ -19,8 +19,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.Identifier"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR Identifier Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.443Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -28,10 +30,9 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.501Z"/>
   <description value="A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors."/>
   <purpose value="Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -107,9 +108,17 @@
     </element>
     <element id="Identifier:shr-core-Identifier.extension">
       <path value="Identifier.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -131,7 +140,7 @@
       <path value="Identifier.use"/>
       <short value="usual | official | temp | secondary (If known)"/>
       <definition value="The purpose of this identifier."/>
-      <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one. Applications can assume that an identifier is permanent unless it explicitly says that it is temporary."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one. Applications can assume that an identifier is permanent unless it explicitly says that it is temporary."/>
       <requirements value="Allows the appropriate identifier for a particular context of use to be selected from among a set of identifiers."/>
       <min value="0"/>
       <max value="1"/>
@@ -141,6 +150,9 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="IdentifierUse"/>
+        </extension>
         <strength value="required"/>
         <description value="Identifies the purpose for this identifier, if known ."/>
         <valueSetReference>
@@ -160,9 +172,7 @@
       <path value="Identifier.type"/>
       <short value="Description of identifier"/>
       <definition value="A coded type for the identifier that can be used to determine which identifier to use for a specific purpose."/>
-      <comments value="This element deals only with general categories of identifiers.  It SHOULD not be used for codes that correspond 1..1 with the Identifier.system. Some identifiers may fall into multiple categories due to common usage. 
-
-Where the system is known, a type is unnecessary because the type is always part of the system definition. However systems often need to handle identifiers where the system is not known. There is not a 1:1 relationship between type and system, since many different systems have the same type."/>
+      <comment value="This element deals only with general categories of identifiers.  It SHOULD not be used for codes that correspond 1..1 with the Identifier.system. Some identifiers may fall into multiple categories due to common usage. &#xA;&#xA;Where the system is known, a type is unnecessary because the type is always part of the system definition. However systems often need to handle identifiers where the system is not known. There is not a 1:1 relationship between type and system, since many different systems have the same type."/>
       <requirements value="Allows users to make use of identifiers when the identifier system is not known."/>
       <min value="0"/>
       <max value="1"/>
@@ -171,6 +181,12 @@ Where the system is known, a type is unnecessary because the type is always part
       </type>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="IdentifierType"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
         <strength value="extensible"/>
         <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose."/>
         <valueSetReference>
@@ -188,9 +204,9 @@ Where the system is known, a type is unnecessary because the type is always part
     </element>
     <element id="Identifier:shr-core-Identifier.system">
       <path value="Identifier.system"/>
-      <short value="The namespace for the identifier"/>
-      <definition value="Establishes the namespace in which set of possible id values is unique."/>
-      <requirements value="There are many sequences of identifiers.  To perform matching, we need to know what sequence we&#39;re dealing with. The system identifies a particular sequence or set of unique identifiers."/>
+      <short value="The namespace for the identifier value"/>
+      <definition value="Establishes the namespace for the value - that is, a URL that describes a set values that are unique."/>
+      <requirements value="There are many sets  of identifiers.  To perform matching of two identifiers, we need to know what set we&#39;re dealing with. The system identifies a particular set of unique identifiers."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -218,7 +234,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <path value="Identifier.value"/>
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
-      <comments value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value&#39;s primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [Rendered Value extension](extension-rendered-value.html)."/>
+      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value&#39;s primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [Rendered Value extension](extension-rendered-value.html)."/>
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -270,7 +286,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <path value="Identifier.assigner"/>
       <short value="Organization that issued id (may be just text)"/>
       <definition value="Organization that issued/manages the identifier."/>
-      <comments value="The Identifier.assigner may omit the .reference element and only contain a .display element reflecting the name or other textual information about the assigning organization."/>
+      <comment value="The Identifier.assigner may omit the .reference element and only contain a .display element reflecting the name or other textual information about the assigning organization."/>
       <min value="0"/>
       <max value="1"/>
       <type>

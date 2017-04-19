@@ -10,12 +10,6 @@
     single schematron that validates contained resources (if you have any) 
   -->
   <sch:pattern>
-    <sch:title>f:CodeableConcept</sch:title>
-    <sch:rule context="f:CodeableConcept">
-      <sch:assert test="count(f:text) &gt;= 1">text: minimum cardinality of 'text' is 1</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
     <sch:title>CodeableConcept</sch:title>
     <sch:rule context="f:CodeableConcept">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>

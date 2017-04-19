@@ -12,8 +12,10 @@
       "value": "shr.core.CodeableConcept"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR CodeableConcept Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:21.077Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,10 +27,9 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.124Z",
   "description": "A set of codes drawn from different coding systems, representing the same concept.",
   "purpose": "This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "v2",
@@ -58,7 +59,7 @@
         "path": "CodeableConcept",
         "short": "SHR CodeableConcept Profile",
         "definition": "A set of codes drawn from different coding systems, representing the same concept.",
-        "comments": "Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination.",
+        "comment": "Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination.",
         "min": 0,
         "max": "*",
         "condition": [
@@ -123,9 +124,19 @@
       {
         "id": "CodeableConcept:shr-core-CodeableConcept.extension",
         "path": "CodeableConcept.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -154,7 +165,7 @@
         "path": "CodeableConcept.coding",
         "short": "Code defined by a terminology system",
         "definition": "A reference to a code defined by a terminology system.",
-        "comments": "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true.",
+        "comment": "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.",
         "requirements": "Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings.",
         "min": 0,
         "max": "*",
@@ -182,12 +193,18 @@
       },
       {
         "id": "CodeableConcept:shr-core-CodeableConcept.text",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
         "path": "CodeableConcept.text",
         "short": "Plain text representation of the concept",
         "definition": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user.",
-        "comments": "Very often the text is the same as a displayName of one of the codings.",
+        "comment": "Very often the text is the same as a displayName of one of the codings.",
         "requirements": "The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source.",
-        "min": 1,
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -229,12 +246,6 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"
           }
         ]
-      },
-      {
-        "id": "CodeableConcept:shr-core-CodeableConcept.text",
-        "path": "CodeableConcept.text",
-        "min": 1,
-        "max": "1"
       }
     ]
   }

@@ -15,10 +15,11 @@
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension']) &gt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension': minimum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension': maximum cardinality of 'extension' is 1</sch:assert>
-      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PriorityOfRequest-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PriorityOfRequest-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PatientInstructions-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PatientInstructions-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:status) &gt;= 1">status: minimum cardinality of 'status' is 1</sch:assert>
       <sch:assert test="count(f:reasonCode) &lt;= 1">reasonCode: maximum cardinality of 'reasonCode' is 1</sch:assert>
+      <sch:assert test="count(f:note) &lt;= 1">note: maximum cardinality of 'note' is 1</sch:assert>
+      <sch:assert test="count(f:dosageInstruction) &lt;= 1">dosageInstruction: maximum cardinality of 'dosageInstruction' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -167,6 +168,42 @@
       <sch:assert test="count(f:url) &lt;= 1">url: maximum cardinality of 'url' is 1</sch:assert>
       <sch:assert test="count(f:value[x]) &gt;= 1">value[x]: minimum cardinality of 'value[x]' is 1</sch:assert>
       <sch:assert test="count(f:value[x]) &lt;= 1">value[x]: maximum cardinality of 'value[x]' is 1</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>MedicationRequest.requester</sch:title>
+    <sch:rule context="f:MedicationRequest/f:requester">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+      <sch:assert test="contains(f:agent, '/Practitioner') or contains(f:agent, '/Device') or not(exists(f:onBehalfOf))">onBehalfOf can only be specified if agent is practitioner or device</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>f:MedicationRequest/f:note</sch:title>
+    <sch:rule context="f:MedicationRequest/f:note">
+      <sch:assert test="count(f:id) &lt;= 1">id: maximum cardinality of 'id' is 1</sch:assert>
+      <sch:assert test="count(f:author[x]) &lt;= 1">author[x]: maximum cardinality of 'author[x]' is 1</sch:assert>
+      <sch:assert test="count(f:time) &lt;= 1">time: maximum cardinality of 'time' is 1</sch:assert>
+      <sch:assert test="count(f:text) &gt;= 1">text: minimum cardinality of 'text' is 1</sch:assert>
+      <sch:assert test="count(f:text) &lt;= 1">text: maximum cardinality of 'text' is 1</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>f:MedicationRequest/f:dosageInstruction</sch:title>
+    <sch:rule context="f:MedicationRequest/f:dosageInstruction">
+      <sch:assert test="count(f:id) &lt;= 1">id: maximum cardinality of 'id' is 1</sch:assert>
+      <sch:assert test="count(f:sequence) &lt;= 1">sequence: maximum cardinality of 'sequence' is 1</sch:assert>
+      <sch:assert test="count(f:text) &lt;= 1">text: maximum cardinality of 'text' is 1</sch:assert>
+      <sch:assert test="count(f:patientInstruction) &lt;= 1">patientInstruction: maximum cardinality of 'patientInstruction' is 1</sch:assert>
+      <sch:assert test="count(f:timing) &lt;= 1">timing: maximum cardinality of 'timing' is 1</sch:assert>
+      <sch:assert test="count(f:asNeeded[x]) &lt;= 1">asNeeded[x]: maximum cardinality of 'asNeeded[x]' is 1</sch:assert>
+      <sch:assert test="count(f:site) &lt;= 1">site: maximum cardinality of 'site' is 1</sch:assert>
+      <sch:assert test="count(f:route) &lt;= 1">route: maximum cardinality of 'route' is 1</sch:assert>
+      <sch:assert test="count(f:method) &lt;= 1">method: maximum cardinality of 'method' is 1</sch:assert>
+      <sch:assert test="count(f:dose[x]) &lt;= 1">dose[x]: maximum cardinality of 'dose[x]' is 1</sch:assert>
+      <sch:assert test="count(f:maxDosePerPeriod) &lt;= 1">maxDosePerPeriod: maximum cardinality of 'maxDosePerPeriod' is 1</sch:assert>
+      <sch:assert test="count(f:maxDosePerAdministration) &lt;= 1">maxDosePerAdministration: maximum cardinality of 'maxDosePerAdministration' is 1</sch:assert>
+      <sch:assert test="count(f:maxDosePerLifetime) &lt;= 1">maxDosePerLifetime: maximum cardinality of 'maxDosePerLifetime' is 1</sch:assert>
+      <sch:assert test="count(f:rate[x]) &lt;= 1">rate[x]: maximum cardinality of 'rate[x]' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

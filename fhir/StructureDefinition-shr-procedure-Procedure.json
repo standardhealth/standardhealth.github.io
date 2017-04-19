@@ -3,7 +3,7 @@
   "id": "shr-procedure-Procedure",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  ProcedureStatus maps to status\n  NonOccurrenceModifier maps to notPerformed\n  NonOccurrenceModifier.Reason maps to reasonNotPerformed\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  ProcedureParticipant maps to performer\n  ProcedureParticipant.PersonOfRecord maps to performer.actor\n  ProcedureParticipant.Practitioner maps to performer.actor\n  ProcedureParticipant.RelatedPerson maps to performer.actor\n  ProcedureParticipant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  ProcedureStatus maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  ProcedureParticipant maps to performer\n  ProcedureParticipant.PersonOfRecord maps to performer.actor\n  ProcedureParticipant.Practitioner maps to performer.actor\n  ProcedureParticipant.RelatedPerson maps to performer.actor\n  ProcedureParticipant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-Procedure",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.procedure.Procedure"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR Procedure Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.451Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,9 +27,8 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.505Z",
   "description": "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "rim",
@@ -95,9 +96,9 @@
           {
             "key": "pro-1",
             "severity": "error",
-            "human": "Reason not performed is only permitted if notPerformed indicator is true",
-            "expression": "reasonNotPerformed.empty() or notPerformed = true",
-            "xpath": "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
+            "human": "Reason not done is only permitted if notDone indicator is true",
+            "expression": "notDoneReason.empty() or notDone = true",
+            "xpath": "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
           }
         ],
         "mapping": [
@@ -120,7 +121,7 @@
         "path": "Procedure.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -159,7 +160,7 @@
         "path": "Procedure.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -180,7 +181,7 @@
         "path": "Procedure.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -200,6 +201,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -214,7 +223,7 @@
         "path": "Procedure.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -248,7 +257,7 @@
         "path": "Procedure.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -277,16 +286,19 @@
         "id": "Procedure:shr-procedure-Procedure.extension",
         "path": "Procedure.extension",
         "slicing": {
-          "id": "155",
+          "id": "188",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -315,6 +327,7 @@
         "path": "Procedure.extension",
         "sliceName": "codeableconcept",
         "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -347,7 +360,7 @@
         "path": "Procedure.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -402,11 +415,105 @@
         ]
       },
       {
+        "id": "Procedure:shr-procedure-Procedure.definition",
+        "path": "Procedure.definition",
+        "short": "Instantiates protocol or definition",
+        "definition": "A protocol, guideline, orderset or other definition that was adhered to in whole or in part by this procedure.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/PlanDefinition"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ActivityDefinition"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/HealthcareService"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".outboundRelationship[typeCode=DEFN].target"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.basedOn",
+        "path": "Procedure.basedOn",
+        "short": "A request for this procedure",
+        "definition": "A reference to a resource that contains details of the request for this procedure.",
+        "alias": [
+          "fulfills"
+        ],
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/CarePlan"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ProcedureRequest"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ReferralRequest"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".outboundRelationship[typeCode=FLFS].target[classCode=(various e.g. PROC, OBS, PCPR, ACT,  moodCode=RQO].code"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.partOf",
+        "path": "Procedure.partOf",
+        "short": "Part of referenced event",
+        "definition": "A larger event of which this particular procedure is a component or step.",
+        "comment": "The MedicationAdministration has a partOf reference to Procedure, but this is not a circular reference.  For a surgical procedure, the anesthesia related medicationAdministration is part of the procedure.  For an IV medication administration,  the procedure to insert the IV port is part of the medication administration.",
+        "alias": [
+          "container"
+        ],
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Procedure"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/MedicationAdministration"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".inboundRelationship[typeCode=COMP].source[classCode=SBADM or PROC or OBS, moodCode=EVN]"
+          }
+        ]
+      },
+      {
         "id": "Procedure:shr-procedure-Procedure.status",
         "path": "Procedure.status",
-        "short": "in-progress | aborted | completed | entered-in-error | unknown",
+        "short": "preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown",
         "definition": "A code specifying the state of the procedure. Generally this will be in-progress or completed state.",
-        "comments": "The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn't know the current state of the procedure.",
+        "comment": "The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn't know the current state of the procedure.\n\nThis element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.",
         "min": 1,
         "max": "1",
         "type": [
@@ -417,16 +524,86 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureStatus"
+            }
+          ],
           "strength": "required",
           "description": "A code specifying the state of the procedure.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/procedure-status"
+            "reference": "http://hl7.org/fhir/ValueSet/event-status"
           }
         },
         "mapping": [
           {
+            "identity": "rim",
+            "map": "statusCode"
+          },
+          {
             "identity": "w5",
             "map": "status"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.notDone",
+        "path": "Procedure.notDone",
+        "short": "True if procedure was not performed as scheduled",
+        "definition": "Set this to true if the record is saying that the procedure was NOT performed.",
+        "comment": "If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it's not that useful to say \"There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome\" as it implies that there *could* have been an appendectomy done at any other time, by any other clinician or with any other outcome.\n\nThis element is labeled as a modifier because it indicates that a procedure didn't happen.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "defaultValueBoolean": false,
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".actionNegationInd"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.notDoneReason",
+        "path": "Procedure.notDoneReason",
+        "short": "Reason procedure was not performed",
+        "definition": "A code indicating why the procedure was not performed.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "condition": [
+          "pro-1"
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureNegationReason"
+            }
+          ],
+          "strength": "example",
+          "description": "A code that identifies the reason a procedure was not performed.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/procedure-not-performed-reason"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".reason.Observation.value"
           }
         ]
       },
@@ -444,6 +621,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureCategory"
+            }
+          ],
           "strength": "example",
           "description": "A code that classifies a procedure for searching, sorting and display purposes.",
           "valueSetReference": {
@@ -466,7 +649,11 @@
         "path": "Procedure.code",
         "short": "Identification of the procedure",
         "definition": "The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. \"Laparoscopic Appendectomy\").",
-        "min": 1,
+        "requirements": "0..1 to account for primarily narrative only resources.",
+        "alias": [
+          "type"
+        ],
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -475,6 +662,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureCode"
+            }
+          ],
           "strength": "example",
           "description": "A code to identify a specific procedure .",
           "valueSetReference": {
@@ -501,6 +694,9 @@
         "path": "Procedure.subject",
         "short": "Who the procedure was performed on",
         "definition": "The person, animal or group on which the procedure was performed.",
+        "alias": [
+          "patient"
+        ],
         "min": 1,
         "max": "1",
         "type": [
@@ -530,16 +726,23 @@
         ]
       },
       {
-        "id": "Procedure:shr-procedure-Procedure.encounter",
-        "path": "Procedure.encounter",
-        "short": "The encounter associated with the procedure",
+        "id": "Procedure:shr-procedure-Procedure.context",
+        "path": "Procedure.context",
+        "short": "Encounter or episode associated with the procedure",
         "definition": "The encounter during which the procedure was performed.",
+        "alias": [
+          "encounter"
+        ],
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Reference",
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
           }
         ],
         "isSummary": true,
@@ -616,7 +819,7 @@
         "mapping": [
           {
             "identity": "rim",
-            "map": ".participation[typeCode=PFM]"
+            "map": ".participation[typeCode=PRF]"
           }
         ]
       },
@@ -652,7 +855,7 @@
         "path": "Procedure.performer.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -681,7 +884,7 @@
         "path": "Procedure.performer.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -705,47 +908,6 @@
           {
             "identity": "rim",
             "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.performer.actor",
-        "path": "Procedure.performer.actor",
-        "short": "The reference to the practitioner",
-        "definition": "The practitioner who was involved in the procedure.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "ORC-19/PRT-5"
-          },
-          {
-            "identity": "rim",
-            "map": ".role"
-          },
-          {
-            "identity": "w5",
-            "map": "who.actor"
           }
         ]
       },
@@ -781,6 +943,73 @@
         ]
       },
       {
+        "id": "Procedure:shr-procedure-Procedure.performer.actor",
+        "path": "Procedure.performer.actor",
+        "short": "The reference to the practitioner",
+        "definition": "The practitioner who was involved in the procedure.",
+        "requirements": "A reference to Device supports use cases, such as pacemakers.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "ORC-19/PRT-5"
+          },
+          {
+            "identity": "rim",
+            "map": ".role"
+          },
+          {
+            "identity": "w5",
+            "map": "who.actor"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.performer.onBehalfOf",
+        "path": "Procedure.performer.onBehalfOf",
+        "short": "Organization the device or practitioner was acting for",
+        "definition": "The organization the device or practitioner was acting on behalf of.",
+        "requirements": "Practitioners and Devices can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of when performing the action.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".scoper"
+          }
+        ]
+      },
+      {
         "id": "Procedure:shr-procedure-Procedure.location",
         "path": "Procedure.location",
         "short": "Where the procedure happened",
@@ -797,34 +1026,12 @@
         "isSummary": true,
         "mapping": [
           {
-            "identity": "w5",
-            "map": "where"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.reasonReference",
-        "path": "Procedure.reasonReference",
-        "short": "Condition that is the reason the procedure performed",
-        "definition": "The condition that is the reason why the procedure was performed.",
-        "comments": "e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
             "identity": "rim",
-            "map": ".reasonCode"
+            "map": ".participation[typeCode=LOC].role[classCode=SDLOC]"
           },
           {
             "identity": "w5",
-            "map": "why"
+            "map": "where"
           }
         ]
       },
@@ -843,6 +1050,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureReason"
+            }
+          ],
           "strength": "example",
           "description": "A code that identifies the reason a procedure is  required.",
           "valueSetReference": {
@@ -861,55 +1074,32 @@
         ]
       },
       {
-        "id": "Procedure:shr-procedure-Procedure.notPerformed",
-        "path": "Procedure.notPerformed",
-        "short": "True if procedure was not performed as scheduled",
-        "definition": "Set this to true if the record is saying that the procedure was NOT performed.",
-        "comments": "If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it's not that useful to say \"There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome\" as it implies that there *could* have been an appendectomy done at any other time, by any other clinician or with any other outcome.",
+        "id": "Procedure:shr-procedure-Procedure.reasonReference",
+        "path": "Procedure.reasonReference",
+        "short": "Condition that is the reason the procedure performed",
+        "definition": "The condition that is the reason why the procedure was performed.",
+        "comment": "e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic.",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
-            "code": "boolean"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
           }
         ],
-        "defaultValueBoolean": false,
-        "isModifier": true,
         "isSummary": true,
         "mapping": [
           {
             "identity": "rim",
-            "map": ".actionNegationInd"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.reasonNotPerformed",
-        "path": "Procedure.reasonNotPerformed",
-        "short": "Reason procedure was not performed",
-        "definition": "A code indicating why the procedure was not performed.",
-        "min": 0,
-        "max": "1",
-        "type": [
+            "map": ".reasonCode"
+          },
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "condition": [
-          "pro-1"
-        ],
-        "binding": {
-          "strength": "example",
-          "description": "A code that identifies the reason a procedure was not performed.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/procedure-not-performed-reason"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".reason.Observation.value"
+            "identity": "w5",
+            "map": "why"
           }
         ]
       },
@@ -927,6 +1117,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "BodySite"
+            }
+          ],
           "strength": "example",
           "description": "Codes describing anatomical locations. May include laterality.",
           "valueSetReference": {
@@ -949,7 +1145,7 @@
         "path": "Procedure.outcome",
         "short": "The result of procedure",
         "definition": "The outcome of the procedure - did it resolve reasons for the procedure being performed?",
-        "comments": "If outcome contains narrative text only, it can be captured using the CodeableConcept.text.",
+        "comment": "If outcome contains narrative text only, it can be captured using the CodeableConcept.text.",
         "min": 0,
         "max": "1",
         "type": [
@@ -959,6 +1155,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureOutcome"
+            }
+          ],
           "strength": "example",
           "description": "An outcome of a procedure - whether it was resolved or otherwise.",
           "valueSetReference": {
@@ -977,7 +1179,7 @@
         "path": "Procedure.report",
         "short": "Any report resulting from the procedure",
         "definition": "This could be a histology result, pathology report, surgical report, etc..",
-        "comments": "There could potentially be multiple reports - e.g. if this was a procedure which took multiple biopsies resulting in a number of anatomical pathology reports.",
+        "comment": "There could potentially be multiple reports - e.g. if this was a procedure which took multiple biopsies resulting in a number of anatomical pathology reports.",
         "min": 0,
         "max": "*",
         "type": [
@@ -998,7 +1200,7 @@
         "path": "Procedure.complication",
         "short": "Complication following the procedure",
         "definition": "Any complications that occurred during the procedure, or in the immediate post-performance period. These are generally tracked separately from the notes, which will typically describe the procedure itself rather than any 'post procedure' issues.",
-        "comments": "If complications are only expressed by the narrative text, they can be captured using the CodeableConcept.text.",
+        "comment": "If complications are only expressed by the narrative text, they can be captured using the CodeableConcept.text.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1007,6 +1209,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureComplication"
+            }
+          ],
           "strength": "example",
           "description": "Codes describing complications that resulted from a procedure.",
           "valueSetReference": {
@@ -1016,7 +1224,28 @@
         "mapping": [
           {
             "identity": "rim",
-            "map": "Need specialization of OUT for this."
+            "map": ".outboundRelationship[typeCode=OUTC].target[classCode=OBS, code=\"complication\", moodCode=EVN].value"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.complicationDetail",
+        "path": "Procedure.complicationDetail",
+        "short": "A condition that is a result of the procedure",
+        "definition": "Any complications that occurred during the procedure, or in the immediate post-performance period.",
+        "requirements": "This is used to document a condition that is a result of the procedure, not the condition that was the reason for the procedure.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".outboundRelationship[typeCode=OUTC].target[classCode=OBS, code=\"complication\", moodCode=EVN].value"
           }
         ]
       },
@@ -1033,6 +1262,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureFollowUp"
+            }
+          ],
           "strength": "example",
           "description": "Specific follow up required for a procedure e.g. removal of sutures.",
           "valueSetReference": {
@@ -1047,34 +1282,8 @@
         ]
       },
       {
-        "id": "Procedure:shr-procedure-Procedure.request",
-        "path": "Procedure.request",
-        "short": "A request for this procedure",
-        "definition": "A reference to a resource that contains details of the request for this procedure.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/CarePlan"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DiagnosticRequest"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ProcedureRequest"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ReferralRequest"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.notes",
-        "path": "Procedure.notes",
+        "id": "Procedure:shr-procedure-Procedure.note",
+        "path": "Procedure.note",
         "short": "Additional information about the procedure",
         "definition": "Any other notes about the procedure.  E.g. the operative notes.",
         "min": 0,
@@ -1116,6 +1325,12 @@
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=DEV].role[classCode=MANU]"
+          }
         ]
       },
       {
@@ -1150,7 +1365,7 @@
         "path": "Procedure.focalDevice.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1179,7 +1394,7 @@
         "path": "Procedure.focalDevice.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1219,12 +1434,24 @@
           }
         ],
         "binding": {
-          "strength": "required",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DeviceActionKind"
+            }
+          ],
+          "strength": "preferred",
           "description": "A kind of change that happened to the device during the procedure.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/device-action"
           }
-        }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"procedure device action\"].value=:procedure device action codes"
+          }
+        ]
       },
       {
         "id": "Procedure:shr-procedure-Procedure.focalDevice.manipulated",
@@ -1238,6 +1465,12 @@
             "code": "Reference",
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
           }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=DEV].role[classCode=SDLOC]"
+          }
         ]
       },
       {
@@ -1245,7 +1478,7 @@
         "path": "Procedure.usedReference",
         "short": "Items used during procedure",
         "definition": "Identifies medications, devices and any other substance used as part of the procedure.",
-        "comments": "For devices actually implanted or removed, use Procedure.device.",
+        "comment": "For devices actually implanted or removed, use Procedure.device.",
         "requirements": "Used for tracking contamination, etc.",
         "min": 0,
         "max": "*",
@@ -1262,6 +1495,12 @@
             "code": "Reference",
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/Substance"
           }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=DEV].role[classCode=MANU] or\n.participation[typeCode=CSM].role[classCode=ADMM] (for Medication or Substance)"
+          }
         ]
       },
       {
@@ -1269,7 +1508,7 @@
         "path": "Procedure.usedCode",
         "short": "Coded items used during the procedure",
         "definition": "Identifies coded items that were used as part of the procedure.",
-        "comments": "For devices actually implanted or removed, use Procedure.device.",
+        "comment": "For devices actually implanted or removed, use Procedure.device.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1278,29 +1517,22 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedureUsed"
+            }
+          ],
           "strength": "example",
-          "description": "Codes describing items used during a procedure"
-        }
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.component",
-        "path": "Procedure.component",
-        "short": "Events related to the procedure",
-        "definition": "Identifies medication administrations, other procedures or observations that are related to this procedure.",
-        "min": 0,
-        "max": "*",
-        "type": [
+          "description": "Codes describing items used during a procedure",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/device-kind"
+          }
+        },
+        "mapping": [
           {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/MedicationAdministration"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Procedure"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
+            "identity": "rim",
+            "map": "participation[typeCode=Dev].role[classCode=MANU]"
           }
         ]
       }
@@ -1331,6 +1563,16 @@
         "isSummary": false
       },
       {
+        "id": "Procedure:shr-procedure-Procedure.notDoneReason",
+        "path": "Procedure.notDoneReason",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ]
+      },
+      {
         "id": "Procedure:shr-procedure-Procedure.performed[x]",
         "path": "Procedure.performed[x]",
         "type": [
@@ -1346,6 +1588,22 @@
       {
         "id": "Procedure:shr-procedure-Procedure.performer",
         "path": "Procedure.performer"
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.performer.role",
+        "path": "Procedure.performer.role",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/v3-ParticipationType"
+          }
+        }
       },
       {
         "id": "Procedure:shr-procedure-Procedure.performer.actor",
@@ -1366,24 +1624,12 @@
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
           }
         ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.performer.role",
-        "path": "Procedure.performer.role",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/v3-ParticipationType"
-          }
-        }
       },
       {
         "id": "Procedure:shr-procedure-Procedure.location",
@@ -1398,18 +1644,6 @@
       {
         "id": "Procedure:shr-procedure-Procedure.reasonCode",
         "path": "Procedure.reasonCode",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-procedure-Procedure.reasonNotPerformed",
-        "path": "Procedure.reasonNotPerformed",
-        "min": 0,
-        "max": "1",
         "type": [
           {
             "code": "CodeableConcept",

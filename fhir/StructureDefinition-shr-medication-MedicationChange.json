@@ -12,8 +12,10 @@
       "value": "shr.medication.MedicationChange"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR MedicationChange Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.403Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,10 +27,9 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.477Z",
   "description": "Description of a modification or change of a medication or dosage.",
   "purpose": "Need some way to safely (without breaking interoperability) allow implementers to exchange content not supported by the initial set of declared resources.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "rim",
@@ -114,7 +115,7 @@
         "path": "Basic.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -153,7 +154,7 @@
         "path": "Basic.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -174,7 +175,7 @@
         "path": "Basic.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -194,6 +195,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -208,7 +217,7 @@
         "path": "Basic.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -242,7 +251,7 @@
         "path": "Basic.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -271,16 +280,19 @@
         "id": "Basic:shr-medication-MedicationChange.extension",
         "path": "Basic.extension",
         "slicing": {
-          "id": "152",
+          "id": "186",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -309,6 +321,7 @@
         "path": "Basic.extension",
         "sliceName": "effectivedate",
         "definition": "The date when something is to take effect.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -341,6 +354,7 @@
         "path": "Basic.extension",
         "sliceName": "typeofchange",
         "definition": "Whether the change is a dose change, switch to a new medication, or discontinuation.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -373,6 +387,7 @@
         "path": "Basic.extension",
         "sliceName": "medicationbeforechange",
         "definition": "The medication taken, prior to the change.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -405,6 +420,7 @@
         "path": "Basic.extension",
         "sliceName": "medicationafterchange",
         "definition": "A medication taken, after the change.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -437,7 +453,7 @@
         "path": "Basic.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -491,8 +507,8 @@
         "path": "Basic.code",
         "short": "Kind of Resource",
         "definition": "Identifies the 'type' of resource - equivalent to the resource name for other resources.",
-        "comments": "Because resource references will only be able to indicate 'Basic', the type of reference will need to be specified in a Profile identified as part of the resource.  Refer to the resource notes section for information on appropriate terminologies for this code.",
-        "requirements": "Must be able to distinguish different types of \"basic\" resources.",
+        "comment": "Because resource references will only be able to indicate 'Basic', the type of reference will need to be specified in a Profile identified as part of the resource.  Refer to the resource notes section for information on appropriate terminologies for this code.\n\nThis element is labeled as a modifier because the it defines the meaning of the resource and cannot be ignored.",
+        "requirements": "Must be able to distinguish different types of Basic resources.",
         "min": 1,
         "max": "1",
         "type": [
@@ -511,6 +527,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "BasicResourceType"
+            }
+          ],
           "strength": "example",
           "description": "Codes for identifying types of resources not yet defined by FHIR",
           "valueSetReference": {
@@ -533,7 +555,7 @@
         "path": "Basic.subject",
         "short": "Identifies the focus of this resource",
         "definition": "Identifies the patient, practitioner, device or any other resource that is the \"focus\" of this resource.",
-        "comments": "Optional as not all resources potential resources will have subjects.  Resources associated with multiple subjects can handle this via extension.",
+        "comment": "Optional as not all potential resources will have subjects.  Resources associated with multiple subjects can handle this via extension.",
         "requirements": "Needed for partitioning the resource by Patient.",
         "min": 0,
         "max": "1",

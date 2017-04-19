@@ -1,14 +1,10 @@
----
-redirect_from:
-  - /fhir/StructureDefinition/shr-encounter-Encounter-definitions/
----
 <!DOCTYPE HTML>
 
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -138,7 +134,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Visit</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.id"> </a><a name="Encounter.id"> </a><b>Encounter.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -157,7 +153,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.language"> </a><a name="Encounter.language"> </a><b>Encounter.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -197,35 +194,35 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.extension:referralsourcetype"> </a><b>Encounter.extension (<a href="StructureDefinition-shr-encounter-ReferralSourceType-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-ReferralSourceType-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The type of person or entity that instigated the encounter.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.extension:facility"> </a><b>Encounter.extension (<a href="StructureDefinition-shr-encounter-Facility-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Facility.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility">SHR Facility Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.extension:treatmentcooperation"> </a><b>Encounter.extension (<a href="StructureDefinition-shr-encounter-TreatmentCooperation-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-TreatmentCooperation-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Whether the patient is undergoing treatment voluntarily, or under a legal order.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.extension:paymentsource"> </a><b>Encounter.extension (<a href="StructureDefinition-shr-encounter-PaymentSource-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-PaymentSource-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The source of payment for the current encounter.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.modifierExtension"> </a><a name="Encounter.modifierExtension"> </a><b>Encounter.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -241,7 +238,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.identifier"> </a><a name="Encounter.identifier"> </a><b>Encounter.identifier</b></td></tr>
   <tr><td>Definition</td><td><p>Identifier(s) by which this encounter is known.</p>
 </td></tr>
@@ -249,12 +246,15 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.status"> </a><a name="Encounter.status"> </a><b>Encounter.status</b></td></tr>
-  <tr><td>Definition</td><td><p>planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.</p>
+  <tr><td>Definition</td><td><p>planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Current state of the encounter<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-status.html">EncounterStatus</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td>Comments</td><td><p>Note that internal business rules will detemine the appropraite transitions that may occur between statuses (and also classes).</p>
+<p>This element is labeled as a modifier because the status contains codes that mark the encounter as not currently valid.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.statusHistory"> </a><a name="Encounter.statusHistory"> </a><b>Encounter.statusHistory</b></td></tr>
   <tr><td>Definition</td><td><p>The status history permits the encounter resource to contain the status history without needing to read through the historical versions of the resource, or even have the server store them.</p>
 </td></tr>
@@ -263,7 +263,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>The current status is always found in the current version of the resource, not the status history.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.statusHistory.id"> </a><a name="Encounter.statusHistory.id"> </a><b>Encounter.statusHistory.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -287,7 +287,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.statusHistory.status"> </a><a name="Encounter.statusHistory.status"> </a><b>Encounter.statusHistory.status</b></td></tr>
-  <tr><td>Definition</td><td><p>planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error.</p>
+  <tr><td>Definition</td><td><p>planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Current state of the encounter<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-status.html">EncounterStatus</a></td></tr>
@@ -303,6 +303,47 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-encounter-EncounterTypeVS.html">SHR EncounterTypeVS ValueSet</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>(<a href="StructureDefinition-shr-core-Coding.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding">SHR Coding Profile</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory"> </a><a name="Encounter.classHistory"> </a><b>Encounter.classHistory</b></td></tr>
+  <tr><td>Definition</td><td><p>The class history permits the tracking of the encounters transitions without needing to go  through the resource history.</p>
+<p>This would be used for a case where an admission starts of as an emergency encounter, then transisions into an inpatient scenario. Doing this and not restarting a new encounter ensures that any lab/diagnostic results can more easily follow the patient and not require re-processing and not get lost or cancelled during a kindof discharge from emergency to inpatient.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory.id"> </a><a name="Encounter.classHistory.id"> </a><b>Encounter.classHistory.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory.extension"> </a><a name="Encounter.classHistory.extension"> </a><b>Encounter.classHistory.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory.modifierExtension"> </a><a name="Encounter.classHistory.modifierExtension"> </a><b>Encounter.classHistory.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory.class"> </a><a name="Encounter.classHistory.class"> </a><b>Encounter.classHistory.class</b></td></tr>
+  <tr><td>Definition</td><td><p>inpatient | outpatient | ambulatory | emergency +.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Classification of the encounter<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/v3/ActEncounterCode/vs.html">ActEncounterCode</a>; other codes may be used where these codes are not suitable</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.classHistory.period"> </a><a name="Encounter.classHistory.period"> </a><b>Encounter.classHistory.period</b></td></tr>
+  <tr><td>Definition</td><td><p>The time that the episode was in the specified class.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.type"> </a><a name="Encounter.type"> </a><b>Encounter.type</b></td></tr>
   <tr><td>Definition</td><td><p>Specific type of encounter (e.g. e-mail consultation, surgical day-care, skilled nursing, rehabilitation).</p>
 </td></tr>
@@ -317,13 +358,13 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Indicates the urgency of the encounter.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/v3/ActPriority/vs.html">v3 Code System ActPriority</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.patient"> </a><a name="Encounter.patient"> </a><b>Encounter.patient</b></td></tr>
-  <tr><td>Definition</td><td><p>The patient present at the encounter.</p>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.subject"> </a><a name="Encounter.subject"> </a><b>Encounter.subject</b></td></tr>
+  <tr><td>Definition</td><td><p>The patient ro group present at the encounter.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-demographics-PersonOfRecord.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord">SHR PersonOfRecord Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-demographics-PersonOfRecord.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord">SHR PersonOfRecord Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/group.html" title="http://hl7.org/fhir/StructureDefinition/Group">Group</a>)</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>patient</td></tr>
-  <tr><td>Comments</td><td><p>While the encounter is always about the patient, the patient may not actually be known in all contexts of use.</p>
+  <tr><td>Comments</td><td><p>While the encounter is always about the patient, the patient may not actually be known in all contexts of use, and there may be a group of patients that could be anonymous (such as in a group therapy for Alcoholics Anonymous - where the recording of the encounter could be used for billing on the number of people/staff and not important to the context of the specific patients) or alternately in veterinary care a herd of sheep receiving treatment (where the animals are not individually tracked).</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.episodeOfCare"> </a><a name="Encounter.episodeOfCare"> </a><b>Encounter.episodeOfCare</b></td></tr>
   <tr><td>Definition</td><td><p>Where a specific encounter should be classified as a part of a specific episode(s) of care this field should be used. This association can facilitate grouping of related encounters together for a specific purpose, such as government reporting, issue tracking, association via a common problem.  The association is recorded on the encounter as these are typically created after the episode of care, and grouped on entry rather than editing the episode of care to append another encounter to it (the episode of care could span years).</p>
@@ -341,7 +382,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.participant.id"> </a><a name="Encounter.participant.id"> </a><b>Encounter.participant.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -405,19 +446,59 @@ redirect_from:
   <tr><td>Definition</td><td><p>Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Reason why the encounter takes place.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-reason.html">Encounter Reason Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Reason why the encounter takes place.<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-reason.html">Encounter Reason Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Indication, Admission diagnosis</td></tr>
   <tr><td>Comments</td><td><p>For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.indication"> </a><a name="Encounter.indication"> </a><b>Encounter.indication</b></td></tr>
-  <tr><td>Definition</td><td><p>Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.</p>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis"> </a><a name="Encounter.diagnosis"> </a><b>Encounter.diagnosis</b></td></tr>
+  <tr><td>Definition</td><td><p>The list of diagnosis relevant to this encounter.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.id"> </a><a name="Encounter.diagnosis.id"> </a><b>Encounter.diagnosis.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.extension"> </a><a name="Encounter.diagnosis.extension"> </a><b>Encounter.diagnosis.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.modifierExtension"> </a><a name="Encounter.diagnosis.modifierExtension"> </a><b>Encounter.diagnosis.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.condition"> </a><a name="Encounter.diagnosis.condition"> </a><b>Encounter.diagnosis.condition</b></td></tr>
+  <tr><td>Definition</td><td><p>Reason the encounter takes place, as specified using information from another resource. For admissions, this is the admission diagnosis. The indication will typically be a Condition (with other resources referenced in the evidence.detail), or a Procedure.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedure.html" title="http://hl7.org/fhir/StructureDefinition/Procedure">Procedure</a>)</td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Admission diagnosis</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Admission diagnosis, discharge diagnosis, indication</td></tr>
   <tr><td>Comments</td><td><p>For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.role"> </a><a name="Encounter.diagnosis.role"> </a><b>Encounter.diagnosis.role</b></td></tr>
+  <tr><td>Definition</td><td><p>Role that this diagnosis has within the encounter (e.g. admission, billing, discharge …).</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The type of diagnosis this condition represents<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-diagnosis-role.html">DiagnosisRole</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.diagnosis.rank"> </a><a name="Encounter.diagnosis.rank"> </a><b>Encounter.diagnosis.rank</b></td></tr>
+  <tr><td>Definition</td><td><p>Ranking of the diagnosis (for each role type).</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.account"> </a><a name="Encounter.account"> </a><b>Encounter.account</b></td></tr>
   <tr><td>Definition</td><td><p>The set of accounts that may be used for billing for this Encounter.</p>
 </td></tr>
@@ -434,7 +515,7 @@ redirect_from:
 <p>The duration recorded in the period of this encounter covers the entire scope of this hospitalization record.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.hospitalization.id"> </a><a name="Encounter.hospitalization.id"> </a><b>Encounter.hospitalization.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -473,11 +554,6 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>From where the patient was admitted.<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-admit-source.html">AdmitSource</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.hospitalization.admittingDiagnosis"> </a><a name="Encounter.hospitalization.admittingDiagnosis"> </a><b>Encounter.hospitalization.admittingDiagnosis</b></td></tr>
-  <tr><td>Definition</td><td><p>The admitting diagnosis field is used to record the diagnosis codes as reported by admitting practitioner. This could be different or in addition to the conditions reported as reason-condition(s) for the encounter.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.hospitalization.reAdmission"> </a><a name="Encounter.hospitalization.reAdmission"> </a><b>Encounter.hospitalization.reAdmission</b></td></tr>
   <tr><td>Definition</td><td><p>Whether this hospitalization is a readmission and why if known.</p>
 </td></tr>
@@ -501,7 +577,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Special courtesies<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-special-courtesy.html">SpecialCourtesy</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.hospitalization.specialArrangement"> </a><a name="Encounter.hospitalization.specialArrangement"> </a><b>Encounter.hospitalization.specialArrangement</b></td></tr>
-  <tr><td>Definition</td><td><p>Wheelchair, translator, stretcher, etc.</p>
+  <tr><td>Definition</td><td><p>Any special requests that have been made for this hospitalization encounter, such as the provision of specific equipment or other things.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Special arrangements<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-special-arrangements.html">SpecialArrangements</a></td></tr>
@@ -517,11 +593,6 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Discharge Disposition<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-encounter-discharge-disposition.html">DischargeDisposition</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.hospitalization.dischargeDiagnosis"> </a><a name="Encounter.hospitalization.dischargeDiagnosis"> </a><b>Encounter.hospitalization.dischargeDiagnosis</b></td></tr>
-  <tr><td>Definition</td><td><p>The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.location"> </a><a name="Encounter.location"> </a><b>Encounter.location</b></td></tr>
   <tr><td>Definition</td><td><p>List of locations where  the patient has been during this encounter.</p>
 </td></tr>
@@ -530,7 +601,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type &quot;kind&quot; such as &quot;client's home&quot; and an encounter.class = &quot;virtual&quot;.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Encounter:shr-encounter-Encounter.location.id"> </a><a name="Encounter.location.id"> </a><b>Encounter.location.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -608,8 +679,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

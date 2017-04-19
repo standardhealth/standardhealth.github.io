@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.core.CodeableConcept" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR CodeableConcept Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:21.077Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,10 +31,9 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:38.124Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "A set of codes drawn from different coding systems, representing the same concept."];
   fhir:StructureDefinition.purpose [ fhir:value "This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
@@ -61,8 +62,8 @@
        fhir:ElementDefinition.path [ fhir:value "CodeableConcept" ];
        fhir:ElementDefinition.short [ fhir:value "SHR CodeableConcept Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "A set of codes drawn from different coding systems, representing the same concept." ];
-       fhir:ElementDefinition.comments [ fhir:value "Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.condition [
          fhir:value "ele-1";
@@ -104,11 +105,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -124,9 +125,18 @@
        fhir:index 2;
        fhir:Element.id [ fhir:value "CodeableConcept:shr-core-CodeableConcept.extension" ];
        fhir:ElementDefinition.path [ fhir:value "CodeableConcept.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -134,11 +144,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -156,9 +166,9 @@
        fhir:ElementDefinition.path [ fhir:value "CodeableConcept.coding" ];
        fhir:ElementDefinition.short [ fhir:value "Code defined by a terminology system" ];
        fhir:ElementDefinition.definition [ fhir:value "A reference to a code defined by a terminology system." ];
-       fhir:ElementDefinition.comments [ fhir:value "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true." ];
+       fhir:ElementDefinition.comment [ fhir:value "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true." ];
        fhir:ElementDefinition.requirements [ fhir:value "Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -182,12 +192,17 @@
      ], [
        fhir:index 4;
        fhir:Element.id [ fhir:value "CodeableConcept:shr-core-CodeableConcept.text" ];
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable" ];
+         fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
+       ];
        fhir:ElementDefinition.path [ fhir:value "CodeableConcept.text" ];
        fhir:ElementDefinition.short [ fhir:value "Plain text representation of the concept" ];
        fhir:ElementDefinition.definition [ fhir:value "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user." ];
-       fhir:ElementDefinition.comments [ fhir:value "Very often the text is the same as a displayName of one of the codings." ];
+       fhir:ElementDefinition.comment [ fhir:value "Very often the text is the same as a displayName of one of the codings." ];
        fhir:ElementDefinition.requirements [ fhir:value "The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -225,14 +240,13 @@
          fhir:ElementDefinition.type.code [ fhir:value "Coding" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding" ]
        ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "CodeableConcept:shr-core-CodeableConcept.text" ];
-       fhir:ElementDefinition.path [ fhir:value "CodeableConcept.text" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
      ]
   ] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 

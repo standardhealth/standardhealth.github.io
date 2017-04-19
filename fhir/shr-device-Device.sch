@@ -24,4 +24,10 @@
       <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
     </sch:rule>
   </sch:pattern>
+  <sch:pattern>
+    <sch:title>Device.udi</sch:title>
+    <sch:rule context="f:Device/f:udi">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+    </sch:rule>
+  </sch:pattern>
 </sch:schema>

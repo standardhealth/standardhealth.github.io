@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.core.Age" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Age Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:22.418Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,9 +31,8 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:38.487Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "How long something has existed (quantitative)."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -55,8 +56,8 @@
        fhir:ElementDefinition.path [ fhir:value "Age" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Age Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "How long something has existed (quantitative)." ];
-       fhir:ElementDefinition.comments [ fhir:value "The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.constraint [
          fhir:index 0;
@@ -71,7 +72,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "age-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive." ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.toString().contains('.').not())" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value > 0)" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))" ]
        ];
        fhir:ElementDefinition.mapping [
@@ -97,11 +98,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -117,9 +118,18 @@
        fhir:index 2;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Age.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -127,11 +137,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -149,13 +159,13 @@
        fhir:ElementDefinition.path [ fhir:value "Age.value" ];
        fhir:ElementDefinition.short [ fhir:value "Numerical value (with implicit precision)" ];
        fhir:ElementDefinition.definition [ fhir:value "The value of the measured amount. The value includes an implicit precision in the presentation of the value." ];
-       fhir:ElementDefinition.comments [ fhir:value "The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)." ];
+       fhir:ElementDefinition.comment [ fhir:value "The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)." ];
        fhir:ElementDefinition.requirements [ fhir:value "Precision is handled implicitly in almost all cases of measurement." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.value" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -178,13 +188,13 @@
        fhir:ElementDefinition.path [ fhir:value "Age.comparator" ];
        fhir:ElementDefinition.short [ fhir:value "< | <= | >= | > - how to understand the value" ];
        fhir:ElementDefinition.definition [ fhir:value "How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is \"<\" , then the real value is < stated value." ];
-       fhir:ElementDefinition.comments [ fhir:value "This is labeled as \"Is Modifier\" because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is labeled as \"Is Modifier\" because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need a framework for handling measures where the value is <5ug/L or >400mg/L due to the limitations of measuring methodology." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.comparator" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -195,6 +205,11 @@
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "QuantityComparator" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "How the Quantity should be understood and represented." ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -214,15 +229,20 @@
      ], [
        fhir:index 5;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.unit" ];
+       fhir:Element.extension [
+         fhir:index 0;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable" ];
+         fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
+       ];
        fhir:ElementDefinition.path [ fhir:value "Age.unit" ];
        fhir:ElementDefinition.short [ fhir:value "Unit representation" ];
        fhir:ElementDefinition.definition [ fhir:value "A human-readable form of the unit." ];
        fhir:ElementDefinition.requirements [ fhir:value "There are many representations for units of measure and in many contexts, particular representations are fixed and required. I.e. mcg for micrograms." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.unit" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -246,11 +266,11 @@
        fhir:ElementDefinition.short [ fhir:value "System that defines coded unit form" ];
        fhir:ElementDefinition.definition [ fhir:value "The identification of the system that provides the coded form of the unit." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need to know the system that defines the coded form of the unit." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.system" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -277,13 +297,13 @@
        fhir:ElementDefinition.path [ fhir:value "Age.code" ];
        fhir:ElementDefinition.short [ fhir:value "Coded form of the unit" ];
        fhir:ElementDefinition.definition [ fhir:value "A computer processable form of the unit in some unit representation system." ];
-       fhir:ElementDefinition.comments [ fhir:value "The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system." ];
+       fhir:ElementDefinition.comment [ fhir:value "The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.code" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -313,18 +333,23 @@
        fhir:index 1;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.value" ];
        fhir:ElementDefinition.path [ fhir:value "Age.value" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
        fhir:index 2;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.code" ];
        fhir:ElementDefinition.path [ fhir:value "Age.code" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ]
   ] .
 
 <http://hl7.org/fhir/ValueSet/quantity-comparator> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 

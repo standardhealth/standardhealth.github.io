@@ -9,11 +9,13 @@
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.medication.Medication maps to Medication:
   CodeableConcept maps to code
-  DoseForm maps to product.form
-  Ingredient maps to product.ingredient.item[x].CodeableConcept
-  Ingredient.IngredientAmount maps to product.ingredient.amount.numerator
-  Ingredient.AmountOfMedication maps to product.ingredient.amount.denominator
+  DoseForm maps to form
+  Ingredient maps to ingredient.item[x].CodeableConcept
+  Ingredient.IngredientAmount maps to ingredient.amount.numerator
+  Ingredient.AmountOfMedication maps to ingredient.amount.denominator
+  Ingredient.IsActiveIngredient maps to ingredient.isActive
   Brand maps to isBrand
+  OverTheCounter maps to isOverTheCounter
 </pre></p>
 </div>
   </text>
@@ -22,8 +24,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.medication.Medication"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR Medication Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.233Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -31,9 +35,8 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.386Z"/>
   <description value="A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="script10.6"/>
     <uri value="http://ncpdp.org/SCRIPT10_6"/>
@@ -104,7 +107,7 @@
       </mapping>
       <mapping>
         <identity value="script10.6"/>
-        <map value="NewRx/MedicationPrescribed-or-RxFill/MedicationDispensed-or-RxHistoryResponse/MedicationDispensed-or-RxHistoryResponse/MedicationPrescribed"/>
+        <map value="NewRx/MedicationPrescribed&#xD;-or-&#xD;RxFill/MedicationDispensed&#xD;-or-&#xD;RxHistoryResponse/MedicationDispensed&#xD;-or-&#xD;RxHistoryResponse/MedicationPrescribed"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -119,7 +122,7 @@
       <path value="Medication.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -152,7 +155,7 @@
       <path value="Medication.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. &#xA;&#xA;This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -170,7 +173,7 @@
       <path value="Medication.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -187,6 +190,12 @@
             <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
           </valueReference>
         </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
         <strength value="extensible"/>
         <description value="A human language."/>
         <valueSetReference>
@@ -198,7 +207,7 @@
       <path value="Medication.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
       <alias value="xhtml"/>
@@ -223,7 +232,7 @@
       <path value="Medication.contained"/>
       <short value="Contained, inline Resources"/>
       <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
-      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -244,14 +253,9 @@
     </element>
     <element id="Medication:shr-medication-Medication.extension">
       <path value="Medication.extension"/>
-      <slicing id="146">
-        <discriminator value="url"/>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -269,36 +273,11 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.extension:overthecounter">
-      <path value="Medication.extension"/>
-      <sliceName value="overthecounter"/>
-      <definition value="True if the medication is available to consumers without a prescription."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-OverTheCounter-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
     <element id="Medication:shr-medication-Medication.modifierExtension">
       <path value="Medication.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -321,7 +300,7 @@
       <path value="Medication.code"/>
       <short value="Codes that identify this medication"/>
       <definition value="A code (or set of codes) that specify this medication, or a textual description if no code is available. Usage note: This could be a standard medication code such as a code from RxNorm, SNOMED CT, IDMP etc. It could also be a national or local formulary code, optionally with translations to other code systems."/>
-      <comments value="Depending on the context of use, the code that was actually selected by the user (prescriber, dispenser, etc.) should be marked as &quot;primary&quot;. Other codes can only be literal translations to alternative code systems, or codes at a lower level of granularity (e.g. a generic code for a vendor-specific primary one)."/>
+      <comment value="Depending on the context of use, the code that was actually selected by the user (prescriber, dispenser, etc.) will have the coding.userSelected set to true.  As described in the coding datatype: &quot;A coding may be marked as a &quot;userSelected&quot; if a user selected the particular coded value in a user interface (e.g. the user selects an item in a pick-list). If a user selected coding exists, it is the preferred choice for performing translations etc."/>
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -330,15 +309,14 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="example"/>
-        <description value="A coded concept that defines the type of a medication"/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/medication-codes"/>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
         </valueSetReference>
       </binding>
       <mapping>
         <identity value="script10.6"/>
-        <map value="coding.code = //element(*,MedicationType)/DrugCoded/ProductCodecoding.system = //element(*,MedicationType)/DrugCoded/ProductCodeQualifiercoding.display = //element(*,MedicationType)/DrugDescription"/>
+        <map value="coding.code = //element(*,MedicationType)/DrugCoded/ProductCode&#xD;&#xD;coding.system = //element(*,MedicationType)/DrugCoded/ProductCodeQualifier&#xD;&#xD;coding.display = //element(*,MedicationType)/DrugDescription"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
@@ -351,6 +329,32 @@
       <mapping>
         <identity value="w5"/>
         <map value="class"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.status">
+      <path value="Medication.status"/>
+      <short value="active | inactive | entered-in-error"/>
+      <definition value="A code to indicate if the medication is in active use."/>
+      <comment value="This status is not intended to specify if a medication is part of a formulary."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationStatus"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept defining if the medication is in active use"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-status"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".statusCode"/>
       </mapping>
     </element>
     <element id="Medication:shr-medication-Medication.isBrand">
@@ -376,10 +380,29 @@
         <map value="class"/>
       </mapping>
     </element>
+    <element id="Medication:shr-medication-Medication.isOverTheCounter">
+      <path value="Medication.isOverTheCounter"/>
+      <short value="True if medication does not require a prescription"/>
+      <definition value="Set to true if the medication can be obtained without an order from a prescriber."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="NA"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
+      </mapping>
+    </element>
     <element id="Medication:shr-medication-Medication.manufacturer">
       <path value="Medication.manufacturer"/>
       <short value="Manufacturer of the item"/>
-      <definition value="Describes the details of the manufacturer."/>
+      <definition value="Describes the details of the manufacturer of the medication product.  This is not intended to represent the distributor of a medication product."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -404,104 +427,11 @@
         <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product">
-      <path value="Medication.product"/>
-      <short value="Administrable medication details"/>
-      <definition value="Information that only applies to products (not packages)."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="BackboneElement"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <mapping>
-        <identity value="script10.6"/>
-        <map value="//element(*,DrugCodedType)/"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".player [classCode != CONT]"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.id">
-      <path value="Medication.product.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.extension">
-      <path value="Medication.product.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.modifierExtension">
-      <path value="Medication.product.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.form">
-      <path value="Medication.product.form"/>
+    <element id="Medication:shr-medication-Medication.form">
+      <path value="Medication.form"/>
       <short value="powder | tablets | capsule +"/>
       <definition value="Describes the form of the item.  Powder; tablets; capsule."/>
-      <comments value="When Medication is referenced from MedicationRequest, this is the ordered form.  When Medication is referenced within MedicationDispense, this is the dispensed form.  When Medication is referenced within MedicationAdministration, this is administered form."/>
+      <comment value="When Medication is referenced from MedicationRequest, this is the ordered form.  When Medication is referenced within MedicationDispense, this is the dispensed form.  When Medication is referenced within MedicationAdministration, this is administered form."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -509,6 +439,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationForm"/>
+        </extension>
         <strength value="example"/>
         <description value="A coded concept defining the form of a medication"/>
         <valueSetReference>
@@ -517,7 +450,7 @@
       </binding>
       <mapping>
         <identity value="script10.6"/>
-        <map value="coding.code =  //element(*,DrugCodedType)/FormCodecoding.system = //element(*,DrugCodedType)/FormSourceCode"/>
+        <map value="coding.code =  //element(*,DrugCodedType)/FormCode&#xD;&#xD;coding.system = //element(*,DrugCodedType)/FormSourceCode"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
@@ -528,11 +461,11 @@
         <map value=".formCode"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient">
-      <path value="Medication.product.ingredient"/>
+    <element id="Medication:shr-medication-Medication.ingredient">
+      <path value="Medication.ingredient"/>
       <short value="Active or inactive ingredient"/>
       <definition value="Identifies a particular constituent of interest in the product."/>
-      <comments value="The ingredients need not be a complete list; usually only active ingredients are listed."/>
+      <comment value="The ingredients need not be a complete list.  If an ingredient is not specified, this does not indicate whether an ingredient is present or absent.  If an ingredient is specified it does not mean that all ingredients are specified.  It is possible to specify both inactive and active ingredients."/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -551,8 +484,8 @@
         <map value=".scopesRole[typeCode=INGR]"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.id">
-      <path value="Medication.product.ingredient.id"/>
+    <element id="Medication:shr-medication-Medication.ingredient.id">
+      <path value="Medication.ingredient.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
@@ -571,11 +504,11 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.extension">
-      <path value="Medication.product.ingredient.extension"/>
+    <element id="Medication:shr-medication-Medication.ingredient.extension">
+      <path value="Medication.ingredient.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -593,11 +526,11 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.modifierExtension">
-      <path value="Medication.product.ingredient.modifierExtension"/>
+    <element id="Medication:shr-medication-Medication.ingredient.modifierExtension">
+      <path value="Medication.ingredient.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -618,10 +551,13 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.item[x]">
-      <path value="Medication.product.ingredient.item[x]"/>
-      <slicing id="145">
-        <discriminator value="@type"/>
+    <element id="Medication:shr-medication-Medication.ingredient.item[x]">
+      <path value="Medication.ingredient.item[x]"/>
+      <slicing id="177">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -635,7 +571,7 @@
       </type>
       <mapping>
         <identity value="script10.6"/>
-        <map value="coding.code = //element(*,MedicationType)/DrugCoded/ProductCodecoding.system = //element(*,MedicationType)/DrugCoded/ProductCodeQualifiercoding.display = //element(*,MedicationType)/DrugDescription"/>
+        <map value="coding.code = //element(*,MedicationType)/DrugCoded/ProductCode&#xD;&#xD;coding.system = //element(*,MedicationType)/DrugCoded/ProductCodeQualifier&#xD;&#xD;coding.display = //element(*,MedicationType)/DrugDescription"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
@@ -646,8 +582,8 @@
         <map value=".player"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.itemCodeableConcept:shr-core-CodeableConcept">
-      <path value="Medication.product.ingredient.itemCodeableConcept"/>
+    <element id="Medication:shr-medication-Medication.ingredient.itemCodeableConcept:shr-core-CodeableConcept">
+      <path value="Medication.ingredient.itemCodeableConcept"/>
       <sliceName value="shr-core-CodeableConcept"/>
       <short value="The product contained"/>
       <definition value="The actual ingredient - either a substance (simple ingredient) or another medication."/>
@@ -657,9 +593,30 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.amount">
-      <path value="Medication.product.ingredient.amount"/>
+    <element id="Medication:shr-medication-Medication.ingredient.isActive">
+      <path value="Medication.ingredient.isActive"/>
+      <short value="Active ingredient indicator"/>
+      <definition value="Indication of whether this&#xA0;ingredient affects&#xA0;the therapeutic action of the drug."/>
+      <requirements value="True indicates that the ingredient affects the therapeutic action of the drug (i.e. active). &#xD;False indicates that the ingredient does not affect the therapeutic action of the drug (i.e. inactive)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="NA"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.ingredient.amount">
+      <path value="Medication.ingredient.amount"/>
       <short value="Quantity of ingredient present"/>
       <definition value="Specifies how many (or how much) of the items there are in this Medication.  For example, 250 mg per tablet.  This is expressed as a ratio where the numerator is 250mg and the denominator is 1 tablet."/>
       <min value="0"/>
@@ -680,34 +637,8 @@
         <map value=".quantity"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.batch">
-      <path value="Medication.product.batch"/>
-      <short value="Identifies a single production run"/>
-      <definition value="Information about a group of medication produced or packaged from one production run."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="BackboneElement"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <mapping>
-        <identity value="script10.6"/>
-        <map value="no mapping"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].id"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.batch.id">
-      <path value="Medication.product.batch.id"/>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.id">
+      <path value="Medication.ingredient.amount.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
@@ -726,11 +657,19 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.batch.extension">
-      <path value="Medication.product.batch.extension"/>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.extension">
+      <path value="Medication.ingredient.amount.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -748,73 +687,36 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.batch.modifierExtension">
-      <path value="Medication.product.batch.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.numerator">
+      <path value="Medication.ingredient.amount.numerator"/>
+      <short value="Numerator value"/>
+      <definition value="The value of the numerator."/>
       <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
+      <max value="1"/>
       <type>
-        <code value="Extension"/>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
-      <isModifier value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value=".numerator"/>
       </mapping>
     </element>
-    <element id="Medication:shr-medication-Medication.product.batch.lotNumber">
-      <path value="Medication.product.batch.lotNumber"/>
-      <short value="Identifier assigned to batch"/>
-      <definition value="The assigned lot number of a batch of the specified product."/>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.denominator">
+      <path value="Medication.ingredient.amount.denominator"/>
+      <short value="Denominator value"/>
+      <definition value="The value of the denominator."/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="string"/>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
-      <mapping>
-        <identity value="script10.6"/>
-        <map value="no mapping"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="RXA-15 Substance Lot Number / RXG-19 Substance Lot Number"/>
-      </mapping>
+      <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
-        <map value="Not Mapped"/>
-      </mapping>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.batch.expirationDate">
-      <path value="Medication.product.batch.expirationDate"/>
-      <short value="When batch will expire"/>
-      <definition value="When this specific batch of product will expire."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <mapping>
-        <identity value="script10.6"/>
-        <map value="no mapping"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="RXA-16 Substance Expiration Date / RXG-20 Substance Expiration Date"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].expirationTime"/>
+        <map value=".denominator"/>
       </mapping>
     </element>
     <element id="Medication:shr-medication-Medication.package">
@@ -867,7 +769,7 @@
       <path value="Medication.package.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -889,7 +791,7 @@
       <path value="Medication.package.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -920,10 +822,13 @@
         <code value="CodeableConcept"/>
       </type>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationContainer"/>
+        </extension>
         <strength value="example"/>
         <description value="A coded concept defining the kind of container a medication package is packaged in"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/medication-package-form-codes"/>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-package-form"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -985,7 +890,7 @@
       <path value="Medication.package.content.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -1007,7 +912,7 @@
       <path value="Medication.package.content.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1069,25 +974,164 @@
         <map value=".quantity"/>
       </mapping>
     </element>
+    <element id="Medication:shr-medication-Medication.package.batch">
+      <path value="Medication.package.batch"/>
+      <short value="Identifies a single production run"/>
+      <definition value="Information about a group of medication produced or packaged from one production run."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].id"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.package.batch.id">
+      <path value="Medication.package.batch.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.package.batch.extension">
+      <path value="Medication.package.batch.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.package.batch.modifierExtension">
+      <path value="Medication.package.batch.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.package.batch.lotNumber">
+      <path value="Medication.package.batch.lotNumber"/>
+      <short value="Identifier assigned to batch"/>
+      <definition value="The assigned lot number of a batch of the specified product."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXA-15 Substance Lot Number / RXG-19 Substance Lot Number"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".id"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.package.batch.expirationDate">
+      <path value="Medication.package.batch.expirationDate"/>
+      <short value="When batch will expire"/>
+      <definition value="When this specific batch of product will expire."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <mapping>
+        <identity value="script10.6"/>
+        <map value="no mapping"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="RXA-16 Substance Expiration Date / RXG-20 Substance Expiration Date"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].expirationTime"/>
+      </mapping>
+    </element>
+    <element id="Medication:shr-medication-Medication.image">
+      <path value="Medication.image"/>
+      <short value="Picture of the medication"/>
+      <definition value="Photo(s) or graphic representation(s) of the medication."/>
+      <requirements value="Note that &quot;image&quot; is only applicable when the medication.code represents a physical item (e.g. Amoxil 250 mg capsule) and not an abstract item (e.g. amoxicillin 250 mg)."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=SUBJ].role[classCode=MANU],source[classCode=OBS,moodCode=EVN,code=&quot;type of image&quot;].value(ED.image)"/>
+      </mapping>
+    </element>
   </snapshot>
   <differential>
     <element id="Medication:shr-medication-Medication">
       <path value="Medication"/>
       <short value="SHR Medication Profile"/>
       <definition value="A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines."/>
-    </element>
-    <element id="Medication:shr-medication-Medication.extension:overthecounter">
-      <path value="Medication.extension"/>
-      <sliceName value="overthecounter"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-OverTheCounter-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Medication:shr-medication-Medication.code">
       <path value="Medication.code"/>
@@ -1097,24 +1141,30 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
-    <element id="Medication:shr-medication-Medication.product">
-      <path value="Medication.product"/>
-    </element>
-    <element id="Medication:shr-medication-Medication.product.form">
-      <path value="Medication.product.form"/>
+    <element id="Medication:shr-medication-Medication.form">
+      <path value="Medication.form"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient">
-      <path value="Medication.product.ingredient"/>
+    <element id="Medication:shr-medication-Medication.ingredient">
+      <path value="Medication.ingredient"/>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.item[x]">
-      <path value="Medication.product.ingredient.item[x]"/>
-      <slicing id="145">
-        <discriminator value="@type"/>
+    <element id="Medication:shr-medication-Medication.ingredient.item[x]">
+      <path value="Medication.ingredient.item[x]"/>
+      <slicing id="177">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
@@ -1123,11 +1173,34 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
     </element>
-    <element id="Medication:shr-medication-Medication.product.ingredient.itemCodeableConcept:shr-core-CodeableConcept">
-      <path value="Medication.product.ingredient.itemCodeableConcept"/>
+    <element id="Medication:shr-medication-Medication.ingredient.itemCodeableConcept:shr-core-CodeableConcept">
+      <path value="Medication.ingredient.itemCodeableConcept"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Medication:shr-medication-Medication.ingredient.amount">
+      <path value="Medication.ingredient.amount"/>
+    </element>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.numerator">
+      <path value="Medication.ingredient.amount.numerator"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+    </element>
+    <element id="Medication:shr-medication-Medication.ingredient.amount.denominator">
+      <path value="Medication.ingredient.amount.denominator"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
     </element>
   </differential>

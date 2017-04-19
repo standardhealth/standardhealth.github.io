@@ -8,18 +8,20 @@
   <p>A record of a request (order) for a test to be performed.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.lab.TestRequest maps to ProcedureRequest:
-  Entry.Author maps to orderer
+  Entry.Author maps to requester.agent
   Entry.FocalSubject maps to subject
-  Entry.AssociatedEncounter maps to encounter
-  Reason maps to reason[x].CodeableConcept
-  OccurrenceTime maps to orderedOn
+  Entry.AssociatedEncounter maps to context
+  Reason maps to reasonCode
+  OccurrenceTime maps to authoredOn   // or could potentially map Entry.DateEntered to authoredOn
   ActionCode maps to code
+  RequestNotToPerformActionModifier maps to doNotPerform
   RequestStatus maps to status
-  RequestedPerformanceTime maps to scheduled[x]
+  RequestedPerformanceTime maps to occurrence[x]
   PriorityOfRequest maps to priority
+  RequestedPerformerType maps to performerType
   RequestedPerformer maps to performer
   BodySite maps to bodySite
-  TBD &quot;Specimen&quot; maps to specimen
+  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
 </pre></p>
 </div>
   </text>
@@ -28,8 +30,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.lab.TestRequest"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR TestRequest Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.592Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -37,9 +41,23 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.566Z"/>
   <description value="A record of a request (order) for a test to be performed."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
+  <mapping>
+    <identity value="workflow"/>
+    <uri value="http://hl7.org/fhir/workflow"/>
+    <name value="Workflow Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
   <mapping>
     <identity value="w5"/>
     <uri value="http://hl7.org/fhir/w5"/>
@@ -49,11 +67,6 @@
     <identity value="quick"/>
     <uri value="http://wiki.siframework.org/CQF"/>
     <name value="Quality Improvement and Clinical Knowledge (QUICK)"/>
-  </mapping>
-  <mapping>
-    <identity value="rim"/>
-    <uri value="http://hl7.org/v3"/>
-    <name value="RIM Mapping"/>
   </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
@@ -65,6 +78,7 @@
       <path value="ProcedureRequest"/>
       <short value="SHR TestRequest Profile"/>
       <definition value="A record of a request (order) for a test to be performed."/>
+      <alias value="diagnostic request"/>
       <min value="0"/>
       <max value="*"/>
       <constraint>
@@ -104,6 +118,18 @@
         <map value="Entity. Role, or Act"/>
       </mapping>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Request"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Act[moodCode&lt;=INT]"/>
+      </mapping>
+      <mapping>
         <identity value="w5"/>
         <map value="clinical.general"/>
       </mapping>
@@ -112,7 +138,7 @@
       <path value="ProcedureRequest.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -145,7 +171,7 @@
       <path value="ProcedureRequest.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. &#xA;&#xA;This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -163,7 +189,7 @@
       <path value="ProcedureRequest.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -180,6 +206,12 @@
             <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
           </valueReference>
         </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
         <strength value="extensible"/>
         <description value="A human language."/>
         <valueSetReference>
@@ -191,7 +223,7 @@
       <path value="ProcedureRequest.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
       <alias value="xhtml"/>
@@ -216,7 +248,7 @@
       <path value="ProcedureRequest.contained"/>
       <short value="Contained, inline Resources"/>
       <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
-      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -237,14 +269,17 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.extension">
       <path value="ProcedureRequest.extension"/>
-      <slicing id="168">
-        <discriminator value="url"/>
+      <slicing id="206">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -266,6 +301,7 @@
       <path value="ProcedureRequest.extension"/>
       <sliceName value="participant"/>
       <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -291,6 +327,7 @@
       <path value="ProcedureRequest.extension"/>
       <sliceName value="performerinstructions"/>
       <definition value="Information for the performer of the test, if needed."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -316,6 +353,7 @@
       <path value="ProcedureRequest.extension"/>
       <sliceName value="patientinstructions"/>
       <definition value="Information for the patient, such as, where to get the test, how to prepare for the test, etc."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -339,14 +377,17 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension">
       <path value="ProcedureRequest.modifierExtension"/>
-      <slicing id="169">
-        <discriminator value="url"/>
+      <slicing id="207">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -369,6 +410,7 @@
       <path value="ProcedureRequest.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
       <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -390,41 +432,29 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension:requestnottoperformactionmodifier">
-      <path value="ProcedureRequest.modifierExtension"/>
-      <sliceName value="requestnottoperformactionmodifier"/>
-      <definition value="If true, the thing requested should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting RequestNotToPerformActionModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the Request.code and RequestAgainstModifier both contain negation, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RequestNotToPerformActionModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.identifier">
       <path value="ProcedureRequest.identifier"/>
-      <short value="Unique identifier for the request"/>
-      <definition value="Identifiers assigned to this order by the order or by the receiver."/>
+      <short value="Identifiers assigned to this order"/>
+      <definition value="Identifiers assigned to this order instance by the orderer and/or the receiver and/or order fulfiller."/>
+      <comment value="The identifier.type element is used to distinguish between the identifiers assigned by the orderer (known as the &#39;Placer&#39; in HL7 v2) and the producer of the observations in response to the order (known as the &#39;Filler&#39; in HL7 v2).  For further discussion and examples see the resource notes section below."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Identifier"/>
       </type>
       <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.2, ORC.3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".identifier"/>
+      </mapping>
       <mapping>
         <identity value="quick"/>
         <map value="ClinicalStatement.identifier"/>
@@ -434,34 +464,282 @@
         <map value="id"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.subject">
-      <path value="ProcedureRequest.subject"/>
-      <short value="Who the procedure should be done to"/>
-      <definition value="The person, animal or group that should receive the procedure."/>
-      <min value="1"/>
-      <max value="1"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.definition">
+      <path value="ProcedureRequest.definition"/>
+      <short value="Protocol or definition"/>
+      <definition value="Protocol or definition followed by this request."/>
+      <alias value="protocol"/>
+      <min value="0"/>
+      <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ActivityDefinition"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
       </type>
       <isSummary value="true"/>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Request.definition"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Varies by domain"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=DEFN].target"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.basedOn">
+      <path value="ProcedureRequest.basedOn"/>
+      <short value="What request fulfills"/>
+      <definition value="Plan/proposal/order fulfilled by this request."/>
+      <alias value="fulfills"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.basedOn"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.8 (plus others)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=FLFS].target"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.replaces">
+      <path value="ProcedureRequest.replaces"/>
+      <short value="What request replaces"/>
+      <definition value="The request takes the place of the referenced completed or terminated request(s)."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.replaces"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Handled by message location of ORC (ORC.1=RO or RU)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=RPLC].target"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requisition">
+      <path value="ProcedureRequest.requisition"/>
+      <short value="Composite Request ID"/>
+      <definition value="A shared identifier common to all procedure or diagnostic requests that were authorized more or less simultaneously by a single author, representing the composite or group identifier."/>
+      <comment value="Requests are linked either by a &quot;basedOn&quot; relationship (i.e. one request is fulfilling another) or by having a common requisition. Requests that are part of the same requisition are generally treated independently from the perspective of changing their state or maintaining them after initial creation."/>
+      <requirements value="Some business processes need to know if multiple items were ordered as part of the same &quot;requisition&quot; for billing or other purposes."/>
+      <alias value="grouperId"/>
+      <alias value="groupIdentifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.4"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".inboundRelationship(typeCode=COMP].source[moodCode=INT].identifier"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.status">
+      <path value="ProcedureRequest.status"/>
+      <short value="draft | active | suspended | completed | entered-in-error | cancelled"/>
+      <definition value="The status of the order."/>
+      <comment value="The status is generally fully in the control of the requester - they determine whether the order is draft or active and, after it has been activated, competed, cancelled or suspended. States relating to the activities of the performer are reflected on either the corresponding event (see [Event Pattern](event.html) for general discussion) or using the [Task](task.html) resource.&#xA;&#xA;This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestStatus"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The status of a procedure or diagnostic order."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/request-status"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.status"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.5"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".status"/>
+      </mapping>
+      <mapping>
         <identity value="quick"/>
-        <map value="ClinicalStatement.subject"/>
+        <map value="Action.currentStatus"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="who.focus"/>
+        <map value="status"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.intent">
+      <path value="ProcedureRequest.intent"/>
+      <short value="proposal | plan | order +"/>
+      <definition value="Whether the request is a proposal, plan, an original order or a reflex order."/>
+      <comment value="This element is labeled as a modifier because the intent alters when and how the resource is actually applicable."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestIntent"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The kind of procedure or diagnostic request"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/request-intent"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.intent"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".moodCode (nuances beyond PRP/PLAN/RQO would need to be elsewhere)"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.priority">
+      <path value="ProcedureRequest.priority"/>
+      <short value="routine | urgent | asap | stat"/>
+      <definition value="Indicates how quickly the ProcedureRequest should be addressed with respect to other requests."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <meaningWhenMissing value="If missing, this task should be performed with normal priority"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestPriority"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Identifies the level of importance to be assigned to actioning the request"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/request-priority"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.priority"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="TQ1.9"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".priorityCode"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.doNotPerform">
+      <path value="ProcedureRequest.doNotPerform"/>
+      <short value="True if procedure should not be performed"/>
+      <definition value="Set this to true if the record is saying that the procedure should NOT be performed."/>
+      <comment value="This element is labeled as a [modifier](conformance-rules.html#isModifier.html) because it indicates that a procedure shouldn&#39;t happen, instead of a request for it to happen.  In general, only the code and timeframe will be present, though occasional additional qualifiers such as body site or even performer could be included to narrow the scope of the prohibition.  If the ProcedureRequest.code and ProcedureRequest.doNotPerform both contain negation, that will reinforce prohibition and should not have a double negative interpretation."/>
+      <requirements value="Used for do not ambulate, do not elevate head of bed, do not flush NG tube, do not take blood pressure on a certain arm, etc."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <defaultValueBoolean value="false"/>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".actionNegationInd"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.category">
+      <path value="ProcedureRequest.category"/>
+      <short value="Classification of procedure"/>
+      <definition value="A code that classifies the procedure for searching, sorting and display purposes (e.g. &quot;Surgical Procedure&quot;)."/>
+      <comment value="There may be multiple axis of categorization depending on the context or use case for retrieving or displaying the resource.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what procedure request are retrieved and displayed."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestCategory"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Classification of the procedure"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/procedure-category"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;INT&quot;].code"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
       </mapping>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.code">
       <path value="ProcedureRequest.code"/>
-      <short value="What procedure to perform"/>
-      <definition value="The specific procedure that is ordered. Use text if the exact nature of the procedure cannot be coded."/>
+      <short value="What is being requested/ordered"/>
+      <definition value="A code that identifies a particular procedure, diagnostic investigation, or panel of investigations, that have been requested."/>
+      <comment value="Many laboratory and radiology procedure codes embed the specimen/organ system in the test ordeer name, for example,  serum or serum/plasma glucose, or a chest xray. The specimen may not be recorded separately from the test code."/>
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -476,69 +754,112 @@
         </valueSetReference>
       </binding>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Request.code"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Varies by domain"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".code"/>
+      </mapping>
+      <mapping>
         <identity value="quick"/>
         <map value="Procedure.procedureCode"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="class"/>
+        <map value="what"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.bodySite">
-      <path value="ProcedureRequest.bodySite"/>
-      <short value="What part of body to perform on"/>
-      <definition value="Indicates the sites on the subject&#39;s body where the procedure should be performed (I.e. the target sites)."/>
-      <comments value="Only used if not implicit in the code found in ProcedureRequest.type."/>
-      <requirements value="Knowing where the procedure is made is important for tracking if multiple sites are possible."/>
-      <min value="0"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.subject">
+      <path value="ProcedureRequest.subject"/>
+      <short value="Individual the service is ordered for"/>
+      <definition value="On whom or what the procedure or diagnostic is to be performed. This is usually a human patient, but can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans)."/>
+      <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
       </type>
       <isSummary value="true"/>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS"/>
-        </valueSetReference>
-      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.subject"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Accompanying PID segment"/>
+      </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="targetSiteCode"/>
+        <map value=".participation[typeCode=SBJ].role"/>
       </mapping>
       <mapping>
         <identity value="quick"/>
-        <map value="Procedure.targetBodySite"/>
+        <map value="ClinicalStatement.subject"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.focus"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.reason[x]">
-      <path value="ProcedureRequest.reason[x]"/>
-      <short value="Why procedure should occur"/>
-      <definition value="The reason why the procedure is being proposed or ordered. This procedure request may be motivated by a Condition for instance."/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.context">
+      <path value="ProcedureRequest.context"/>
+      <short value="Encounter or Episode during which request was created"/>
+      <definition value="An encounter or episode of care that provides additional information about the healthcare context in which this request is made."/>
+      <alias value="encounter"/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <isSummary value="true"/>
-      <binding>
-        <strength value="example"/>
-        <description value="A code that explains the reason why a procedure is  required."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/procedure-reason"/>
-        </valueSetReference>
-      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.context"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Accompanying PV1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".inboundRelationship(typeCode=COMP].source[classCode&lt;=PCPR, moodCode=EVN]"/>
+      </mapping>
       <mapping>
         <identity value="quick"/>
-        <map value="Action.indication.reason"/>
+        <map value="ClinicalStatement.encounter"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="context"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.scheduled[x]">
-      <path value="ProcedureRequest.scheduled[x]"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.occurrence[x]">
+      <path value="ProcedureRequest.occurrence[x]"/>
       <short value="When procedure should occur"/>
-      <definition value="The timing schedule for the proposed or ordered procedure. The Schedule data type allows many different expressions.  E.g. &quot;Every 8 hours&quot;; &quot;Three times a day&quot;; &quot;1/2 an hour before breakfast for 10 days from 23-Dec 2011:&quot;; &quot;15 Oct 2013, 17 Oct 2013 and 1 Nov 2013&quot;."/>
+      <definition value="The date/time at which the diagnostic testing should occur."/>
+      <alias value="schedule"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -552,6 +873,18 @@
       </type>
       <isSummary value="true"/>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Request.occurrence[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Accompanying TQ1/TQ2 segments"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".effectiveTime"/>
+      </mapping>
+      <mapping>
         <identity value="quick"/>
         <map value="Procedure.procedureSchedule"/>
       </mapping>
@@ -560,30 +893,283 @@
         <map value="when.planned"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.encounter">
-      <path value="ProcedureRequest.encounter"/>
-      <short value="Encounter request created during"/>
-      <definition value="The encounter within which the procedure proposal or request was created."/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.asNeeded[x]">
+      <path value="ProcedureRequest.asNeeded[x]"/>
+      <short value="Preconditions for procedure or diagnostic"/>
+      <definition value="If a CodeableConcept is present, it indicates the pre-condition for performing the procedure.  For example &quot;pain&quot;, &quot;on flare-up&quot;, etc."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureAsNeededReason"/>
+        </extension>
+        <strength value="example"/>
+        <description value="A coded concept identifying the pre-condition that should hold prior to performing a procedure.  For example &quot;pain&quot;, &quot;on flare-up&quot;, etc."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-as-needed-reason"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="boolean: precondition.negationInd (inversed - so negationInd = true means asNeeded=false CodeableConcept: precondition.observationEventCriterion[code=&quot;Assertion&quot;].value"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="Proposal.prnReason.reason"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.authoredOn">
+      <path value="ProcedureRequest.authoredOn"/>
+      <short value="Date request signed"/>
+      <definition value="When the request transitioned to being actionable."/>
+      <alias value="orderedOn"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.authoredOn"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.9"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=AUT].time"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="Proposal.proposedAtTime"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.recorded"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester">
+      <path value="ProcedureRequest.requester"/>
+      <short value="Who/what is requesting procedure or diagnostic"/>
+      <definition value="The individual who initiated the request and has responsibility for its activation."/>
+      <comment value="This not the dispatcher, but rather who is the authorizer."/>
+      <alias value="author"/>
+      <alias value="orderer"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.requester"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.12"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=AUT].role"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.statementAuthor"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.id">
+      <path value="ProcedureRequest.requester.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.extension">
+      <path value="ProcedureRequest.requester.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.modifierExtension">
+      <path value="ProcedureRequest.requester.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.agent">
+      <path value="ProcedureRequest.requester.agent"/>
+      <short value="Individual making the request"/>
+      <definition value="The device, practitioner or organization who initiated the request."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.requester.agent"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.12"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".player"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="ClinicalStatement.statementAuthor"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.author"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.onBehalfOf">
+      <path value="ProcedureRequest.requester.onBehalfOf"/>
+      <short value="Organization agent is acting for"/>
+      <definition value="The organization the device or practitioner was acting on behalf of."/>
+      <requirements value="Practitioners and Devices can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of when authoring the request."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <isSummary value="true"/>
       <mapping>
-        <identity value="quick"/>
-        <map value="ClinicalStatement.encounter"/>
+        <identity value="workflow"/>
+        <map value="Request.requester.onBehalfOf"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".scoper"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.performerType">
+      <path value="ProcedureRequest.performerType"/>
+      <short value="Performer role"/>
+      <definition value="Desired type of performer for doing the diagnostic testing."/>
+      <comment value="this is a  role, not  a participation type.  I.e. does not describe the task, but describes the capacity.  For example, &#x201C;compounding pharmacy&#x201D; or &#x201C;psychiatrist&#x201D; or &#x201C;internal referral&#x201D;."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestParticipantRole"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Indicates specific responsibility of an individual within the care team, such as &quot;Primary physician&quot;, &quot;Team coordinator&quot;, &quot;Caregiver&quot;, etc."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/participant-role"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.performerType"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRT"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=PRF].role[scoper.determinerCode=KIND].code"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="context"/>
+        <map value="who.actor"/>
       </mapping>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.performer">
       <path value="ProcedureRequest.performer"/>
-      <short value="Who should perform the procedure"/>
-      <definition value="For example, the surgeon, anaethetist, endoscopist, etc."/>
+      <short value="Requested perfomer"/>
+      <definition value="The desired perfomer for doing the diagnostic testing.  For example, the surgeon, dermatopathologist, endoscopist, etc."/>
+      <comment value="If needed, use an [extension](extensibility.html) for listing alternative performers and/or roles and/or preference."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -600,165 +1186,233 @@
       </type>
       <type>
         <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/HealthcareService"/>
+      </type>
       <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.Performer"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRT"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=PRF].role[scoper.determinerCode=INSTANCE]"/>
+      </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.status">
-      <path value="ProcedureRequest.status"/>
-      <short value="proposed | draft | requested | received | accepted | in-progress | completed | suspended | rejected | aborted"/>
-      <definition value="The status of the order."/>
-      <min value="1"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.reasonCode">
+      <path value="ProcedureRequest.reasonCode"/>
+      <short value="Explanation/Justification for test"/>
+      <definition value="An explanation or justification for why this diagnostic investigation is being requested in coded or textual form.   This is often for billing purposes.  May relate to the resources referred to in supportingInformation."/>
+      <comment value="This may be used to decide how the diagnostic investigation will be performed, or even if it will be performed at all.   Use CodeableConcept text element if the data is free (uncoded) text as shown in the [CT Scan example](procedurerequest-example-di.html)."/>
+      <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="code"/>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
-        <description value="The status of the request."/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedureRequestReason"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Diagnosis or problem codes justifying the reason for requesting the procedure or diagnostic investigation."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/procedure-request-status"/>
+          <reference value="http://hl7.org/fhir/ValueSet/procedure-reason"/>
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="quick"/>
-        <map value="Action.currentStatus"/>
+        <identity value="workflow"/>
+        <map value="Request.reasonCod"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.16"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".reasonCode"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="status"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.reasonReference">
+      <path value="ProcedureRequest.reasonReference"/>
+      <short value="Explanation/Justification for test"/>
+      <definition value="Indicates another resource that provides a justification for why this diagnostic investigation is being requested.   May relate to the resources referred to in supportingInformation."/>
+      <comment value="This may be used to decide how the diagnostic investigation will be performed, or even if it will be performed at all.   Use CodeableConcept text element if the data is free (uncoded) text as shown in the [CT Scan example](procedurerequest-example-di.html)."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.reasonReference"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC.16"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=RSON].target"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
       </mapping>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.supportingInfo">
       <path value="ProcedureRequest.supportingInfo"/>
-      <short value="Extra information to use in performing request"/>
-      <definition value="Information that may be needed by/relevant to the performer in their execution of this request."/>
+      <short value="Additional clinical information"/>
+      <definition value="Additional clinical information about the patient or specimen that may influence the procedure or diagnostics or their interpretations.     This information includes diagnosis, clinical findings and other observations.  In laboratory ordering these are typically referred to as &quot;ask at order entry questions (AOEs)&quot;.  This includes observations explicitly requested by the producer (filler) to provide context or supporting information needed to complete the order. For example,  reporting the amount of inspired oxygen for blood gas measurements."/>
+      <alias value="Ask at order entry question"/>
+      <alias value="AOE"/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
-      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.supportingInformation"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Accompanying segments"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=PERT].target"/>
+      </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.notes">
-      <path value="ProcedureRequest.notes"/>
-      <short value="Additional information about desired procedure"/>
-      <definition value="Any other notes associated with this proposal or order - e.g. provider instructions."/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.specimen">
+      <path value="ProcedureRequest.specimen"/>
+      <short value="Procedure Samples"/>
+      <definition value="One or more specimens that the laboratory procedure will use."/>
+      <comment value="Many diagnostic procedures need a specimen, but the request itself is not actually about the specimen. This element is for when the diagnostic is requested on already existing specimens and the request points to the specimen it applies to.    Conversely, If the request is entered first with an unknown specimen, The [Specimen](specimen.html) resource references to the ProcedureRequest."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SPM"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".participation[typeCode=SPC].role"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.bodySite">
+      <path value="ProcedureRequest.bodySite"/>
+      <short value="Location on Body"/>
+      <definition value="Anatomic location where the procedure should be performed. This is the target site."/>
+      <comment value="Only used if not implicit in the code found in ProcedureRequest.type.  If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [procedurerequest-targetBodySite](extension-procedurerequest-targetbodysite.html)."/>
+      <requirements value="Knowing where the procedure is performed is important for tracking if multiple sites are possible."/>
+      <alias value="location"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SPM"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="targetSiteCode"/>
+      </mapping>
+      <mapping>
+        <identity value="quick"/>
+        <map value="Procedure.targetBodySite"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.note">
+      <path value="ProcedureRequest.note"/>
+      <short value="Comments"/>
+      <definition value="Any other notes and comments made about the service request. For example, letting provider know that &quot;patient hates needles&quot; or other provider instructions."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Annotation"/>
       </type>
-      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Request.note"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="NTE"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".inboundRelationship(typeCode=SUBJ].source[classCode=ANNGEN, moodCode=EVN].value[xsi:type=ST]"/>
+      </mapping>
       <mapping>
         <identity value="quick"/>
         <map value="ClinicalStatement.additionalText"/>
       </mapping>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.asNeeded[x]">
-      <path value="ProcedureRequest.asNeeded[x]"/>
-      <short value="Preconditions for procedure"/>
-      <definition value="If a CodeableConcept is present, it indicates the pre-condition for performing the procedure."/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.relevantHistory">
+      <path value="ProcedureRequest.relevantHistory"/>
+      <short value="Request provenance"/>
+      <definition value="Key events in the history of the request."/>
+      <comment value="This may not include provenances for all versions of the request &#x2013; only those deemed &#x201C;relevant&#x201D; or important.&#xD;This SHALL NOT include the Provenance associated with this current version of the resource.  (If that provenance is deemed to be a &#x201C;relevant&#x201D; change, it will need to be added as part of a later update.  Until then, it can be queried directly as the Provenance that points to this version using _revinclude&#xD;All Provenances should have some historical version of this Request as their subject."/>
       <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="boolean"/>
-      </type>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="example"/>
-        <description value="A coded concept identifying the pre-condition that should hold prior to performing a procedure.  For example &quot;pain&quot;, &quot;on flare-up&quot;, etc."/>
-      </binding>
-      <mapping>
-        <identity value="quick"/>
-        <map value="Proposal.prnReason.reason"/>
-      </mapping>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.orderedOn">
-      <path value="ProcedureRequest.orderedOn"/>
-      <short value="When request was created"/>
-      <definition value="The time when the request was made."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="quick"/>
-        <map value="Proposal.proposedAtTime"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="when.recorded"/>
-      </mapping>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.orderer">
-      <path value="ProcedureRequest.orderer"/>
-      <short value="Who made request"/>
-      <definition value="The healthcare professional responsible for proposing or ordering the procedure."/>
-      <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Provenance"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <isSummary value="true"/>
       <mapping>
-        <identity value="quick"/>
-        <map value="ClinicalStatement.statementAuthor"/>
+        <identity value="workflow"/>
+        <map value="Request.relevantHistory"/>
       </mapping>
       <mapping>
-        <identity value="w5"/>
-        <map value="who.author"/>
-      </mapping>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.priority">
-      <path value="ProcedureRequest.priority"/>
-      <short value="routine | urgent | stat | asap"/>
-      <definition value="The clinical priority associated with this order."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="code"/>
-      </type>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="required"/>
-        <description value="The priority of the request."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/procedure-request-priority"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="quick"/>
-        <map value="Proposal.urgency"/>
+        <identity value="v2"/>
+        <map value="N/A"/>
       </mapping>
       <mapping>
-        <identity value="w5"/>
-        <map value="grade"/>
+        <identity value="rim"/>
+        <map value=".inboundRelationship(typeCode=SUBJ].source[classCode=CACT, moodCode=EVN]"/>
       </mapping>
     </element>
   </snapshot>
@@ -820,30 +1474,6 @@
       <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension:requestnottoperformactionmodifier">
-      <path value="ProcedureRequest.modifierExtension"/>
-      <sliceName value="requestnottoperformactionmodifier"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RequestNotToPerformActionModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.subject">
-      <path value="ProcedureRequest.subject"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-    </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.code">
       <path value="ProcedureRequest.code"/>
       <type>
@@ -857,33 +1487,52 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.bodySite">
-      <path value="ProcedureRequest.bodySite"/>
-      <min value="0"/>
-      <max value="1"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.subject">
+      <path value="ProcedureRequest.subject"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.reason[x]">
-      <path value="ProcedureRequest.reason[x]"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
       </type>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.encounter">
-      <path value="ProcedureRequest.encounter"/>
+    <element id="ProcedureRequest:shr-lab-TestRequest.context">
+      <path value="ProcedureRequest.context"/>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+      </type>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester">
+      <path value="ProcedureRequest.requester"/>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.requester.agent">
+      <path value="ProcedureRequest.requester.agent"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.performer">
@@ -902,32 +1551,40 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
-      </type>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.status">
-      <path value="ProcedureRequest.status"/>
-      <min value="1"/>
-      <max value="1"/>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.orderer">
-      <path value="ProcedureRequest.orderer"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
-      </type>
-      <type>
-        <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
       </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/HealthcareService"/>
+      </type>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.reasonCode">
+      <path value="ProcedureRequest.reasonCode"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.bodySite">
+      <path value="ProcedureRequest.bodySite"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

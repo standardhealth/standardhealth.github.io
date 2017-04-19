@@ -18,8 +18,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.base.Narrative"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR Narrative Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:20.581Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -27,9 +29,8 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:37.970Z"/>
   <description value="A human-readable narrative, potentially including images, that contains a summary of the resource, and may be used to represent the content of the resource to a human."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -87,9 +88,17 @@
     </element>
     <element id="Narrative:shr-base-Narrative.extension">
       <path value="Narrative.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -117,6 +126,9 @@
         <code value="code"/>
       </type>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="NarrativeStatus"/>
+        </extension>
         <strength value="required"/>
         <description value="The status of a resource narrative"/>
         <valueSetReference>
@@ -132,7 +144,7 @@
       <path value="Narrative.div"/>
       <short value="Limited xhtml content"/>
       <definition value="The actual narrative content, a stripped down version of XHTML."/>
-      <comments value="The contents of the html element are an XHTML fragment containing only the basic html formatting elements described in chapters 7-11 and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained stylesheets. The XHTML content may not contain a head, a body, external stylesheet references, scripts, forms, base/link/xlink, frames, iframes and objects."/>
+      <comment value="The contents of the html element are an XHTML fragment containing only the basic html formatting elements described in chapters 7-11 and 15 of the HTML 4.0 standard, &lt;a&gt; elements (either name or href), images and internally contained stylesheets. The XHTML content may not contain a head, a body, external stylesheet references, scripts, forms, base/link/xlink, frames, iframes and objects."/>
       <min value="1"/>
       <max value="1"/>
       <type>

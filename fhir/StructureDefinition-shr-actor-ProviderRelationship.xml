@@ -8,7 +8,7 @@
   <p>A person or organization responsible for providing a service to the person of record. Such a relationship can exist without a specific encounter or services being rendered; for example, an emergency contact relationship can exist without ever calling upon that person. The entry can also be used to state that a provider relationship does not exist, e.g., patient does not have a primary care provider.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.actor.ProviderRelationship maps to CareTeam:
-  participant is 1..1
+  constrain participant to 1..1
   Provider maps to participant.member
   HealthcareRole maps to participant.role
   GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to participant.period
@@ -20,8 +20,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.actor.ProviderRelationship"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR ProviderRelationship Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:20.546Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -29,9 +31,8 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:37.952Z"/>
   <description value="A person or organization responsible for providing a service to the person of record. Such a relationship can exist without a specific encounter or services being rendered; for example, an emergency contact relationship can exist without ever calling upon that person. The entry can also be used to state that a provider relationship does not exist, e.g., patient does not have a primary care provider."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="w5"/>
     <uri value="http://hl7.org/fhir/w5"/>
@@ -104,7 +105,7 @@
       <path value="CareTeam.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comments value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -137,7 +138,7 @@
       <path value="CareTeam.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
-      <comments value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. &#xA;&#xA;This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -155,7 +156,7 @@
       <path value="CareTeam.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
-      <comments value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -172,6 +173,12 @@
             <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
           </valueReference>
         </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
         <strength value="extensible"/>
         <description value="A human language."/>
         <valueSetReference>
@@ -183,7 +190,7 @@
       <path value="CareTeam.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comments value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
       <alias value="xhtml"/>
@@ -208,7 +215,7 @@
       <path value="CareTeam.contained"/>
       <short value="Contained, inline Resources"/>
       <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
-      <comments value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -229,14 +236,17 @@
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.extension">
       <path value="CareTeam.extension"/>
-      <slicing id="3">
-        <discriminator value="url"/>
+      <slicing id="11">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -258,6 +268,7 @@
       <path value="CareTeam.extension"/>
       <sliceName value="priority"/>
       <definition value="An ordinal numbered priority where 1=highest priority, 2=second highest priority, etc."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -281,14 +292,17 @@
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.modifierExtension">
       <path value="CareTeam.modifierExtension"/>
-      <slicing id="4">
-        <discriminator value="url"/>
+      <slicing id="12">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -311,6 +325,7 @@
       <path value="CareTeam.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
       <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -349,15 +364,26 @@
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.status">
       <path value="CareTeam.status"/>
-      <short value="active | suspended | inactive | entered in error"/>
-      <definition value="Indicates whether the care team is currently active, suspended, inactive, or entered in error."/>
+      <short value="proposed | active | suspended | inactive | entered-in-error"/>
+      <definition value="Indicates the current state of the care team."/>
+      <comment value="This element is labeled as a modifier because the status contains the code entered-in-error that marks the care team as not currently valid."/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
+        <code value="code"/>
       </type>
       <isModifier value="true"/>
       <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="CareTeamStatus"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Indicates the status of the care team."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/care-team-status"/>
+        </valueSetReference>
+      </binding>
       <mapping>
         <identity value="w5"/>
         <map value="status"/>
@@ -367,7 +393,7 @@
       <path value="CareTeam.category"/>
       <short value="Type of team"/>
       <definition value="Identifies what kind of team.  This is to support differentiation between multiple co-existing teams, such as care plan team, episode of care team, longitudinal care team."/>
-      <comments value="There may be multiple axis of categorization and one team may serve multiple purposes."/>
+      <comment value="There may be multiple axis of categorization and one team may serve multiple purposes."/>
       <requirements value="Used for filtering what teams(s) are retrieved and displayed to different types of users."/>
       <min value="0"/>
       <max value="*"/>
@@ -375,6 +401,16 @@
         <code value="CodeableConcept"/>
       </type>
       <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="CareTeamCategory"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Indicates the type of care team."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/care-team-category"/>
+        </valueSetReference>
+      </binding>
       <mapping>
         <identity value="w5"/>
         <map value="class"/>
@@ -384,7 +420,7 @@
       <path value="CareTeam.name"/>
       <short value="Name of the team, such as crisis assessment team"/>
       <definition value="A label for human use intended to distinguish like teams.  E.g. the &quot;red&quot; vs. &quot;green&quot; trauma teams."/>
-      <comments value="The meaning/purpose of the team is conveyed in CareTeam.category.  This element may also convey semantics of the team (e.g. &quot;Red trauma team&quot;), but it&#39;s primary purpose is to distinguish between identical teams in a human-friendly way.  (&quot;Team 18735&quot; isn&#39;t as friendly . )."/>
+      <comment value="The meaning/purpose of the team is conveyed in CareTeam.category.  This element may also convey semantics of the team (e.g. &quot;Red trauma team&quot;), but its primary purpose is to distinguish between identical teams in a human-friendly way.  (&quot;Team 18735&quot; isn&#39;t as friendly . )."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -397,6 +433,7 @@
       <short value="Who care team is for"/>
       <definition value="Identifies the patient or group whose intended care is handled by the team."/>
       <requirements value="Allows the team to care for a group (e.g. marriage) therapy."/>
+      <alias value="patient"/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -411,6 +448,27 @@
       <mapping>
         <identity value="w5"/>
         <map value="who.focus"/>
+      </mapping>
+    </element>
+    <element id="CareTeam:shr-actor-ProviderRelationship.context">
+      <path value="CareTeam.context"/>
+      <short value="Encounter or episode associated with CareTeam"/>
+      <definition value="The encounter or episode of care that establishes the context for this care team."/>
+      <alias value="encounter"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="w5"/>
+        <map value="context"/>
       </mapping>
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.period">
@@ -438,6 +496,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <condition value="ctm-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -446,13 +505,20 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
+      <constraint>
+        <key value="ctm-1"/>
+        <severity value="error"/>
+        <human value="CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner"/>
+        <expression value="onBehalfOf.exists() implies (member.resolve() is Practitioner)"/>
+        <xpath value="contains(f:member, &#39;/Practitioner&#39;) or not(exists(f:onBehalfOf))"/>
+      </constraint>
       <mapping>
         <identity value="v2"/>
         <map value="REL (REL.4 is always the Patient) ( or PRT?)"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".participation[typeCode=PFM]"/>
+        <map value=".participation[typeCode=PRF]"/>
       </mapping>
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.participant.id">
@@ -479,7 +545,7 @@
       <path value="CareTeam.participant.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -501,7 +567,7 @@
       <path value="CareTeam.participant.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -526,7 +592,7 @@
       <path value="CareTeam.participant.role"/>
       <short value="Type of involvement"/>
       <definition value="Indicates specific responsibility of an individual within the care team, such as &quot;Primary care physician&quot;, &quot;Trained social worker counselor&quot;, &quot;Caregiver&quot;, etc."/>
-      <comments value="Roles may sometimes be inferred by type of Practitioner.  These are relationships that hold only within the context of the care team.  General relationships should be handled as properties of the Patient resource directly."/>
+      <comment value="Roles may sometimes be inferred by type of Practitioner.  These are relationships that hold only within the context of the care team.  General relationships should be handled as properties of the Patient resource directly."/>
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -537,7 +603,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/fhir/ValueSet/shr-actor-HealthcareRoleVS"/>
+          <reference value="http://standardhealthrecord.org/shr/actor/vs/HealthcareRoleVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -553,9 +619,7 @@
       <path value="CareTeam.participant.member"/>
       <short value="Who is involved"/>
       <definition value="The specific person or organization who is participating/expected to participate in the care team."/>
-      <comments value="Patient only needs to be listed if they have a role other than &quot;subject of care&quot;.
-
-Member is optional because some participants may be known only by their role, particularly in draft plans."/>
+      <comment value="Patient only needs to be listed if they have a role other than &quot;subject of care&quot;.&#xA;&#xA;Member is optional because some participants may be known only by their role, particularly in draft plans."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -574,6 +638,10 @@ Member is optional because some participants may be known only by their role, pa
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CareTeam"/>
+      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -588,6 +656,19 @@ Member is optional because some participants may be known only by their role, pa
         <map value="who.actor"/>
       </mapping>
     </element>
+    <element id="CareTeam:shr-actor-ProviderRelationship.participant.onBehalfOf">
+      <path value="CareTeam.participant.onBehalfOf"/>
+      <short value="Organization of the practitioner"/>
+      <definition value="The organization of the practitioner."/>
+      <requirements value="Practitioners can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.participant.period">
       <path value="CareTeam.participant.period"/>
       <short value="Time period of participant"/>
@@ -598,6 +679,45 @@ Member is optional because some participants may be known only by their role, pa
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
+    </element>
+    <element id="CareTeam:shr-actor-ProviderRelationship.reasonCode">
+      <path value="CareTeam.reasonCode"/>
+      <short value="Why the care team exists"/>
+      <definition value="Describes why the care team exists."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="CareTeamReason"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Indicates the reason for the care team."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/clinical-findings"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="CareTeam:shr-actor-ProviderRelationship.reasonReference">
+      <path value="CareTeam.reasonReference"/>
+      <short value="Why the care team exists"/>
+      <definition value="Condition(s) that this care team addresses."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+      </type>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.managingOrganization">
       <path value="CareTeam.managingOrganization"/>
@@ -611,6 +731,16 @@ Member is optional because some participants may be known only by their role, pa
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <isSummary value="true"/>
+    </element>
+    <element id="CareTeam:shr-actor-ProviderRelationship.note">
+      <path value="CareTeam.note"/>
+      <short value="Comments made about the CareTeam"/>
+      <definition value="Comments made about the CareTeam."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Annotation"/>
+      </type>
     </element>
   </snapshot>
   <differential>
@@ -661,7 +791,7 @@ Member is optional because some participants may be known only by their role, pa
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/fhir/ValueSet/shr-actor-HealthcareRoleVS"/>
+          <reference value="http://standardhealthrecord.org/shr/actor/vs/HealthcareRoleVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -682,6 +812,10 @@ Member is optional because some participants may be known only by their role, pa
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CareTeam"/>
       </type>
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.participant.period">

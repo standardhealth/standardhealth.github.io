@@ -14,7 +14,6 @@
     <sch:rule context="f:Procedure">
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension']) &gt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension': minimum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension': maximum cardinality of 'extension' is 1</sch:assert>
-      <sch:assert test="count(f:reasonNotPerformed) &lt;= 1">reasonNotPerformed: maximum cardinality of 'reasonNotPerformed' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -24,7 +23,7 @@
       <sch:assert test="not(parent::f:contained and f:text)">If the resource is contained in another resource, it SHALL NOT contain any narrative</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
       <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
-      <sch:assert test="not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()">Reason not performed is only permitted if notPerformed indicator is true</sch:assert>
+      <sch:assert test="not(exists(f:notDoneReason)) or f:notDone/@value=true()">Reason not done is only permitted if notDone indicator is true</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

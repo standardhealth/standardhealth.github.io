@@ -12,8 +12,10 @@
       "value": "shr.demographics.HealthInsurance"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR HealthInsurance Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.485Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,11 +27,15 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.522Z",
   "description": "Health insurance coverage available (even if not used for payment for a given encounter).",
   "purpose": "Health care programs and insurers are significant payors of health service costs.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Mapping"
+    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -110,6 +116,10 @@
             "map": "Entity. Role, or Act"
           },
           {
+            "identity": "workflow",
+            "map": "Event"
+          },
+          {
             "identity": "rim",
             "map": "Coverage"
           },
@@ -124,7 +134,7 @@
         "path": "Coverage.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -163,7 +173,7 @@
         "path": "Coverage.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -184,7 +194,7 @@
         "path": "Coverage.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -204,6 +214,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -218,7 +236,7 @@
         "path": "Coverage.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -252,7 +270,7 @@
         "path": "Coverage.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -282,7 +300,7 @@
         "path": "Coverage.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -311,7 +329,7 @@
         "path": "Coverage.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -352,6 +370,10 @@
         "isSummary": true,
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.identifier"
+          },
+          {
             "identity": "cdanetv4",
             "map": "C02"
           },
@@ -374,6 +396,7 @@
         "path": "Coverage.status",
         "short": "active | cancelled | draft | entered-in-error",
         "definition": "The status of the resource instance.",
+        "comment": "This element is labeled as a modifier because the status contains the code entered-in-error that marks the coverage as not currently valid.",
         "min": 0,
         "max": "1",
         "type": [
@@ -384,6 +407,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "CoverageStatus"
+            }
+          ],
           "strength": "required",
           "description": "A code specifying the state of the resource instance.",
           "valueSetReference": {
@@ -391,6 +420,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.status"
+          },
           {
             "identity": "w5",
             "map": "status"
@@ -400,7 +433,7 @@
       {
         "id": "Coverage:shr-demographics-HealthInsurance.type",
         "path": "Coverage.type",
-        "short": "Type of coverage",
+        "short": "Type of coverage such as medical or accident",
         "definition": "The type of coverage: social program, medical plan, accident coverage (workers compensation, auto), group health or payment by an individual or organization.",
         "requirements": "The order of application of coverages is dependent on the types of coverage.",
         "min": 1,
@@ -415,7 +448,7 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-demographics-InsuranceProviderTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/demographics/vs/InsuranceProviderTypeVS"
           }
         },
         "mapping": [
@@ -555,6 +588,10 @@
         "isSummary": true,
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.subject"
+          },
+          {
             "identity": "cdanetv4",
             "map": "D01 through D09"
           },
@@ -586,6 +623,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Relationship"
+            }
+          ],
           "strength": "example",
           "description": "The relationship between the Policyholder and the Beneficiary (insured/covered party/patient).",
           "valueSetReference": {
@@ -614,6 +657,10 @@
         ],
         "isSummary": true,
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.occurrence"
+          },
           {
             "identity": "v2",
             "map": "IN1-12 / IN1-13"
@@ -667,14 +714,14 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping",
         "extension": [
           {
             "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name",
             "valueString": "Group"
           }
         ],
-        "path": "Coverage.group",
+        "path": "Coverage.grouping",
         "short": "Additional coverage classifications",
         "definition": "A suite of underwrite specific classifiers, for example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "min": 0,
@@ -696,8 +743,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.id",
-        "path": "Coverage.group.id",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.id",
+        "path": "Coverage.grouping.id",
         "representation": [
           "xmlAttr"
         ],
@@ -723,11 +770,11 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.extension",
-        "path": "Coverage.group.extension",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.extension",
+        "path": "Coverage.grouping.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -752,11 +799,11 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.modifierExtension",
-        "path": "Coverage.group.modifierExtension",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.modifierExtension",
+        "path": "Coverage.grouping.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -784,8 +831,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.group",
-        "path": "Coverage.group.group",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.group",
+        "path": "Coverage.grouping.group",
         "short": "An identifier for the group",
         "definition": "Identifies a style or collective of coverage issued by the underwriter, for example may be used to identify an employer group. May also be referred to as a Policy or Group ID.",
         "min": 0,
@@ -812,8 +859,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.groupDisplay",
-        "path": "Coverage.group.groupDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.groupDisplay",
+        "path": "Coverage.grouping.groupDisplay",
         "short": "Display text for an identifier for the group",
         "definition": "A short description for the group.",
         "min": 0,
@@ -840,8 +887,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subGroup",
-        "path": "Coverage.group.subGroup",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subGroup",
+        "path": "Coverage.grouping.subGroup",
         "short": "An identifier for the subsection of the group",
         "definition": "Identifies a style or collective of coverage issued by the underwriter, for example may be used to identify a subset of an employer group.",
         "min": 0,
@@ -860,8 +907,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subGroupDisplay",
-        "path": "Coverage.group.subGroupDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subGroupDisplay",
+        "path": "Coverage.grouping.subGroupDisplay",
         "short": "Display text for the subsection of the group",
         "definition": "A short description for the subgroup.",
         "min": 0,
@@ -880,8 +927,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.plan",
-        "path": "Coverage.group.plan",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.plan",
+        "path": "Coverage.grouping.plan",
         "short": "An identifier for the plan",
         "definition": "Identifies a style or collective of coverage issued by the underwriter, for example may be used to identify a collection of benefits provided to employees. May be referred to as a Section or Division ID.",
         "min": 0,
@@ -904,8 +951,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.planDisplay",
-        "path": "Coverage.group.planDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.planDisplay",
+        "path": "Coverage.grouping.planDisplay",
         "short": "Display text for the plan",
         "definition": "A short description for the plan.",
         "min": 0,
@@ -928,8 +975,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subPlan",
-        "path": "Coverage.group.subPlan",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subPlan",
+        "path": "Coverage.grouping.subPlan",
         "short": "An identifier for the subsection of the plan",
         "definition": "Identifies a sub-style or sub-collective of coverage issued by the underwriter, for example may be used to identify a subset of a collection of benefits provided to employees.",
         "min": 0,
@@ -948,8 +995,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subPlanDisplay",
-        "path": "Coverage.group.subPlanDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subPlanDisplay",
+        "path": "Coverage.grouping.subPlanDisplay",
         "short": "Display text for the subsection of the plan",
         "definition": "A short description for the subplan.",
         "min": 0,
@@ -968,10 +1015,10 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.class",
-        "path": "Coverage.group.class",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.class",
+        "path": "Coverage.grouping.class",
         "short": "An identifier for the class",
-        "definition": "Identifies a style or collective of coverage issues by the underwriter, for example may be used to identify a class of coverage or employer group.",
+        "definition": "Identifies a style or collective of coverage issues by the underwriter, for example may be used to identify a class of coverage such as a level of deductables or co-payment.",
         "min": 0,
         "max": "1",
         "type": [
@@ -992,8 +1039,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.classDisplay",
-        "path": "Coverage.group.classDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.classDisplay",
+        "path": "Coverage.grouping.classDisplay",
         "short": "Display text for the class",
         "definition": "A short description for the class.",
         "min": 0,
@@ -1016,10 +1063,10 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subClass",
-        "path": "Coverage.group.subClass",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subClass",
+        "path": "Coverage.grouping.subClass",
         "short": "An identifier for the subsection of the class",
-        "definition": "Identifies a sub-style or sub-collective of coverage issues by the underwriter, for example may be used to identify a subclass of coverage or employer group.",
+        "definition": "Identifies a sub-style or sub-collective of coverage issues by the underwriter, for example may be used to identify a subclass of coverage such as a sub-level of deductables or co-payment.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1040,8 +1087,8 @@
         ]
       },
       {
-        "id": "Coverage:shr-demographics-HealthInsurance.group.subClassDisplay",
-        "path": "Coverage.group.subClassDisplay",
+        "id": "Coverage:shr-demographics-HealthInsurance.grouping.subClassDisplay",
+        "path": "Coverage.grouping.subClassDisplay",
         "short": "Display text for the subsection of the subclass",
         "definition": "A short description for the subclass.",
         "min": 0,
@@ -1205,7 +1252,7 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/fhir/ValueSet/shr-demographics-InsuranceProviderTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/demographics/vs/InsuranceProviderTypeVS"
           }
         }
       },

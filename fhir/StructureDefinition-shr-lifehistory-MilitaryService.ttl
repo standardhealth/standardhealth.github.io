@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-lifehistory-MilitaryService"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MilitaryService Profile</b></p>\n  <p>History of service in the US military.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lifehistory.MilitaryService maps to DiagnosticReport:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to encounter\n  Entry.OriginalCreationDate maps to issued\n  CodeableConcept maps to codedDiagnosis\n  Observation maps to result\n  TBD &quot;Specimen&quot; maps to specimen\n  Interpretation maps to conclusion\n  ObservationCategory maps to category\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MilitaryService Profile</b></p>\n  <p>History of service in the US military.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lifehistory.MilitaryService maps to DiagnosticReport:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  CodeableConcept maps to codedDiagnosis\n  Observation maps to result\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  Interpretation maps to conclusion\n  ObservationCategory maps to category\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-lifehistory-MilitaryService"];
   fhir:StructureDefinition.identifier [
@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.lifehistory.MilitaryService" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR MilitaryService Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:22.860Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,22 +31,26 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:38.630Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "History of service in the US military."];
   fhir:StructureDefinition.purpose [ fhir:value "To support reporting for any diagnostic report into a clinical data repository."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "workflow" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/fhir/workflow" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "Workflow Mapping" ]
+  ], [
+     fhir:index 1;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v2" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "HL7 v2 Mapping" ]
   ], [
-     fhir:index 1;
+     fhir:index 2;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v3" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "RIM Mapping" ]
   ], [
-     fhir:index 2;
+     fhir:index 3;
      fhir:StructureDefinition.mapping.identity [ fhir:value "w5" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/fhir/w5" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "W5 Mapping" ]
@@ -61,7 +67,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport" ];
        fhir:ElementDefinition.short [ fhir:value "SHR MilitaryService Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "History of service in the US military." ];
-       fhir:ElementDefinition.comments [ fhir:value "This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing." ];
        fhir:ElementDefinition.alias [
          fhir:value "Report";
          fhir:index 0
@@ -81,7 +87,7 @@
          fhir:value "Laboratory";
          fhir:index 5
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.constraint [
          fhir:index 0;
@@ -122,14 +128,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Entity. Role, or Act" ]
        ], [
          fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event" ]
+       ], [
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "ORU -> OBR" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "Observation[classCode=OBS, moodCode=EVN]" ]
        ], [
-         fhir:index 3;
+         fhir:index 4;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "clinical.diagnostics" ]
        ]
@@ -139,12 +149,12 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.id" ];
        fhir:ElementDefinition.short [ fhir:value "Logical id of this artifact" ];
        fhir:ElementDefinition.definition [ fhir:value "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." ];
-       fhir:ElementDefinition.comments [ fhir:value "The only time that a resource does not have an id is when it is being submitted to the server using a create operation." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "The only time that a resource does not have an id is when it is being submitted to the server using a create operation." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -158,11 +168,11 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.meta" ];
        fhir:ElementDefinition.short [ fhir:value "Metadata about the resource" ];
        fhir:ElementDefinition.definition [ fhir:value "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.meta" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -176,12 +186,12 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.implicitRules" ];
        fhir:ElementDefinition.short [ fhir:value "A set of rules under which this content was created" ];
        fhir:ElementDefinition.definition [ fhir:value "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." ];
-       fhir:ElementDefinition.comments [ fhir:value "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.implicitRules" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -196,12 +206,12 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.language" ];
        fhir:ElementDefinition.short [ fhir:value "Language of the resource content" ];
        fhir:ElementDefinition.definition [ fhir:value "The base language in which the resource is written." ];
-       fhir:ElementDefinition.comments [ fhir:value "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.language" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -209,13 +219,21 @@
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
        fhir:ElementDefinition.binding [
-         fhir:extension [
+         fhir:Element.extension [
            fhir:index 0;
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet" ];
            fhir:Extension.valueReference [
              fhir:link <http://hl7.org/fhir/ValueSet/all-languages>;
              fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/all-languages" ]
            ]
+         ], [
+           fhir:index 1;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "Language" ]
+         ], [
+           fhir:index 2;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" ];
+           fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
          ];
          fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.description [ fhir:value "A human language." ];
@@ -230,7 +248,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.text" ];
        fhir:ElementDefinition.short [ fhir:value "Text summary of the resource, for human interpretation" ];
        fhir:ElementDefinition.definition [ fhir:value "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." ];
-       fhir:ElementDefinition.comments [ fhir:value "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later." ];
+       fhir:ElementDefinition.comment [ fhir:value "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later." ];
        fhir:ElementDefinition.alias [
          fhir:value "narrative";
          fhir:index 0
@@ -244,11 +262,11 @@
          fhir:value "display";
          fhir:index 3
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.text" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -270,7 +288,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.contained" ];
        fhir:ElementDefinition.short [ fhir:value "Contained, inline Resources" ];
        fhir:ElementDefinition.definition [ fhir:value "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." ];
-       fhir:ElementDefinition.comments [ fhir:value "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." ];
+       fhir:ElementDefinition.comment [ fhir:value "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." ];
        fhir:ElementDefinition.alias [
          fhir:value "inline resources";
          fhir:index 0
@@ -281,11 +299,11 @@
          fhir:value "contained resources";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.contained" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -302,17 +320,18 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "188" ];
+         fhir:Element.id [ fhir:value "228" ];
          fhir:ElementDefinition.slicing.discriminator [
-           fhir:value "url";
-           fhir:index 0
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
          ];
          fhir:ElementDefinition.slicing.ordered [ fhir:value "false"^^xsd:boolean ];
          fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
        ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -320,11 +339,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -342,6 +361,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "observationreason" ];
        fhir:ElementDefinition.definition [ fhir:value "The reason for making the observation." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -349,11 +369,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -375,6 +395,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "observationcode" ];
        fhir:ElementDefinition.definition [ fhir:value "A term from a controlled vocabulary that defines the data element (the question, not the answer) as specifically as possible. The specific code should always align with the concept of the element, but may be more specific. For example, the concept associated with medications is code for 'medication used', but the ObservationCode is the code for the particular medication used. For tests, ObservationCode identifies the specific test being performed, and for observations, the specific question being asked." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -382,11 +403,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -412,11 +433,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -435,11 +456,11 @@
        fhir:ElementDefinition.sliceName [ fhir:value "extension" ];
        fhir:ElementDefinition.short [ fhir:value "Extension" ];
        fhir:ElementDefinition.definition [ fhir:value "An Extension" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -456,12 +477,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "identifies the meaning of the extension" ];
        fhir:ElementDefinition.definition [ fhir:value "Source of the definition for the extension code - a logical name or a URL." ];
-       fhir:ElementDefinition.comments [ fhir:value "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Extension.url" ];
-         fhir:ElementDefinition.base.min [ fhir:value "1"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -480,11 +500,11 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension.valueCodeableConcept" ];
        fhir:ElementDefinition.short [ fhir:value "Value of extension" ];
        fhir:ElementDefinition.definition [ fhir:value "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Extension.value[x]" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -510,6 +530,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militarystatus" ];
        fhir:ElementDefinition.definition [ fhir:value "The current connection to the US military." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -517,11 +538,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -543,6 +564,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militaryservicedischargestatus" ];
        fhir:ElementDefinition.definition [ fhir:value "How the subject was formally discharged from the US Military." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -550,11 +572,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -576,6 +598,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militarybranch" ];
        fhir:ElementDefinition.definition [ fhir:value "The branch of the US military that the subject has served." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -583,11 +606,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -609,6 +632,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militaryserviceera" ];
        fhir:ElementDefinition.definition [ fhir:value "The time period of US military service." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -616,11 +640,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -642,6 +666,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "serviceconnecteddisability" ];
        fhir:ElementDefinition.definition [ fhir:value "Percentage disability resulting from US Military Service." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -649,11 +674,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -675,7 +700,7 @@
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -683,11 +708,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -704,14 +729,21 @@
        fhir:index 20;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.identifier" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.identifier" ];
-       fhir:ElementDefinition.short [ fhir:value "Id for external references to this report" ];
-       fhir:ElementDefinition.definition [ fhir:value "The local ID assigned to the report by the order filler, usually by the Information System of the diagnostic service provider." ];
+       fhir:ElementDefinition.short [ fhir:value "Business identifier for report" ];
+       fhir:ElementDefinition.definition [ fhir:value "Identifiers assigned to this report by the performer or other systems." ];
+       fhir:ElementDefinition.comment [ fhir:value "Usually assigned by the Information System of the diagnostic service provider (filler id)." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need to know what identifier to use when making queries about this report from the source laboratory, and for linking to the report outside FHIR context." ];
        fhir:ElementDefinition.alias [
          fhir:value "ReportID";
          fhir:index 0
+       ], [
+         fhir:value "Filler ID";
+         fhir:index 1
+       ], [
+         fhir:value "Placer ID";
+         fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -720,26 +752,82 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.identifier" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "OBR-51" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ]
      ], [
        fhir:index 21;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.basedOn" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.basedOn" ];
+       fhir:ElementDefinition.short [ fhir:value "What was requested" ];
+       fhir:ElementDefinition.definition [ fhir:value "Details concerning a test or procedure requested." ];
+       fhir:ElementDefinition.comment [ fhir:value "Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports." ];
+       fhir:ElementDefinition.requirements [ fhir:value "This allows tracing of authorization for the report and tracking whether proposals/recommendations were acted upon." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "Request";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/CarePlan" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/MedicationRequest" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/NutritionOrder" ]
+       ], [
+         fhir:index 4;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/ProcedureRequest" ]
+       ], [
+         fhir:index 5;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/ReferralRequest" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.basedOn" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "ORC? OBR-2/3?" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=FLFS].target" ]
+       ]
+     ], [
+       fhir:index 22;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.status" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.status" ];
-       fhir:ElementDefinition.short [ fhir:value "registered | partial | final | corrected | appended | cancelled | entered-in-error" ];
+       fhir:ElementDefinition.short [ fhir:value "registered | partial | preliminary | final +" ];
        fhir:ElementDefinition.definition [ fhir:value "The status of the diagnostic report as a whole." ];
-       fhir:ElementDefinition.comments [ fhir:value "This is labeled as \"Is Modifier\" because applications need to take appropriate action if a report is withdrawn." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is labeled as \"Is Modifier\" because applications need to take appropriate action if a report is withdrawn." ];
        fhir:ElementDefinition.requirements [ fhir:value "Diagnostic services routinely issue provisional/incomplete reports, and sometimes withdraw previously released reports." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -748,6 +836,11 @@
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "DiagnosticReportStatus" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The status of the diagnostic report as a whole." ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -757,24 +850,28 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.status" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "OBR-25 (not 1:1 mapping)" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "statusCode  Note: final and amended are distinguished by whether observation is the subject of a ControlAct event of type \"revise\"" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 23;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.category" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.category" ];
        fhir:ElementDefinition.short [ fhir:value "Service category" ];
        fhir:ElementDefinition.definition [ fhir:value "A code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This is used for searching, sorting and display purposes." ];
-       fhir:ElementDefinition.comments [ fhir:value "The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code." ];
+       fhir:ElementDefinition.comment [ fhir:value "The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code." ];
        fhir:ElementDefinition.alias [
          fhir:value "Department";
          fhir:index 0
@@ -782,13 +879,13 @@
          fhir:value "Sub-department";
          fhir:index 1
        ], [
-         fhir:value "service";
+         fhir:value "Service";
          fhir:index 2
        ], [
-         fhir:value "discipline";
+         fhir:value "Discipline";
          fhir:index 3
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -817,12 +914,16 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "class" ]
        ]
      ], [
-       fhir:index 23;
+       fhir:index 24;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.code" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.code" ];
        fhir:ElementDefinition.short [ fhir:value "Name/Code for this diagnostic report" ];
        fhir:ElementDefinition.definition [ fhir:value "A code or name that describes this diagnostic report." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.alias [
+         fhir:value "Type";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -830,6 +931,11 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "DiagnosticReportCodes" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
          fhir:ElementDefinition.binding.description [ fhir:value "Codes that describe Diagnostic Reports." ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -839,29 +945,33 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.code" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "OBR-4 (HL7 v2 doesn't provide an easy way to indicate both the ordered test and the performed panel)" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "code" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 24;
+       fhir:index 25;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.subject" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.subject" ];
-       fhir:ElementDefinition.short [ fhir:value "The subject of the report, usually, but not always, the patient" ];
+       fhir:ElementDefinition.short [ fhir:value "The subject of the report - usually, but not always, the patient" ];
        fhir:ElementDefinition.definition [ fhir:value "The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources." ];
        fhir:ElementDefinition.requirements [ fhir:value "SHALL know the subject context." ];
        fhir:ElementDefinition.alias [
          fhir:value "Patient";
          fhir:index 0
        ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -883,51 +993,69 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.subject" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "PID-3 (no HL7 v2 mapping for Group or Device)" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "participation[typeCode=SBJ]" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 25;
-       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.encounter" ];
-       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.encounter" ];
+       fhir:index 26;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.context" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.context" ];
        fhir:ElementDefinition.short [ fhir:value "Health care event when test ordered" ];
-       fhir:ElementDefinition.definition [ fhir:value "The link to the health care event (encounter) when the order was made." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.definition [ fhir:value "The healthcare event  (e.g. a patient and healthcare provider interaction) which this DiagnosticReport per is about." ];
+       fhir:ElementDefinition.comment [ fhir:value "This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests)." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Links the request to the Encounter context." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "Encounter";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.context" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "PV1-19" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "context" ]
        ]
      ], [
-       fhir:index 26;
+       fhir:index 27;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.effective[x]" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.effective[x]" ];
-       fhir:ElementDefinition.short [ fhir:value "Clinically Relevant time/time-period for report" ];
+       fhir:ElementDefinition.short [ fhir:value "Clinically relevant time/time-period for report" ];
        fhir:ElementDefinition.definition [ fhir:value "The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself." ];
-       fhir:ElementDefinition.comments [ fhir:value "If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic." ];
+       fhir:ElementDefinition.comment [ fhir:value "If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need to know where in the patient history to file/present this report." ];
        fhir:ElementDefinition.alias [
          fhir:value "Observation time";
@@ -935,8 +1063,11 @@
        ], [
          fhir:value "Effective Time";
          fhir:index 1
+       ], [
+         fhir:value "Occurrence";
+         fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -948,24 +1079,28 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.occurrence[x]" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "OBR-7" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "effectiveTime" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "when.done" ]
        ]
      ], [
-       fhir:index 27;
+       fhir:index 28;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.issued" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.issued" ];
        fhir:ElementDefinition.short [ fhir:value "DateTime this version was released" ];
        fhir:ElementDefinition.definition [ fhir:value "The date and time that this version of the report was released from the source diagnostic service." ];
-       fhir:ElementDefinition.comments [ fhir:value "May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report." ];
+       fhir:ElementDefinition.comment [ fhir:value "May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report." ];
        fhir:ElementDefinition.requirements [ fhir:value "Clinicians need to be able to check the date that the report was released." ];
        fhir:ElementDefinition.alias [
          fhir:value "Date Created";
@@ -977,7 +1112,7 @@
          fhir:value "Date Issued";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -998,13 +1133,11 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "when.recorded" ]
        ]
      ], [
-       fhir:index 28;
+       fhir:index 29;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer" ];
-       fhir:ElementDefinition.short [ fhir:value "Responsible Diagnostic Service" ];
-       fhir:ElementDefinition.definition [ fhir:value "The diagnostic service that is responsible for issuing the report." ];
-       fhir:ElementDefinition.comments [ fhir:value "This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report." ];
-       fhir:ElementDefinition.requirements [ fhir:value "Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis." ];
+       fhir:ElementDefinition.short [ fhir:value "Participants in producing the report" ];
+       fhir:ElementDefinition.definition [ fhir:value "Indicates who or what participated in producing the report." ];
        fhir:ElementDefinition.alias [
          fhir:value "Laboratory";
          fhir:index 0
@@ -1021,8 +1154,179 @@
          fhir:value "Company";
          fhir:index 4
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "BackboneElement" ]
+       ];
+       fhir:ElementDefinition.constraint [
+         fhir:index 0;
+         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PRT-8 (where this PRT-4-Participation = \"PO\")" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=PRF]" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "who.witness" ]
+       ]
+     ], [
+       fhir:index 30;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer.id" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer.id" ];
+       fhir:ElementDefinition.representation [
+         fhir:value "xmlAttr";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
+       fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 31;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer.extension" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer.extension" ];
+       fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 32;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer.modifierExtension" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer.modifierExtension" ];
+       fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ], [
+         fhir:value "modifiers";
+         fhir:index 2
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+       ]
+     ], [
+       fhir:index 33;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer.role" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer.role" ];
+       fhir:ElementDefinition.short [ fhir:value "Type of performer" ];
+       fhir:ElementDefinition.definition [ fhir:value "Describes the type of participation (e.g.  a responsible party, author, or verifier)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "Role" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Indicate a role of diagnostic report performer" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/performer-role>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/performer-role" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer.role" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PRT-8 (where this PRT-4-Participation = \"PO\")" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".functionCode" ]
+       ]
+     ], [
+       fhir:index 34;
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.performer.actor" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.performer.actor" ];
+       fhir:ElementDefinition.short [ fhir:value "Practitioner or Organization  participant" ];
+       fhir:ElementDefinition.definition [ fhir:value "The reference to the  practitioner or organization involved in producing the report. For example, the diagnostic service that is responsible for issuing the report." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
@@ -1035,58 +1339,26 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer.actor" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "PRT-8 (where this PRT-4-Participation = \"PO\")" ]
        ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "participation[typeCode=AUT].role[classCode=ASSIGN].scoper" ]
-       ], [
          fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "who.witness" ]
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".role" ]
        ]
      ], [
-       fhir:index 29;
-       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.request" ];
-       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.request" ];
-       fhir:ElementDefinition.short [ fhir:value "What was requested" ];
-       fhir:ElementDefinition.definition [ fhir:value "Details concerning a test or procedure requested." ];
-       fhir:ElementDefinition.comments [ fhir:value "Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports." ];
-       fhir:ElementDefinition.requirements [ fhir:value "Need to be able to track completion of requests based on reports issued and also to report what diagnostic tests were requested (not always the same as what is delivered)." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "*" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/DiagnosticRequest" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/ProcedureRequest" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/ReferralRequest" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ORC? OBR-2/3?" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=FLFS].target" ]
-       ]
-     ], [
-       fhir:index 30;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.specimen" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.specimen" ];
        fhir:ElementDefinition.short [ fhir:value "Specimens this report is based on" ];
        fhir:ElementDefinition.definition [ fhir:value "Details about the specimens on which this diagnostic report is based." ];
-       fhir:ElementDefinition.comments [ fhir:value "If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per Observation or group." ];
+       fhir:ElementDefinition.comment [ fhir:value "If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per observation or group." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need to be able to report information about the collected specimens on which the report is based." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1103,7 +1375,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "participation[typeCode=SBJ]" ]
        ]
      ], [
-       fhir:index 31;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.result" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.result" ];
        fhir:ElementDefinition.short [ fhir:value "Observations - simple, or complex nested groups" ];
@@ -1137,7 +1409,7 @@
          fhir:value "Organizer";
          fhir:index 8
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1154,13 +1426,13 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=COMP].target" ]
        ]
      ], [
-       fhir:index 32;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.imagingStudy" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.imagingStudy" ];
        fhir:ElementDefinition.short [ fhir:value "Reference to full details of imaging associated with the diagnostic report" ];
        fhir:ElementDefinition.definition [ fhir:value "One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images." ];
-       fhir:ElementDefinition.comments [ fhir:value "ImagingStudy and ImageManifest and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "ImagingStudy and ImageManifest and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1177,7 +1449,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=COMP].target[classsCode=DGIMG, moodCode=EVN]" ]
        ]
      ], [
-       fhir:index 33;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image" ];
        fhir:ElementDefinition.short [ fhir:value "Key images associated with this report" ];
@@ -1193,7 +1465,7 @@
          fhir:value "Scans";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1219,7 +1491,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=COMP].target" ]
        ]
      ], [
-       fhir:index 34;
+       fhir:index 39;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image.id" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image.id" ];
        fhir:ElementDefinition.representation [
@@ -1228,11 +1500,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -1245,12 +1517,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 35;
+       fhir:index 40;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image.extension" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1258,11 +1530,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1275,12 +1547,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 36;
+       fhir:index 41;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1291,11 +1563,11 @@
          fhir:value "modifiers";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1310,14 +1582,14 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 37;
+       fhir:index 42;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image.comment" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image.comment" ];
        fhir:ElementDefinition.short [ fhir:value "Comment about the image (e.g. explanation)" ];
        fhir:ElementDefinition.definition [ fhir:value "A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features." ];
-       fhir:ElementDefinition.comments [ fhir:value "The comment should be displayed with the image. It would be common for the report to include additional discussion of the image contents in other sections such as the conclusion." ];
+       fhir:ElementDefinition.comment [ fhir:value "The comment should be displayed with the image. It would be common for the report to include additional discussion of the image contents in other sections such as the conclusion." ];
        fhir:ElementDefinition.requirements [ fhir:value "The provider of the report should make a comment about each image included in the report." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1329,12 +1601,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".inboundRelationship[typeCode=COMP].source[classCode=OBS, moodCode=EVN, code=\"annotation\"].value" ]
        ]
      ], [
-       fhir:index 38;
+       fhir:index 43;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.image.link" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.image.link" ];
        fhir:ElementDefinition.short [ fhir:value "Reference to the image source" ];
        fhir:ElementDefinition.definition [ fhir:value "Reference to the image source." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1348,7 +1620,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".value.reference" ]
        ]
      ], [
-       fhir:index 39;
+       fhir:index 44;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.conclusion" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.conclusion" ];
        fhir:ElementDefinition.short [ fhir:value "Clinical Interpretation of test results" ];
@@ -1358,7 +1630,7 @@
          fhir:value "Report";
          fhir:index 0
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1374,12 +1646,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "inboundRelationship[typeCode=\"SPRT\"].source[classCode=OBS, moodCode=EVN, code=LOINC:48767-8].value (type=ST)" ]
        ]
      ], [
-       fhir:index 40;
+       fhir:index 45;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.codedDiagnosis" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.codedDiagnosis" ];
        fhir:ElementDefinition.short [ fhir:value "Codes for the conclusion" ];
        fhir:ElementDefinition.definition [ fhir:value "Codes for the conclusion." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1387,8 +1659,13 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "AdjunctDiagnosis" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Diagnoses codes provided as adjuncts to the report." ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Diagnosis codes provided as adjuncts to the report." ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://hl7.org/fhir/ValueSet/clinical-findings>;
            fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/clinical-findings" ]
@@ -1404,14 +1681,14 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "inboundRelationship[typeCode=SPRT].source[classCode=OBS, moodCode=EVN, code=LOINC:54531-9].value (type=CD)" ]
        ]
      ], [
-       fhir:index 41;
+       fhir:index 46;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.presentedForm" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.presentedForm" ];
        fhir:ElementDefinition.short [ fhir:value "Entire report as issued" ];
        fhir:ElementDefinition.definition [ fhir:value "Rich text representation of the entire result as issued by the diagnostic service. Multiple formats are allowed but they SHALL be semantically equivalent." ];
-       fhir:ElementDefinition.comments [ fhir:value "\"application/pdf\" is recommended as the most reliable and interoperable in this context." ];
-       fhir:ElementDefinition.requirements [ fhir:value "Gives Laboratory the ability to provide its own fully formatted report for clinical fidelity." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "\"application/pdf\" is recommended as the most reliable and interoperable in this context." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Gives laboratory the ability to provide its own fully formatted report for clinical fidelity." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1440,7 +1717,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:observationreason" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "observationreason" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1455,7 +1732,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:observationcode" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "observationcode" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1477,7 +1754,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:militarystatus" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militarystatus" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1492,7 +1769,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:militaryservicedischargestatus" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militaryservicedischargestatus" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1507,7 +1784,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:militarybranch" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militarybranch" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1522,7 +1799,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:militaryserviceera" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "militaryserviceera" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1537,7 +1814,7 @@
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.extension:serviceconnecteddisability" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "serviceconnecteddisability" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1567,7 +1844,7 @@
        fhir:index 9;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.subject" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.subject" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1588,18 +1865,22 @@
        ]
      ], [
        fhir:index 10;
-       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.encounter" ];
-       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.encounter" ];
+       fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.context" ];
+       fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.context" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare" ]
        ]
      ], [
        fhir:index 11;
        fhir:Element.id [ fhir:value "DiagnosticReport:shr-lifehistory-MilitaryService.issued" ];
        fhir:ElementDefinition.path [ fhir:value "DiagnosticReport.issued" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
        fhir:index 12;
@@ -1628,11 +1909,18 @@
 
 <http://hl7.org/fhir/ValueSet/diagnostic-report-status> a fhir:ValueSet .
 
-<http://hl7.org/fhir/ValueSet/observation-category> a fhir:ValueSet, fhir:ValueSet .
+<http://hl7.org/fhir/ValueSet/observation-category> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/report-codes> a fhir:ValueSet .
 
+<http://hl7.org/fhir/ValueSet/performer-role> a fhir:ValueSet .
+
 <http://hl7.org/fhir/ValueSet/clinical-findings> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-lifehistory-MilitaryService.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 

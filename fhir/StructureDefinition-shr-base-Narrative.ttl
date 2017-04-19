@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.base.Narrative" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Narrative Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:20.581Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,9 +31,8 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:37.970Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "A human-readable narrative, potentially including images, that contains a summary of the resource, and may be used to represent the content of the resource to a human."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -50,7 +51,7 @@
        fhir:ElementDefinition.path [ fhir:value "Narrative" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Narrative Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "A human-readable narrative, potentially including images, that contains a summary of the resource, and may be used to represent the content of the resource to a human." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.condition [
          fhir:value "ele-1";
@@ -84,11 +85,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -104,9 +105,18 @@
        fhir:index 2;
        fhir:Element.id [ fhir:value "Narrative:shr-base-Narrative.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Narrative.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -114,11 +124,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -136,13 +146,18 @@
        fhir:ElementDefinition.path [ fhir:value "Narrative.status" ];
        fhir:ElementDefinition.short [ fhir:value "generated | extensions | additional | empty" ];
        fhir:ElementDefinition.definition [ fhir:value "The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "NarrativeStatus" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The status of a resource narrative" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -161,8 +176,8 @@
        fhir:ElementDefinition.path [ fhir:value "Narrative.div" ];
        fhir:ElementDefinition.short [ fhir:value "Limited xhtml content" ];
        fhir:ElementDefinition.definition [ fhir:value "The actual narrative content, a stripped down version of XHTML." ];
-       fhir:ElementDefinition.comments [ fhir:value "The contents of the html element are an XHTML fragment containing only the basic html formatting elements described in chapters 7-11 and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained stylesheets. The XHTML content may not contain a head, a body, external stylesheet references, scripts, forms, base/link/xlink, frames, iframes and objects." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "The contents of the html element are an XHTML fragment containing only the basic html formatting elements described in chapters 7-11 and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained stylesheets. The XHTML content may not contain a head, a body, external stylesheet references, scripts, forms, base/link/xlink, frames, iframes and objects." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -201,6 +216,11 @@
   ] .
 
 <http://hl7.org/fhir/ValueSet/narrative-status> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Narrative.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 
