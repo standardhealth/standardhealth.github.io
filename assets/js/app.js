@@ -183,6 +183,11 @@ var App = window.App = {
                 var redirectLink = _.find(App.options, function (obj) {return obj.label == $('.tt-input')[0].value}).link;
                 window.location.href = redirectLink;
             })
+
+            $('#search-input').on('typeahead:selected', function (obj, datum, name) {
+                var redirectLink = _.find(App.options, function (obj) {return obj.label == $('.tt-input')[0].value}).link;
+                window.location.href = redirectLink;
+            });
         }
     });
 })();
