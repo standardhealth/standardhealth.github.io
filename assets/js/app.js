@@ -129,7 +129,14 @@ var App = window.App = {
             let result;
             result = fuse.search(query);
             if (result.length > 0) {
-                result.length = (result.length) > 5 ? 5 : result.length;
+                let optionLength = result.length; 
+                let limit = ($(window).width() > 480) ? 6 : 3;
+                console.log(limit);
+                console.log(optionLength);
+                if (optionLength > limit) { 
+                    result.length = limit;
+                    result.push({label: "More elements...", link: '/shr'});
+                }
                 App.options = result;
                 console.log(App);
                 cb(_.map(result, function (elem) {
@@ -183,6 +190,11 @@ var App = window.App = {
                 var redirectLink = _.find(App.options, function (obj) {return obj.label == $('.tt-input')[0].value}).link;
                 window.location.href = redirectLink;
             })
+
+            $('#search-input').on('typeahead:selected', function (obj, datum, name) {
+                var redirectLink = _.find(App.options, function (obj) {return obj.label == $('.tt-input')[0].value}).link;
+                window.location.href = redirectLink;
+            });
         }
     });
 })();
