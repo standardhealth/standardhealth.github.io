@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.id"> </a><a name="CareTeam.id"> </a><b>CareTeam.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.language"> </a><a name="CareTeam.language"> </a><b>CareTeam.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -196,7 +197,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.modifierExtension"> </a><a name="CareTeam.modifierExtension"> </a><b>CareTeam.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -213,15 +214,19 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.status"> </a><a name="CareTeam.status"> </a><b>CareTeam.status</b></td></tr>
-  <tr><td>Definition</td><td><p>Indicates whether the care team is currently active, suspended, inactive, or entered in error.</p>
+  <tr><td>Definition</td><td><p>Indicates the current state of the care team.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Indicates the status of the care team.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-care-team-status.html">CareTeamStatus</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td>Comments</td><td><p>This element is labeled as a modifier because the status contains the code entered-in-error that marks the care team as not currently valid.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.category"> </a><a name="CareTeam.category"> </a><b>CareTeam.category</b></td></tr>
   <tr><td>Definition</td><td><p>Identifies what kind of team.  This is to support differentiation between multiple co-existing teams, such as care plan team, episode of care team, longitudinal care team.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Indicates the type of care team.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-care-team-category.html">CareTeamCategory</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Requirements</td><td><p>Used for filtering what teams(s) are retrieved and displayed to different types of users.</p>
 </td></tr>
@@ -232,7 +237,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td>Comments</td><td><p>The meaning/purpose of the team is conveyed in CareTeam.category.  This element may also convey semantics of the team (e.g. &quot;Red trauma team&quot;), but it's primary purpose is to distinguish between identical teams in a human-friendly way.  (&quot;Team 18735&quot; isn't as friendly . ).</p>
+  <tr><td>Comments</td><td><p>The meaning/purpose of the team is conveyed in CareTeam.category.  This element may also convey semantics of the team (e.g. &quot;Red trauma team&quot;), but its primary purpose is to distinguish between identical teams in a human-friendly way.  (&quot;Team 18735&quot; isn't as friendly . ).</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.subject"> </a><a name="CareTeam.subject"> </a><b>CareTeam.subject</b></td></tr>
   <tr><td>Definition</td><td><p>Identifies the patient or group whose intended care is handled by the team.</p>
@@ -241,6 +246,13 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/group.html" title="http://hl7.org/fhir/StructureDefinition/Group">Group</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Allows the team to care for a group (e.g. marriage) therapy.</p>
 </td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>patient</td></tr>
+  <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.context"> </a><a name="CareTeam.context"> </a><b>CareTeam.context</b></td></tr>
+  <tr><td>Definition</td><td><p>The encounter or episode of care that establishes the context for this care team.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/episodeofcare.html" title="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare">EpisodeOfCare</a>)</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>encounter</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.period"> </a><a name="CareTeam.period"> </a><b>CareTeam.period</b></td></tr>
   <tr><td>Definition</td><td><p>Indicates when the team did (or is intended to) come into effect and end.</p>
 </td></tr>
@@ -251,10 +263,10 @@ redirect_from:
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.participant"> </a><a name="CareTeam.participant"> </a><b>CareTeam.participant</b></td></tr>
   <tr><td>Definition</td><td><p>Identifies all people and organizations who are expected to be involved in the care team.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1 This element is affected by the following invariants: ctm-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ctm-1</b>: CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner (: onBehalfOf.exists() implies (member.resolve() is Practitioner))<br/><b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.participant.id"> </a><a name="CareTeam.participant.id"> </a><b>CareTeam.participant.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -290,15 +302,33 @@ redirect_from:
   <tr><td>Definition</td><td><p>The specific person or organization who is participating/expected to participate in the care team.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson">SHR RelatedPerson Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson">SHR RelatedPerson Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/careteam.html" title="http://hl7.org/fhir/StructureDefinition/CareTeam">CareTeam</a>)</td></tr>
   <tr><td>Comments</td><td><p>Patient only needs to be listed if they have a role other than &quot;subject of care&quot;.</p>
 <p>Member is optional because some participants may be known only by their role, particularly in draft plans.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.participant.onBehalfOf"> </a><a name="CareTeam.participant.onBehalfOf"> </a><b>CareTeam.participant.onBehalfOf</b></td></tr>
+  <tr><td>Definition</td><td><p>The organization of the practitioner.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>Practitioners can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.participant.period"> </a><a name="CareTeam.participant.period"> </a><b>CareTeam.participant.period</b></td></tr>
   <tr><td>Definition</td><td><p>Indicates when the specific member or organization did (or is intended to) come into effect and end.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>(<a href="StructureDefinition-shr-core-TimePeriod.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod">SHR TimePeriod Profile</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.reasonCode"> </a><a name="CareTeam.reasonCode"> </a><b>CareTeam.reasonCode</b></td></tr>
+  <tr><td>Definition</td><td><p>Describes why the care team exists.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Indicates the reason for the care team.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-clinical-findings.html">SNOMED CT Clinical Findings</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.reasonReference"> </a><a name="CareTeam.reasonReference"> </a><b>CareTeam.reasonReference</b></td></tr>
+  <tr><td>Definition</td><td><p>Condition(s) that this care team addresses.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.managingOrganization"> </a><a name="CareTeam.managingOrganization"> </a><b>CareTeam.managingOrganization</b></td></tr>
   <tr><td>Definition</td><td><p>The organization responsible for the care team.</p>
 </td></tr>
@@ -306,6 +336,11 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Allows for multiple organizations to collaboratively manage cross-organizational, longitudinal care plan.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="CareTeam:shr-actor-PrimaryCareProvider.note"> </a><a name="CareTeam.note"> </a><b>CareTeam.note</b></td></tr>
+  <tr><td>Definition</td><td><p>Comments made about the CareTeam.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a></td></tr>
 </table>
 
 
@@ -330,8 +365,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

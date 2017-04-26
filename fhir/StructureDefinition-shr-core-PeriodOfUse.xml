@@ -18,8 +18,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.PeriodOfUse"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR PeriodOfUse Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.420Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -27,9 +29,8 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.488Z"/>
   <description value="A period of time when a device, medication, or other therapy is used."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -50,7 +51,7 @@
       <path value="Period"/>
       <short value="SHR PeriodOfUse Profile"/>
       <definition value="A period of time when a device, medication, or other therapy is used."/>
-      <comments value="This is not a duration - that&#39;s a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration."/>
+      <comment value="This is not a duration - that&#39;s a measure of time (a separate type), but a duration that occurs at a fixed value of time. A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;). If duration is required, specify the type as Interval|Duration."/>
       <min value="0"/>
       <max value="*"/>
       <condition value="ele-1"/>
@@ -104,9 +105,17 @@
     </element>
     <element id="Period:shr-core-PeriodOfUse.extension">
       <path value="Period.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -128,7 +137,7 @@
       <path value="Period.start"/>
       <short value="Starting time with inclusive boundary"/>
       <definition value="The start of the period. The boundary is inclusive."/>
-      <comments value="If the low element is missing, the meaning is that the low boundary is not known."/>
+      <comment value="If the low element is missing, the meaning is that the low boundary is not known."/>
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -149,7 +158,7 @@
       <path value="Period.end"/>
       <short value="End time with inclusive boundary, if not ongoing"/>
       <definition value="The end of the period. If the end of the period is missing, it means that the period is ongoing. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."/>
-      <comments value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03."/>
+      <comment value="The high value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has a end value of 2012-02-03."/>
       <min value="0"/>
       <max value="1"/>
       <type>

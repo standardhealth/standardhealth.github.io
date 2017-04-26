@@ -20,8 +20,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.demographics.Telecom"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR Telecom Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.471Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -29,10 +31,9 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.513Z"/>
   <description value="An electronic means of contacting an organization or individual."/>
   <purpose value="Need to track phone, fax, mobile, sms numbers, email addresses, twitter tags, etc."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -115,14 +116,17 @@
     </element>
     <element id="ContactPoint:shr-demographics-Telecom.extension">
       <path value="ContactPoint.extension"/>
-      <slicing id="157">
-        <discriminator value="url"/>
-        <ordered value="false"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
         <rules value="open"/>
       </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -143,7 +147,16 @@
     <element id="ContactPoint:shr-demographics-Telecom.extension:telecomtypeother">
       <path value="ContactPoint.extension"/>
       <sliceName value="telecomtypeother"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <definition value="Specification of the type of telecom channel, if the TelecomType is other."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -167,7 +180,7 @@
     </element>
     <element id="ContactPoint:shr-demographics-Telecom.system">
       <path value="ContactPoint.system"/>
-      <short value="phone | fax | email | pager | url | other"/>
+      <short value="phone | fax | email | pager | url | sms | other"/>
       <definition value="Telecommunications form for contact point - what communications system is required to make use of the contact."/>
       <min value="1"/>
       <max value="1"/>
@@ -177,6 +190,9 @@
       <condition value="cpt-2"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ContactPointSystem"/>
+        </extension>
         <strength value="required"/>
         <description value="Telecommunications form for contact point"/>
         <valueSetReference>
@@ -200,7 +216,7 @@
       <path value="ContactPoint.value"/>
       <short value="The actual contact point details"/>
       <definition value="The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address)."/>
-      <comments value="Additional text data such as phone extension numbers, or notes about use of the contact are sometimes included in the value."/>
+      <comment value="Additional text data such as phone extension numbers, or notes about use of the contact are sometimes included in the value."/>
       <requirements value="Need to support legacy numbers that are not in a tightly controlled format."/>
       <min value="1"/>
       <max value="1"/>
@@ -225,7 +241,7 @@
       <path value="ContactPoint.use"/>
       <short value="home | work | temp | old | mobile - purpose of this contact point"/>
       <definition value="Identifies the purpose for the contact point."/>
-      <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old contact etc.for a current/permanent one. Applications can assume that a contact is current unless it explicitly says that it is temporary or old."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old contact etc.for a current/permanent one. Applications can assume that a contact is current unless it explicitly says that it is temporary or old."/>
       <requirements value="Need to track the way a person uses this contact, so a user can choose which is appropriate for their purpose."/>
       <min value="0"/>
       <max value="1"/>
@@ -235,6 +251,9 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ContactPointUse"/>
+        </extension>
         <strength value="required"/>
         <description value="Use of contact point"/>
         <valueSetReference>
@@ -258,7 +277,7 @@
       <path value="ContactPoint.rank"/>
       <short value="Specify preferred order of use (1 = highest)"/>
       <definition value="Specifies a preferred order in which to use a set of contacts. Contacts are ranked with lower values coming before higher values."/>
-      <comments value="Note that rank does not necessarily follow the order in which the contacts are represented in the instance."/>
+      <comment value="Note that rank does not necessarily follow the order in which the contacts are represented in the instance."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -291,7 +310,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="./useablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]"/>
+        <map value="./usablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]"/>
       </mapping>
       <mapping>
         <identity value="servd"/>

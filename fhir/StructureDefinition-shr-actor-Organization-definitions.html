@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))<br/><b title="Formal Invariant Identifier">org-1</b>: The organization SHALL at least have a name or an id, and possibly more than one (xpath: count(f:identifier | f:name) &gt; 0)</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())<br/><b title="Formal Invariant Identifier">org-1</b>: The organization SHALL at least have a name or an id, and possibly more than one (: (identifier.count() + name.count()) &gt; 0)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.id"> </a><a name="Organization.id"> </a><b>Organization.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.language"> </a><a name="Organization.language"> </a><b>Organization.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -217,17 +218,20 @@ redirect_from:
 </td></tr>
   <tr><td>Comments</td><td><p>Default is true.</p>
 <p>This active flag is not intended to be used to mark an organizations as temporarily closed or under construction. Instead the Location(s) within the Organization should have the suspended status. If further details of the reason for the suspension are required, then an extension on this element should be used.</p>
+<p>This element is labeled as a modifier because it may be used to mark that the resource was created in error.</p>
 </td></tr>
   <tr><td>Default Value</td><td>true</td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.type"> </a><a name="Organization.type"> </a><b>Organization.type</b></td></tr>
-  <tr><td>Definition</td><td><p>The kind of organization that this is.</p>
+  <tr><td>Definition</td><td><p>The kind(s) of organization that this is.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Used to categorize the organization<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-organization-type.html">OrganizationType</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Need to be able to track the kind of organization that this is - different organization types have different uses.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Organizations can be corporations, wards, sections, clinical teams, government departments, etc. Note that code is generally a classifier of the type of organization; in many applications, codes are used to identity a particular organization (say, ward) as opposed to another of the same type - these are identifiers, not codes.</p>
+  <tr><td>Comments</td><td><p>Organizations can be corporations, wards, sections, clinical teams, government departments, etc. Note that code is generally a classifier of the type of organization; in many applications, codes are used to identity a particular organization (say, ward) as opposed to another of the same type - these are identifiers, not codes</p>
+<p>When considering if multiple types are appropriate, you should evaluate if child organizations would be a more appropriate use of the concept, as different types likely are in different sub-areas of the organization. This is most likely to be used where type values have orthogonal values, such as a religious, academic and medical center.</p>
+<p>We expect that some jurisdictions will profile this optionality to be a single cardinality.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.name"> </a><a name="Organization.name"> </a><b>Organization.name</b></td></tr>
   <tr><td>Definition</td><td><p>A name associated with the organization.</p>
@@ -244,7 +248,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
   <tr><td>Requirements</td><td><p>Over time locations and organizations go through many changes and can be known by different names.</p>
-<p>For searching knowing previous names that the location was known by can be very useful.</p>
+<p>For searching knowing previous names that the organization was known by can be very useful.</p>
 </td></tr>
   <tr><td>Comments</td><td><p>There are no dates associated with the alias/historic names, as this is not intended to track when names were used, but to assist in searching so that older names can still result in identifying the organization.</p>
 </td></tr>
@@ -258,7 +262,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>The use code home is not to be used. Note that these contacts are not the contact details of people who are employed by or represent the organization, but official contacts for the organization itself.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">org-3</b>: The telecom of an organization can never be of use 'home' (xpath: count(f:use[@value='home']) = 0)</td></tr>
+<b title="Formal Invariant Identifier">org-3</b>: The telecom of an organization can never be of use 'home' (: where(use = 'home').empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.address"> </a><a name="Organization.address"> </a><b>Organization.address</b></td></tr>
   <tr><td>Definition</td><td><p>An address for the organization.</p>
 </td></tr>
@@ -269,7 +273,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>Organization may have multiple addresses with different uses or applicable periods. The use code home is not to be used.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">org-2</b>: An address of an organization can never be of use 'home' (xpath: count(f:use[@value='home']) = 0)</td></tr>
+<b title="Formal Invariant Identifier">org-2</b>: An address of an organization can never be of use 'home' (: where(use = 'home').empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.partOf"> </a><a name="Organization.partOf"> </a><b>Organization.partOf</b></td></tr>
   <tr><td>Definition</td><td><p>The organization of which this organization forms a part.</p>
 </td></tr>
@@ -287,7 +291,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>Where multiple contacts for the same purpose are provided there is a standard extension that can be used to determine which one is the preferred contact to use.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Organization:shr-actor-Organization.contact.id"> </a><a name="Organization.contact.id"> </a><b>Organization.contact.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -370,8 +374,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

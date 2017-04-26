@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-immunization-ImmunizationNotGiven"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ImmunizationNotGiven Profile</b></p>\n  <p>Represents an immunization that was not given.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.ImmunizationNotGiven maps to Immunization:\n  Vaccine.CodeableConcept maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  ImmunizationNotGivenModifier maps to wasNotGiven\n  explanation is 0..1\n  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  TBD &quot;DoseSequenceNumber&quot; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ImmunizationNotGiven Profile</b></p>\n  <p>Represents an immunization that was not given.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.ImmunizationNotGiven maps to Immunization:\n  Vaccine.CodeableConcept maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  ImmunizationNotGivenModifier maps to notGiven\n  constrain explanation to 0..1\n  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  &lt;TBD &quot;DoseSequenceNumber&quot;&gt; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-immunization-ImmunizationNotGiven"];
   fhir:StructureDefinition.identifier [
@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.immunization.ImmunizationNotGiven" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR ImmunizationNotGiven Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:22.549Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,9 +31,8 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:38.552Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "Represents an immunization that was not given."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
@@ -49,6 +50,11 @@
      fhir:StructureDefinition.mapping.name [ fhir:value "W5 Mapping" ]
   ], [
      fhir:index 3;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "workflow" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/fhir/workflow" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "Workflow Mapping" ]
+  ], [
+     fhir:index 4;
      fhir:StructureDefinition.mapping.identity [ fhir:value "cda" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v3/cda" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "CDA (R2)" ]
@@ -65,7 +71,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization" ];
        fhir:ElementDefinition.short [ fhir:value "SHR ImmunizationNotGiven Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "Represents an immunization that was not given." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.constraint [
          fhir:index 0;
@@ -103,16 +109,16 @@
          fhir:index 4;
          fhir:ElementDefinition.constraint.key [ fhir:value "imm-2" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent." ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "(wasNotGiven = true) or explanation.reasonNotGiven.empty()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))" ]
+         fhir:ElementDefinition.constraint.human [ fhir:value "If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent." ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "(notGiven = true) or explanation.reasonNotGiven.empty()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))" ]
        ], [
          fhir:index 5;
          fhir:ElementDefinition.constraint.key [ fhir:value "imm-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "If immunization was not administered (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "(wasNotGiven = true).not() or (reaction.empty() and explanation.reason.empty())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))" ]
+         fhir:ElementDefinition.constraint.human [ fhir:value "If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "(notGiven = true).not() or (reaction.empty() and explanation.reason.empty())" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:notGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))" ]
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -137,12 +143,12 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.id" ];
        fhir:ElementDefinition.short [ fhir:value "Logical id of this artifact" ];
        fhir:ElementDefinition.definition [ fhir:value "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." ];
-       fhir:ElementDefinition.comments [ fhir:value "The only time that a resource does not have an id is when it is being submitted to the server using a create operation." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "The only time that a resource does not have an id is when it is being submitted to the server using a create operation." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -156,11 +162,11 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.meta" ];
        fhir:ElementDefinition.short [ fhir:value "Metadata about the resource" ];
        fhir:ElementDefinition.definition [ fhir:value "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.meta" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -174,12 +180,12 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.implicitRules" ];
        fhir:ElementDefinition.short [ fhir:value "A set of rules under which this content was created" ];
        fhir:ElementDefinition.definition [ fhir:value "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." ];
-       fhir:ElementDefinition.comments [ fhir:value "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.implicitRules" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -194,12 +200,12 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.language" ];
        fhir:ElementDefinition.short [ fhir:value "Language of the resource content" ];
        fhir:ElementDefinition.definition [ fhir:value "The base language in which the resource is written." ];
-       fhir:ElementDefinition.comments [ fhir:value "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Resource.language" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -207,13 +213,21 @@
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
        fhir:ElementDefinition.binding [
-         fhir:extension [
+         fhir:Element.extension [
            fhir:index 0;
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet" ];
            fhir:Extension.valueReference [
              fhir:link <http://hl7.org/fhir/ValueSet/all-languages>;
              fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/all-languages" ]
            ]
+         ], [
+           fhir:index 1;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "Language" ]
+         ], [
+           fhir:index 2;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" ];
+           fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
          ];
          fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.description [ fhir:value "A human language." ];
@@ -228,7 +242,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.text" ];
        fhir:ElementDefinition.short [ fhir:value "Text summary of the resource, for human interpretation" ];
        fhir:ElementDefinition.definition [ fhir:value "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." ];
-       fhir:ElementDefinition.comments [ fhir:value "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later." ];
+       fhir:ElementDefinition.comment [ fhir:value "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later." ];
        fhir:ElementDefinition.alias [
          fhir:value "narrative";
          fhir:index 0
@@ -242,11 +256,11 @@
          fhir:value "display";
          fhir:index 3
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.text" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -268,7 +282,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.contained" ];
        fhir:ElementDefinition.short [ fhir:value "Contained, inline Resources" ];
        fhir:ElementDefinition.definition [ fhir:value "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." ];
-       fhir:ElementDefinition.comments [ fhir:value "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." ];
+       fhir:ElementDefinition.comment [ fhir:value "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." ];
        fhir:ElementDefinition.alias [
          fhir:value "inline resources";
          fhir:index 0
@@ -279,11 +293,11 @@
          fhir:value "contained resources";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.contained" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -301,7 +315,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -309,11 +323,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -331,7 +345,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -339,11 +353,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -362,7 +376,7 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.identifier" ];
        fhir:ElementDefinition.short [ fhir:value "Business identifier" ];
        fhir:ElementDefinition.definition [ fhir:value "A unique identifier assigned to this immunization record." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -370,14 +384,18 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.identifier" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value ".id" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/id" ]
        ], [
-         fhir:index 2;
+         fhir:index 3;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ]
@@ -387,8 +405,8 @@
        fhir:ElementDefinition.path [ fhir:value "Immunization.status" ];
        fhir:ElementDefinition.short [ fhir:value "completed | entered-in-error" ];
        fhir:ElementDefinition.definition [ fhir:value "Indicates the current status of the vaccination event." ];
-       fhir:ElementDefinition.comments [ fhir:value "Will generally be set to show that the immunization has been completed." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Will generally be set to show that the immunization has been completed.\n\nThis element is labeled as a modifier because the status contains codes that mark the resource as not currently valid." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -397,6 +415,11 @@
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ImmunizationStatus" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "A set of codes indicating the current status of an Immunization" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -406,114 +429,25 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.status" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "statusCode" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
        fhir:index 11;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.date" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.date" ];
-       fhir:ElementDefinition.short [ fhir:value "Vaccination administration date" ];
-       fhir:ElementDefinition.definition [ fhir:value "Date vaccine administered or was to be administered." ];
-       fhir:ElementDefinition.comments [ fhir:value "When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-3" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value ".effectiveTime" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/effectiveTime/value" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "when.init" ]
-       ]
-     ], [
-       fhir:index 12;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccineCode" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.vaccineCode" ];
-       fhir:ElementDefinition.short [ fhir:value "Vaccine product administered" ];
-       fhir:ElementDefinition.definition [ fhir:value "Vaccine that was administered or was to be administered." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
-       ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "The code for vaccine product administered" ];
-         fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/vaccine-code>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/vaccine-code" ]
-         ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-5" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value ".code" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacturedMaterial/realmCode/code" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
-       ]
-     ], [
-       fhir:index 13;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.patient" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.patient" ];
-       fhir:ElementDefinition.short [ fhir:value "Who was immunized" ];
-       fhir:ElementDefinition.definition [ fhir:value "The patient who either received or did not receive the immunization." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Patient" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "PID-3" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value ".partipication[ttypeCode=].role" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
-       ]
-     ], [
-       fhir:index 14;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.wasNotGiven" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.wasNotGiven" ];
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.notGiven" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.notGiven" ];
        fhir:ElementDefinition.short [ fhir:value "Flag for whether immunization was given" ];
        fhir:ElementDefinition.definition [ fhir:value "Indicates if the vaccination was or was not given." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "This element is labeled as a modifier because it indicates that an immunization didn't happen." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -524,21 +458,166 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.notDone" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "[actionNegationInd=true].reasonCode" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
+       fhir:index 12;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccineCode" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.vaccineCode" ];
+       fhir:ElementDefinition.short [ fhir:value "Vaccine product administered" ];
+       fhir:ElementDefinition.definition [ fhir:value "Vaccine that was administered or was to be administered." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "VaccineCode" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "The code for vaccine product administered" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/vaccine-code>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/vaccine-code" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.code" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-5" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".code" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacturedMaterial/realmCode/code" ]
+       ], [
+         fhir:index 4;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
+       ]
+     ], [
+       fhir:index 13;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.patient" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.patient" ];
+       fhir:ElementDefinition.short [ fhir:value "Who was immunized" ];
+       fhir:ElementDefinition.definition [ fhir:value "The patient who either received or did not receive the immunization." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Patient" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.subject" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PID-3" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".partipication[ttypeCode=].role" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
+       ]
+     ], [
+       fhir:index 14;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.encounter" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.encounter" ];
+       fhir:ElementDefinition.short [ fhir:value "Encounter administered as part of" ];
+       fhir:ElementDefinition.definition [ fhir:value "The visit or admission or other contact between patient and health care provider the immunization was performed as part of." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Encounter" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.context" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PV1-19" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "component->EncounterEvent" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "context" ]
+       ]
+     ], [
        fhir:index 15;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.date" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.date" ];
+       fhir:ElementDefinition.short [ fhir:value "Vaccination administration date" ];
+       fhir:ElementDefinition.definition [ fhir:value "Date vaccine administered or was to be administered." ];
+       fhir:ElementDefinition.comment [ fhir:value "When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.occurrence.occurrenceDateTime" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-3" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".effectiveTime" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/effectiveTime/value" ]
+       ], [
+         fhir:index 4;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "when.init" ]
+       ]
+     ], [
+       fhir:index 16;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.primarySource" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.primarySource" ];
        fhir:ElementDefinition.short [ fhir:value "Indicates context the data was recorded in" ];
        fhir:ElementDefinition.definition [ fhir:value "An indication that the content of the record is based on information from the person who administered the vaccine. This reflects the context under which the data was originally recorded." ];
-       fhir:ElementDefinition.comments [ fhir:value "Reflects the “reliability” of the content." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Reflects the “reliability” of the content." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -558,19 +637,24 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.source" ]
        ]
      ], [
-       fhir:index 16;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reportOrigin" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reportOrigin" ];
        fhir:ElementDefinition.short [ fhir:value "Indicates the source of a secondarily reported record" ];
        fhir:ElementDefinition.definition [ fhir:value "The source of the data when the report of the immunization event is not based on information from the person who administered the vaccine." ];
-       fhir:ElementDefinition.comments [ fhir:value "Should not be populated if primarySource = True, will not be required even if primarySource = False." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Should not be populated if primarySource = True, will not be required even if primarySource = False." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ImmunizationReportOrigin" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The source of the data for a record which is not from a primary source." ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -592,121 +676,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.source" ]
        ]
      ], [
-       fhir:index 17;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.performer" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.performer" ];
-       fhir:ElementDefinition.short [ fhir:value "Who administered vaccine" ];
-       fhir:ElementDefinition.definition [ fhir:value "Clinician who administered the vaccine." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Practitioner" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-10" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=PRF].COCT_MT090102UV" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/performer/assignedEntity/assignedPerson/name" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "who.actor" ]
-       ]
-     ], [
        fhir:index 18;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.requester" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.requester" ];
-       fhir:ElementDefinition.short [ fhir:value "Who ordered vaccination" ];
-       fhir:ElementDefinition.definition [ fhir:value "Clinician who ordered the vaccination." ];
-       fhir:ElementDefinition.comments [ fhir:value "Other participants - delegate to Provenance resource." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Practitioner" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ORC-12" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship.target[classCode=SBADM].participation[typeCode=AUT].COCT_MT090102UV" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "who.cause" ]
-       ]
-     ], [
-       fhir:index 19;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.encounter" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.encounter" ];
-       fhir:ElementDefinition.short [ fhir:value "Encounter administered as part of" ];
-       fhir:ElementDefinition.definition [ fhir:value "The visit or admission or other contact between patient and health care provider the immunization was performed as part of." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Encounter" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "PV1-19" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "component->EncounterEvent" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "context" ]
-       ]
-     ], [
-       fhir:index 20;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.manufacturer" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.manufacturer" ];
-       fhir:ElementDefinition.short [ fhir:value "Vaccine manufacturer" ];
-       fhir:ElementDefinition.definition [ fhir:value "Name of vaccine manufacturer." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-17" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=ORG]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacuturerOrganization/name" ]
-       ]
-     ], [
-       fhir:index 21;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.location" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.location" ];
        fhir:ElementDefinition.short [ fhir:value "Where vaccination occurred" ];
        fhir:ElementDefinition.definition [ fhir:value "The service delivery location where the vaccine administration occurred." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -727,12 +702,38 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "where" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 19;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.manufacturer" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.manufacturer" ];
+       fhir:ElementDefinition.short [ fhir:value "Vaccine manufacturer" ];
+       fhir:ElementDefinition.definition [ fhir:value "Name of vaccine manufacturer." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "RXA-17" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=ORG]" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "cda" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacuturerOrganization/name" ]
+       ]
+     ], [
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.lotNumber" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.lotNumber" ];
        fhir:ElementDefinition.short [ fhir:value "Vaccine lot number" ];
        fhir:ElementDefinition.definition [ fhir:value "Lot number of the  vaccine product." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -752,12 +753,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/consumable/manfacturedProduct/manufacturedMaterial/lotNumberText" ]
        ]
      ], [
-       fhir:index 23;
+       fhir:index 21;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.expirationDate" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.expirationDate" ];
        fhir:ElementDefinition.short [ fhir:value "Vaccine expiration date" ];
        fhir:ElementDefinition.definition [ fhir:value "Date vaccine batch expires." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -773,12 +774,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].expirationTime" ]
        ]
      ], [
-       fhir:index 24;
+       fhir:index 22;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.site" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.site" ];
        fhir:ElementDefinition.short [ fhir:value "Body site vaccine  was administered" ];
        fhir:ElementDefinition.definition [ fhir:value "Body site where vaccine was administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -788,8 +789,8 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -806,12 +807,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/approachSiteCode/code" ]
        ]
      ], [
-       fhir:index 25;
+       fhir:index 23;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.route" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.route" ];
        fhir:ElementDefinition.short [ fhir:value "How vaccine entered body" ];
        fhir:ElementDefinition.definition [ fhir:value "The path by which the vaccine product is taken into the body." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -839,12 +840,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "ClinicalDocument/component/StructuredBody/component/section/entry/substanceAdministration/routeCode/code" ]
        ]
      ], [
-       fhir:index 26;
+       fhir:index 24;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.doseQuantity" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.doseQuantity" ];
        fhir:ElementDefinition.short [ fhir:value "Amount of vaccine administered" ];
        fhir:ElementDefinition.definition [ fhir:value "The quantity of vaccine product that was administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -861,12 +862,200 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".doseQuantity" ]
        ]
      ], [
+       fhir:index 25;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner" ];
+       fhir:ElementDefinition.short [ fhir:value "Who performed event" ];
+       fhir:ElementDefinition.definition [ fhir:value "Indicates who or what performed the event." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "BackboneElement" ]
+       ];
+       fhir:ElementDefinition.constraint [
+         fhir:index 0;
+         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "ORC-12 / RXA-10" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=PRF].role[scoper.determinerCode=INSTANCE]" ]
+       ]
+     ], [
+       fhir:index 26;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner.id" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner.id" ];
+       fhir:ElementDefinition.representation [
+         fhir:value "xmlAttr";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
+       fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
        fhir:index 27;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner.extension" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner.extension" ];
+       fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 28;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner.modifierExtension" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner.modifierExtension" ];
+       fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ], [
+         fhir:value "modifiers";
+         fhir:index 2
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+       ]
+     ], [
+       fhir:index 29;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner.role" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner.role" ];
+       fhir:ElementDefinition.short [ fhir:value "What type of performance was done" ];
+       fhir:ElementDefinition.definition [ fhir:value "Describes the type of performance (e.g. ordering provider, administering provider, etc.)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ImmunizationRole" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "The role a practitioner plays in the immunization event" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/immunization-role>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/immunization-role" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer.role" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".participation.functionCode" ]
+       ]
+     ], [
+       fhir:index 30;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.practitioner.actor" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.practitioner.actor" ];
+       fhir:ElementDefinition.short [ fhir:value "Individual who was performing" ];
+       fhir:ElementDefinition.definition [ fhir:value "The device, practitioner, etc. who performed the action." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Practitioner" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.performer.actor" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value ".player" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "who.actor" ]
+       ]
+     ], [
+       fhir:index 31;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.note" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.note" ];
        fhir:ElementDefinition.short [ fhir:value "Vaccination notes" ];
        fhir:ElementDefinition.definition [ fhir:value "Extra information about the immunization that is not conveyed by the other attributes." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -875,16 +1064,20 @@
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.note" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "note" ]
        ]
      ], [
-       fhir:index 28;
+       fhir:index 32;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation" ];
        fhir:ElementDefinition.short [ fhir:value "Administration/non-administration reasons" ];
        fhir:ElementDefinition.definition [ fhir:value "Reasons why a vaccine was or was not administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -905,7 +1098,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 29;
+       fhir:index 33;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.id" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.id" ];
        fhir:ElementDefinition.representation [
@@ -914,11 +1107,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -931,12 +1124,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 30;
+       fhir:index 34;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -944,11 +1137,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -961,12 +1154,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 31;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -977,11 +1170,11 @@
          fhir:value "modifiers";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -996,18 +1189,23 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 32;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.reason" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.reason" ];
        fhir:ElementDefinition.short [ fhir:value "Why immunization occurred" ];
        fhir:ElementDefinition.definition [ fhir:value "Reasons why a vaccine was administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ImmunizationReason" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The reason why a vaccine was administered" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -1017,16 +1215,20 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.reasonCodeableConcept" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "[actionNegationInd=false].reasonCode" ]
        ]
      ], [
-       fhir:index 33;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.reasonNotGiven" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.reasonNotGiven" ];
        fhir:ElementDefinition.short [ fhir:value "Why immunization did not occur" ];
        fhir:ElementDefinition.definition [ fhir:value "Reason why a vaccine was not administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1034,6 +1236,11 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "NoImmunizationReason" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The reason why a vaccine was not administered" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -1043,21 +1250,25 @@
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "workflow" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Event.notDoneReason" ]
+       ], [
+         fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "RXA-18" ]
        ], [
-         fhir:index 1;
+         fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "[actionNegationInd=true].reasonCode" ]
        ]
      ], [
-       fhir:index 34;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction" ];
        fhir:ElementDefinition.short [ fhir:value "Details of a reaction that follows immunization" ];
        fhir:ElementDefinition.definition [ fhir:value "Categorical data indicating that an adverse event is associated in time to an immunization." ];
-       fhir:ElementDefinition.comments [ fhir:value "A reaction may be an indication of an allergy or intolerance and, if this is determined to be the case,  it should be recorded as a new [AllergyIntolerance](allergyintolerance.html) resource instance as most systems will not query against  past Immunization.reaction elements." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "A reaction may be an indication of an allergy or intolerance and, if this is determined to be the case,  it should be recorded as a new [AllergyIntolerance](allergyintolerance.html) resource instance as most systems will not query against  past Immunization.reaction elements." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1082,7 +1293,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Observation[classCode=obs].code" ]
        ]
      ], [
-       fhir:index 35;
+       fhir:index 39;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.id" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.id" ];
        fhir:ElementDefinition.representation [
@@ -1091,11 +1302,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -1108,12 +1319,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 36;
+       fhir:index 40;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1121,11 +1332,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1138,12 +1349,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 37;
+       fhir:index 41;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1154,11 +1365,11 @@
          fhir:value "modifiers";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1173,12 +1384,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 38;
+       fhir:index 42;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.date" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.date" ];
        fhir:ElementDefinition.short [ fhir:value "When reaction started" ];
        fhir:ElementDefinition.definition [ fhir:value "Date of reaction to the immunization." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1194,12 +1405,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".effectiveTime" ]
        ]
      ], [
-       fhir:index 39;
+       fhir:index 43;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.detail" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.detail" ];
        fhir:ElementDefinition.short [ fhir:value "Additional information on reaction" ];
        fhir:ElementDefinition.definition [ fhir:value "Details of the reaction." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1216,12 +1427,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".value" ]
        ]
      ], [
-       fhir:index 40;
+       fhir:index 44;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.reaction.reported" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.reaction.reported" ];
        fhir:ElementDefinition.short [ fhir:value "Indicates self-reported reaction" ];
        fhir:ElementDefinition.definition [ fhir:value "Self-reported indicator." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1237,12 +1448,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=INF].role[classCode=PAT] (this syntax for self-reported=true)" ]
        ]
      ], [
-       fhir:index 41;
+       fhir:index 45;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol" ];
        fhir:ElementDefinition.short [ fhir:value "What protocol was followed" ];
        fhir:ElementDefinition.definition [ fhir:value "Contains information about the protocol(s) under which the vaccine was administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1267,7 +1478,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM]" ]
        ]
      ], [
-       fhir:index 42;
+       fhir:index 46;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.id" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.id" ];
        fhir:ElementDefinition.representation [
@@ -1276,11 +1487,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -1293,12 +1504,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 43;
+       fhir:index 47;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1306,11 +1517,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1323,12 +1534,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 44;
+       fhir:index 48;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -1339,11 +1550,11 @@
          fhir:value "modifiers";
          fhir:index 2
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "BackboneElement.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -1358,12 +1569,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 45;
+       fhir:index 49;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.doseSequence" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.doseSequence" ];
        fhir:ElementDefinition.short [ fhir:value "Dose number within series" ];
        fhir:ElementDefinition.definition [ fhir:value "Nominal position in a series." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1375,12 +1586,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM].inboundRelationship[typeCode=COMP].sequenceNumber" ]
        ]
      ], [
-       fhir:index 46;
+       fhir:index 50;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.description" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.description" ];
        fhir:ElementDefinition.short [ fhir:value "Details of vaccine protocol" ];
        fhir:ElementDefinition.definition [ fhir:value "Contains the description about the protocol under which the vaccine was administered." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1392,12 +1603,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM].inboundRelationship[typeCode=COMP].source[classCode=SBADM].text" ]
        ]
      ], [
-       fhir:index 47;
+       fhir:index 51;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.authority" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.authority" ];
        fhir:ElementDefinition.short [ fhir:value "Who is responsible for protocol" ];
        fhir:ElementDefinition.definition [ fhir:value "Indicates the authority who published the protocol.  E.g. ACIP." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1410,12 +1621,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM].inboundRelationship[typeCode=COMP].source[classCode=SBADM].participation[typeCode=AUT].COCT_MT090200UV" ]
        ]
      ], [
-       fhir:index 48;
+       fhir:index 52;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.series" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.series" ];
        fhir:ElementDefinition.short [ fhir:value "Name of vaccine series" ];
        fhir:ElementDefinition.definition [ fhir:value "One possible path to achieve presumed immunity against a disease - within the context of an authority." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1427,12 +1638,12 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM]" ]
        ]
      ], [
-       fhir:index 49;
+       fhir:index 53;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.seriesDoses" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.seriesDoses" ];
        fhir:ElementDefinition.short [ fhir:value "Recommended number of doses for immunity" ];
        fhir:ElementDefinition.definition [ fhir:value "The recommended number of doses to achieve immunity." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1444,18 +1655,23 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship[typeCode=INST].target[classCode=SBADM].inboundRelationship[typeCode=COMP].source[classCode=SBADM].text" ]
        ]
      ], [
-       fhir:index 50;
+       fhir:index 54;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.targetDisease" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.targetDisease" ];
        fhir:ElementDefinition.short [ fhir:value "Disease immunized against" ];
        fhir:ElementDefinition.definition [ fhir:value "The targeted disease." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "VaccinationProtocoltargetDisease" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The disease target of the vaccination protocol" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -1469,19 +1685,24 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "outboundRelationship.target[classCode=OBS].code" ]
        ]
      ], [
-       fhir:index 51;
+       fhir:index 55;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.doseStatus" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.doseStatus" ];
        fhir:ElementDefinition.short [ fhir:value "Indicates if dose counts towards immunity" ];
        fhir:ElementDefinition.definition [ fhir:value "Indicates if the immunization event should \"count\" against  the protocol." ];
-       fhir:ElementDefinition.comments [ fhir:value "May need to differentiate between status declarations by a provider vs. a CDS engine." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "May need to differentiate between status declarations by a provider vs. a CDS engine." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "VaccinationProtocolDoseStatus" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The status of the vaccination protocol (i.e. should this count)" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -1495,18 +1716,23 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".participation[typeCode=CSM].role[classCode=INST].scopedRole.scoper[classCode=MMAT].playedRole[classCode=INGR].scopedRole.scoper[classCode=MMAT].playedRole[classCode=HLTHCHRT].participation[typeCode=SBJ].observation[classCode=OBS].value" ]
        ]
      ], [
-       fhir:index 52;
+       fhir:index 56;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccinationProtocol.doseStatusReason" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccinationProtocol.doseStatusReason" ];
        fhir:ElementDefinition.short [ fhir:value "Why dose does (not) count" ];
        fhir:ElementDefinition.definition [ fhir:value "Provides an explanation as to why an immunization event should or should not count against the protocol." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "VaccinationProtocolDoseStatusReason" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The reason for the determining if a vaccination should count or why vaccination should not count." ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -1530,6 +1756,11 @@
        fhir:ElementDefinition.definition [ fhir:value "Represents an immunization that was not given." ]
      ], [
        fhir:index 1;
+       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.notGiven" ];
+       fhir:ElementDefinition.path [ fhir:value "Immunization.notGiven" ];
+       fhir:ElementDefinition.fixedBoolean [ fhir:value "true"^^xsd:boolean ]
+     ], [
+       fhir:index 2;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.vaccineCode" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.vaccineCode" ];
        fhir:ElementDefinition.type [
@@ -1537,11 +1768,6 @@
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.wasNotGiven" ];
-       fhir:ElementDefinition.path [ fhir:value "Immunization.wasNotGiven" ];
-       fhir:ElementDefinition.fixedBoolean [ fhir:value "true"^^xsd:boolean ]
      ], [
        fhir:index 3;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.manufacturer" ];
@@ -1555,7 +1781,7 @@
        fhir:index 4;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.site" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.site" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1565,15 +1791,15 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/fhir/ValueSet/shr-core-BodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
          ]
        ]
      ], [
        fhir:index 5;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.route" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.route" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1591,7 +1817,7 @@
        fhir:index 6;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.doseQuantity" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.doseQuantity" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1606,7 +1832,7 @@
        fhir:index 8;
        fhir:Element.id [ fhir:value "Immunization:shr-immunization-ImmunizationNotGiven.explanation.reasonNotGiven" ];
        fhir:ElementDefinition.path [ fhir:value "Immunization.explanation.reasonNotGiven" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -1626,7 +1852,9 @@
 
 <http://hl7.org/fhir/ValueSet/immunization-origin> a fhir:ValueSet .
 
-<http://hl7.org/fhir/ValueSet/route-codes> a fhir:ValueSet, fhir:ValueSet .
+<http://hl7.org/fhir/ValueSet/route-codes> a fhir:ValueSet .
+
+<http://hl7.org/fhir/ValueSet/immunization-role> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/immunization-reason> a fhir:ValueSet .
 
@@ -1637,6 +1865,11 @@
 <http://hl7.org/fhir/ValueSet/vaccination-protocol-dose-status> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/vaccination-protocol-dose-status-reason> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-immunization-ImmunizationNotGiven.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 

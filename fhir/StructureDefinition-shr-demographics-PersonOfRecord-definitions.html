@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -138,7 +138,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>SubjectOfCare Client Resident</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.id"> </a><a name="Patient.id"> </a><b>Patient.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -157,7 +157,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.language"> </a><a name="Patient.language"> </a><b>Patient.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -197,7 +198,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:medicalinterpreterneeded"> </a><b>Patient.extension (<a href="http://hl7.org/fhir/2017Jan/extension-patient-interpreterrequired.html">http://hl7.org/fhir/StructureDefinition/patient-interpreterRequired</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>This Patient requires an interpreter to communicate healthcare information to the practitioner.</p>
 </td></tr>
@@ -206,81 +207,87 @@ redirect_from:
   <tr><td>Comments</td><td><p>The Patient does not speak the default language of the organization, and hence requires an interpreter. If the patient has other languages in the Communications list, then that would be the type of interpreter required.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:mothersmaidenname"> </a><b>Patient.extension (<a href="http://hl7.org/fhir/2017Jan/extension-patient-mothersmaidenname.html">http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Mother's maiden (unmarried) name, commonly collected to help verify patient identity.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:birthsex"> </a><b>Patient.extension (http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex)</b></td></tr>
   <tr><td>Definition</td><td><p>Administrative sex assigned at birth and recorded on birth certificate.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a>(http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex)</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:ethnicity"> </a><b>Patient.extension (http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)</b></td></tr>
   <tr><td>Definition</td><td><p>Indicator of Hispanic or Latino origin.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a>(http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:race"> </a><b>Patient.extension (http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)</b></td></tr>
   <tr><td>Definition</td><td><p>Subjective association of a person with a named category of humans sharing common history, traits, place of family origin, nationality, tribe, or other inherited background.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a>(http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:anonymized"> </a><b>Patient.extension (<a href="StructureDefinition-shr-actor-Anonymized-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Anonymized-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Flag indicating if personally identifiable information has been withheld.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:fictionalperson"> </a><b>Patient.extension (<a href="StructureDefinition-shr-actor-FictionalPerson-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-FictionalPerson-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Flag indicating if this record represents a fictional (synthetic, not real) person.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:fathersname"> </a><b>Patient.extension (<a href="StructureDefinition-shr-demographics-FathersName-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-FathersName-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The name of the father as it was or likely to have been recorded on the birth certificate of the subject; most likely the name of the father at the time of birth of the subject.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>(<a href="StructureDefinition-shr-core-HumanName.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-HumanName">SHR HumanName Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:socialsecuritynumber"> </a><b>Patient.extension (<a href="StructureDefinition-shr-demographics-SocialSecurityNumber-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-SocialSecurityNumber-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>A US social security number (SSN).</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:driverslicensenumber"> </a><b>Patient.extension (<a href="StructureDefinition-shr-demographics-DriversLicenseNumber-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-DriversLicenseNumber-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Identifying information from a drivers license.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:passportnumber"> </a><b>Patient.extension (<a href="StructureDefinition-shr-demographics-PassportNumber-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PassportNumber-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Indicator of citizenship and identity.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.extension:familialrelationship"> </a><b>Patient.extension (<a href="StructureDefinition-shr-demographics-FamilialRelationship-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-FamilialRelationship-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The relationship of the subject to another person in the same (extended) family. May or may not be a blood relative (determined by value). Can be used to indicate there is no relation of the given type (e.g., no siblings), using the NonOccurrenceModifier.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">choice-1</b>: shr-demographics-FamilialRelationship-extension SHALL have either extension('relatedperson') or extension('practitioner') (xpath: )<br/><b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">choice-1</b>: shr-demographics-FamilialRelationship-extension SHALL have either extension('relatedperson') or extension('practitioner') (: ( extension('relatedperson').url | extension('practitioner').url ).distinct().count() &lt;= 1)<br/><b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.modifierExtension"> </a><a name="Patient.modifierExtension"> </a><b>Patient.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -306,7 +313,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
   <tr><td>Requirements</td><td><p>Need to be able to mark a patient record as not to be used because it was created in error.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Default is true. If a record is inactive, and linked to an active record, then future patient/record updates should occur on the other patient.</p>
+  <tr><td>Comments</td><td><p>Default is true. If a record is inactive, and linked to an active record, then future patient/record updates should occur on the other patient</p>
+<p>This element is labeled as a modifier because when the patient record is marked as not active it is not expected to be used/referenced without being changed back to active.</p>
 </td></tr>
   <tr><td>Default Value</td><td>true</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.name"> </a><a name="Patient.name"> </a><b>Patient.name</b></td></tr>
@@ -357,6 +365,7 @@ redirect_from:
   <tr><td>Requirements</td><td><p>The fact that a patient is deceased influences the clinical process. Also, in human communication and relation management it is necessary to know whether the person is alive.</p>
 </td></tr>
   <tr><td>Comments</td><td><p>If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive.</p>
+<p>This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.address"> </a><a name="Patient.address"> </a><b>Patient.address</b></td></tr>
   <tr><td>Definition</td><td><p>Addresses for the individual.</p>
@@ -404,7 +413,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
   <tr><td>Comments</td><td><p>Contact covers all kinds of contact parties: family members, business contacts, guardians, caregivers. Not applicable to register pedigree and family ties beyond use of having contact.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">pat-1</b>: SHALL at least contain a contact's details or a reference to an organization (xpath: exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">pat-1</b>: SHALL at least contain a contact's details or a reference to an organization (: name.exists() or telecom.exists() or address.exists() or organization.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.contact.id"> </a><a name="Patient.contact.id"> </a><b>Patient.contact.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -489,7 +498,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
   <tr><td>Comments</td><td><p>The animal element is labeled &quot;Is Modifier&quot; since patients may be non-human. Systems SHALL either handle patient details appropriately (e.g. inform users patient is not human) or reject declared animal records.   The absense of the animal element does not imply that the patient is a human. If a system requires such a positive assertion that the patient is human, an extension will be required.  (Do not use a species of homo-sapiens in animal species, as this would incorrectly infer that the patient is an animal).</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.animal.id"> </a><a name="Patient.animal.id"> </a><b>Patient.animal.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -550,7 +559,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
   <tr><td>Comments</td><td><p>If no language is specified, this <em>implies</em> that the default local language is spoken.  If you need to convey proficiency for multiple modes then you need multiple Patient.Communication associations.   For animals, language is not a relevant field, and should be absent from the instance. If the Patient does not speak the default local language, then the Interpreter Required Standard can be used to explicitly declare that an interpreter is required.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.communication.id"> </a><a name="Patient.communication.id"> </a><b>Patient.communication.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -622,9 +631,10 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
 </ul>
 </td></tr>
   <tr><td>Comments</td><td><p>There is no assumption that linked patient records have mutual links.</p>
+<p>This element is labelled as a modifier because it may not be the main Patient resource, and the referenced patient should be used instead of this Patient record. This is when the link.type value is 'replaced-by'.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.link.id"> </a><a name="Patient.link.id"> </a><b>Patient.link.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -652,7 +662,6 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/relatedperson.html" title="http://hl7.org/fhir/StructureDefinition/RelatedPerson">RelatedPerson</a>)</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>Referencing a RelatedPerson here removes the need to use a Person record to associate a Patient and RelatedPerson as the same individual.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Patient:shr-demographics-PersonOfRecord.link.type"> </a><a name="Patient.link.type"> </a><b>Patient.link.type</b></td></tr>
@@ -661,7 +670,6 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The type of link between this patient resource and another patient resource.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-link-type.html">LinkType</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
 </table>
 
 
@@ -686,8 +694,8 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

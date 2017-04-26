@@ -23,8 +23,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.HumanName"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR HumanName Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.430Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -32,10 +34,9 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.496Z"/>
   <description value="A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)."/>
   <purpose value="Need to be able to record names, along with notes about their use."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -61,7 +62,7 @@
       <path value="HumanName"/>
       <short value="SHR HumanName Profile"/>
       <definition value="A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)."/>
-      <comments value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely."/>
+      <comment value="Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely."/>
       <min value="0"/>
       <max value="*"/>
       <condition value="ele-1"/>
@@ -112,9 +113,17 @@
     </element>
     <element id="HumanName:shr-core-HumanName.extension">
       <path value="HumanName.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -136,7 +145,7 @@
       <path value="HumanName.use"/>
       <short value="usual | official | temp | nickname | anonymous | old | maiden"/>
       <definition value="Identifies the purpose for this name."/>
-      <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old."/>
       <requirements value="Allows the appropriate name for a particular context of use to be selected from among a set of names."/>
       <min value="0"/>
       <max value="1"/>
@@ -146,6 +155,9 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="NameUse"/>
+        </extension>
         <strength value="required"/>
         <description value="The use of a human name"/>
         <valueSetReference>
@@ -169,7 +181,7 @@
       <path value="HumanName.text"/>
       <short value="Text representation of the full name"/>
       <definition value="A full text representation of the name."/>
-      <comments value="Can provide both a text representation and structured parts."/>
+      <comment value="Can provide both a text representation and structured parts."/>
       <requirements value="A renderable, unencoded form."/>
       <min value="1"/>
       <max value="1"/>
@@ -190,7 +202,7 @@
       <path value="HumanName.family"/>
       <short value="Family name (often called &#39;Surname&#39;)"/>
       <definition value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father."/>
-      <comments value="Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures)."/>
+      <comment value="Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures)."/>
       <alias value="surname"/>
       <min value="0"/>
       <max value="1"/>
@@ -215,7 +227,7 @@
       <path value="HumanName.given"/>
       <short value="Given names (not always &#39;first&#39;). Includes middle names"/>
       <definition value="Given name."/>
-      <comments value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first."/>
+      <comment value="If only initials are recorded, they may be used in place of the full name.  Not called &quot;first name&quot; since given names do not always come first."/>
       <alias value="first name"/>
       <alias value="middle name"/>
       <min value="0"/>
@@ -223,6 +235,7 @@
       <type>
         <code value="string"/>
       </type>
+      <orderMeaning value="Given Names appear in the correct order for presenting the name"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -246,6 +259,7 @@
       <type>
         <code value="string"/>
       </type>
+      <orderMeaning value="Prefixes appear in the correct order for presenting the name"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -269,6 +283,7 @@
       <type>
         <code value="string"/>
       </type>
+      <orderMeaning value="Suffixes appear in the correct order for presenting the name"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>

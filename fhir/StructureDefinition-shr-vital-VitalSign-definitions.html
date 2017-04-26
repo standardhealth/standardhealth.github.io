@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -140,7 +140,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))<br/><b title="Formal Invariant Identifier">obs-6</b>: dataAbsentReason SHALL only be present if Observation.value[x] is not present (xpath: not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')]))))<br/><b title="Formal Invariant Identifier">obs-7</b>: If code is the same as a component code then the value element associated with the code SHALL NOT be present (xpath: not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())<br/><b title="Formal Invariant Identifier">obs-6</b>: dataAbsentReason SHALL only be present if Observation.value[x] is not present (: dataAbsentReason.empty() or value.empty())<br/><b title="Formal Invariant Identifier">obs-7</b>: If code is the same as a component code then the value element associated with the code SHALL NOT be present (: value.empty() or code!=component.code)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.id"> </a><a name="Observation.id"> </a><b>Observation.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -159,7 +159,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.language"> </a><a name="Observation.language"> </a><b>Observation.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -199,35 +200,28 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.extension:changeflag"> </a><b>Observation.extension (<a href="http://hl7.org/fhir/2017Jan/extension-observation-delta.html">http://hl7.org/fhir/StructureDefinition/observation-delta</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The qualitative change in the value relative to the previous measurement. Usually only recorded if the change is clinically significant.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.extension:observationreason"> </a><b>Observation.extension (<a href="StructureDefinition-shr-observation-ObservationReason-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The reason for making the observation.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.extension:observationqualifier"> </a><b>Observation.extension (<a href="StructureDefinition-shr-observation-ObservationQualifier-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.extension:testrequest"> </a><b>Observation.extension (<a href="StructureDefinition-shr-lab-TestRequest-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-TestRequest-extension</a>)</b></td></tr>
-  <tr><td>Definition</td><td><p>A record of a request (order) for a test to be performed.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-lab-TestRequest.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-TestRequest">SHR TestRequest Profile</a>))</td></tr>
-  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.modifierExtension"> </a><a name="Observation.modifierExtension"> </a><b>Observation.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -243,15 +237,23 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#date">date</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#decimal">decimal</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">id</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#instant">instant</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#integer">integer</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">markdown</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#oid">oid</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#positiveInt">positiveInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">unsignedInt</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Address">Address</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Age">Age</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding">Coding</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactPoint">ContactPoint</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Count">Count</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Distance">Distance</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Duration">Duration</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#HumanName">HumanName</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Money">Money</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Signature">Signature</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Timing">Timing</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Meta">Meta</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.identifier"> </a><a name="Observation.identifier"> </a><b>Observation.identifier</b></td></tr>
-  <tr><td>Definition</td><td><p>A unique identifier for the simple observation instance.</p>
+  <tr><td>Definition</td><td><p>A unique identifier assigned to this observation.</p>
 </td></tr>
   <tr><td>Note</td><td>This is a business identifer, not a resource identifier (see <a href="http://hl7.org/fhir/2017Jan/resource.html#identifiers">discussion</a>)</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
   <tr><td>Requirements</td><td><p>Allows observations to be distinguished and referenced.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.basedOn"> </a><a name="Observation.basedOn"> </a><b>Observation.basedOn</b></td></tr>
+  <tr><td>Definition</td><td><p>A plan, proposal or order that is fulfilled in whole or in part by this event.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/careplan.html" title="http://hl7.org/fhir/StructureDefinition/CarePlan">CarePlan</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/devicerequest.html" title="http://hl7.org/fhir/StructureDefinition/DeviceRequest">DeviceRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/immunizationrecommendation.html" title="http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation">ImmunizationRecommendation</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/medicationrequest.html" title="http://hl7.org/fhir/StructureDefinition/MedicationRequest">MedicationRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/nutritionorder.html" title="http://hl7.org/fhir/StructureDefinition/NutritionOrder">NutritionOrder</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-lab-TestRequest.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-TestRequest">SHR TestRequest Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/referralrequest.html" title="http://hl7.org/fhir/StructureDefinition/ReferralRequest">ReferralRequest</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon.</p>
+</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Fulfills</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.status"> </a><a name="Observation.status"> </a><b>Observation.status</b></td></tr>
   <tr><td>Definition</td><td><p>The status of the result value.</p>
 </td></tr>
@@ -261,16 +263,22 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
   <tr><td>Requirements</td><td><p>Need to track the status of individual results. Some results are finalized before the whole report is finalized.</p>
 </td></tr>
+  <tr><td>Comments</td><td><p>This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.category"> </a><a name="Observation.category"> </a><b>Observation.category</b></td></tr>
   <tr><td>Definition</td><td><p>A code that classifies the general type of observation being made.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes for high level observation categories .<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-observation-category.html">Observation Category Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes for high level observation categories.<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-observation-category.html">Observation Category Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td>Requirements</td><td><p>Used for filtering what observations are retreived and displayed.</p>
+  <tr><td>Requirements</td><td><p>Used for filtering what observations are retrieved and displayed.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>There may be multiple axis of categoriization depending on the context or use case for retrieving or displaying the resource.  The level of granularity is defined by the category concepts in the value set.</p>
+  <tr><td>Comments</td><td><p>In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.category:vital-signs"> </a><a name="Observation.category"> </a><b>Observation.category(vital-signs)</b></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td>Fixed Value</td><td>&lt;valueCodeableConcept&nbsp;xmlns=&quot;http://hl7.org/fhir&quot;&gt;<br/>&nbsp;&nbsp;&lt;coding&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;system&nbsp;value=&quot;http://hl7.org/fhir/observation-category&quot;/&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&nbsp;value=&quot;vital-signs&quot;/&gt;<br/>&nbsp;&nbsp;&lt;/coding&gt;<br/>&lt;/valueCodeableConcept&gt;<br/></td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.code"> </a><a name="Observation.code"> </a><b>Observation.code</b></td></tr>
   <tr><td>Definition</td><td><p>Describes what was observed. Sometimes this is called the observation &quot;name&quot;.</p>
 </td></tr>
@@ -279,6 +287,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Knowing what kind of observation is being made is essential to understanding the observation.</p>
 </td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Name</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.subject"> </a><a name="Observation.subject"> </a><b>Observation.subject</b></td></tr>
   <tr><td>Definition</td><td><p>The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject.</p>
 </td></tr>
@@ -289,12 +298,15 @@ redirect_from:
   <tr><td>Comments</td><td><p>One would expect this element to be a cardinality  of 1..1.  The only circumstance in which the subject can be missing is when the observation is made by a device that does not know the patient. In this case, the observation SHALL be matched to a patient through some context/channel matching technique, and at this point, the observation should be updated.</p>
 <p>If the target of the observation is different than the subject, the general extension <a href="http://hl7.org/fhir/2017Jan/extension-observation-focal-subject.html">observation-focal-subject</a>.  may be used.  However, the distinction between the patient's own value for an observation versus that of the fetus, or the donor or blood product unit, etc., are often specified in the observation code.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.encounter"> </a><a name="Observation.encounter"> </a><b>Observation.encounter</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.context"> </a><a name="Observation.context"> </a><b>Observation.context</b></td></tr>
   <tr><td>Definition</td><td><p>The healthcare event  (e.g. a patient and healthcare provider interaction) during which this observation is made.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Encounter.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter">SHR Encounter Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Encounter.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter">SHR Encounter Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/episodeofcare.html" title="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare">EpisodeOfCare</a>)</td></tr>
   <tr><td>Requirements</td><td><p>For some observations it may be important to know the link between an observation and a particular encounter.</p>
+</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Encounter</td></tr>
+  <tr><td>Comments</td><td><p>This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests).</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.effective[x]"> </a><a name="Observation:shr-vital-VitalSign.effectiveDateTime"> </a><a name="Observation:shr-vital-VitalSign.effectivePeriod"> </a><a name="Observation:shr-vital-VitalSign.effectiveDateTime"> </a><a name="Observation:shr-vital-VitalSign.effectivePeriod"> </a><b>Observation.effective[x]</b></td></tr>
   <tr><td>Definition</td><td><p>The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.</p>
@@ -304,6 +316,7 @@ redirect_from:
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/2017Jan/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
   <tr><td>Requirements</td><td><p>Knowing when an observation was deemed true is important to its relevance as well as determining trends.</p>
 </td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Occurrence</td></tr>
   <tr><td>Comments</td><td><p>At least a date should be present unless this observation is a historical report.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.issued"> </a><a name="Observation.issued"> </a><b>Observation.issued</b></td></tr>
@@ -326,10 +339,10 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: obs-7</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="StructureDefinition-shr-core-Quantity.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity">SHR Quantity Profile</a>)</td></tr>
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/2017Jan/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
-  <tr><td>Requirements</td><td><p>An observation exists to have a value, though it may not if it is in error, or it represents a group of observations.</p>
+  <tr><td>Requirements</td><td><p>An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).</p>
-<p>If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.  For boolean values use valueCodeableConcept and select codes from <a href="http://hl7.org/fhir/2017Jan/v2/0136/index.html">HL7 Version 2 Table 0136</a>. These &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed.   For further discussion and examples see the  <a href="http://hl7.org/fhir/2017Jan/observation.html#4.20.4">notes section</a> below.</p>
+  <tr><td>Comments</td><td><p>Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).</p>
+<p>If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  <a href="http://hl7.org/fhir/2017Jan/observation.html#notes">notes section</a> below.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.dataAbsentReason"> </a><a name="Observation.dataAbsentReason"> </a><b>Observation.dataAbsentReason</b></td></tr>
   <tr><td>Definition</td><td><p>Provides a reason why the expected value in the element Observation.value[x] is missing.</p>
@@ -339,7 +352,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Requirements</td><td><p>For many results it is necessary to handle exceptional values in measurements.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Null or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  &quot;detected&quot;, &quot;not detected&quot;, &quot;inconclusive&quot;, or  &quot;specimen unsatisfactory&quot;.   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code &quot;error&quot; could be used when the measurement was not completed.  Because of these options, use-case agreements are required to interpret general observations for exceptional values.</p>
+  <tr><td>Comments</td><td><p>Null or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  &quot;detected&quot;, &quot;not detected&quot;, &quot;inconclusive&quot;, or  &quot;specimen unsatisfactory&quot;.   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code &quot;error&quot; could be used when the measurement was not completed. Note that an observation may only be reported if there are values to report. For example differential cell counts values may be reported only when &gt; 0.  Because of these options, use-case agreements are required to interpret general observations for null or exceptional values.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.interpretation"> </a><a name="Observation.interpretation"> </a><b>Observation.interpretation</b></td></tr>
   <tr><td>Definition</td><td><p>The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag.</p>
@@ -363,9 +376,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-core-BodySiteVS.html">SHR BodySiteVS ValueSet</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td>Requirements</td><td><p>Knowing where the observation is made is important for tracking if multiple sites are possible.</p>
-</td></tr>
-  <tr><td>Comments</td><td><p>Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   If the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use The standard extension<a href="http://hl7.org/fhir/2017Jan/extension-body-site-instance.html"> body-site-instance</a>.</p>
+  <tr><td>Comments</td><td><p>Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   If the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension<a href="http://hl7.org/fhir/2017Jan/extension-body-site-instance.html"> body-site-instance</a>.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.method"> </a><a name="Observation.method"> </a><b>Observation.method</b></td></tr>
   <tr><td>Definition</td><td><p>Indicates the mechanism used to perform the observation.</p>
@@ -382,14 +393,14 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/specimen.html" title="http://hl7.org/fhir/StructureDefinition/Specimen">Specimen</a>)</td></tr>
-  <tr><td>Comments</td><td><p>Observations are not made on specimens themselves; they are made on a subject, but usually by the means of a specimen. Note that although specimens are often involved, they are not always tracked and reported explicitly. Also note that observation resources may be used in contexts that track the specimen explicitly (e.g. Diagnostic Report).</p>
+  <tr><td>Comments</td><td><p>Should only be used if not implicit in code found in <code>Observation.code</code>.  Observations are not made on specimens themselves; they are made on a subject, but in many cases by the means of a specimen. Note that although specimens are often involved, they are not always tracked and reported explicitly. Also note that observation resources may be used in contexts that track the specimen explicitly (e.g. Diagnostic Report).</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.device"> </a><a name="Observation.device"> </a><b>Observation.device</b></td></tr>
   <tr><td>Definition</td><td><p>The device used to generate the observation data.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-device-Device.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device">SHR Device Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/devicemetric.html" title="http://hl7.org/fhir/StructureDefinition/DeviceMetric">DeviceMetric</a>)</td></tr>
-  <tr><td>Comments</td><td><p>An extension should be used if further typing of the device is needed.  Devices used to support obtaining an observation can be represented using either extension or through the Observation.related element.</p>
+  <tr><td>Comments</td><td><p>An extension should be used if further typing of the device is needed.  Devices used to support obtaining an observation can be represented using either an extension or through the Observation.related element.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange"> </a><a name="Observation.referenceRange"> </a><b>Observation.referenceRange</b></td></tr>
   <tr><td>Definition</td><td><p>Guidance on how to interpret the value by comparison to a normal or recommended range.</p>
@@ -398,10 +409,10 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Requirements</td><td><p>Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g. specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.</p>
+  <tr><td>Comments</td><td><p>Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">obs-3</b>: Must have at least a low or a high or text (xpath: (exists(f:low) or exists(f:high)or exists(f:text)))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">obs-3</b>: Must have at least a low or a high or text (: low.exists() or high.exists() or text.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange.id"> </a><a name="Observation.referenceRange.id"> </a><b>Observation.referenceRange.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -434,15 +445,25 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: obs-3</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="http://hl7.org/fhir/2017Jan/datatypes.html#SimpleQuantity" title="http://hl7.org/fhir/StructureDefinition/SimpleQuantity">SimpleQuantity</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange.meaning"> </a><a name="Observation.referenceRange.meaning"> </a><b>Observation.referenceRange.meaning</b></td></tr>
-  <tr><td>Definition</td><td><p>Codes to indicate the the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex, race, therapeutic status, or endocrine or reproductive status.</p>
+  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange.type"> </a><a name="Observation.referenceRange.type"> </a><b>Observation.referenceRange.type</b></td></tr>
+  <tr><td>Definition</td><td><p>Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Code for the meaning of a reference range.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-referencerange-meaning.html">Observation Reference Range Meaning Codes</a>; other codes may be used where these codes are not suitable</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td>Requirements</td><td><p>Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation.</p>
+</td></tr>
+  <tr><td>Comments</td><td><p>This SHOULD be populated if there is more than one range.  If this element is not present then the normal range is assumed.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange.appliesTo"> </a><a name="Observation.referenceRange.appliesTo"> </a><b>Observation.referenceRange.appliesTo</b></td></tr>
+  <tr><td>Definition</td><td><p>Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Code for the meaning of a reference range.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-referencerange-meaning.html">Observation Reference Range Meaning Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes identifying the population the reference range applies to.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-referencerange-appliesto.html">Observation Reference Range Applies To Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td>Requirements</td><td><p>Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc  - for proper interpretation.</p>
+  <tr><td>Requirements</td><td><p>Need to be able to identify the target population for proper interpretation.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>This SHOULD be populated if there is more than one range.  If this element is not present then the norma population is assumed.</p>
+  <tr><td>Comments</td><td><p>This SHOULD be populated if there is more than one range.  If this element is not present then the normal population is assumed.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.referenceRange.age"> </a><a name="Observation.referenceRange.age"> </a><b>Observation.referenceRange.age</b></td></tr>
   <tr><td>Definition</td><td><p>The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so.</p>
@@ -461,12 +482,12 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
-  <tr><td>Requirements</td><td><p>Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived.</p>
+  <tr><td>Requirements</td><td><p>Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived.</p>
 </td></tr>
   <tr><td>Comments</td><td><p>For a discussion on the ways Observations can assembled in groups together see <a href="http://hl7.org/fhir/2017Jan/observation.html#4.20.4">Notes below</a>.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.related.id"> </a><a name="Observation.related.id"> </a><b>Observation.related.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -497,7 +518,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td>Requirements</td><td><p>A relationship type SHOULD be provided.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>&quot;derived-from&quot; is only logical choice when referencing QuestionnaireAnswer resource.</p>
+  <tr><td>Comments</td><td><p>The &quot;derived-from&quot; type is the only logical choice when referencing the QuestionnaireAnswer resource.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.related.target"> </a><a name="Observation.related.target"> </a><b>Observation.related.target</b></td></tr>
   <tr><td>Definition</td><td><p>A reference to the observation or <a href="http://hl7.org/fhir/2017Jan/questionnaireresponse.html#">QuestionnaireResponse</a> resource that is related to this observation.</p>
@@ -511,10 +532,10 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Requirements</td><td><p>Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>For a discussion on the ways Observations can assembled in groups together see <a href="http://hl7.org/fhir/2017Jan/observation.html#notes">Notes</a> below.</p>
+  <tr><td>Comments</td><td><p>For a discussion on the ways Observations can be assembled in groups together see <a href="http://hl7.org/fhir/2017Jan/observation.html#notes">Notes</a> below.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.component.id"> </a><a name="Observation.component.id"> </a><b>Observation.component.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -551,9 +572,9 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Range">Range</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#SampledData">SampledData</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#time">time</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Period">Period</a></td></tr>
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/2017Jan/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
-  <tr><td>Requirements</td><td><p>An observation exists to have a value, though it may not if it is in error, or it represents a group of observations.</p>
+  <tr><td>Requirements</td><td><p>An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from &lt;http://hl7.org/fhir/ValueSet/v2-0136&gt; (These &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed&quot;).  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).</p>
+  <tr><td>Comments</td><td><p>Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from &lt;http://hl7.org/fhir/ValueSet/v2-0136&gt; (these &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed&quot;).  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.component.dataAbsentReason"> </a><a name="Observation.component.dataAbsentReason"> </a><b>Observation.component.dataAbsentReason</b></td></tr>
   <tr><td>Definition</td><td><p>Provides a reason why the expected value in the element Observation.value[x] is missing.</p>
@@ -574,7 +595,7 @@ redirect_from:
   <tr><td>Requirements</td><td><p>For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result.</p>
 </td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Abnormal Flag</td></tr>
-  <tr><td>Comments</td><td><p>The component interpretation is applies only to the indivual component value.  For an overall interpretation all components together use Observation.interpretation element.</p>
+  <tr><td>Comments</td><td><p>The component interpretation applies only to the individual component value.  For an overall interpretation all components together use thes Observation.interpretation element.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Observation:shr-vital-VitalSign.component.referenceRange"> </a><a name="Observation.component.referenceRange"> </a><b>Observation.component.referenceRange</b></td></tr>
   <tr><td>Definition</td><td><p>Guidance on how to interpret the value by comparison to a normal or recommended range.</p>
@@ -583,7 +604,7 @@ redirect_from:
   <tr><td>Type</td><td>See Observation.referenceRange</td></tr>
   <tr><td>Requirements</td><td><p>Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g. specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.</p>
+  <tr><td>Comments</td><td><p>Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.</p>
 </td></tr>
 </table>
 
@@ -609,8 +630,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

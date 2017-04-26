@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -140,7 +140,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.id"> </a><a name="DiagnosticReport.id"> </a><b>DiagnosticReport.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -159,7 +159,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.language"> </a><a name="DiagnosticReport.language"> </a><b>DiagnosticReport.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -199,49 +200,49 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a>, <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:transportationavailability"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-TransportationAvailability-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-TransportationAvailability-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Whether the subject has reliable transportation to bring him or her to medical appointments and to get medications.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-TransportationAvailability.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-TransportationAvailability">SHR TransportationAvailability Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:housingsecurity"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-HousingSecurity-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-HousingSecurity-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Whether the subject is at-risk of losing their housing or in a stable housing situation.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-HousingSecurity.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-HousingSecurity">SHR HousingSecurity Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:physicalsafety"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-PhysicalSafety-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-PhysicalSafety-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>How often the subject feels physically safe in the subject's home environment.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-PhysicalSafety.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-PhysicalSafety">SHR PhysicalSafety Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:emotionalsafety"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-EmotionalSafety-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-EmotionalSafety-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Whether the subject feels physically safe in the subject's home environment.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-EmotionalSafety.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-EmotionalSafety">SHR EmotionalSafety Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:domesticviolence"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-DomesticViolence-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-DomesticViolence-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>Whether the subject experiences domestic violence.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-DomesticViolence.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-DomesticViolence">SHR DomesticViolence Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.extension:homeenvironmentrisk"> </a><b>DiagnosticReport.extension (<a href="StructureDefinition-shr-environment-HomeEnvironmentRisk-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-HomeEnvironmentRisk-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>A risk experienced in the home environment.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-environment-HomeEnvironmentRisk.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-HomeEnvironmentRisk">SHR HomeEnvironmentRisk Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.modifierExtension"> </a><a name="DiagnosticReport.modifierExtension"> </a><b>DiagnosticReport.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -252,14 +253,26 @@ redirect_from:
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.identifier"> </a><a name="DiagnosticReport.identifier"> </a><b>DiagnosticReport.identifier</b></td></tr>
-  <tr><td>Definition</td><td><p>The local ID assigned to the report by the order filler, usually by the Information System of the diagnostic service provider.</p>
+  <tr><td>Definition</td><td><p>Identifiers assigned to this report by the performer or other systems.</p>
 </td></tr>
   <tr><td>Note</td><td>This is a business identifer, not a resource identifier (see <a href="http://hl7.org/fhir/2017Jan/resource.html#identifiers">discussion</a>)</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
   <tr><td>Requirements</td><td><p>Need to know what identifier to use when making queries about this report from the source laboratory, and for linking to the report outside FHIR context.</p>
 </td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>ReportID</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>ReportID, Filler ID, Placer ID</td></tr>
+  <tr><td>Comments</td><td><p>Usually assigned by the Information System of the diagnostic service provider (filler id).</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.basedOn"> </a><a name="DiagnosticReport.basedOn"> </a><b>DiagnosticReport.basedOn</b></td></tr>
+  <tr><td>Definition</td><td><p>Details concerning a test or procedure requested.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/careplan.html" title="http://hl7.org/fhir/StructureDefinition/CarePlan">CarePlan</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/immunizationrecommendation.html" title="http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation">ImmunizationRecommendation</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/medicationrequest.html" title="http://hl7.org/fhir/StructureDefinition/MedicationRequest">MedicationRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/nutritionorder.html" title="http://hl7.org/fhir/StructureDefinition/NutritionOrder">NutritionOrder</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedurerequest.html" title="http://hl7.org/fhir/StructureDefinition/ProcedureRequest">ProcedureRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/referralrequest.html" title="http://hl7.org/fhir/StructureDefinition/ReferralRequest">ReferralRequest</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>This allows tracing of authorization for the report and tracking whether proposals/recommendations were acted upon.</p>
+</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Request</td></tr>
+  <tr><td>Comments</td><td><p>Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.status"> </a><a name="DiagnosticReport.status"> </a><b>DiagnosticReport.status</b></td></tr>
   <tr><td>Definition</td><td><p>The status of the diagnostic report as a whole.</p>
 </td></tr>
@@ -277,7 +290,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-observation-category.html">Observation Category Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Department, Sub-department, service, discipline</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Department, Sub-department, Service, Discipline</td></tr>
   <tr><td>Comments</td><td><p>The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.code"> </a><a name="DiagnosticReport.code"> </a><b>DiagnosticReport.code</b></td></tr>
@@ -286,6 +299,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes that describe Diagnostic Reports.<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-report-codes.html">LOINC Diagnostic Report Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Type</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.subject"> </a><a name="DiagnosticReport.subject"> </a><b>DiagnosticReport.subject</b></td></tr>
   <tr><td>Definition</td><td><p>The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.</p>
 </td></tr>
@@ -294,11 +308,16 @@ redirect_from:
   <tr><td>Requirements</td><td><p>SHALL know the subject context.</p>
 </td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Patient</td></tr>
-  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.encounter"> </a><a name="DiagnosticReport.encounter"> </a><b>DiagnosticReport.encounter</b></td></tr>
-  <tr><td>Definition</td><td><p>The link to the health care event (encounter) when the order was made.</p>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.context"> </a><a name="DiagnosticReport.context"> </a><b>DiagnosticReport.context</b></td></tr>
+  <tr><td>Definition</td><td><p>The healthcare event  (e.g. a patient and healthcare provider interaction) which this DiagnosticReport per is about.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Encounter.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter">SHR Encounter Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Encounter.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter">SHR Encounter Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/episodeofcare.html" title="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare">EpisodeOfCare</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>Links the request to the Encounter context.</p>
+</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Encounter</td></tr>
+  <tr><td>Comments</td><td><p>This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests).</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.effective[x]"> </a><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.effectiveDateTime"> </a><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.effectivePeriod"> </a><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.effectiveDateTime"> </a><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.effectivePeriod"> </a><b>DiagnosticReport.effective[x]</b></td></tr>
   <tr><td>Definition</td><td><p>The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself.</p>
 </td></tr>
@@ -307,7 +326,7 @@ redirect_from:
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/2017Jan/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
   <tr><td>Requirements</td><td><p>Need to know where in the patient history to file/present this report.</p>
 </td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Observation time, Effective Time</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Observation time, Effective Time, Occurrence</td></tr>
   <tr><td>Comments</td><td><p>If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.issued"> </a><a name="DiagnosticReport.issued"> </a><b>DiagnosticReport.issued</b></td></tr>
@@ -321,23 +340,49 @@ redirect_from:
   <tr><td>Comments</td><td><p>May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer"> </a><a name="DiagnosticReport.performer"> </a><b>DiagnosticReport.performer</b></td></tr>
-  <tr><td>Definition</td><td><p>The diagnostic service that is responsible for issuing the report.</p>
+  <tr><td>Definition</td><td><p>Indicates who or what participated in producing the report.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Laboratory, Service, Practitioner, Department, Company</td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer.id"> </a><a name="DiagnosticReport.performer.id"> </a><b>DiagnosticReport.performer.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer.extension"> </a><a name="DiagnosticReport.performer.extension"> </a><b>DiagnosticReport.performer.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer.modifierExtension"> </a><a name="DiagnosticReport.performer.modifierExtension"> </a><b>DiagnosticReport.performer.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer.role"> </a><a name="DiagnosticReport.performer.role"> </a><b>DiagnosticReport.performer.role</b></td></tr>
+  <tr><td>Definition</td><td><p>Describes the type of participation (e.g.  a responsible party, author, or verifier).</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Indicate a role of diagnostic report performer<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-performer-role.html">Procedure Performer Role Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.performer.actor"> </a><a name="DiagnosticReport.performer.actor"> </a><b>DiagnosticReport.performer.actor</b></td></tr>
+  <tr><td>Definition</td><td><p>The reference to the  practitioner or organization involved in producing the report. For example, the diagnostic service that is responsible for issuing the report.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.</p>
 </td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Laboratory, Service, Practitioner, Department, Company</td></tr>
   <tr><td>Comments</td><td><p>This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.request"> </a><a name="DiagnosticReport.request"> </a><b>DiagnosticReport.request</b></td></tr>
-  <tr><td>Definition</td><td><p>Details concerning a test or procedure requested.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/diagnosticrequest.html" title="http://hl7.org/fhir/StructureDefinition/DiagnosticRequest">DiagnosticRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedurerequest.html" title="http://hl7.org/fhir/StructureDefinition/ProcedureRequest">ProcedureRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/referralrequest.html" title="http://hl7.org/fhir/StructureDefinition/ReferralRequest">ReferralRequest</a>)</td></tr>
-  <tr><td>Requirements</td><td><p>Need to be able to track completion of requests based on reports issued and also to report what diagnostic tests were requested (not always the same as what is delivered).</p>
-</td></tr>
-  <tr><td>Comments</td><td><p>Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.specimen"> </a><a name="DiagnosticReport.specimen"> </a><b>DiagnosticReport.specimen</b></td></tr>
   <tr><td>Definition</td><td><p>Details about the specimens on which this diagnostic report is based.</p>
@@ -346,7 +391,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/specimen.html" title="http://hl7.org/fhir/StructureDefinition/Specimen">Specimen</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Need to be able to report information about the collected specimens on which the report is based.</p>
 </td></tr>
-  <tr><td>Comments</td><td><p>If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per Observation or group.</p>
+  <tr><td>Comments</td><td><p>If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per observation or group.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.result"> </a><a name="DiagnosticReport.result"> </a><b>DiagnosticReport.result</b></td></tr>
   <tr><td>Definition</td><td><p>Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;).</p>
@@ -372,7 +417,7 @@ redirect_from:
 </td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>DICOM, Slides, Scans</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.image.id"> </a><a name="DiagnosticReport.image.id"> </a><b>DiagnosticReport.image.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -421,14 +466,14 @@ redirect_from:
   <tr><td>Definition</td><td><p>Codes for the conclusion.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Diagnoses codes provided as adjuncts to the report.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-clinical-findings.html">SNOMED CT Clinical Findings</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Diagnosis codes provided as adjuncts to the report.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-clinical-findings.html">SNOMED CT Clinical Findings</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="DiagnosticReport:shr-environment-SocialEnvironmentPanel.presentedForm"> </a><a name="DiagnosticReport.presentedForm"> </a><b>DiagnosticReport.presentedForm</b></td></tr>
   <tr><td>Definition</td><td><p>Rich text representation of the entire result as issued by the diagnostic service. Multiple formats are allowed but they SHALL be semantically equivalent.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a></td></tr>
-  <tr><td>Requirements</td><td><p>Gives Laboratory the ability to provide its own fully formatted report for clinical fidelity.</p>
+  <tr><td>Requirements</td><td><p>Gives laboratory the ability to provide its own fully formatted report for clinical fidelity.</p>
 </td></tr>
   <tr><td>Comments</td><td><p>&quot;application/pdf&quot; is recommended as the most reliable and interoperable in this context.</p>
 </td></tr>
@@ -456,8 +501,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

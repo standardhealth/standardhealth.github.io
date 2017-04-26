@@ -3,7 +3,7 @@
   "id": "shr-sex-SexualIdentity",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SexualIdentity Profile</b></p>\n  <p>Information on gender identity and sexual orientation.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.sex.SexualIdentity maps to DiagnosticReport:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to encounter\n  Entry.OriginalCreationDate maps to issued\n  CodeableConcept maps to codedDiagnosis\n  Observation maps to result\n  TBD &quot;Specimen&quot; maps to specimen\n  Interpretation maps to conclusion\n  ObservationCategory maps to category\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SexualIdentity Profile</b></p>\n  <p>Information on gender identity and sexual orientation.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.sex.SexualIdentity maps to DiagnosticReport:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  CodeableConcept maps to codedDiagnosis\n  Observation maps to result\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  Interpretation maps to conclusion\n  ObservationCategory maps to category\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-SexualIdentity",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.sex.SexualIdentity"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR SexualIdentity Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.954Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,11 +27,15 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.657Z",
   "description": "Information on gender identity and sexual orientation.",
   "purpose": "To support reporting for any diagnostic report into a clinical data repository.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Mapping"
+    },
     {
       "identity": "v2",
       "uri": "http://hl7.org/v2",
@@ -58,7 +64,7 @@
         "path": "DiagnosticReport",
         "short": "SHR SexualIdentity Profile",
         "definition": "Information on gender identity and sexual orientation.",
-        "comments": "This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing.",
+        "comment": "This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing.",
         "alias": [
           "Report",
           "Test",
@@ -109,6 +115,10 @@
             "map": "Entity. Role, or Act"
           },
           {
+            "identity": "workflow",
+            "map": "Event"
+          },
+          {
             "identity": "v2",
             "map": "ORU -> OBR"
           },
@@ -127,7 +137,7 @@
         "path": "DiagnosticReport.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -166,7 +176,7 @@
         "path": "DiagnosticReport.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -187,7 +197,7 @@
         "path": "DiagnosticReport.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -207,6 +217,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -221,7 +239,7 @@
         "path": "DiagnosticReport.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -255,7 +273,7 @@
         "path": "DiagnosticReport.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -284,16 +302,19 @@
         "id": "DiagnosticReport:shr-sex-SexualIdentity.extension",
         "path": "DiagnosticReport.extension",
         "slicing": {
-          "id": "195",
+          "id": "236",
           "discriminator": [
-            "url"
+            {
+              "type": "value",
+              "path": "url"
+            }
           ],
           "ordered": false,
           "rules": "open"
         },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -322,6 +343,7 @@
         "path": "DiagnosticReport.extension",
         "sliceName": "observationreason",
         "definition": "The reason for making the observation.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -354,6 +376,7 @@
         "path": "DiagnosticReport.extension",
         "sliceName": "observationcode",
         "definition": "A term from a controlled vocabulary that defines the data element (the question, not the answer) as specifically as possible. The specific code should always align with the concept of the element, but may be more specific. For example, the concept associated with medications is code for 'medication used', but the ObservationCode is the code for the particular medication used. For tests, ObservationCode identifies the specific test being performed, and for observations, the specific question being asked.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -435,7 +458,6 @@
         ],
         "short": "identifies the meaning of the extension",
         "definition": "Source of the definition for the extension code - a logical name or a URL.",
-        "comments": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
         "min": 1,
         "max": "1",
         "base": {
@@ -486,6 +508,7 @@
         "path": "DiagnosticReport.extension",
         "sliceName": "genderidentity",
         "definition": "Subjective personal perception of one's own gender, which can be male, female, a blend of both, or neither.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -518,6 +541,7 @@
         "path": "DiagnosticReport.extension",
         "sliceName": "sexualorientation",
         "definition": "An inherent and enduring emotional, romantic or sexual attraction to other people.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -550,7 +574,7 @@
         "path": "DiagnosticReport.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -578,11 +602,14 @@
       {
         "id": "DiagnosticReport:shr-sex-SexualIdentity.identifier",
         "path": "DiagnosticReport.identifier",
-        "short": "Id for external references to this report",
-        "definition": "The local ID assigned to the report by the order filler, usually by the Information System of the diagnostic service provider.",
+        "short": "Business identifier for report",
+        "definition": "Identifiers assigned to this report by the performer or other systems.",
+        "comment": "Usually assigned by the Information System of the diagnostic service provider (filler id).",
         "requirements": "Need to know what identifier to use when making queries about this report from the source laboratory, and for linking to the report outside FHIR context.",
         "alias": [
-          "ReportID"
+          "ReportID",
+          "Filler ID",
+          "Placer ID"
         ],
         "min": 0,
         "max": "*",
@@ -593,6 +620,10 @@
         ],
         "isSummary": true,
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.identifier"
+          },
           {
             "identity": "v2",
             "map": "OBR-51"
@@ -608,11 +639,64 @@
         ]
       },
       {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.basedOn",
+        "path": "DiagnosticReport.basedOn",
+        "short": "What was requested",
+        "definition": "Details concerning a test or procedure requested.",
+        "comment": "Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.",
+        "requirements": "This allows tracing of authorization for the report and tracking whether proposals/recommendations were acted upon.",
+        "alias": [
+          "Request"
+        ],
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/CarePlan"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/MedicationRequest"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/NutritionOrder"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ProcedureRequest"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ReferralRequest"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.basedOn"
+          },
+          {
+            "identity": "v2",
+            "map": "ORC? OBR-2/3?"
+          },
+          {
+            "identity": "rim",
+            "map": "outboundRelationship[typeCode=FLFS].target"
+          }
+        ]
+      },
+      {
         "id": "DiagnosticReport:shr-sex-SexualIdentity.status",
         "path": "DiagnosticReport.status",
-        "short": "registered | partial | final | corrected | appended | cancelled | entered-in-error",
+        "short": "registered | partial | preliminary | final +",
         "definition": "The status of the diagnostic report as a whole.",
-        "comments": "This is labeled as \"Is Modifier\" because applications need to take appropriate action if a report is withdrawn.",
+        "comment": "This is labeled as \"Is Modifier\" because applications need to take appropriate action if a report is withdrawn.",
         "requirements": "Diagnostic services routinely issue provisional/incomplete reports, and sometimes withdraw previously released reports.",
         "min": 1,
         "max": "1",
@@ -624,6 +708,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DiagnosticReportStatus"
+            }
+          ],
           "strength": "required",
           "description": "The status of the diagnostic report as a whole.",
           "valueSetReference": {
@@ -631,6 +721,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.status"
+          },
           {
             "identity": "v2",
             "map": "OBR-25 (not 1:1 mapping)"
@@ -650,12 +744,12 @@
         "path": "DiagnosticReport.category",
         "short": "Service category",
         "definition": "A code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This is used for searching, sorting and display purposes.",
-        "comments": "The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code.",
+        "comment": "The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code.",
         "alias": [
           "Department",
           "Sub-department",
-          "service",
-          "discipline"
+          "Service",
+          "Discipline"
         ],
         "min": 0,
         "max": "1",
@@ -692,6 +786,9 @@
         "path": "DiagnosticReport.code",
         "short": "Name/Code for this diagnostic report",
         "definition": "A code or name that describes this diagnostic report.",
+        "alias": [
+          "Type"
+        ],
         "min": 1,
         "max": "1",
         "type": [
@@ -701,6 +798,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DiagnosticReportCodes"
+            }
+          ],
           "strength": "preferred",
           "description": "Codes that describe Diagnostic Reports.",
           "valueSetReference": {
@@ -708,6 +811,10 @@
           }
         },
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.code"
+          },
           {
             "identity": "v2",
             "map": "OBR-4 (HL7 v2 doesn't provide an easy way to indicate both the ordered test and the performed panel)"
@@ -725,7 +832,7 @@
       {
         "id": "DiagnosticReport:shr-sex-SexualIdentity.subject",
         "path": "DiagnosticReport.subject",
-        "short": "The subject of the report, usually, but not always, the patient",
+        "short": "The subject of the report - usually, but not always, the patient",
         "definition": "The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.",
         "requirements": "SHALL know the subject context.",
         "alias": [
@@ -754,6 +861,10 @@
         "isSummary": true,
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.subject"
+          },
+          {
             "identity": "v2",
             "map": "PID-3 (no HL7 v2 mapping for Group or Device)"
           },
@@ -768,20 +879,33 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-sex-SexualIdentity.encounter",
-        "path": "DiagnosticReport.encounter",
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.context",
+        "path": "DiagnosticReport.context",
         "short": "Health care event when test ordered",
-        "definition": "The link to the health care event (encounter) when the order was made.",
+        "definition": "The healthcare event  (e.g. a patient and healthcare provider interaction) which this DiagnosticReport per is about.",
+        "comment": "This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests).",
+        "requirements": "Links the request to the Encounter context.",
+        "alias": [
+          "Encounter"
+        ],
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
           }
         ],
         "isSummary": true,
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.context"
+          },
           {
             "identity": "v2",
             "map": "PV1-19"
@@ -799,13 +923,14 @@
       {
         "id": "DiagnosticReport:shr-sex-SexualIdentity.effective[x]",
         "path": "DiagnosticReport.effective[x]",
-        "short": "Clinically Relevant time/time-period for report",
+        "short": "Clinically relevant time/time-period for report",
         "definition": "The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself.",
-        "comments": "If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic.",
+        "comment": "If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic.",
         "requirements": "Need to know where in the patient history to file/present this report.",
         "alias": [
           "Observation time",
-          "Effective Time"
+          "Effective Time",
+          "Occurrence"
         ],
         "min": 0,
         "max": "1",
@@ -819,6 +944,10 @@
         ],
         "isSummary": true,
         "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.occurrence[x]"
+          },
           {
             "identity": "v2",
             "map": "OBR-7"
@@ -838,7 +967,7 @@
         "path": "DiagnosticReport.issued",
         "short": "DateTime this version was released",
         "definition": "The date and time that this version of the report was released from the source diagnostic service.",
-        "comments": "May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report.",
+        "comment": "May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report.",
         "requirements": "Clinicians need to be able to check the date that the report was released.",
         "alias": [
           "Date Created",
@@ -871,10 +1000,8 @@
       {
         "id": "DiagnosticReport:shr-sex-SexualIdentity.performer",
         "path": "DiagnosticReport.performer",
-        "short": "Responsible Diagnostic Service",
-        "definition": "The diagnostic service that is responsible for issuing the report.",
-        "comments": "This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report.",
-        "requirements": "Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.",
+        "short": "Participants in producing the report",
+        "definition": "Indicates who or what participated in producing the report.",
         "alias": [
           "Laboratory",
           "Service",
@@ -884,6 +1011,179 @@
         ],
         "min": 0,
         "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer"
+          },
+          {
+            "identity": "v2",
+            "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
+          },
+          {
+            "identity": "rim",
+            "map": ".participation[typeCode=PRF]"
+          },
+          {
+            "identity": "w5",
+            "map": "who.witness"
+          }
+        ]
+      },
+      {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.performer.id",
+        "path": "DiagnosticReport.performer.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.performer.extension",
+        "path": "DiagnosticReport.performer.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.performer.modifierExtension",
+        "path": "DiagnosticReport.performer.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.performer.role",
+        "path": "DiagnosticReport.performer.role",
+        "short": "Type of performer",
+        "definition": "Describes the type of participation (e.g.  a responsible party, author, or verifier).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Role"
+            }
+          ],
+          "strength": "example",
+          "description": "Indicate a role of diagnostic report performer",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/performer-role"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer.role"
+          },
+          {
+            "identity": "v2",
+            "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
+          },
+          {
+            "identity": "rim",
+            "map": ".functionCode"
+          }
+        ]
+      },
+      {
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.performer.actor",
+        "path": "DiagnosticReport.performer.actor",
+        "short": "Practitioner or Organization  participant",
+        "definition": "The reference to the  practitioner or organization involved in producing the report. For example, the diagnostic service that is responsible for issuing the report.",
+        "comment": "This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report.",
+        "requirements": "Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.",
+        "min": 1,
+        "max": "1",
         "type": [
           {
             "code": "Reference",
@@ -897,50 +1197,16 @@
         "isSummary": true,
         "mapping": [
           {
+            "identity": "workflow",
+            "map": "Event.performer.actor"
+          },
+          {
             "identity": "v2",
             "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
           },
           {
             "identity": "rim",
-            "map": "participation[typeCode=AUT].role[classCode=ASSIGN].scoper"
-          },
-          {
-            "identity": "w5",
-            "map": "who.witness"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-sex-SexualIdentity.request",
-        "path": "DiagnosticReport.request",
-        "short": "What was requested",
-        "definition": "Details concerning a test or procedure requested.",
-        "comments": "Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.",
-        "requirements": "Need to be able to track completion of requests based on reports issued and also to report what diagnostic tests were requested (not always the same as what is delivered).",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DiagnosticRequest"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ProcedureRequest"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ReferralRequest"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "ORC? OBR-2/3?"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=FLFS].target"
+            "map": ".role"
           }
         ]
       },
@@ -949,7 +1215,7 @@
         "path": "DiagnosticReport.specimen",
         "short": "Specimens this report is based on",
         "definition": "Details about the specimens on which this diagnostic report is based.",
-        "comments": "If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per Observation or group.",
+        "comment": "If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per observation or group.",
         "requirements": "Need to be able to report information about the collected specimens on which the report is based.",
         "min": 0,
         "max": "*",
@@ -1011,7 +1277,7 @@
         "path": "DiagnosticReport.imagingStudy",
         "short": "Reference to full details of imaging associated with the diagnostic report",
         "definition": "One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.",
-        "comments": "ImagingStudy and ImageManifest and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided.",
+        "comment": "ImagingStudy and ImageManifest and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1103,7 +1369,7 @@
         "path": "DiagnosticReport.image.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -1132,7 +1398,7 @@
         "path": "DiagnosticReport.image.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content",
@@ -1164,7 +1430,7 @@
         "path": "DiagnosticReport.image.comment",
         "short": "Comment about the image (e.g. explanation)",
         "definition": "A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.",
-        "comments": "The comment should be displayed with the image. It would be common for the report to include additional discussion of the image contents in other sections such as the conclusion.",
+        "comment": "The comment should be displayed with the image. It would be common for the report to include additional discussion of the image contents in other sections such as the conclusion.",
         "requirements": "The provider of the report should make a comment about each image included in the report.",
         "min": 0,
         "max": "1",
@@ -1242,8 +1508,14 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdjunctDiagnosis"
+            }
+          ],
           "strength": "example",
-          "description": "Diagnoses codes provided as adjuncts to the report.",
+          "description": "Diagnosis codes provided as adjuncts to the report.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/clinical-findings"
           }
@@ -1264,8 +1536,8 @@
         "path": "DiagnosticReport.presentedForm",
         "short": "Entire report as issued",
         "definition": "Rich text representation of the entire result as issued by the diagnostic service. Multiple formats are allowed but they SHALL be semantically equivalent.",
-        "comments": "\"application/pdf\" is recommended as the most reliable and interoperable in this context.",
-        "requirements": "Gives Laboratory the ability to provide its own fully formatted report for clinical fidelity.",
+        "comment": "\"application/pdf\" is recommended as the most reliable and interoperable in this context.",
+        "requirements": "Gives laboratory the ability to provide its own fully formatted report for clinical fidelity.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1399,12 +1671,16 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-sex-SexualIdentity.encounter",
-        "path": "DiagnosticReport.encounter",
+        "id": "DiagnosticReport:shr-sex-SexualIdentity.context",
+        "path": "DiagnosticReport.context",
         "type": [
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
           }
         ]
       },

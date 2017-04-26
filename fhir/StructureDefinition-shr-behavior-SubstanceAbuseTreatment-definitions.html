@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))<br/><b title="Formal Invariant Identifier">pro-1</b>: Reason not performed is only permitted if notPerformed indicator is true (xpath: not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true())</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())<br/><b title="Formal Invariant Identifier">pro-1</b>: Reason not done is only permitted if notDone indicator is true (: notDoneReason.empty() or notDone = true)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.id"> </a><a name="Procedure.id"> </a><b>Procedure.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.language"> </a><a name="Procedure.language"> </a><b>Procedure.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -196,7 +197,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.modifierExtension"> </a><a name="Procedure.modifierExtension"> </a><b>Procedure.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -214,15 +215,51 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
   <tr><td>Requirements</td><td><p>Need to allow connection to a wider workflow.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.definition"> </a><a name="Procedure.definition"> </a><b>Procedure.definition</b></td></tr>
+  <tr><td>Definition</td><td><p>A protocol, guideline, orderset or other definition that was adhered to in whole or in part by this procedure.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/plandefinition.html" title="http://hl7.org/fhir/StructureDefinition/PlanDefinition">PlanDefinition</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/activitydefinition.html" title="http://hl7.org/fhir/StructureDefinition/ActivityDefinition">ActivityDefinition</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/healthcareservice.html" title="http://hl7.org/fhir/StructureDefinition/HealthcareService">HealthcareService</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.basedOn"> </a><a name="Procedure.basedOn"> </a><b>Procedure.basedOn</b></td></tr>
+  <tr><td>Definition</td><td><p>A reference to a resource that contains details of the request for this procedure.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/careplan.html" title="http://hl7.org/fhir/StructureDefinition/CarePlan">CarePlan</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedurerequest.html" title="http://hl7.org/fhir/StructureDefinition/ProcedureRequest">ProcedureRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/referralrequest.html" title="http://hl7.org/fhir/StructureDefinition/ReferralRequest">ReferralRequest</a>)</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>fulfills</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.partOf"> </a><a name="Procedure.partOf"> </a><b>Procedure.partOf</b></td></tr>
+  <tr><td>Definition</td><td><p>A larger event of which this particular procedure is a component or step.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedure.html" title="http://hl7.org/fhir/StructureDefinition/Procedure">Procedure</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/observation.html" title="http://hl7.org/fhir/StructureDefinition/Observation">Observation</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/medicationadministration.html" title="http://hl7.org/fhir/StructureDefinition/MedicationAdministration">MedicationAdministration</a>)</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>container</td></tr>
+  <tr><td>Comments</td><td><p>The MedicationAdministration has a partOf reference to Procedure, but this is not a circular reference.  For a surgical procedure, the anesthesia related medicationAdministration is part of the procedure.  For an IV medication administration,  the procedure to insert the IV port is part of the medication administration.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.status"> </a><a name="Procedure.status"> </a><b>Procedure.status</b></td></tr>
   <tr><td>Definition</td><td><p>A code specifying the state of the procedure. Generally this will be in-progress or completed state.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code specifying the state of the procedure.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-status.html">ProcedureStatus</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code specifying the state of the procedure.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-event-status.html">EventStatus</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn't know the current state of the procedure.</p>
+<p>This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.notDone"> </a><a name="Procedure.notDone"> </a><b>Procedure.notDone</b></td></tr>
+  <tr><td>Definition</td><td><p>Set this to true if the record is saying that the procedure was NOT performed.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td>Comments</td><td><p>If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it's not that useful to say &quot;There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome&quot; as it implies that there <em>could</em> have been an appendectomy done at any other time, by any other clinician or with any other outcome.</p>
+<p>This element is labeled as a modifier because it indicates that a procedure didn't happen.</p>
+</td></tr>
+  <tr><td>Default Value</td><td>false</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason"> </a><a name="Procedure.notDoneReason"> </a><b>Procedure.notDoneReason</b></td></tr>
+  <tr><td>Definition</td><td><p>A code indicating why the procedure was not performed.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: pro-1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code that identifies the reason a procedure was not performed.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-not-performed-reason.html">Procedure Not Performed Reason (SNOMED-CT)</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.category"> </a><a name="Procedure.category"> </a><b>Procedure.category</b></td></tr>
   <tr><td>Definition</td><td><p>A code that classifies the procedure for searching, sorting and display purposes (e.g. &quot;Surgical Procedure&quot;).</p>
 </td></tr>
@@ -232,19 +269,24 @@ redirect_from:
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.code"> </a><a name="Procedure.code"> </a><b>Procedure.code</b></td></tr>
   <tr><td>Definition</td><td><p>The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. &quot;Laparoscopic Appendectomy&quot;).</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code to identify a specific procedure .<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-code.html">Procedure Codes (SNOMED CT)</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td>Requirements</td><td><p>0..1 to account for primarily narrative only resources.</p>
+</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>type</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.subject"> </a><a name="Procedure.subject"> </a><b>Procedure.subject</b></td></tr>
   <tr><td>Definition</td><td><p>The person, animal or group on which the procedure was performed.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/group.html" title="http://hl7.org/fhir/StructureDefinition/Group">Group</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.encounter"> </a><a name="Procedure.encounter"> </a><b>Procedure.encounter</b></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>patient</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.context"> </a><a name="Procedure.context"> </a><b>Procedure.context</b></td></tr>
   <tr><td>Definition</td><td><p>The encounter during which the procedure was performed.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/episodeofcare.html" title="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare">EpisodeOfCare</a>)</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>encounter</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performed[x]"> </a><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performedDateTime"> </a><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performedPeriod"> </a><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performedDateTime"> </a><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performedPeriod"> </a><b>Procedure.performed[x]</b></td></tr>
   <tr><td>Definition</td><td><p>The date(time)/period over which the procedure was performed. Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured.</p>
 </td></tr>
@@ -257,7 +299,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.id"> </a><a name="Procedure.performer.id"> </a><b>Procedure.performer.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -280,17 +322,26 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.actor"> </a><a name="Procedure.performer.actor"> </a><b>Procedure.performer.actor</b></td></tr>
-  <tr><td>Definition</td><td><p>The practitioner who was involved in the procedure.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Practitioner.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner">SHR Practitioner Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-demographics-PersonOfRecord.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord">SHR PersonOfRecord Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson">SHR RelatedPerson Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.role"> </a><a name="Procedure.performer.role"> </a><b>Procedure.performer.role</b></td></tr>
   <tr><td>Definition</td><td><p>For example: surgeon, anaethetist, endoscopist.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/v3/ParticipationType/vs.html">v3 Code System ParticipationType</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.actor"> </a><a name="Procedure.performer.actor"> </a><b>Procedure.performer.actor</b></td></tr>
+  <tr><td>Definition</td><td><p>The practitioner who was involved in the procedure.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Practitioner.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner">SHR Practitioner Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-demographics-PersonOfRecord.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord">SHR PersonOfRecord Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson">SHR RelatedPerson Profile</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/device.html" title="http://hl7.org/fhir/StructureDefinition/Device">Device</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>A reference to Device supports use cases, such as pacemakers.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.onBehalfOf"> </a><a name="Procedure.performer.onBehalfOf"> </a><b>Procedure.performer.onBehalfOf</b></td></tr>
+  <tr><td>Definition</td><td><p>The organization the device or practitioner was acting on behalf of.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>Practitioners and Devices can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of when performing the action.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.location"> </a><a name="Procedure.location"> </a><b>Procedure.location</b></td></tr>
   <tr><td>Definition</td><td><p>The location where the procedure actually happened.  E.g. a newborn at home, a tracheostomy at a restaurant.</p>
 </td></tr>
@@ -298,34 +349,19 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-Facility.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility">SHR Facility Profile</a>)</td></tr>
   <tr><td>Requirements</td><td><p>Ties a procedure to where the records are likely kept.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.reasonReference"> </a><a name="Procedure.reasonReference"> </a><b>Procedure.reasonReference</b></td></tr>
-  <tr><td>Definition</td><td><p>The condition that is the reason why the procedure was performed.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>)</td></tr>
-  <tr><td>Comments</td><td><p>e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic.</p>
-</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.reasonCode"> </a><a name="Procedure.reasonCode"> </a><b>Procedure.reasonCode</b></td></tr>
   <tr><td>Definition</td><td><p>The coded reason why the procedure was performed. This may be coded entity of some type, or may simply be present as text.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code that identifies the reason a procedure is  required.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-reason.html">Procedure Reason Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.notPerformed"> </a><a name="Procedure.notPerformed"> </a><b>Procedure.notPerformed</b></td></tr>
-  <tr><td>Definition</td><td><p>Set this to true if the record is saying that the procedure was NOT performed.</p>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.reasonReference"> </a><a name="Procedure.reasonReference"> </a><b>Procedure.reasonReference</b></td></tr>
+  <tr><td>Definition</td><td><p>The condition that is the reason why the procedure was performed.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it's not that useful to say &quot;There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome&quot; as it implies that there <em>could</em> have been an appendectomy done at any other time, by any other clinician or with any other outcome.</p>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/observation.html" title="http://hl7.org/fhir/StructureDefinition/Observation">Observation</a>)</td></tr>
+  <tr><td>Comments</td><td><p>e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic.</p>
 </td></tr>
-  <tr><td>Default Value</td><td>false</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.reasonNotPerformed"> </a><a name="Procedure.reasonNotPerformed"> </a><b>Procedure.reasonNotPerformed</b></td></tr>
-  <tr><td>Definition</td><td><p>A code indicating why the procedure was not performed.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: pro-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A code that identifies the reason a procedure was not performed.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-not-performed-reason.html">Procedure Not Performed Reason (SNOMED-CT)</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.bodySite"> </a><a name="Procedure.bodySite"> </a><b>Procedure.bodySite</b></td></tr>
   <tr><td>Definition</td><td><p>Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.</p>
 </td></tr>
@@ -355,18 +391,20 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Comments</td><td><p>If complications are only expressed by the narrative text, they can be captured using the CodeableConcept.text.</p>
 </td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.complicationDetail"> </a><a name="Procedure.complicationDetail"> </a><b>Procedure.complicationDetail</b></td></tr>
+  <tr><td>Definition</td><td><p>Any complications that occurred during the procedure, or in the immediate post-performance period.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/condition.html" title="http://hl7.org/fhir/StructureDefinition/Condition">Condition</a>)</td></tr>
+  <tr><td>Requirements</td><td><p>This is used to document a condition that is a result of the procedure, not the condition that was the reason for the procedure.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.followUp"> </a><a name="Procedure.followUp"> </a><b>Procedure.followUp</b></td></tr>
   <tr><td>Definition</td><td><p>If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or could potentially be more complex in which case the CarePlan resource can be used.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Specific follow up required for a procedure e.g. removal of sutures.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-procedure-followup.html">Procedure Follow up Codes (SNOMED CT)</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.request"> </a><a name="Procedure.request"> </a><b>Procedure.request</b></td></tr>
-  <tr><td>Definition</td><td><p>A reference to a resource that contains details of the request for this procedure.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/careplan.html" title="http://hl7.org/fhir/StructureDefinition/CarePlan">CarePlan</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/diagnosticrequest.html" title="http://hl7.org/fhir/StructureDefinition/DiagnosticRequest">DiagnosticRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedurerequest.html" title="http://hl7.org/fhir/StructureDefinition/ProcedureRequest">ProcedureRequest</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/referralrequest.html" title="http://hl7.org/fhir/StructureDefinition/ReferralRequest">ReferralRequest</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.notes"> </a><a name="Procedure.notes"> </a><b>Procedure.notes</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.note"> </a><a name="Procedure.note"> </a><b>Procedure.note</b></td></tr>
   <tr><td>Definition</td><td><p>Any other notes about the procedure.  E.g. the operative notes.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
@@ -377,7 +415,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.focalDevice.id"> </a><a name="Procedure.focalDevice.id"> </a><b>Procedure.focalDevice.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -404,7 +442,7 @@ redirect_from:
   <tr><td>Definition</td><td><p>The kind of change that happened to the device during the procedure.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A kind of change that happened to the device during the procedure.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-device-action.html">Procedure Device Action Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A kind of change that happened to the device during the procedure.<br/>The codes SHOULD be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-device-action.html">Procedure Device Action Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.focalDevice.manipulated"> </a><a name="Procedure.focalDevice.manipulated"> </a><b>Procedure.focalDevice.manipulated</b></td></tr>
   <tr><td>Definition</td><td><p>The device that was manipulated (changed) during the procedure.</p>
@@ -424,15 +462,10 @@ redirect_from:
   <tr><td>Definition</td><td><p>Identifies coded items that were used as part of the procedure.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes describing items used during a procedure</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes describing items used during a procedure<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-device-kind.html">FHIR Device Types</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Comments</td><td><p>For devices actually implanted or removed, use Procedure.device.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Procedure:shr-behavior-SubstanceAbuseTreatment.component"> </a><a name="Procedure.component"> </a><b>Procedure.component</b></td></tr>
-  <tr><td>Definition</td><td><p>Identifies medication administrations, other procedures or observations that are related to this procedure.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/medicationadministration.html" title="http://hl7.org/fhir/StructureDefinition/MedicationAdministration">MedicationAdministration</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/procedure.html" title="http://hl7.org/fhir/StructureDefinition/Procedure">Procedure</a>), <a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/observation.html" title="http://hl7.org/fhir/StructureDefinition/Observation">Observation</a>)</td></tr>
 </table>
 
 
@@ -457,8 +490,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

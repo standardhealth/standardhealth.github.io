@@ -12,8 +12,10 @@
       "value": "shr.core.HumanName"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR HumanName Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.430Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,10 +27,9 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.496Z",
   "description": "A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
   "purpose": "Need to be able to record names, along with notes about their use.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "v2",
@@ -58,7 +59,7 @@
         "path": "HumanName",
         "short": "SHR HumanName Profile",
         "definition": "A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
-        "comments": "Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.",
+        "comment": "Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.",
         "min": 0,
         "max": "*",
         "condition": [
@@ -123,9 +124,19 @@
       {
         "id": "HumanName:shr-core-HumanName.extension",
         "path": "HumanName.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -154,7 +165,7 @@
         "path": "HumanName.use",
         "short": "usual | official | temp | nickname | anonymous | old | maiden",
         "definition": "Identifies the purpose for this name.",
-        "comments": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old.",
+        "comment": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old.",
         "requirements": "Allows the appropriate name for a particular context of use to be selected from among a set of names.",
         "min": 0,
         "max": "1",
@@ -166,6 +177,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "NameUse"
+            }
+          ],
           "strength": "required",
           "description": "The use of a human name",
           "valueSetReference": {
@@ -192,7 +209,7 @@
         "path": "HumanName.text",
         "short": "Text representation of the full name",
         "definition": "A full text representation of the name.",
-        "comments": "Can provide both a text representation and structured parts.",
+        "comment": "Can provide both a text representation and structured parts.",
         "requirements": "A renderable, unencoded form.",
         "min": 1,
         "max": "1",
@@ -218,7 +235,7 @@
         "path": "HumanName.family",
         "short": "Family name (often called 'Surname')",
         "definition": "The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.",
-        "comments": "Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures).",
+        "comment": "Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures).",
         "alias": [
           "surname"
         ],
@@ -250,7 +267,7 @@
         "path": "HumanName.given",
         "short": "Given names (not always 'first'). Includes middle names",
         "definition": "Given name.",
-        "comments": "If only initials are recorded, they may be used in place of the full name.  Not called \"first name\" since given names do not always come first.",
+        "comment": "If only initials are recorded, they may be used in place of the full name.  Not called \"first name\" since given names do not always come first.",
         "alias": [
           "first name",
           "middle name"
@@ -262,6 +279,7 @@
             "code": "string"
           }
         ],
+        "orderMeaning": "Given Names appear in the correct order for presenting the name",
         "isSummary": true,
         "mapping": [
           {
@@ -290,6 +308,7 @@
             "code": "string"
           }
         ],
+        "orderMeaning": "Prefixes appear in the correct order for presenting the name",
         "isSummary": true,
         "mapping": [
           {
@@ -318,6 +337,7 @@
             "code": "string"
           }
         ],
+        "orderMeaning": "Suffixes appear in the correct order for presenting the name",
         "isSummary": true,
         "mapping": [
           {

@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))<br/><b title="Formal Invariant Identifier">imm-1</b>: If immunization was not administered (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present (xpath: not(f:wasNotGiven/@value=true() and (count(f:reaction) &gt; 0 or exists(f:explanation/f:reason))))<br/><b title="Formal Invariant Identifier">imm-2</b>: If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent. (xpath: not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())<br/><b title="Formal Invariant Identifier">imm-1</b>: If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present (: (notGiven = true).not() or (reaction.empty() and explanation.reason.empty()))<br/><b title="Formal Invariant Identifier">imm-2</b>: If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent. (: (notGiven = true) or explanation.reasonNotGiven.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.id"> </a><a name="Immunization.id"> </a><b>Immunization.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.language"> </a><a name="Immunization.language"> </a><b>Immunization.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -213,13 +214,15 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>Will generally be set to show that the immunization has been completed.</p>
+<p>This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.date"> </a><a name="Immunization.date"> </a><b>Immunization.date</b></td></tr>
-  <tr><td>Definition</td><td><p>Date vaccine administered or was to be administered.</p>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.notGiven"> </a><a name="Immunization.notGiven"> </a><b>Immunization.notGiven</b></td></tr>
+  <tr><td>Definition</td><td><p>Indicates if the vaccination was or was not given.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
-  <tr><td>Comments</td><td><p>When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given.</p>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td>Comments</td><td><p>This element is labeled as a modifier because it indicates that an immunization didn't happen.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.vaccineCode"> </a><a name="Immunization.vaccineCode"> </a><b>Immunization.vaccineCode</b></td></tr>
   <tr><td>Definition</td><td><p>Vaccine that was administered or was to be administered.</p>
@@ -232,12 +235,18 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.wasNotGiven"> </a><a name="Immunization.wasNotGiven"> </a><b>Immunization.wasNotGiven</b></td></tr>
-  <tr><td>Definition</td><td><p>Indicates if the vaccination was or was not given.</p>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.encounter"> </a><a name="Immunization.encounter"> </a><b>Immunization.encounter</b></td></tr>
+  <tr><td>Definition</td><td><p>The visit or admission or other contact between patient and health care provider the immunization was performed as part of.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.date"> </a><a name="Immunization.date"> </a><b>Immunization.date</b></td></tr>
+  <tr><td>Definition</td><td><p>Date vaccine administered or was to be administered.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
+  <tr><td>Comments</td><td><p>When immunizations are given a specific date and time should always be known.   When immunizations are patient reported, a specific date might not be known.  Although partial dates are allowed, an adult patient might not be able to recall the year a childhood immunization was given.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.primarySource"> </a><a name="Immunization.primarySource"> </a><b>Immunization.primarySource</b></td></tr>
   <tr><td>Definition</td><td><p>An indication that the content of the record is based on information from the person who administered the vaccine. This reflects the context under which the data was originally recorded.</p>
 </td></tr>
@@ -249,37 +258,20 @@ redirect_from:
   <tr><td>Definition</td><td><p>The source of the data when the report of the immunization event is not based on information from the person who administered the vaccine.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The source of the data for a record which is not from a primary source.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-immunization-origin.html">ImmunizationOrigin</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The source of the data for a record which is not from a primary source.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-immunization-origin.html">Immunization Origin Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Comments</td><td><p>Should not be populated if primarySource = True, will not be required even if primarySource = False.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.performer"> </a><a name="Immunization.performer"> </a><b>Immunization.performer</b></td></tr>
-  <tr><td>Definition</td><td><p>Clinician who administered the vaccine.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.requester"> </a><a name="Immunization.requester"> </a><b>Immunization.requester</b></td></tr>
-  <tr><td>Definition</td><td><p>Clinician who ordered the vaccination.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>)</td></tr>
-  <tr><td>Comments</td><td><p>Other participants - delegate to Provenance resource.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.encounter"> </a><a name="Immunization.encounter"> </a><b>Immunization.encounter</b></td></tr>
-  <tr><td>Definition</td><td><p>The visit or admission or other contact between patient and health care provider the immunization was performed as part of.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.manufacturer"> </a><a name="Immunization.manufacturer"> </a><b>Immunization.manufacturer</b></td></tr>
-  <tr><td>Definition</td><td><p>Name of vaccine manufacturer.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Organization.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization">SHR Organization Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.location"> </a><a name="Immunization.location"> </a><b>Immunization.location</b></td></tr>
   <tr><td>Definition</td><td><p>The service delivery location where the vaccine administration occurred.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/location.html" title="http://hl7.org/fhir/StructureDefinition/Location">Location</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.manufacturer"> </a><a name="Immunization.manufacturer"> </a><b>Immunization.manufacturer</b></td></tr>
+  <tr><td>Definition</td><td><p>Name of vaccine manufacturer.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Organization.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization">SHR Organization Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.lotNumber"> </a><a name="Immunization.lotNumber"> </a><b>Immunization.lotNumber</b></td></tr>
   <tr><td>Definition</td><td><p>Lot number of the  vaccine product.</p>
 </td></tr>
@@ -307,6 +299,46 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="StructureDefinition-shr-core-Quantity.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity">SHR Quantity Profile</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner"> </a><a name="Immunization.practitioner"> </a><b>Immunization.practitioner</b></td></tr>
+  <tr><td>Definition</td><td><p>Indicates who or what performed the event.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner.id"> </a><a name="Immunization.practitioner.id"> </a><b>Immunization.practitioner.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner.extension"> </a><a name="Immunization.practitioner.extension"> </a><b>Immunization.practitioner.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner.modifierExtension"> </a><a name="Immunization.practitioner.modifierExtension"> </a><b>Immunization.practitioner.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner.role"> </a><a name="Immunization.practitioner.role"> </a><b>Immunization.practitioner.role</b></td></tr>
+  <tr><td>Definition</td><td><p>Describes the type of performance (e.g. ordering provider, administering provider, etc.).</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The role a practitioner plays in the immunization event<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-immunization-role.html">Immunization Role Codes</a>; other codes may be used where these codes are not suitable</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.practitioner.actor"> </a><a name="Immunization.practitioner.actor"> </a><b>Immunization.practitioner.actor</b></td></tr>
+  <tr><td>Definition</td><td><p>The device, practitioner, etc. who performed the action.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/practitioner.html" title="http://hl7.org/fhir/StructureDefinition/Practitioner">Practitioner</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.note"> </a><a name="Immunization.note"> </a><b>Immunization.note</b></td></tr>
   <tr><td>Definition</td><td><p>Extra information about the immunization that is not conveyed by the other attributes.</p>
 </td></tr>
@@ -318,7 +350,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.explanation.id"> </a><a name="Immunization.explanation.id"> </a><b>Immunization.explanation.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -361,7 +393,7 @@ redirect_from:
   <tr><td>Comments</td><td><p>A reaction may be an indication of an allergy or intolerance and, if this is determined to be the case,  it should be recorded as a new <a href="http://hl7.org/fhir/2017Jan/allergyintolerance.html">AllergyIntolerance</a> resource instance as most systems will not query against  past Immunization.reaction elements.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.reaction.id"> </a><a name="Immunization.reaction.id"> </a><b>Immunization.reaction.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -405,7 +437,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Immunization:shr-immunization-ImmunizationAdministered.vaccinationProtocol.id"> </a><a name="Immunization.vaccinationProtocol.id"> </a><b>Immunization.vaccinationProtocol.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -497,8 +529,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

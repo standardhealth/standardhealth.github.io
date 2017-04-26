@@ -12,7 +12,6 @@
   <sch:pattern>
     <sch:title>f:Medication</sch:title>
     <sch:rule context="f:Medication">
-      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-OverTheCounter-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-OverTheCounter-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:code) &gt;= 1">code: minimum cardinality of 'code' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
@@ -26,21 +25,17 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Medication.product</sch:title>
-    <sch:rule context="f:Medication/f:product">
+    <sch:title>Medication.ingredient</sch:title>
+    <sch:rule context="f:Medication/f:ingredient">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Medication.product.ingredient</sch:title>
-    <sch:rule context="f:Medication/f:product/f:ingredient">
-      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
-    </sch:rule>
-  </sch:pattern>
-  <sch:pattern>
-    <sch:title>Medication.product.batch</sch:title>
-    <sch:rule context="f:Medication/f:product/f:batch">
-      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+    <sch:title>f:Medication/f:ingredient/f:amount</sch:title>
+    <sch:rule context="f:Medication/f:ingredient/f:amount">
+      <sch:assert test="count(f:id) &lt;= 1">id: maximum cardinality of 'id' is 1</sch:assert>
+      <sch:assert test="count(f:numerator) &lt;= 1">numerator: maximum cardinality of 'numerator' is 1</sch:assert>
+      <sch:assert test="count(f:denominator) &lt;= 1">denominator: maximum cardinality of 'denominator' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
@@ -52,6 +47,12 @@
   <sch:pattern>
     <sch:title>Medication.package.content</sch:title>
     <sch:rule context="f:Medication/f:package/f:content">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Medication.package.batch</sch:title>
+    <sch:rule context="f:Medication/f:package/f:batch">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
     </sch:rule>
   </sch:pattern>

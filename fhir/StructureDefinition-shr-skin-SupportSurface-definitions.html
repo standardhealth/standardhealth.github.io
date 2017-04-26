@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.id"> </a><a name="Device.id"> </a><b>Device.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.language"> </a><a name="Device.language"> </a><b>Device.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -196,21 +197,21 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.extension:supportsurfacebodyposition"> </a><b>Device.extension (<a href="StructureDefinition-shr-skin-SupportSurfaceBodyPosition-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceBodyPosition-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>What body positions the surface can be used for, specifically, sitting or lying.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.extension:supportsurfacecomponent"> </a><b>Device.extension (<a href="StructureDefinition-shr-skin-SupportSurfaceComponent-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceComponent-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>A physical material, structure, or system used alone or in combination with other components to fashion a support surface.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.modifierExtension"> </a><a name="Device.modifierExtension"> </a><b>Device.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -229,36 +230,116 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Serial Number</td></tr>
   <tr><td>Comments</td><td><p>The barcode string from a barcode present on a device label or package may identify the instance, include names given to the device in local usage, or may identify the type of device. If the identifier identifies the type of device, Device.type element should be used.  For <a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">UDI</a>,  this element corresponds to the variable portion of the UDI that identifies the serial number of a specific device. See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udiCarrier"> </a><a name="Device.udiCarrier"> </a><b>Device.udiCarrier</b></td></tr>
-  <tr><td>Definition</td><td><p><a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">Unique device identifier (UDI)</a> barcode or rfid string assigned to device label or package.</p>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi"> </a><a name="Device.udi"> </a><b>Device.udi</b></td></tr>
+  <tr><td>Definition</td><td><p><a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">Unique device identifier (UDI)</a> assigned to device label or package.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Identifier">Identifier</a></td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>UDI, Barcode String</td></tr>
-  <tr><td>Comments</td><td><p>The udiCarrier string may identify an unique instance of a device, or it may only identify the type of the device. The Human Readable format (HRF) is required in FHIR. AIDC identifiers cannot be conveyed in FHIR, Because of limitations on character sets in XML and the need to round-trip JSON data through XML.  See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td>Comments</td><td><p>UDI may identify an unique instance of a device, or it may only identify the type of the device.  See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
+</td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.id"> </a><a name="Device.udi.id"> </a><b>Device.udi.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.extension"> </a><a name="Device.udi.extension"> </a><b>Device.udi.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.modifierExtension"> </a><a name="Device.udi.modifierExtension"> </a><b>Device.udi.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.deviceIdentifier"> </a><a name="Device.udi.deviceIdentifier"> </a><b>Device.udi.deviceIdentifier</b></td></tr>
+  <tr><td>Definition</td><td><p>The device identifier (DI) is a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a device.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>DI</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.name"> </a><a name="Device.udi.name"> </a><b>Device.udi.name</b></td></tr>
+  <tr><td>Definition</td><td><p>Name of device as used in labeling or catalog.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Brand Name</td></tr>
+  <tr><td>Comments</td><td><p>Use the <code>Device.type</code>  for a generic type or kind of device name.  Note the <a href="http://www.fda.gov/medicaldevices/deviceregulationandguidance/uniquedeviceidentification/globaludidatabasegudid/default.htm">GUDID</a> lists the name as the 'Brand Name'.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.jurisdiction"> </a><a name="Device.udi.jurisdiction"> </a><b>Device.udi.jurisdiction</b></td></tr>
+  <tr><td>Definition</td><td><p>The identity of the authoritative source for UDI generation within a  jurisdiction.  All UDIs are globally unique within a single namespace. with the appropriate repository uri as the system.  For example,  UDIs of devices managed in the U.S. by the FDA, the value is  http://hl7.org/fhir/NamingSystem/fda-udi.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
+  <tr><td>Requirements</td><td><p>Allows a recipient of a UDI to know which database will contain the UDI-associated metadata.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.carrierHRF"> </a><a name="Device.udi.carrierHRF"> </a><b>Device.udi.carrierHRF</b></td></tr>
+  <tr><td>Definition</td><td><p>The full UDI carrier as the human readable form (HRF) representation of the barcode string as printed on the packaging of the device.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Human Readable Form</td></tr>
+  <tr><td>Comments</td><td><p>If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.carrierAIDC"> </a><a name="Device.udi.carrierAIDC"> </a><b>Device.udi.carrierAIDC</b></td></tr>
+  <tr><td>Definition</td><td><p>The full UDI carrier of the Automatic Identification and Data Capture (AIDC) technology representation of the barcode string as printed on the packaging of the device - E.g a barcode or RFID.   Because of limitations on character sets in XML and the need to round-trip JSON data through XML, AIDC Formats <em>SHALL</em> be base64 encoded.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#base64Binary">base64Binary</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Automatic Identification and Data Capture</td></tr>
+  <tr><td>Comments</td><td><p>The AIDC form of UDIs should be scanned or otherwise used for the identification of the device whenever possible to minimize errors in records resulting from manual transcriptions. If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.issuer"> </a><a name="Device.udi.issuer"> </a><b>Device.udi.issuer</b></td></tr>
+  <tr><td>Definition</td><td><p>Organization that is charged with issuing UDIs for devices.  For example, the US FDA issuers include :
+1) GS1:
+http://hl7.org/fhir/NamingSystem/gs1-di,
+2) HIBCC:
+http://hl7.org/fhir/NamingSystem/hibcc-dI,
+3) ICCBBA for blood containers:
+http://hl7.org/fhir/NamingSystem/iccbba-blood-di,
+4) ICCBA for other devices:
+http://hl7.org/fhir/NamingSystem/iccbba-other-di.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>Barcode System</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.udi.entryType"> </a><a name="Device.udi.entryType"> </a><b>Device.udi.entryType</b></td></tr>
+  <tr><td>Definition</td><td><p>A coded entry to indicate how the data was entered.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes to identify how UDI data was entered<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-udi-entry-type.html">UDIEntryType</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
+  <tr><td>Requirements</td><td><p>Supports a way to distinguish hand entered from machine read data.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.status"> </a><a name="Device.status"> </a><b>Device.status</b></td></tr>
   <tr><td>Definition</td><td><p>Status of the Device availability.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The availability status of the device.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-devicestatus.html">DeviceStatus</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>The availability status of the device.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-device-status.html">FHIRDeviceStatus</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td>Comments</td><td><p>This element is labeled as a modifier because the status contains the codes inactive and entered-in-error that mark the device (record)as not currently valid.</p>
+</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.type"> </a><a name="Device.type"> </a><b>Device.type</b></td></tr>
   <tr><td>Definition</td><td><p>Code or identifier to identify a kind of device.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-skin-SupportSurfaceVS.html">SHR SupportSurfaceVS ValueSet</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td>Comments</td><td><p>There can be different code values thath may correspond to different granularities of the same concept.  These can be represented as translations using  the <a href="http://hl7.org/fhir/2017Jan/datatypes.html#codeableconcept">codeableConcept</a> datatype.  For <a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">UDI</a>, this element corresponds to the UDI device identifier (DI) part. See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
-</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.lotNumber"> </a><a name="Device.lotNumber"> </a><b>Device.lotNumber</b></td></tr>
   <tr><td>Definition</td><td><p>Lot number assigned by the manufacturer.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td>Comments</td><td><p>Alphanumeric. For <a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">UDI</a>, this element corresponds to the variable portion of a UDI that identifies the lot or batch number within which a physical instance of a device was manufactured. See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
-</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.manufacturer"> </a><a name="Device.manufacturer"> </a><b>Device.manufacturer</b></td></tr>
   <tr><td>Definition</td><td><p>A name of the manufacturer.</p>
 </td></tr>
@@ -269,15 +350,11 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
-  <tr><td>Comments</td><td><p>For <a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">UDI</a>, this element corresponds to the variable portion of a UDI that identifies the date a physical instance of a device was manufactured. See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
-</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.expirationDate"> </a><a name="Device.expirationDate"> </a><b>Device.expirationDate</b></td></tr>
   <tr><td>Definition</td><td><p>The date and time beyond which this device is no longer valid or should not be used (if applicable).</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
-  <tr><td>Comments</td><td><p>For <a href="http://hl7.org/fhir/2017Jan/device.html#5.11.3.2.2">UDI</a>, this element corresponds to the variable portion of a UDI that identifies the expiration date of a physical instance of a device. See <a href="http://hl7.org/fhir/2017Jan/device-mappings.html#udi">UDI mappings</a> for a complete mapping of UDI parts to Device.</p>
-</td></tr>
   <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.model"> </a><a name="Device.model"> </a><b>Device.model</b></td></tr>
   <tr><td>Definition</td><td><p>The &quot;model&quot; is an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type.</p>
 </td></tr>
@@ -327,6 +404,12 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Annotation">Annotation</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Device:shr-skin-SupportSurface.safety"> </a><a name="Device.safety"> </a><b>Device.safety</b></td></tr>
+  <tr><td>Definition</td><td><p>Provides additional safety characteristics about a medical device.  For example devices containing latex.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>Codes used to identify medical devices safety characterics. These codes are derived in part from the [United States Food and Drug Administration recommendations](http://www.fda.gov/downloads/medicaldevices/deviceregulationandguidance/guidancedocuments/ucm107708.pdf) and are provided here as a suggestive example.<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-device-safety.html">DeviceSafety</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
 </table>
 
 
@@ -351,8 +434,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

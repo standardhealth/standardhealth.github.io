@@ -3,7 +3,7 @@
   "id": "shr-core-GeopoliticalLocation",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR GeopoliticalLocation Profile</b></p>\n  <p>The countries of the world and major geopolitical subregions, such as US states.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.GeopoliticalLocation maps to Address:\n  AddressLine maps to line\n  City maps to city\n  County maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  use is 0..0\n  type is 0..0\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR GeopoliticalLocation Profile</b></p>\n  <p>The countries of the world and major geopolitical subregions, such as US states.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.GeopoliticalLocation maps to Address:\n  AddressLine maps to line\n  City maps to city\n  County maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  constrain use to 0..0\n  constrain type to 0..0\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.core.GeopoliticalLocation"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR GeopoliticalLocation Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.426Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,10 +27,9 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.493Z",
   "description": "The countries of the world and major geopolitical subregions, such as US states.",
   "purpose": "Need to be able to record postal addresses, along with notes about their use.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
     {
       "identity": "v2",
@@ -63,7 +64,7 @@
         "path": "Address",
         "short": "SHR GeopoliticalLocation Profile",
         "definition": "The countries of the world and major geopolitical subregions, such as US states.",
-        "comments": "Note: address is for postal addresses, not physical locations.",
+        "comment": "Note: address is for postal addresses, not physical locations.",
         "min": 0,
         "max": "*",
         "condition": [
@@ -128,9 +129,19 @@
       {
         "id": "Address:shr-core-GeopoliticalLocation.extension",
         "path": "Address.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -159,7 +170,7 @@
         "path": "Address.use",
         "short": "home | work | temp | old - purpose of this address",
         "definition": "The purpose of this address.",
-        "comments": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old.",
+        "comment": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old.",
         "requirements": "Allows an appropriate address to be chosen from a list of many.",
         "min": 0,
         "max": "0",
@@ -177,6 +188,12 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AddressUse"
+            }
+          ],
           "strength": "required",
           "description": "The use of an address",
           "valueSetReference": {
@@ -218,6 +235,12 @@
         ],
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AddressType"
+            }
+          ],
           "strength": "required",
           "description": "The type of an address (physical / postal)",
           "valueSetReference": {
@@ -244,7 +267,7 @@
         "path": "Address.text",
         "short": "Text representation of the address",
         "definition": "A full text representation of the address.",
-        "comments": "Can provide both a text representation and parts.",
+        "comment": "Can provide both a text representation and parts.",
         "requirements": "A renderable, unencoded form.",
         "min": 0,
         "max": "1",
@@ -288,6 +311,7 @@
             "code": "string"
           }
         ],
+        "orderMeaning": "The order in which lines should appear in an address label",
         "example": [
           {
             "label": "General",
@@ -360,7 +384,7 @@
         "path": "Address.district",
         "short": "District name (aka county)",
         "definition": "The name of the administrative area (county).",
-        "comments": "District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead.",
+        "comment": "District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead.",
         "alias": [
           "County"
         ],
@@ -471,7 +495,7 @@
         "path": "Address.country",
         "short": "Country (e.g. can be ISO 3166 2 or 3 letter code)",
         "definition": "Country - a nation as commonly understood or generally accepted.",
-        "comments": "ISO 3166 3 letter codes can be used in place of a full country name.",
+        "comment": "ISO 3166 3 letter codes can be used in place of a full country name.",
         "min": 1,
         "max": "1",
         "type": [

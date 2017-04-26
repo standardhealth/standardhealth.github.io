@@ -18,8 +18,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.CodeableConcept"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR CodeableConcept Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:21.077Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -27,10 +29,9 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.124Z"/>
   <description value="A set of codes drawn from different coding systems, representing the same concept."/>
   <purpose value="This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -56,7 +57,7 @@
       <path value="CodeableConcept"/>
       <short value="SHR CodeableConcept Profile"/>
       <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
-      <comments value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination."/>
+      <comment value="Not all terminology uses fit this general pattern. In some cases, models should not use CodeableConcept and use Coding directly and provide their own structure for managing text, codings, translations and the relationship between elements and pre- and post-coordination."/>
       <min value="0"/>
       <max value="*"/>
       <condition value="ele-1"/>
@@ -107,9 +108,17 @@
     </element>
     <element id="CodeableConcept:shr-core-CodeableConcept.extension">
       <path value="CodeableConcept.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -131,7 +140,7 @@
       <path value="CodeableConcept.coding"/>
       <short value="Code defined by a terminology system"/>
       <definition value="A reference to a code defined by a terminology system."/>
-      <comments value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labelled as UserSelected = true."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
       <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
       <min value="0"/>
       <max value="*"/>
@@ -154,12 +163,15 @@
       </mapping>
     </element>
     <element id="CodeableConcept:shr-core-CodeableConcept.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
       <path value="CodeableConcept.text"/>
       <short value="Plain text representation of the concept"/>
       <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
-      <comments value="Very often the text is the same as a displayName of one of the codings."/>
+      <comment value="Very often the text is the same as a displayName of one of the codings."/>
       <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="string"/>
@@ -191,11 +203,6 @@
         <code value="Coding"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
-    </element>
-    <element id="CodeableConcept:shr-core-CodeableConcept.text">
-      <path value="CodeableConcept.text"/>
-      <min value="1"/>
-      <max value="1"/>
     </element>
   </differential>
 </StructureDefinition>

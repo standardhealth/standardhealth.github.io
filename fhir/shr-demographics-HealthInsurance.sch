@@ -25,8 +25,8 @@
     </sch:rule>
   </sch:pattern>
   <sch:pattern>
-    <sch:title>Coverage.group</sch:title>
-    <sch:rule context="f:Coverage/f:group">
+    <sch:title>Coverage.grouping</sch:title>
+    <sch:rule context="f:Coverage/f:grouping">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
     </sch:rule>
   </sch:pattern>

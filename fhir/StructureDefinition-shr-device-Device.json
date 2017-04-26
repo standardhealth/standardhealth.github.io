@@ -3,7 +3,7 @@
   "id": "shr-device-Device",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Device Profile</b></p>\n  <p>A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.device.Device maps to Device:\n  CodeableConcept maps to type\n  DeviceUdi maps to udiCarrier.value\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Device Profile</b></p>\n  <p>A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.device.Device maps to Device:\n  CodeableConcept maps to type\n  DeviceUdi maps to udi.carrierHRF\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device",
   "identifier": [
@@ -12,8 +12,10 @@
       "value": "shr.device.Device"
     }
   ],
+  "version": "0.0.1",
   "name": "SHR Device Profile",
   "status": "draft",
+  "date": "2017-04-18T15:12:22.489Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -25,16 +27,10 @@
       ]
     }
   ],
-  "date": "2017-04-06T15:42:38.524Z",
   "description": "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.",
   "purpose": "Allows institutions to track their devices.",
-  "fhirVersion": "1.8.0",
+  "fhirVersion": "3.0.0",
   "mapping": [
-    {
-      "identity": "udi",
-      "uri": "http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm",
-      "name": "UDI Mapping"
-    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -44,6 +40,11 @@
       "identity": "w5",
       "uri": "http://hl7.org/fhir/w5",
       "name": "W5 Mapping"
+    },
+    {
+      "identity": "udi",
+      "uri": "http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm",
+      "name": "UDI Mapping"
     }
   ],
   "kind": "resource",
@@ -100,10 +101,6 @@
             "map": "Entity. Role, or Act"
           },
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": "Device"
           },
@@ -118,7 +115,7 @@
         "path": "Device.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
-        "comments": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
+        "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -157,7 +154,7 @@
         "path": "Device.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
-        "comments": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.",
+        "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
         "min": 0,
         "max": "1",
         "base": {
@@ -178,7 +175,7 @@
         "path": "Device.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
-        "comments": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
+        "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
         "min": 0,
         "max": "1",
         "base": {
@@ -198,6 +195,14 @@
               "valueReference": {
                 "reference": "http://hl7.org/fhir/ValueSet/all-languages"
               }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
             }
           ],
           "strength": "extensible",
@@ -212,7 +217,7 @@
         "path": "Device.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
-        "comments": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
+        "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
         "alias": [
           "narrative",
           "html",
@@ -246,7 +251,7 @@
         "path": "Device.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
-        "comments": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
+        "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
         "alias": [
           "inline resources",
           "anonymous resources",
@@ -276,7 +281,7 @@
         "path": "Device.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -305,7 +310,7 @@
         "path": "Device.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comments": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
@@ -335,7 +340,7 @@
         "path": "Device.identifier",
         "short": "Instance identifier",
         "definition": "Unique instance identifiers assigned to a device by manufacturers other organizations or owners.",
-        "comments": "The barcode string from a barcode present on a device label or package may identify the instance, include names given to the device in local usage, or may identify the type of device. If the identifier identifies the type of device, Device.type element should be used.  For [UDI](device.html#5.11.3.2.2),  this element corresponds to the variable portion of the UDI that identifies the serial number of a specific device. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
+        "comment": "The barcode string from a barcode present on a device label or package may identify the instance, include names given to the device in local usage, or may identify the type of device. If the identifier identifies the type of device, Device.type element should be used.  For [UDI](device.html#5.11.3.2.2),  this element corresponds to the variable portion of the UDI that identifies the serial number of a specific device. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "alias": [
           "Serial Number"
         ],
@@ -349,7 +354,7 @@
         "mapping": [
           {
             "identity": "udi",
-            "map": "The serial number which is a component of the the production identifier (PI), a conditional, variable portion of a UDI.   The identifier.type code should be set to “SNO”(Serial Number) and the system left empty."
+            "map": "The serial number which is a component of the production identifier (PI), a conditional, variable portion of a UDI.   The identifier.type code should be set to “SNO”(Serial Number) and the system left empty."
           },
           {
             "identity": "rim",
@@ -362,30 +367,33 @@
         ]
       },
       {
-        "id": "Device:shr-device-Device.udiCarrier",
-        "path": "Device.udiCarrier",
+        "id": "Device:shr-device-Device.udi",
+        "path": "Device.udi",
         "short": "Unique Device Identifier (UDI) Barcode string",
-        "definition": "[Unique device identifier (UDI)](device.html#5.11.3.2.2) barcode or rfid string assigned to device label or package.",
-        "comments": "The udiCarrier string may identify an unique instance of a device, or it may only identify the type of the device. The Human Readable format (HRF) is required in FHIR. AIDC identifiers cannot be conveyed in FHIR, Because of limitations on character sets in XML and the need to round-trip JSON data through XML.  See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
-        "alias": [
-          "UDI",
-          "Barcode String"
-        ],
+        "definition": "[Unique device identifier (UDI)](device.html#5.11.3.2.2) assigned to device label or package.",
+        "comment": "UDI may identify an unique instance of a device, or it may only identify the type of the device.  See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "min": 0,
         "max": "1",
         "type": [
           {
-            "code": "Identifier"
+            "code": "BackboneElement"
           }
         ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
         "mapping": [
           {
-            "identity": "udi",
-            "map": "The full UDI carrier - The Human Readable Form (HRF) representation of the barcode string as printed on the packaging of the device.  The  'type' component should be set to “UDI” and the 'system' component to the the appropriate repository url.  the additional URL is needed to identify the authoritative source for UDI generation within the jurisdiction.  All UDIs are globally unique within a single namespace. with the appropriate repository uri as the system.  This allows a recipient of a UDI to know which database will contain the UDI-associated metadata.  For example,  UDIs of devices managed in the U.S. by the FDA, the value is  http://hl7.org/fhir/NamingSystem/fda-udi.  Because of limitations on character sets in XML and the need to round-trip JSON data through XML, AIDC identifiers cannot be conveyed in FHIR."
-          },
-          {
             "identity": "rim",
-            "map": ".id[where root is root for UDI]"
+            "map": ".id and .code"
           },
           {
             "identity": "w5",
@@ -394,10 +402,297 @@
         ]
       },
       {
+        "id": "Device:shr-device-Device.udi.id",
+        "path": "Device.udi.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.extension",
+        "path": "Device.udi.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.modifierExtension",
+        "path": "Device.udi.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.deviceIdentifier",
+        "path": "Device.udi.deviceIdentifier",
+        "short": "Mandatory fixed portion of UDI",
+        "definition": "The device identifier (DI) is a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a device.",
+        "alias": [
+          "DI"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "udi",
+            "map": "The device identifier (DI), a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a device."
+          },
+          {
+            "identity": "rim",
+            "map": "Role.id.extension"
+          },
+          {
+            "identity": "w5",
+            "map": "what"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.name",
+        "path": "Device.udi.name",
+        "short": "Device Name as appears on UDI label",
+        "definition": "Name of device as used in labeling or catalog.",
+        "comment": "Use the `Device.type`  for a generic type or kind of device name.  Note the [GUDID](http://www.fda.gov/medicaldevices/deviceregulationandguidance/uniquedeviceidentification/globaludidatabasegudid/default.htm) lists the name as the 'Brand Name'.",
+        "alias": [
+          "Brand Name"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "udi",
+            "map": "Propietary/Trade Name of the medical Device as used in the labeling or catalog"
+          },
+          {
+            "identity": "rim",
+            "map": ".displayName"
+          },
+          {
+            "identity": "w5",
+            "map": "what"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.jurisdiction",
+        "path": "Device.udi.jurisdiction",
+        "short": "Regional UDI authority",
+        "definition": "The identity of the authoritative source for UDI generation within a  jurisdiction.  All UDIs are globally unique within a single namespace. with the appropriate repository uri as the system.  For example,  UDIs of devices managed in the U.S. by the FDA, the value is  http://hl7.org/fhir/NamingSystem/fda-udi.",
+        "requirements": "Allows a recipient of a UDI to know which database will contain the UDI-associated metadata.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "Role.scoper"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.carrierHRF",
+        "path": "Device.udi.carrierHRF",
+        "short": "UDI Human Readable Barcode String",
+        "definition": "The full UDI carrier as the human readable form (HRF) representation of the barcode string as printed on the packaging of the device.",
+        "comment": "If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.",
+        "alias": [
+          "Human Readable Form"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "udi",
+            "map": "A unique device identifier (UDI) on a device label in plain text"
+          },
+          {
+            "identity": "rim",
+            "map": "Role.id.extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.carrierAIDC",
+        "path": "Device.udi.carrierAIDC",
+        "short": "UDI Machine Readable Barcode String",
+        "definition": "The full UDI carrier of the Automatic Identification and Data Capture (AIDC) technology representation of the barcode string as printed on the packaging of the device - E.g a barcode or RFID.   Because of limitations on character sets in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be base64 encoded.",
+        "comment": "The AIDC form of UDIs should be scanned or otherwise used for the identification of the device whenever possible to minimize errors in records resulting from manual transcriptions. If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.",
+        "alias": [
+          "Automatic Identification and Data Capture"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "base64Binary"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "udi",
+            "map": "A unique device identifier (UDI) on a device label a form that uses automatic identification and data capture (AIDC) technology."
+          },
+          {
+            "identity": "rim",
+            "map": "Role.id.extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.issuer",
+        "path": "Device.udi.issuer",
+        "short": "UDI Issuing Organization",
+        "definition": "Organization that is charged with issuing UDIs for devices.  For example, the US FDA issuers include :\n1) GS1: \nhttp://hl7.org/fhir/NamingSystem/gs1-di, \n2) HIBCC:\nhttp://hl7.org/fhir/NamingSystem/hibcc-dI, \n3) ICCBBA for blood containers:\nhttp://hl7.org/fhir/NamingSystem/iccbba-blood-di, \n4) ICCBA for other devices:\nhttp://hl7.org/fhir/NamingSystem/iccbba-other-di.",
+        "alias": [
+          "Barcode System"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "udi",
+            "map": "All UDIs are to be issued under a system operated by an Jurisdiction-accredited issuing agency.\nGS1 DIs: \n http://hl7.org/fhir/NamingSystem/gs1\nHIBCC DIs:\n http://hl7.org/fhir/NamingSystem/hibcc\nICCBBA DIs for blood containers:\n http://hl7.org/fhir/NamingSystem/iccbba-blood\nICCBA DIs for other devices:\n http://hl7.org/fhir/NamingSystem/iccbba-other"
+          },
+          {
+            "identity": "rim",
+            "map": "Role.id.root"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.udi.entryType",
+        "path": "Device.udi.entryType",
+        "short": "barcode | rfid | manual +",
+        "definition": "A coded entry to indicate how the data was entered.",
+        "requirements": "Supports a way to distinguish hand entered from machine read data.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "UDIEntryType"
+            }
+          ],
+          "strength": "required",
+          "description": "Codes to identify how UDI data was entered",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/udi-entry-type"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "NA"
+          }
+        ]
+      },
+      {
         "id": "Device:shr-device-Device.status",
         "path": "Device.status",
-        "short": "available | not-available | entered-in-error",
+        "short": "active | inactive | entered-in-error | unknown",
         "definition": "Status of the Device availability.",
+        "comment": "This element is labeled as a modifier because the status contains the codes inactive and entered-in-error that mark the device (record)as not currently valid.",
         "min": 0,
         "max": "1",
         "type": [
@@ -408,17 +703,19 @@
         "isModifier": true,
         "isSummary": true,
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "FHIRDeviceStatus"
+            }
+          ],
           "strength": "required",
           "description": "The availability status of the device.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/devicestatus"
+            "reference": "http://hl7.org/fhir/ValueSet/device-status"
           }
         },
         "mapping": [
-          {
-            "identity": "udi",
-            "map": "N/A"
-          },
           {
             "identity": "rim",
             "map": ".statusCode"
@@ -434,7 +731,6 @@
         "path": "Device.type",
         "short": "What kind of device this is",
         "definition": "Code or identifier to identify a kind of device.",
-        "comments": "There can be different code values thath may correspond to different granularities of the same concept.  These can be represented as translations using  the [codeableConcept](datatypes.html#codeableconcept) datatype.  For [UDI](device.html#5.11.3.2.2), this element corresponds to the UDI device identifier (DI) part. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "min": 1,
         "max": "1",
         "type": [
@@ -444,6 +740,12 @@
           }
         ],
         "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DeviceKind"
+            }
+          ],
           "strength": "example",
           "description": "Codes to identify medical devices",
           "valueSetReference": {
@@ -453,7 +755,7 @@
         "mapping": [
           {
             "identity": "udi",
-            "map": "The device identifier (DI), a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a devicet.  The system uri should be included. Possible URIs include\nGS1 DIs: \n http://hl7.org/fhir/NamingSystem/gs1-di\nHIBCC DIs:\n http://hl7.org/fhir/NamingSystem/hibcc-di\nICCBBA DIs for blood containers:\n http://hl7.org/fhir/NamingSystem/iccbba-blood-di\nICCBA DIs for other devices:\n http://hl7.org/fhir/NamingSystem/iccbba-other-di"
+            "map": "Type description using GMDN or other code system"
           },
           {
             "identity": "rim",
@@ -470,7 +772,6 @@
         "path": "Device.lotNumber",
         "short": "Lot number of manufacture",
         "definition": "Lot number assigned by the manufacturer.",
-        "comments": "Alphanumeric. For [UDI](device.html#5.11.3.2.2), this element corresponds to the variable portion of a UDI that identifies the lot or batch number within which a physical instance of a device was manufactured. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "min": 0,
         "max": "1",
         "type": [
@@ -481,7 +782,7 @@
         "mapping": [
           {
             "identity": "udi",
-            "map": "The lot or batch number within which a device was manufactured - which is a component of the the production identifier (PI), a conditional, variable portion of a UDI."
+            "map": "The lot or batch number within which a device was manufactured - which is a component of the production identifier (PI), a conditional, variable portion of a UDI."
           },
           {
             "identity": "rim",
@@ -525,7 +826,6 @@
         "path": "Device.manufactureDate",
         "short": "Date when the device was made",
         "definition": "The date and time when the device was manufactured.",
-        "comments": "For [UDI](device.html#5.11.3.2.2), this element corresponds to the variable portion of a UDI that identifies the date a physical instance of a device was manufactured. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "min": 0,
         "max": "1",
         "type": [
@@ -536,7 +836,7 @@
         "mapping": [
           {
             "identity": "udi",
-            "map": "The date a specific device was manufactured - which is a component of the the production identifier (PI), a conditional, variable portion of a UDI.  For FHIR, The datetime syntax must converted to YYYY-MM-DD[THH:MM:SS].  If hour is present, the minutes and seconds should both be set to “00”."
+            "map": "The date a specific device was manufactured - which is a component of the production identifier (PI), a conditional, variable portion of a UDI.  For FHIR, The datetime syntax must converted to YYYY-MM-DD[THH:MM:SS].  If hour is present, the minutes and seconds should both be set to “00”."
           },
           {
             "identity": "rim",
@@ -553,7 +853,6 @@
         "path": "Device.expirationDate",
         "short": "Date and time of expiry of this device (if applicable)",
         "definition": "The date and time beyond which this device is no longer valid or should not be used (if applicable).",
-        "comments": "For [UDI](device.html#5.11.3.2.2), this element corresponds to the variable portion of a UDI that identifies the expiration date of a physical instance of a device. See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
         "min": 0,
         "max": "1",
         "type": [
@@ -564,7 +863,7 @@
         "mapping": [
           {
             "identity": "udi",
-            "map": "the expiration date of a specific device -  which is a component of the the production identifier (PI), a conditional, variable portion of a UDI.  For FHIR, The datetime syntax must converted to YYYY-MM-DD[THH:MM:SS].  If hour is present, the minutes and seconds should both be set to “00”."
+            "map": "the expiration date of a specific device -  which is a component of the production identifier (PI), a conditional, variable portion of a UDI.  For FHIR, The datetime syntax must converted to YYYY-MM-DD[THH:MM:SS].  If hour is present, the minutes and seconds should both be set to “00”."
           },
           {
             "identity": "rim",
@@ -590,10 +889,6 @@
         ],
         "mapping": [
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": ".playedRole[typeCode=MANU].code"
           },
@@ -616,10 +911,6 @@
           }
         ],
         "mapping": [
-          {
-            "identity": "udi",
-            "map": "N/A"
-          },
           {
             "identity": "rim",
             "map": ".softwareName (included as part)"
@@ -646,10 +937,6 @@
         ],
         "mapping": [
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": ".playedRole[typeCode=USED].scoper.playedRole[typeCode=PAT]"
           },
@@ -674,10 +961,6 @@
         ],
         "mapping": [
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": ".playedRole[typeCode=OWN].scoper"
           },
@@ -692,7 +975,7 @@
         "path": "Device.contact",
         "short": "Details for human/organization for support",
         "definition": "Contact details for an organization or a particular human that is responsible for the device.",
-        "comments": "used for troubleshooting etc.",
+        "comment": "used for troubleshooting etc.",
         "min": 0,
         "max": "*",
         "type": [
@@ -701,10 +984,6 @@
           }
         ],
         "mapping": [
-          {
-            "identity": "udi",
-            "map": "N/A"
-          },
           {
             "identity": "rim",
             "map": ".scopedRole[typeCode=CON].player"
@@ -731,10 +1010,6 @@
         ],
         "mapping": [
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": ".playedRole[typeCode=LOCE].scoper"
           },
@@ -749,7 +1024,7 @@
         "path": "Device.url",
         "short": "Network address to contact device",
         "definition": "A network address on which the device may be contacted directly.",
-        "comments": "If the device is running a FHIR server, the network address should  be the Base URL from which a conformance statement may be retrieved.",
+        "comment": "If the device is running a FHIR server, the network address should  be the Base URL from which a conformance statement may be retrieved.",
         "min": 0,
         "max": "1",
         "type": [
@@ -758,10 +1033,6 @@
           }
         ],
         "mapping": [
-          {
-            "identity": "udi",
-            "map": "N/A"
-          },
           {
             "identity": "rim",
             "map": ".telecom"
@@ -786,12 +1057,41 @@
         ],
         "mapping": [
           {
-            "identity": "udi",
-            "map": "N/A"
-          },
-          {
             "identity": "rim",
             "map": ".text"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-device-Device.safety",
+        "path": "Device.safety",
+        "short": "Safety Characteristics of Device",
+        "definition": "Provides additional safety characteristics about a medical device.  For example devices containing latex.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "DeviceSafety"
+            }
+          ],
+          "strength": "example",
+          "description": "Codes used to identify medical devices safety characterics. These codes are derived in part from the [United States Food and Drug Administration recommendations](http://www.fda.gov/downloads/medicaldevices/deviceregulationandguidance/guidancedocuments/ucm107708.pdf) and are provided here as a suggestive example.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/device-safety"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "NA"
           }
         ]
       }

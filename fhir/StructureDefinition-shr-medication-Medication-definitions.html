@@ -8,7 +8,7 @@ redirect_from:
 
 <head>
   <meta charset="UTF-8" />
-  <title></title>
+  <title>Standard Health Record FHIR Profiles</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Standard Health Record FHIR Implemenation Guide" />
@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (xpath: not(parent::f:contained and f:text))<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (xpath: not(parent::f:contained and f:contained))<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (xpath: not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))])))<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (xpath: not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated)))</td></tr>
+<b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.id"> </a><a name="Medication.id"> </a><b>Medication.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -156,7 +156,8 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">uri</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible.</p>
+  <tr><td>Comments</td><td><p>Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element.</p>
+<p>This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.language"> </a><a name="Medication.language"> </a><b>Medication.language</b></td></tr>
   <tr><td>Definition</td><td><p>The base language in which the resource is written.</p>
@@ -190,13 +191,6 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.extension:overthecounter"> </a><b>Medication.extension (<a href="StructureDefinition-shr-medication-OverTheCounter-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-OverTheCounter-extension</a>)</b></td></tr>
-  <tr><td>Definition</td><td><p>True if the medication is available to consumers without a prescription.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a>)</td></tr>
-  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (xpath: exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')]))</td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.modifierExtension"> </a><a name="Medication.modifierExtension"> </a><b>Medication.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -210,50 +204,34 @@ redirect_from:
   <tr><td>Definition</td><td><p>A code (or set of codes) that specify this medication, or a textual description if no code is available. Usage note: This could be a standard medication code such as a code from RxNorm, SNOMED CT, IDMP etc. It could also be a national or local formulary code, optionally with translations to other code systems.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A coded concept that defines the type of a medication<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-medication-codes.html">SNOMED CT Medication Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-medication-MedicationVS.html">SHR MedicationVS ValueSet</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td>Comments</td><td><p>Depending on the context of use, the code that was actually selected by the user (prescriber, dispenser, etc.) should be marked as &quot;primary&quot;. Other codes can only be literal translations to alternative code systems, or codes at a lower level of granularity (e.g. a generic code for a vendor-specific primary one).</p>
+  <tr><td>Comments</td><td><p>Depending on the context of use, the code that was actually selected by the user (prescriber, dispenser, etc.) will have the coding.userSelected set to true.  As described in the coding datatype: &quot;A coding may be marked as a &quot;userSelected&quot; if a user selected the particular coded value in a user interface (e.g. the user selects an item in a pick-list). If a user selected coding exists, it is the preferred choice for performing translations etc.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.status"> </a><a name="Medication.status"> </a><b>Medication.status</b></td></tr>
+  <tr><td>Definition</td><td><p>A code to indicate if the medication is in active use.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A coded concept defining if the medication is in active use<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/2017Jan/valueset-medication-status.html">MedicationStatus</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">code</a></td></tr>
+  <tr><td>Comments</td><td><p>This status is not intended to specify if a medication is part of a formulary.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.isBrand"> </a><a name="Medication.isBrand"> </a><b>Medication.isBrand</b></td></tr>
   <tr><td>Definition</td><td><p>Set to true if the item is attributable to a specific manufacturer.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.isOverTheCounter"> </a><a name="Medication.isOverTheCounter"> </a><b>Medication.isOverTheCounter</b></td></tr>
+  <tr><td>Definition</td><td><p>Set to true if the medication can be obtained without an order from a prescriber.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.manufacturer"> </a><a name="Medication.manufacturer"> </a><b>Medication.manufacturer</b></td></tr>
-  <tr><td>Definition</td><td><p>Describes the details of the manufacturer.</p>
+  <tr><td>Definition</td><td><p>Describes the details of the manufacturer of the medication product.  This is not intended to represent the distributor of a medication product.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/2017Jan/organization.html" title="http://hl7.org/fhir/StructureDefinition/Organization">Organization</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product"> </a><a name="Medication.product"> </a><b>Medication.product</b></td></tr>
-  <tr><td>Definition</td><td><p>Information that only applies to products (not packages).</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
-  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.id"> </a><a name="Medication.product.id"> </a><b>Medication.product.id</b></td></tr>
-  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.extension"> </a><a name="Medication.product.extension"> </a><b>Medication.product.extension</b></td></tr>
-  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
-  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.modifierExtension"> </a><a name="Medication.product.modifierExtension"> </a><b>Medication.product.modifierExtension</b></td></tr>
-  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
-  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.form"> </a><a name="Medication.product.form"> </a><b>Medication.product.form</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.form"> </a><a name="Medication.form"> </a><b>Medication.form</b></td></tr>
   <tr><td>Definition</td><td><p>Describes the form of the item.  Powder; tablets; capsule.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
@@ -261,21 +239,21 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td>Comments</td><td><p>When Medication is referenced from MedicationRequest, this is the ordered form.  When Medication is referenced within MedicationDispense, this is the dispensed form.  When Medication is referenced within MedicationAdministration, this is administered form.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient"> </a><a name="Medication.product.ingredient"> </a><b>Medication.product.ingredient</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient"> </a><a name="Medication.ingredient"> </a><b>Medication.ingredient</b></td></tr>
   <tr><td>Definition</td><td><p>Identifies a particular constituent of interest in the product.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
-  <tr><td>Comments</td><td><p>The ingredients need not be a complete list; usually only active ingredients are listed.</p>
+  <tr><td>Comments</td><td><p>The ingredients need not be a complete list.  If an ingredient is not specified, this does not indicate whether an ingredient is present or absent.  If an ingredient is specified it does not mean that all ingredients are specified.  It is possible to specify both inactive and active ingredients.</p>
 </td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.id"> </a><a name="Medication.product.ingredient.id"> </a><b>Medication.product.ingredient.id</b></td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.id"> </a><a name="Medication.ingredient.id"> </a><b>Medication.ingredient.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.extension"> </a><a name="Medication.product.ingredient.extension"> </a><b>Medication.product.ingredient.extension</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.extension"> </a><a name="Medication.ingredient.extension"> </a><b>Medication.ingredient.extension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
@@ -283,7 +261,7 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.modifierExtension"> </a><a name="Medication.product.ingredient.modifierExtension"> </a><b>Medication.product.ingredient.modifierExtension</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.modifierExtension"> </a><a name="Medication.ingredient.modifierExtension"> </a><b>Medication.ingredient.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
@@ -292,35 +270,37 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.item[x]"> </a><a name="Medication:shr-medication-Medication.product.ingredient.itemCodeableConcept"> </a><a name="Medication:shr-medication-Medication.product.ingredient.itemCodeableConcept"> </a><b>Medication.product.ingredient.item[x]</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.item[x]"> </a><a name="Medication:shr-medication-Medication.ingredient.itemCodeableConcept"> </a><a name="Medication:shr-medication-Medication.ingredient.itemCodeableConcept"> </a><b>Medication.ingredient.item[x]</b></td></tr>
   <tr><td>Definition</td><td><p>The actual ingredient - either a substance (simple ingredient) or another medication.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/2017Jan/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.itemCodeableConcept:shr-core-CodeableConcept"> </a><a name="Medication.product.ingredient.itemCodeableConcept"> </a><b>Medication.product.ingredient.itemCodeableConcept(shr-core-CodeableConcept)</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.itemCodeableConcept:shr-core-CodeableConcept"> </a><a name="Medication.ingredient.itemCodeableConcept"> </a><b>Medication.ingredient.itemCodeableConcept(shr-core-CodeableConcept)</b></td></tr>
   <tr><td>Definition</td><td><p>The actual ingredient - either a substance (simple ingredient) or another medication.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-medication-MedicationVS.html">SHR MedicationVS ValueSet</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.ingredient.amount"> </a><a name="Medication.product.ingredient.amount"> </a><b>Medication.product.ingredient.amount</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.isActive"> </a><a name="Medication.ingredient.isActive"> </a><b>Medication.ingredient.isActive</b></td></tr>
+  <tr><td>Definition</td><td><p>Indication of whether this ingredient affects the therapeutic action of the drug.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">boolean</a></td></tr>
+  <tr><td>Requirements</td><td><p>True indicates that the ingredient affects the therapeutic action of the drug (i.e. active).
+False indicates that the ingredient does not affect the therapeutic action of the drug (i.e. inactive).</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.amount"> </a><a name="Medication.ingredient.amount"> </a><b>Medication.ingredient.amount</b></td></tr>
   <tr><td>Definition</td><td><p>Specifies how many (or how much) of the items there are in this Medication.  For example, 250 mg per tablet.  This is expressed as a ratio where the numerator is 250mg and the denominator is 1 tablet.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Ratio">Ratio</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch"> </a><a name="Medication.product.batch"> </a><b>Medication.product.batch</b></td></tr>
-  <tr><td>Definition</td><td><p>Information about a group of medication produced or packaged from one production run.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
-  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch.id"> </a><a name="Medication.product.batch.id"> </a><b>Medication.product.batch.id</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.amount.id"> </a><a name="Medication.ingredient.amount.id"> </a><b>Medication.ingredient.amount.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch.extension"> </a><a name="Medication.product.batch.extension"> </a><b>Medication.product.batch.extension</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.amount.extension"> </a><a name="Medication.ingredient.amount.extension"> </a><b>Medication.ingredient.amount.extension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
@@ -328,32 +308,23 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch.modifierExtension"> </a><a name="Medication.product.batch.modifierExtension"> </a><b>Medication.product.batch.modifierExtension</b></td></tr>
-  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
-</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
-  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
-  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
-</td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch.lotNumber"> </a><a name="Medication.product.batch.lotNumber"> </a><b>Medication.product.batch.lotNumber</b></td></tr>
-  <tr><td>Definition</td><td><p>The assigned lot number of a batch of the specified product.</p>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.amount.numerator"> </a><a name="Medication.ingredient.amount.numerator"> </a><b>Medication.ingredient.amount.numerator</b></td></tr>
+  <tr><td>Definition</td><td><p>The value of the numerator.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
-  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.product.batch.expirationDate"> </a><a name="Medication.product.batch.expirationDate"> </a><b>Medication.product.batch.expirationDate</b></td></tr>
-  <tr><td>Definition</td><td><p>When this specific batch of product will expire.</p>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="StructureDefinition-shr-core-Quantity.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity">SHR Quantity Profile</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.ingredient.amount.denominator"> </a><a name="Medication.ingredient.amount.denominator"> </a><b>Medication.ingredient.amount.denominator</b></td></tr>
+  <tr><td>Definition</td><td><p>The value of the denominator.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="StructureDefinition-shr-core-Quantity.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity">SHR Quantity Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package"> </a><a name="Medication.package"> </a><b>Medication.package</b></td></tr>
   <tr><td>Definition</td><td><p>Information that only applies to packages (not products).</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.id"> </a><a name="Medication.package.id"> </a><b>Medication.package.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -380,7 +351,7 @@ redirect_from:
   <tr><td>Definition</td><td><p>The kind of container that this package comes as.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A coded concept defining the kind of container a medication package is packaged in<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-medication-package-form-codes.html">SNOMED CT Form Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/terminologies.html">Binding</a></td><td>A coded concept defining the kind of container a medication package is packaged in<br/>For example codes, see <a href="http://hl7.org/fhir/2017Jan/valueset-medication-package-form.html">MedicationContainer</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.content"> </a><a name="Medication.package.content"> </a><b>Medication.package.content</b></td></tr>
   <tr><td>Definition</td><td><p>A set of components that go to make up the described item.</p>
@@ -388,7 +359,7 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (xpath: @value|f:*|h:div)</td></tr>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.content.id"> </a><a name="Medication.package.content.id"> </a><b>Medication.package.content.id</b></td></tr>
   <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
 </td></tr>
@@ -422,6 +393,52 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Quantity">Quantity</a>(<a href="http://hl7.org/fhir/2017Jan/datatypes.html#SimpleQuantity" title="http://hl7.org/fhir/StructureDefinition/SimpleQuantity">SimpleQuantity</a>)</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch"> </a><a name="Medication.package.batch"> </a><b>Medication.package.batch</b></td></tr>
+  <tr><td>Definition</td><td><p>Information about a group of medication produced or packaged from one production run.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#BackboneElement">BackboneElement</a></td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch.id"> </a><a name="Medication.package.batch.id"> </a><b>Medication.package.batch.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch.extension"> </a><a name="Medication.package.batch.extension"> </a><b>Medication.package.batch.extension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch.modifierExtension"> </a><a name="Medication.package.batch.modifierExtension"> </a><b>Medication.package.batch.modifierExtension</b></td></tr>
+  <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content, modifiers</td></tr>
+  <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch.lotNumber"> </a><a name="Medication.package.batch.lotNumber"> </a><b>Medication.package.batch.lotNumber</b></td></tr>
+  <tr><td>Definition</td><td><p>The assigned lot number of a batch of the specified product.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.package.batch.expirationDate"> </a><a name="Medication.package.batch.expirationDate"> </a><b>Medication.package.batch.expirationDate</b></td></tr>
+  <tr><td>Definition</td><td><p>When this specific batch of product will expire.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">dateTime</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Medication:shr-medication-Medication.image"> </a><a name="Medication.image"> </a><b>Medication.image</b></td></tr>
+  <tr><td>Definition</td><td><p>Photo(s) or graphic representation(s) of the medication.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/2017Jan/datatypes.html#Attachment">Attachment</a></td></tr>
+  <tr><td>Requirements</td><td><p>Note that &quot;image&quot; is only applicable when the medication.code represents a physical item (e.g. Amoxil 250 mg capsule) and not an abstract item (e.g. amoxicillin 250 mg).</p>
+</td></tr>
 </table>
 
 
@@ -446,8 +463,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v1.8.0-10514) generated
-        on Thu, Apr 6, 2017 12:41-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
+        on Tue, Apr 18, 2017 11:13-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-GeopoliticalLocation"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR GeopoliticalLocation Profile</b></p>\n  <p>The countries of the world and major geopolitical subregions, such as US states.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.GeopoliticalLocation maps to Address:\n  AddressLine maps to line\n  City maps to city\n  County maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  use is 0..0\n  type is 0..0\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR GeopoliticalLocation Profile</b></p>\n  <p>The countries of the world and major geopolitical subregions, such as US states.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.GeopoliticalLocation maps to Address:\n  AddressLine maps to line\n  City maps to city\n  County maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  constrain use to 0..0\n  constrain type to 0..0\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation"];
   fhir:StructureDefinition.identifier [
@@ -18,8 +18,10 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.core.GeopoliticalLocation" ]
   ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR GeopoliticalLocation Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:22.426Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -29,10 +31,9 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-06T15:42:38.493Z"^^xsd:dateTime];
   fhir:StructureDefinition.description [ fhir:value "The countries of the world and major geopolitical subregions, such as US states."];
   fhir:StructureDefinition.purpose [ fhir:value "Need to be able to record postal addresses, along with notes about their use."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "1.8.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
@@ -66,8 +67,8 @@
        fhir:ElementDefinition.path [ fhir:value "Address" ];
        fhir:ElementDefinition.short [ fhir:value "SHR GeopoliticalLocation Profile" ];
        fhir:ElementDefinition.definition [ fhir:value "The countries of the world and major geopolitical subregions, such as US states." ];
-       fhir:ElementDefinition.comments [ fhir:value "Note: address is for postal addresses, not physical locations." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "Note: address is for postal addresses, not physical locations." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.condition [
          fhir:value "ele-1";
@@ -109,11 +110,11 @@
        ];
        fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
        fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "1" ]
        ];
        fhir:ElementDefinition.type [
@@ -129,9 +130,18 @@
        fhir:index 2;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Address.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comments [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
          fhir:index 0
@@ -139,11 +149,11 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:int ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
          fhir:ElementDefinition.base.max [ fhir:value "*" ]
        ];
        fhir:ElementDefinition.type [
@@ -161,9 +171,9 @@
        fhir:ElementDefinition.path [ fhir:value "Address.use" ];
        fhir:ElementDefinition.short [ fhir:value "home | work | temp | old - purpose of this address" ];
        fhir:ElementDefinition.definition [ fhir:value "The purpose of this address." ];
-       fhir:ElementDefinition.comments [ fhir:value "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old." ];
        fhir:ElementDefinition.requirements [ fhir:value "Allows an appropriate address to be chosen from a list of many." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -177,6 +187,11 @@
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "AddressUse" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The use of an address" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -203,7 +218,7 @@
        fhir:ElementDefinition.path [ fhir:value "Address.type" ];
        fhir:ElementDefinition.short [ fhir:value "postal | physical | both" ];
        fhir:ElementDefinition.definition [ fhir:value "Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -216,6 +231,11 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "AddressType" ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The type of an address (physical / postal)" ];
          fhir:ElementDefinition.binding.valueSetReference [
@@ -242,9 +262,9 @@
        fhir:ElementDefinition.path [ fhir:value "Address.text" ];
        fhir:ElementDefinition.short [ fhir:value "Text representation of the address" ];
        fhir:ElementDefinition.definition [ fhir:value "A full text representation of the address." ];
-       fhir:ElementDefinition.comments [ fhir:value "Can provide both a text representation and parts." ];
+       fhir:ElementDefinition.comment [ fhir:value "Can provide both a text representation and parts." ];
        fhir:ElementDefinition.requirements [ fhir:value "A renderable, unencoded form." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -276,12 +296,13 @@
        fhir:ElementDefinition.short [ fhir:value "Street name, number, direction & P.O. Box etc." ];
        fhir:ElementDefinition.definition [ fhir:value "This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information." ];
        fhir:ElementDefinition.requirements [ fhir:value "home | work | temp | old - purpose of this address." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
+       fhir:ElementDefinition.orderMeaning [ fhir:value "The order in which lines should appear in an address label" ];
        fhir:ElementDefinition.example [
          fhir:index 0;
          fhir:ElementDefinition.example.label [ fhir:value "General" ];
@@ -315,7 +336,7 @@
          fhir:value "Municpality";
          fhir:index 0
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -350,12 +371,12 @@
        fhir:ElementDefinition.path [ fhir:value "Address.district" ];
        fhir:ElementDefinition.short [ fhir:value "District name (aka county)" ];
        fhir:ElementDefinition.definition [ fhir:value "The name of the administrative area (county)." ];
-       fhir:ElementDefinition.comments [ fhir:value "District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead." ];
+       fhir:ElementDefinition.comment [ fhir:value "District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead." ];
        fhir:ElementDefinition.alias [
          fhir:value "County";
          fhir:index 0
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -389,7 +410,7 @@
          fhir:value "Territory";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -423,7 +444,7 @@
          fhir:value "Zip";
          fhir:index 0
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -458,8 +479,8 @@
        fhir:ElementDefinition.path [ fhir:value "Address.country" ];
        fhir:ElementDefinition.short [ fhir:value "Country (e.g. can be ISO 3166 2 or 3 letter code)" ];
        fhir:ElementDefinition.definition [ fhir:value "Country - a nation as commonly understood or generally accepted." ];
-       fhir:ElementDefinition.comments [ fhir:value "ISO 3166 3 letter codes can be used in place of a full country name." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.comment [ fhir:value "ISO 3166 3 letter codes can be used in place of a full country name." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -490,7 +511,7 @@
        fhir:ElementDefinition.short [ fhir:value "Time period when address was/is in use" ];
        fhir:ElementDefinition.definition [ fhir:value "Time period when address was/is in use." ];
        fhir:ElementDefinition.requirements [ fhir:value "Allows addresses to be placed in historical context." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
@@ -531,31 +552,31 @@
        fhir:index 1;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.use" ];
        fhir:ElementDefinition.path [ fhir:value "Address.use" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ]
      ], [
        fhir:index 2;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.type" ];
        fhir:ElementDefinition.path [ fhir:value "Address.type" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ]
      ], [
        fhir:index 3;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.line" ];
        fhir:ElementDefinition.path [ fhir:value "Address.line" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ]
      ], [
        fhir:index 4;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.postalCode" ];
        fhir:ElementDefinition.path [ fhir:value "Address.postalCode" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "0" ]
      ], [
        fhir:index 5;
        fhir:Element.id [ fhir:value "Address:shr-core-GeopoliticalLocation.country" ];
        fhir:ElementDefinition.path [ fhir:value "Address.country" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:int ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ]
   ] .
@@ -563,6 +584,11 @@
 <http://hl7.org/fhir/ValueSet/address-use> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/address-type> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
 
 # -------------------------------------------------------------------------------------
 

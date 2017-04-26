@@ -16,8 +16,14 @@
       <sch:assert test="not(parent::f:contained and f:text)">If the resource is contained in another resource, it SHALL NOT contain any narrative</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
       <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
-      <sch:assert test="not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))">If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent.</sch:assert>
-      <sch:assert test="not(f:wasNotGiven/@value=true() and (count(f:reaction) &gt; 0 or exists(f:explanation/f:reason)))">If immunization was not administered (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present</sch:assert>
+      <sch:assert test="not(f:notGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))">If immunization was administered (notGiven=false) then explanation.reasonNotGiven SHALL be absent.</sch:assert>
+      <sch:assert test="not(f:notGiven/@value=true() and (count(f:reaction) &gt; 0 or exists(f:explanation/f:reason)))">If immunization was not administered (notGiven=true) then there SHALL be no reaction nor explanation.reason present</sch:assert>
+    </sch:rule>
+  </sch:pattern>
+  <sch:pattern>
+    <sch:title>Immunization.practitioner</sch:title>
+    <sch:rule context="f:Immunization/f:practitioner">
+      <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

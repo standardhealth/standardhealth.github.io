@@ -14,8 +14,8 @@
   State maps to state
   PostalCode maps to postalCode
   Country maps to country
-  use is 0..0
-  type is 0..0
+  constrain use to 0..0
+  constrain type to 0..0
 </pre></p>
 </div>
   </text>
@@ -24,8 +24,10 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.GeopoliticalLocation"/>
   </identifier>
+  <version value="0.0.1"/>
   <name value="SHR GeopoliticalLocation Profile"/>
   <status value="draft"/>
+  <date value="2017-04-18T15:12:22.426Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -33,10 +35,9 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <date value="2017-04-06T15:42:38.493Z"/>
   <description value="The countries of the world and major geopolitical subregions, such as US states."/>
   <purpose value="Need to be able to record postal addresses, along with notes about their use."/>
-  <fhirVersion value="1.8.0"/>
+  <fhirVersion value="3.0.0"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -67,7 +68,7 @@
       <path value="Address"/>
       <short value="SHR GeopoliticalLocation Profile"/>
       <definition value="The countries of the world and major geopolitical subregions, such as US states."/>
-      <comments value="Note: address is for postal addresses, not physical locations."/>
+      <comment value="Note: address is for postal addresses, not physical locations."/>
       <min value="0"/>
       <max value="*"/>
       <condition value="ele-1"/>
@@ -118,9 +119,17 @@
     </element>
     <element id="Address:shr-core-GeopoliticalLocation.extension">
       <path value="Address.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -142,7 +151,7 @@
       <path value="Address.use"/>
       <short value="home | work | temp | old - purpose of this address"/>
       <definition value="The purpose of this address."/>
-      <comments value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old."/>
       <requirements value="Allows an appropriate address to be chosen from a list of many."/>
       <min value="0"/>
       <max value="0"/>
@@ -156,6 +165,9 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AddressUse"/>
+        </extension>
         <strength value="required"/>
         <description value="The use of an address"/>
         <valueSetReference>
@@ -190,6 +202,9 @@
       </example>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AddressType"/>
+        </extension>
         <strength value="required"/>
         <description value="The type of an address (physical / postal)"/>
         <valueSetReference>
@@ -213,7 +228,7 @@
       <path value="Address.text"/>
       <short value="Text representation of the address"/>
       <definition value="A full text representation of the address."/>
-      <comments value="Can provide both a text representation and parts."/>
+      <comment value="Can provide both a text representation and parts."/>
       <requirements value="A renderable, unencoded form."/>
       <min value="0"/>
       <max value="1"/>
@@ -248,6 +263,7 @@
       <type>
         <code value="string"/>
       </type>
+      <orderMeaning value="The order in which lines should appear in an address label"/>
       <example>
         <label value="General"/>
         <valueString value="137 Nowhere Street"/>
@@ -306,7 +322,7 @@
       <path value="Address.district"/>
       <short value="District name (aka county)"/>
       <definition value="The name of the administrative area (county)."/>
-      <comments value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
+      <comment value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
       <alias value="County"/>
       <min value="0"/>
       <max value="1"/>
@@ -392,7 +408,7 @@
       <path value="Address.country"/>
       <short value="Country (e.g. can be ISO 3166 2 or 3 letter code)"/>
       <definition value="Country - a nation as commonly understood or generally accepted."/>
-      <comments value="ISO 3166 3 letter codes can be used in place of a full country name."/>
+      <comment value="ISO 3166 3 letter codes can be used in place of a full country name."/>
       <min value="1"/>
       <max value="1"/>
       <type>
