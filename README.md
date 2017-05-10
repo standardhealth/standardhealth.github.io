@@ -1,4 +1,4 @@
-# StandardHealthRecord.org (nicoleng12 fork)
+# StandardHealthRecord.org
 
 
 ## Making Contributions:
