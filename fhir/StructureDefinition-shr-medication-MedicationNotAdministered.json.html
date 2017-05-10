@@ -138,12 +138,10 @@
   Medication maps to medication[x].Reference
   PeriodOfUse maps to effective[x].Period
   Reason maps to reasonCode
-  MedicationNotUsedModifier maps to taken
-  MedicationNotUsedModifier.Reason maps to reasonNotTaken
+  MedicationWasTaken maps to taken
   constrain dosage to 0..1
   Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity
   Dosage.AmountPerDose.&amp;lt;TBD &amp;quot;Range&amp;quot;&amp;gt; maps to dosage.dose[x].Range
-  Dosage.TimingOfDoses maps to dosage.timing
   Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean
   Dosage.DoseInstructionsText maps to dosage.text
   Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction
@@ -164,7 +162,7 @@
   "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.version">version</a>" : "0.0.1",
   "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.name">name</a>" : "SHR MedicationNotAdministered Profile",
   "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.status">status</a>" : "draft",
-  "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.date">date</a>" : "2017-04-18T15:12:22.282Z",
+  "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.date">date</a>" : "2017-05-09T18:19:24.832Z",
   "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.publisher">publisher</a>" : "The MITRE Corporation: Standard Health Record Collaborative",
   "<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.contact">contact</a>" : [
     {
@@ -925,6 +923,13 @@ This element is labeled as a modifier because the status contains codes that mar
             "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a>" : "code"
           }
         ],
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.pattern[x]">patternCodeableConcept</a>" : {
+          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept#CodeableConcept.coding">coding</a>" : [
+            {
+              "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding#Coding.code">code</a>" : "n"
+            }
+          ]
+        },
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.isModifier">isModifier</a>" : true,
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.isSummary">isSummary</a>" : true,
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>" : {
@@ -957,20 +962,26 @@ This element is labeled as a modifier because the status contains codes that mar
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.short">short</a>" : "True if asserting medication was not given",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.definition">definition</a>" : "A code indicating why the medication was not taken.",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a>" : 0,
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "1",
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "*",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>" : [
           {
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a>" : "CodeableConcept",
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.profile">profile</a>" : "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a>" : "CodeableConcept"
           }
         ],
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.condition">condition</a>" : [
           "mst-1"
         ],
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>" : {
-          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a>" : "required",
+          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.extension">extension</a>" : [
+            {
+              "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension#Extension.value[x]">valueString</a>" : "MedicationStatementNotTakenReason"
+            }
+          ],
+          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a>" : "example",
+          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.description">description</a>" : "A coded concept indicating the reason why the medication was not taken",
           "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.valueSet[x]">valueSetReference</a>" : {
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>" : "http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"
+            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>" : "http://hl7.org/fhir/ValueSet/reason-medication-not-taken-codes"
           }
         },
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.mapping">mapping</a>" : [
@@ -1262,7 +1273,7 @@ This element is labeled as a modifier because the status contains codes that mar
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.comment">comment</a>" : "This attribute may not always be populated while the Dosage.text is expected to be populated.  If both are populated, then the Dosage.text should reflect the content of the Dosage.timing.",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.requirements">requirements</a>" : "The timing schedule for giving the medication to the patient. The Schedule data type allows many different expressions. For example: &quot;Every 8 hours&quot;; &quot;Three times a day&quot;; &quot;1/2 an hour before breakfast for 10 days from 23-Dec 2011:&quot;; &quot;15 Oct 2013, 17 Oct 2013 and 1 Nov 2013&quot;.  Sometimes, a rate can imply duration when expressed as total volume / duration (e.g.  500mL/2 hours implies a duration of 2 hours).  However, when rate doesn't imply duration (e.g. 250mL/hour), then the timing.repeat.duration is needed to convey the infuse over time period.",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a>" : 0,
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "0",
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "1",
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>" : [
           {
             "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a>" : "Timing"
@@ -1563,21 +1574,14 @@ This element is labeled as a modifier because the status contains codes that mar
         ]
       },
       {
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.id">id</a>" : "MedicationStatement:shr-medication-MedicationNotAdministered.reasonNotTaken",
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a>" : "MedicationStatement.reasonNotTaken",
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a>" : 0,
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "1",
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>" : [
-          {
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a>" : "CodeableConcept",
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.profile">profile</a>" : "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>" : {
-          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a>" : "required",
-          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.valueSet[x]">valueSetReference</a>" : {
-            "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>" : "http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"
-          }
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.id">id</a>" : "MedicationStatement:shr-medication-MedicationNotAdministered.taken",
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a>" : "MedicationStatement.taken",
+        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.pattern[x]">patternCodeableConcept</a>" : {
+          "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept#CodeableConcept.coding">coding</a>" : [
+            {
+              "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding#Coding.code">code</a>" : "n"
+            }
+          ]
         }
       },
       {
@@ -1621,12 +1625,6 @@ This element is labeled as a modifier because the status contains codes that mar
             "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>" : "http://hl7.org/fhir/ValueSet/additional-instructions-codes"
           }
         }
-      },
-      {
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.id">id</a>" : "MedicationStatement:shr-medication-MedicationNotAdministered.dosage.timing",
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a>" : "MedicationStatement.dosage.timing",
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a>" : 0,
-        "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a>" : "0"
       },
       {
         "<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.id">id</a>" : "MedicationStatement:shr-medication-MedicationNotAdministered.dosage.asNeeded[x]",
@@ -1728,7 +1726,7 @@ This element is labeled as a modifier because the status contains codes that mar
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
     <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
-        on Tue, Apr 18, 2017 11:13-0400.</p>
+        on Tue, May 9, 2017 14:20-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

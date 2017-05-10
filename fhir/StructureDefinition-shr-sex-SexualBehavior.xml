@@ -11,11 +11,17 @@
   Entry.FocalSubject maps to subject
   Entry.AssociatedEncounter maps to context
   Entry.OriginalCreationDate maps to issued
-  CodeableConcept maps to codedDiagnosis
-  Observation maps to result
+  PanelCode maps to code
   &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
-  Interpretation maps to conclusion
-  ObservationCategory maps to category
+  Interpretation maps to codedDiagnosis
+  ServiceCategory maps to category
+  Comment maps to conclusion
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
+  ReportStatus maps to status
+  SexualActivity maps to result (slice on = code)
+  NumberOfSexualPartnersPastYear maps to result
+  DifficultyWithIntercourse maps to result
 </pre></p>
 </div>
   </text>
@@ -27,7 +33,7 @@
   <version value="0.0.1"/>
   <name value="SHR SexualBehavior Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:22.996Z"/>
+  <date value="2017-05-09T18:19:26.541Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -265,7 +271,7 @@
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.extension">
       <path value="DiagnosticReport.extension"/>
-      <slicing id="239">
+      <slicing id="287">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -310,6 +316,110 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:observationmethod">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="observationmethod"/>
+      <definition value="The method of the observation, for example, the specific imaging technical or assessment vehicle."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:participant">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="participant"/>
+      <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:setting">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="setting"/>
+      <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:location">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="location"/>
+      <definition value="A position, site, or point in space where something can be found."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -428,86 +538,16 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:sexualactivity">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="sexualactivity"/>
-      <definition value="Characterization of the sexual activity of the subject."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="1"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-SexualActivity-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:numberofsexualpartnerspastyear">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="numberofsexualpartnerspastyear"/>
-      <definition value="Number of sexual partners in past year."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-NumberOfSexualPartnersPastYear-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:difficultywithintercourse">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="difficultywithintercourse"/>
-      <definition value="Problem with sexual intercourse."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-DifficultyWithIntercourse-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.modifierExtension">
       <path value="DiagnosticReport.modifierExtension"/>
+      <slicing id="288">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -524,6 +564,32 @@
         <code value="Extension"/>
       </type>
       <isModifier value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.modifierExtension:observationnonoccurrencemodifier">
+      <path value="DiagnosticReport.modifierExtension"/>
+      <sliceName value="observationnonoccurrencemodifier"/>
+      <definition value="True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -664,9 +730,13 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="DiagnosticServiceSection"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes for diagnostic service sections."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+          <reference value="http://hl7.org/fhir/ValueSet/diagnostic-service-sections"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -691,6 +761,7 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -732,18 +803,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -774,10 +833,6 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -813,6 +868,7 @@
       </type>
       <type>
         <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1053,6 +1109,14 @@
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.result">
       <path value="DiagnosticReport.result"/>
+      <slicing id="286">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Observations - simple, or complex nested groups"/>
       <definition value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
       <requirements value="Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations."/>
@@ -1069,7 +1133,97 @@
       <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBXs"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=COMP].target"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-SexualActivity">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-SexualActivity"/>
+      <short value="Observations - simple, or complex nested groups"/>
+      <definition value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+      <requirements value="Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations."/>
+      <alias value="Data"/>
+      <alias value="Atomic Value"/>
+      <alias value="Result"/>
+      <alias value="Atomic result"/>
+      <alias value="Data"/>
+      <alias value="Test"/>
+      <alias value="Analyte"/>
+      <alias value="Battery"/>
+      <alias value="Organizer"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-SexualActivity"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBXs"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=COMP].target"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-NumberOfSexualPartnersPastYear">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-NumberOfSexualPartnersPastYear"/>
+      <short value="Observations - simple, or complex nested groups"/>
+      <definition value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+      <requirements value="Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations."/>
+      <alias value="Data"/>
+      <alias value="Atomic Value"/>
+      <alias value="Result"/>
+      <alias value="Atomic result"/>
+      <alias value="Data"/>
+      <alias value="Test"/>
+      <alias value="Analyte"/>
+      <alias value="Battery"/>
+      <alias value="Organizer"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-NumberOfSexualPartnersPastYear"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBXs"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=COMP].target"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-DifficultyWithIntercourse">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-DifficultyWithIntercourse"/>
+      <short value="Observations - simple, or complex nested groups"/>
+      <definition value="Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. &quot;atomic&quot; results), or they can be grouping observations that include references to other members of the group (e.g. &quot;panels&quot;)."/>
+      <requirements value="Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations."/>
+      <alias value="Data"/>
+      <alias value="Atomic Value"/>
+      <alias value="Result"/>
+      <alias value="Atomic result"/>
+      <alias value="Data"/>
+      <alias value="Test"/>
+      <alias value="Analyte"/>
+      <alias value="Battery"/>
+      <alias value="Organizer"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-DifficultyWithIntercourse"/>
       </type>
       <mapping>
         <identity value="v2"/>
@@ -1261,13 +1415,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="AdjunctDiagnosis"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Diagnosis codes provided as adjuncts to the report."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/clinical-findings"/>
+          <reference value="http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1319,6 +1469,58 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:observationmethod">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="observationmethod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:participant">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:setting">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="setting"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:location">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="location"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:observationcode">
       <path value="DiagnosticReport.extension"/>
       <sliceName value="observationcode"/>
@@ -1338,43 +1540,17 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:sexualactivity">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="sexualactivity"/>
-      <min value="1"/>
-      <max value="*"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-SexualActivity-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:numberofsexualpartnerspastyear">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="numberofsexualpartnerspastyear"/>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.modifierExtension:observationnonoccurrencemodifier">
+      <path value="DiagnosticReport.modifierExtension"/>
+      <sliceName value="observationnonoccurrencemodifier"/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-NumberOfSexualPartnersPastYear-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="DiagnosticReport:shr-sex-SexualBehavior.extension:difficultywithintercourse">
-      <path value="DiagnosticReport.extension"/>
-      <sliceName value="difficultywithintercourse"/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-DifficultyWithIntercourse-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.category">
@@ -1383,12 +1559,13 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
-        </valueSetReference>
-      </binding>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.code">
+      <path value="DiagnosticReport.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.subject">
       <path value="DiagnosticReport.subject"/>
@@ -1398,18 +1575,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.context">
       <path value="DiagnosticReport.context"/>
@@ -1417,9 +1582,15 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
       </type>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.effective[x]">
+      <path value="DiagnosticReport.effective[x]"/>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.issued">
@@ -1429,9 +1600,41 @@
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.result">
       <path value="DiagnosticReport.result"/>
+      <slicing id="286">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-SexualActivity">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-SexualActivity"/>
+      <min value="1"/>
+      <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-SexualActivity"/>
+      </type>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-NumberOfSexualPartnersPastYear">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-NumberOfSexualPartnersPastYear"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-NumberOfSexualPartnersPastYear"/>
+      </type>
+    </element>
+    <element id="DiagnosticReport:shr-sex-SexualBehavior.result:shr-sex-DifficultyWithIntercourse">
+      <path value="DiagnosticReport.result"/>
+      <sliceName value="shr-sex-DifficultyWithIntercourse"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-DifficultyWithIntercourse"/>
       </type>
     </element>
     <element id="DiagnosticReport:shr-sex-SexualBehavior.codedDiagnosis">
@@ -1440,6 +1643,12 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

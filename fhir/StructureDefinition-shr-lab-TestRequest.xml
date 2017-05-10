@@ -33,7 +33,7 @@
   <version value="0.0.1"/>
   <name value="SHR TestRequest Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:22.592Z"/>
+  <date value="2017-05-09T18:19:25.200Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -269,7 +269,7 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.extension">
       <path value="ProcedureRequest.extension"/>
-      <slicing id="206">
+      <slicing id="213">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -377,7 +377,7 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension">
       <path value="ProcedureRequest.modifierExtension"/>
-      <slicing id="207">
+      <slicing id="214">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -784,18 +784,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -828,10 +816,6 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -867,9 +851,7 @@
       </type>
       <type>
         <code value="Period"/>
-      </type>
-      <type>
-        <code value="Timing"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1070,15 +1052,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1136,6 +1114,7 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -1174,11 +1153,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1186,15 +1165,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/HealthcareService"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1493,18 +1464,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.context">
       <path value="ProcedureRequest.context"/>
@@ -1512,9 +1471,15 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
       </type>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.occurrence[x]">
+      <path value="ProcedureRequest.occurrence[x]"/>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.requester">
@@ -1524,26 +1489,29 @@
       <path value="ProcedureRequest.requester.agent"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
+      </type>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.performerType">
+      <path value="ProcedureRequest.performerType"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.performer">
       <path value="ProcedureRequest.performer"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1551,15 +1519,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/HealthcareService"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.reasonCode">

@@ -3,7 +3,7 @@
   "id": "shr-problem-MentalHealthProblem",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MentalHealthProblem Profile</b></p>\n  <p>A problem relating to a person’s psychological and emotional well-being.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.problem.MentalHealthProblem maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite maps to bodySite\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MentalHealthProblem Profile</b></p>\n  <p>A problem relating to a person’s psychological and emotional well-being.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.problem.MentalHealthProblem maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-MentalHealthProblem",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR MentalHealthProblem Profile",
   "status": "draft",
-  "date": "2017-04-18T15:12:20.673Z",
+  "date": "2017-05-09T18:19:22.113Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -1009,16 +1009,12 @@
             "code": "dateTime"
           },
           {
-            "code": "Age"
+            "code": "Age",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
           },
           {
-            "code": "Period"
-          },
-          {
-            "code": "Range"
-          },
-          {
-            "code": "string"
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
           }
         ],
         "isSummary": true,
@@ -1050,19 +1046,12 @@
             "code": "dateTime"
           },
           {
-            "code": "Age"
+            "code": "Age",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
           },
           {
-            "code": "boolean"
-          },
-          {
-            "code": "Period"
-          },
-          {
-            "code": "Range"
-          },
-          {
-            "code": "string"
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
           }
         ],
         "condition": [
@@ -1118,7 +1107,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
           },
           {
             "code": "Reference",
@@ -1126,7 +1115,7 @@
           },
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
           }
         ],
         "isSummary": true,
@@ -1740,6 +1729,40 @@
         }
       },
       {
+        "id": "Condition:shr-problem-MentalHealthProblem.onset[x]",
+        "path": "Condition.onset[x]",
+        "type": [
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Age",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+          },
+          {
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-problem-MentalHealthProblem.abatement[x]",
+        "path": "Condition.abatement[x]",
+        "type": [
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Age",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+          },
+          {
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+          }
+        ]
+      },
+      {
         "id": "Condition:shr-problem-MentalHealthProblem.assertedDate",
         "path": "Condition.assertedDate",
         "min": 1,
@@ -1751,7 +1774,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
           },
           {
             "code": "Reference",
@@ -1759,7 +1782,7 @@
           },
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
           }
         ]
       },

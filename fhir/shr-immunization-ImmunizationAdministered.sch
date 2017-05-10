@@ -35,7 +35,7 @@
   <sch:pattern>
     <sch:title>f:Immunization/f:explanation</sch:title>
     <sch:rule context="f:Immunization/f:explanation">
-      <sch:assert test="count(f:reasonNotGiven) &lt;= 0">reasonNotGiven: maximum cardinality of 'reasonNotGiven' is 0</sch:assert>
+      <sch:assert test="count(f:reasonNotGiven) &lt;= 1">reasonNotGiven: maximum cardinality of 'reasonNotGiven' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

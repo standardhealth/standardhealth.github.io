@@ -5,17 +5,20 @@
   <text>
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
   <p><b>SHR Panel Profile</b></p>
-  <p>A group of related observations, usually taken together. Typically the ObservationCategory and ObservationReason are not given for panel observations, but rather given at the level of the panel itself.</p>
+  <p>A group of related observations, usually (but not always) taken together, whose result is captured in a report. Typically the ObservationCategory and ObservationReason are not given for individual observations that are part of the panel, but rather given at the level of the panel itself. Typically, the panel and all its sub-observations share the same metadata (provenance).</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.observation.Panel maps to DiagnosticReport:
   Entry.FocalSubject maps to subject
   Entry.AssociatedEncounter maps to context
   Entry.OriginalCreationDate maps to issued
-  CodeableConcept maps to codedDiagnosis
-  Observation maps to result
+  PanelCode maps to code
   &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
-  Interpretation maps to conclusion
-  ObservationCategory maps to category
+  Interpretation maps to codedDiagnosis
+  ServiceCategory maps to category
+  Comment maps to conclusion
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
+  ReportStatus maps to status
 </pre></p>
 </div>
   </text>
@@ -27,7 +30,7 @@
   <version value="0.0.1"/>
   <name value="SHR Panel Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:20.934Z"/>
+  <date value="2017-05-09T18:19:22.558Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -35,7 +38,7 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <description value="A group of related observations, usually taken together. Typically the ObservationCategory and ObservationReason are not given for panel observations, but rather given at the level of the panel itself."/>
+  <description value="A group of related observations, usually (but not always) taken together, whose result is captured in a report. Typically the ObservationCategory and ObservationReason are not given for individual observations that are part of the panel, but rather given at the level of the panel itself. Typically, the panel and all its sub-observations share the same metadata (provenance)."/>
   <purpose value="To support reporting for any diagnostic report into a clinical data repository."/>
   <fhirVersion value="3.0.0"/>
   <mapping>
@@ -67,7 +70,7 @@
     <element id="DiagnosticReport:shr-observation-Panel">
       <path value="DiagnosticReport"/>
       <short value="SHR Panel Profile"/>
-      <definition value="A group of related observations, usually taken together. Typically the ObservationCategory and ObservationReason are not given for panel observations, but rather given at the level of the panel itself."/>
+      <definition value="A group of related observations, usually (but not always) taken together, whose result is captured in a report. Typically the ObservationCategory and ObservationReason are not given for individual observations that are part of the panel, but rather given at the level of the panel itself. Typically, the panel and all its sub-observations share the same metadata (provenance)."/>
       <comment value="This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing."/>
       <alias value="Report"/>
       <alias value="Test"/>
@@ -265,7 +268,7 @@
     </element>
     <element id="DiagnosticReport:shr-observation-Panel.extension">
       <path value="DiagnosticReport.extension"/>
-      <slicing id="63">
+      <slicing id="61">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -319,8 +322,120 @@
         <map value="N/A"/>
       </mapping>
     </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:observationmethod">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="observationmethod"/>
+      <definition value="The method of the observation, for example, the specific imaging technical or assessment vehicle."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:participant">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="participant"/>
+      <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:setting">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="setting"/>
+      <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:location">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="location"/>
+      <definition value="A position, site, or point in space where something can be found."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
     <element id="DiagnosticReport:shr-observation-Panel.modifierExtension">
       <path value="DiagnosticReport.modifierExtension"/>
+      <slicing id="62">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -337,6 +452,32 @@
         <code value="Extension"/>
       </type>
       <isModifier value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.modifierExtension:observationnonoccurrencemodifier">
+      <path value="DiagnosticReport.modifierExtension"/>
+      <sliceName value="observationnonoccurrencemodifier"/>
+      <definition value="True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -477,9 +618,13 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="DiagnosticServiceSection"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes for diagnostic service sections."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+          <reference value="http://hl7.org/fhir/ValueSet/diagnostic-service-sections"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -504,6 +649,7 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -545,18 +691,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -587,10 +721,6 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -626,6 +756,7 @@
       </type>
       <type>
         <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -882,7 +1013,7 @@
       <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </type>
       <mapping>
         <identity value="v2"/>
@@ -1074,13 +1205,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="AdjunctDiagnosis"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Diagnosis codes provided as adjuncts to the report."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/clinical-findings"/>
+          <reference value="http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1117,7 +1244,7 @@
     <element id="DiagnosticReport:shr-observation-Panel">
       <path value="DiagnosticReport"/>
       <short value="SHR Panel Profile"/>
-      <definition value="A group of related observations, usually taken together. Typically the ObservationCategory and ObservationReason are not given for panel observations, but rather given at the level of the panel itself."/>
+      <definition value="A group of related observations, usually (but not always) taken together, whose result is captured in a report. Typically the ObservationCategory and ObservationReason are not given for individual observations that are part of the panel, but rather given at the level of the panel itself. Typically, the panel and all its sub-observations share the same metadata (provenance)."/>
     </element>
     <element id="DiagnosticReport:shr-observation-Panel.extension:observationreason">
       <path value="DiagnosticReport.extension"/>
@@ -1132,18 +1259,84 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:observationmethod">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="observationmethod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:participant">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:setting">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="setting"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.extension:location">
+      <path value="DiagnosticReport.extension"/>
+      <sliceName value="location"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.modifierExtension:observationnonoccurrencemodifier">
+      <path value="DiagnosticReport.modifierExtension"/>
+      <sliceName value="observationnonoccurrencemodifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+    </element>
     <element id="DiagnosticReport:shr-observation-Panel.category">
       <path value="DiagnosticReport.category"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
-        </valueSetReference>
-      </binding>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.code">
+      <path value="DiagnosticReport.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="DiagnosticReport:shr-observation-Panel.subject">
       <path value="DiagnosticReport.subject"/>
@@ -1153,18 +1346,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
     </element>
     <element id="DiagnosticReport:shr-observation-Panel.context">
       <path value="DiagnosticReport.context"/>
@@ -1172,9 +1353,15 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
       </type>
+    </element>
+    <element id="DiagnosticReport:shr-observation-Panel.effective[x]">
+      <path value="DiagnosticReport.effective[x]"/>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
     </element>
     <element id="DiagnosticReport:shr-observation-Panel.issued">
@@ -1182,19 +1369,18 @@
       <min value="1"/>
       <max value="1"/>
     </element>
-    <element id="DiagnosticReport:shr-observation-Panel.result">
-      <path value="DiagnosticReport.result"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
-      </type>
-    </element>
     <element id="DiagnosticReport:shr-observation-Panel.codedDiagnosis">
       <path value="DiagnosticReport.codedDiagnosis"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

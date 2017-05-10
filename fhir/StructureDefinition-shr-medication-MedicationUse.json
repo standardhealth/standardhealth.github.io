@@ -3,7 +3,7 @@
   "id": "shr-medication-MedicationUse",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MedicationUse Profile</b></p>\n  <p>Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.MedicationUse maps to MedicationStatement:\n  Medication maps to medication[x].Reference\n  PeriodOfUse maps to effective[x].Period\n  Reason maps to reasonCode\n  MedicationNotUsedModifier maps to taken\n  MedicationNotUsedModifier.Reason maps to reasonNotTaken\n  constrain dosage to 0..1\n  Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity\n  Dosage.AmountPerDose.&lt;TBD &quot;Range&quot;&gt; maps to dosage.dose[x].Range\n  Dosage.TimingOfDoses maps to dosage.timing\n  Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean\n  Dosage.DoseInstructionsText maps to dosage.text\n  Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction\n  Dosage.RouteIntoBody maps to dosage.route\n  Dosage.AdministrationMethod maps to dosage.method\n  Dosage.AdministrationBodySite maps to dosage.site\n  Dosage.MaximumDosePerTimePeriod maps to dosage.maxDosePerPeriod\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MedicationUse Profile</b></p>\n  <p>Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.MedicationUse maps to MedicationStatement:\n  Medication maps to medication[x].Reference\n  PeriodOfUse maps to effective[x].Period\n  Reason maps to reasonCode\n  MedicationWasTaken maps to taken\n  constrain dosage to 0..1\n  Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity\n  Dosage.AmountPerDose.&lt;TBD &quot;Range&quot;&gt; maps to dosage.dose[x].Range\n  Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean\n  Dosage.DoseInstructionsText maps to dosage.text\n  Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction\n  Dosage.RouteIntoBody maps to dosage.route\n  Dosage.AdministrationMethod maps to dosage.method\n  Dosage.AdministrationBodySite maps to dosage.site\n  Dosage.MaximumDosePerTimePeriod maps to dosage.maxDosePerPeriod\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationUse",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR MedicationUse Profile",
   "status": "draft",
-  "date": "2017-04-18T15:12:22.248Z",
+  "date": "2017-05-09T18:19:24.810Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -296,7 +296,7 @@
         "id": "MedicationStatement:shr-medication-MedicationUse.extension",
         "path": "MedicationStatement.extension",
         "slicing": {
-          "id": "179",
+          "id": "189",
           "discriminator": [
             {
               "type": "value",
@@ -848,20 +848,26 @@
         "short": "True if asserting medication was not given",
         "definition": "A code indicating why the medication was not taken.",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
           "mst-1"
         ],
         "binding": {
-          "strength": "required",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MedicationStatementNotTakenReason"
+            }
+          ],
+          "strength": "example",
+          "description": "A coded concept indicating the reason why the medication was not taken",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"
+            "reference": "http://hl7.org/fhir/ValueSet/reason-medication-not-taken-codes"
           }
         },
         "mapping": [
@@ -1468,24 +1474,6 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-PeriodOfUse"
           }
         ]
-      },
-      {
-        "id": "MedicationStatement:shr-medication-MedicationUse.reasonNotTaken",
-        "path": "MedicationStatement.reasonNotTaken",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"
-          }
-        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.reasonCode",

@@ -15,7 +15,7 @@
   ClinicalStatus maps to clinicalStatus
   Onset maps to onset[x]
   Abatement maps to abatement[x]
-  BodySite maps to bodySite
+  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource
   Severity maps to severity
   GradeOrStage maps to stage
   GradeOrStage.CodeableConcept maps to stage.summary
@@ -32,7 +32,7 @@
   <version value="0.0.1"/>
   <name value="SHR PressureUlcer Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:23.067Z"/>
+  <date value="2017-05-09T18:19:26.968Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -281,7 +281,7 @@
     </element>
     <element id="Condition:shr-skin-PressureUlcer.extension">
       <path value="Condition.extension"/>
-      <slicing id="248">
+      <slicing id="313">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -493,7 +493,7 @@
     </element>
     <element id="Condition:shr-skin-PressureUlcer.modifierExtension">
       <path value="Condition.modifierExtension"/>
-      <slicing id="249">
+      <slicing id="314">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -789,7 +789,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -877,15 +877,11 @@
       </type>
       <type>
         <code value="Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
       </type>
       <type>
         <code value="Period"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="string"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -913,18 +909,11 @@
       </type>
       <type>
         <code value="Age"/>
-      </type>
-      <type>
-        <code value="boolean"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
       </type>
       <type>
         <code value="Period"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="string"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <condition value="con-4"/>
       <mapping>
@@ -968,7 +957,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -976,7 +965,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1463,9 +1452,37 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
+    </element>
+    <element id="Condition:shr-skin-PressureUlcer.onset[x]">
+      <path value="Condition.onset[x]"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+    </element>
+    <element id="Condition:shr-skin-PressureUlcer.abatement[x]">
+      <path value="Condition.abatement[x]"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.assertedDate">
       <path value="Condition.assertedDate"/>
@@ -1476,7 +1493,7 @@
       <path value="Condition.asserter"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1484,7 +1501,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.stage">

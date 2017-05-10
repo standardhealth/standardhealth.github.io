@@ -138,12 +138,10 @@
   Medication maps to medication[x].Reference
   PeriodOfUse maps to effective[x].Period
   Reason maps to reasonCode
-  MedicationNotUsedModifier maps to taken
-  MedicationNotUsedModifier.Reason maps to reasonNotTaken
+  MedicationWasTaken maps to taken
   constrain dosage to 0..1
   Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity
   Dosage.AmountPerDose.&amp;lt;TBD &amp;quot;Range&amp;quot;&amp;gt; maps to dosage.dose[x].Range
-  Dosage.TimingOfDoses maps to dosage.timing
   Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean
   Dosage.DoseInstructionsText maps to dosage.text
   Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction
@@ -163,7 +161,7 @@
   &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.version">version</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;0.0.1&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.name">name</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;SHR MedicationNotAdministered Profile&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.status">status</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;draft&quot;/&gt;
-  &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.date">date</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">value</a>=&quot;2017-04-18T15:12:22.282Z&quot;/&gt;
+  &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.date">date</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#dateTime">value</a>=&quot;2017-05-09T18:19:24.832Z&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.publisher">publisher</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;The MITRE Corporation: Standard Health Record Collaborative&quot;/&gt;
   &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.contact">contact</a>&gt;
     &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ContactDetail#ContactDetail.telecom">telecom</a>&gt;
@@ -894,6 +892,11 @@ This element is labeled as a modifier because the status contains codes that mar
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>&gt;
         &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;code&quot;/&gt;
       &lt;/type&gt;
+      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.pattern[x]">patternCodeableConcept</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept#CodeableConcept.coding">coding</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding#Coding.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;n&quot;/&gt;
+        &lt;/coding&gt;
+      &lt;/patternCodeableConcept&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.isModifier">isModifier</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">value</a>=&quot;true&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.isSummary">isSummary</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#boolean">value</a>=&quot;true&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>&gt;
@@ -924,18 +927,22 @@ This element is labeled as a modifier because the status contains codes that mar
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.short">short</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;True if asserting medication was not given&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.definition">definition</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">value</a>=&quot;A code indicating why the medication was not taken.&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">value</a>=&quot;0&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;1&quot;/&gt;
+      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;*&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>&gt;
         &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;CodeableConcept&quot;/&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.profile">profile</a>
-                 <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept&quot;/&gt;
       &lt;/type&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.condition">condition</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#id">value</a>=&quot;mst-1&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;required&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.extension">extension</a>
+                   <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">url</a>=&quot;http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName&quot;&gt;
+          &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Extension#Extension.value[x]">valueString</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;MedicationStatementNotTakenReason&quot;/&gt;
+        &lt;/extension&gt;
+        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;example&quot;/&gt;
+        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.description">description</a>
+                     <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;A coded concept indicating the reason why the medication was not taken&quot;/&gt;
         &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.valueSet[x]">valueSetReference</a>&gt;
           &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>
-                     <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS&quot;/&gt;
+                     <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;http://hl7.org/fhir/ValueSet/reason-medication-not-taken-codes&quot;/&gt;
         &lt;/valueSetReference&gt;
       &lt;/binding&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.mapping">mapping</a>&gt;
@@ -1203,7 +1210,7 @@ This element is labeled as a modifier because the status contains codes that mar
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.requirements">requirements</a>
                     <a href="http://hl7.org/fhir/2017Jan/datatypes.html#markdown">value</a>=&quot;The timing schedule for giving the medication to the patient. The Schedule data type allows many different expressions. For example: &amp;quot;Every 8 hours&amp;quot;; &amp;quot;Three times a day&amp;quot;; &amp;quot;1/2 an hour before breakfast for 10 days from 23-Dec 2011:&amp;quot;; &amp;quot;15 Oct 2013, 17 Oct 2013 and 1 Nov 2013&amp;quot;.  Sometimes, a rate can imply duration when expressed as total volume / duration (e.g.  500mL/2 hours implies a duration of 2 hours).  However, when rate doesn&amp;#39;t imply duration (e.g. 250mL/hour), then the timing.repeat.duration is needed to convey the infuse over time period.&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">value</a>=&quot;0&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;0&quot;/&gt;
+      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;1&quot;/&gt;
       &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>&gt;
         &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;Timing&quot;/&gt;
       &lt;/type&gt;
@@ -1482,22 +1489,13 @@ This element is labeled as a modifier because the status contains codes that mar
       &lt;/type&gt;
     &lt;/element&gt;
     &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.differential.element">element</a>
-             <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">id</a>=&quot;MedicationStatement:shr-medication-MedicationNotAdministered.reasonNotTaken&quot;&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;MedicationStatement.reasonNotTaken&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">value</a>=&quot;0&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;1&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type">type</a>&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;CodeableConcept&quot;/&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.type.profile">profile</a>
-                 <a href="http://hl7.org/fhir/2017Jan/datatypes.html#uri">value</a>=&quot;http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept&quot;/&gt;
-      &lt;/type&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding">binding</a>&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.strength">strength</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;required&quot;/&gt;
-        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.binding.valueSet[x]">valueSetReference</a>&gt;
-          &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Reference#Reference.reference">reference</a>
-                     <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS&quot;/&gt;
-        &lt;/valueSetReference&gt;
-      &lt;/binding&gt;
+             <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">id</a>=&quot;MedicationStatement:shr-medication-MedicationNotAdministered.taken&quot;&gt;
+      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;MedicationStatement.taken&quot;/&gt;
+      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.pattern[x]">patternCodeableConcept</a>&gt;
+        &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#CodeableConcept#CodeableConcept.coding">coding</a>&gt;
+          &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#Coding#Coding.code">code</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#code">value</a>=&quot;n&quot;/&gt;
+        &lt;/coding&gt;
+      &lt;/patternCodeableConcept&gt;
     &lt;/element&gt;
     &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.differential.element">element</a>
              <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">id</a>=&quot;MedicationStatement:shr-medication-MedicationNotAdministered.reasonCode&quot;&gt;
@@ -1539,12 +1537,6 @@ This element is labeled as a modifier because the status contains codes that mar
                      <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;http://hl7.org/fhir/ValueSet/additional-instructions-codes&quot;/&gt;
         &lt;/valueSetReference&gt;
       &lt;/binding&gt;
-    &lt;/element&gt;
-    &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.differential.element">element</a>
-             <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">id</a>=&quot;MedicationStatement:shr-medication-MedicationNotAdministered.dosage.timing&quot;&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.path">path</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;MedicationStatement.dosage.timing&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.min">min</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#unsignedInt">value</a>=&quot;0&quot;/&gt;
-      &lt;<a href="http://hl7.org/fhir/2017Jan/datatypes.html#ElementDefinition#ElementDefinition.max">max</a> <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">value</a>=&quot;0&quot;/&gt;
     &lt;/element&gt;
     &lt;<a href="http://hl7.org/fhir/2017Jan/structuredefinition.html#StructureDefinition.differential.element">element</a>
              <a href="http://hl7.org/fhir/2017Jan/datatypes.html#string">id</a>=&quot;MedicationStatement:shr-medication-MedicationNotAdministered.dosage.asNeeded[x]&quot;&gt;
@@ -1639,7 +1631,7 @@ This element is labeled as a modifier because the status contains codes that mar
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
     <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
-        on Tue, Apr 18, 2017 11:13-0400.</p>
+        on Tue, May 9, 2017 14:20-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->
