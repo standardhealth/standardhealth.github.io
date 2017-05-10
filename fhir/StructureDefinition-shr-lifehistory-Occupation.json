@@ -3,7 +3,7 @@
   "id": "shr-lifehistory-Occupation",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Occupation Profile</b></p>\n  <p>The principal activity that a person does to earn money, specifying the job performed by the subject, for example, accountant, programmer analyst, patient care associate, staff nurse, etc.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lifehistory.Occupation maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  ObservationCode maps to code\n  ObservationCategory maps to category\n  ObservationStatus maps to status\n  ObservationMethod maps to method\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Participant maps to performer\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Occupation Profile</b></p>\n  <p>The principal activity that a person does to earn money, specifying the job performed by the subject, for example, accountant, programmer analyst, patient care associate, staff nurse, etc.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lifehistory.Occupation maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  ObservationCode maps to code\n  ObservationCategory maps to category\n  ObservationStatus maps to status\n  ObservationMethod maps to method\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Participant maps to performer\n  CodeableConcept maps to value[x].CodeableConcept\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-lifehistory-Occupation",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Occupation Profile",
   "status": "draft",
-  "date": "2017-05-09T18:19:25.617Z",
+  "date": "2017-05-10T18:00:16.737Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -357,45 +357,6 @@
             "code": "Extension"
           }
         ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-lifehistory-Occupation.extension:codeableconcept",
-        "path": "Observation.extension",
-        "sliceName": "codeableconcept",
-        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://www.bls.gov/soc/"
-          }
-        },
         "mapping": [
           {
             "identity": "rim",
@@ -1049,45 +1010,27 @@
       {
         "id": "Observation:shr-lifehistory-Occupation.value[x]",
         "path": "Observation.value[x]",
+        "slicing": {
+          "id": "229",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Actual result",
         "definition": "The information determined as a result of making the observation, if the information has a simple value.",
         "comment": "Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is \"'value' + the type name\" with a capital on the first letter of the type).\r\r\rIf the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below.",
         "requirements": "An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "Quantity"
-          },
-          {
-            "code": "CodeableConcept"
-          },
-          {
-            "code": "string"
-          },
-          {
-            "code": "boolean"
-          },
-          {
-            "code": "Range"
-          },
-          {
-            "code": "Ratio"
-          },
-          {
-            "code": "SampledData"
-          },
-          {
-            "code": "Attachment"
-          },
-          {
-            "code": "time"
-          },
-          {
-            "code": "dateTime"
-          },
-          {
-            "code": "Period"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "condition": [
@@ -1116,6 +1059,28 @@
             "map": "363714003 |Interprets|"
           }
         ]
+      },
+      {
+        "id": "Observation:shr-lifehistory-Occupation.valueCodeableConcept:shr-core-CodeableConcept",
+        "path": "Observation.valueCodeableConcept",
+        "sliceName": "shr-core-CodeableConcept",
+        "short": "Actual result",
+        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://www.bls.gov/soc/"
+          }
+        }
       },
       {
         "id": "Observation:shr-lifehistory-Occupation.dataAbsentReason",
@@ -2246,28 +2211,6 @@
         "definition": "The principal activity that a person does to earn money, specifying the job performed by the subject, for example, accountant, programmer analyst, patient care associate, staff nurse, etc."
       },
       {
-        "id": "Observation:shr-lifehistory-Occupation.extension:codeableconcept",
-        "path": "Observation.extension",
-        "sliceName": "codeableconcept",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://www.bls.gov/soc/"
-          }
-        }
-      },
-      {
         "id": "Observation:shr-lifehistory-Occupation.extension:observationreason",
         "path": "Observation.extension",
         "sliceName": "observationreason",
@@ -2433,6 +2376,45 @@
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
           }
         ]
+      },
+      {
+        "id": "Observation:shr-lifehistory-Occupation.value[x]",
+        "path": "Observation.value[x]",
+        "slicing": {
+          "id": "229",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-lifehistory-Occupation.valueCodeableConcept:shr-core-CodeableConcept",
+        "path": "Observation.valueCodeableConcept",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://www.bls.gov/soc/"
+          }
+        }
       },
       {
         "id": "Observation:shr-lifehistory-Occupation.method",
