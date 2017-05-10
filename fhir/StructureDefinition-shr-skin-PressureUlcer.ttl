@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-skin-PressureUlcer"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PressureUlcer Profile</b></p>\n  <p>A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.PressureUlcer maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite maps to bodySite\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PressureUlcer Profile</b></p>\n  <p>A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.PressureUlcer maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcer"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR PressureUlcer Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-04-18T15:12:23.067Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-05-09T18:19:26.968Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -318,7 +318,7 @@
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "248" ];
+         fhir:Element.id [ fhir:value "313" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -596,7 +596,7 @@
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.modifierExtension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "249" ];
+         fhir:Element.id [ fhir:value "314" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -952,8 +952,8 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -1055,16 +1055,12 @@
          fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
        ], [
          fhir:index 1;
-         fhir:ElementDefinition.type.code [ fhir:value "Age" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Age" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age" ]
        ], [
          fhir:index 2;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.type.code [ fhir:value "Range" ]
-       ], [
-         fhir:index 4;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1094,19 +1090,12 @@
          fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
        ], [
          fhir:index 1;
-         fhir:ElementDefinition.type.code [ fhir:value "Age" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Age" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age" ]
        ], [
          fhir:index 2;
-         fhir:ElementDefinition.type.code [ fhir:value "boolean" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
-       ], [
-         fhir:index 4;
-         fhir:ElementDefinition.type.code [ fhir:value "Range" ]
-       ], [
-         fhir:index 5;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
        ];
        fhir:ElementDefinition.condition [
          fhir:value "con-4";
@@ -1159,7 +1148,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Practitioner" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
@@ -1167,7 +1156,7 @@
        ], [
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/RelatedPerson" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1768,24 +1757,56 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
          ]
        ]
      ], [
        fhir:index 14;
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.onset[x]" ];
+       fhir:ElementDefinition.path [ fhir:value "Condition.onset[x]" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Age" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ]
+     ], [
+       fhir:index 15;
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.abatement[x]" ];
+       fhir:ElementDefinition.path [ fhir:value "Condition.abatement[x]" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Age" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ]
+     ], [
+       fhir:index 16;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.assertedDate" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.assertedDate" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
-       fhir:index 15;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.asserter" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.asserter" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Practitioner" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
@@ -1793,14 +1814,14 @@
        ], [
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/RelatedPerson" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
        ]
      ], [
-       fhir:index 16;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage" ]
      ], [
-       fhir:index 17;
+       fhir:index 19;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.summary" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.summary" ];
        fhir:ElementDefinition.type [
@@ -1816,11 +1837,11 @@
          ]
        ]
      ], [
-       fhir:index 18;
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence" ]
      ], [
-       fhir:index 19;
+       fhir:index 21;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.code" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.code" ];
        fhir:ElementDefinition.type [

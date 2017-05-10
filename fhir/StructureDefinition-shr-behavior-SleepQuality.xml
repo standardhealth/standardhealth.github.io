@@ -18,7 +18,6 @@
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
   Participant maps to performer
-  CodeableConcept maps to value[x].CodeableConcept
 </pre></p>
 </div>
   </text>
@@ -30,7 +29,7 @@
   <version value="0.0.1"/>
   <name value="SHR SleepQuality Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:21.279Z"/>
+  <date value="2017-05-09T18:19:23.249Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -294,7 +293,7 @@
     </element>
     <element id="Observation:shr-behavior-SleepQuality.extension">
       <path value="Observation.extension"/>
-      <slicing id="98">
+      <slicing id="101">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -317,6 +316,38 @@
       <type>
         <code value="Extension"/>
       </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-SleepQuality.extension:codeableconcept">
+      <path value="Observation.extension"/>
+      <sliceName value="codeableconcept"/>
+      <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/PerformanceGradingScaleVS"/>
+        </valueSetReference>
+      </binding>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -374,10 +405,10 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-SleepQuality.extension:assessmenttool">
+    <element id="Observation:shr-behavior-SleepQuality.extension:setting">
       <path value="Observation.extension"/>
-      <sliceName value="assessmenttool"/>
-      <definition value="The name of the formal assessment or screening tool used to assess the behavior."/>
+      <sliceName value="setting"/>
+      <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -390,7 +421,33 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-behavior-AssessmentTool-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-SleepQuality.extension:location">
+      <path value="Observation.extension"/>
+      <sliceName value="location"/>
+      <definition value="A position, site, or point in space where something can be found."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -558,7 +615,7 @@
     </element>
     <element id="Observation:shr-behavior-SleepQuality.modifierExtension">
       <path value="Observation.modifierExtension"/>
-      <slicing id="99">
+      <slicing id="102">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -740,7 +797,7 @@
     </element>
     <element id="Observation:shr-behavior-SleepQuality.category">
       <path value="Observation.category"/>
-      <slicing id="96">
+      <slicing id="100">
         <discriminator>
           <type value="value"/>
           <path value="coding"/>
@@ -859,18 +916,6 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -901,10 +946,6 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <mapping>
         <identity value="workflow"/>
@@ -990,11 +1031,7 @@
       <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1002,7 +1039,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1024,23 +1061,44 @@
     </element>
     <element id="Observation:shr-behavior-SleepQuality.value[x]">
       <path value="Observation.value[x]"/>
-      <slicing id="97">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
       <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
       </type>
       <condition value="obs-7"/>
       <isSummary value="true"/>
@@ -1064,25 +1122,6 @@
         <identity value="sct-attr"/>
         <map value="363714003 |Interprets|"/>
       </mapping>
-    </element>
-    <element id="Observation:shr-behavior-SleepQuality.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.valueCodeableConcept"/>
-      <sliceName value="shr-core-CodeableConcept"/>
-      <short value="Actual result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/PerformanceGradingScaleVS"/>
-        </valueSetReference>
-      </binding>
     </element>
     <element id="Observation:shr-behavior-SleepQuality.dataAbsentReason">
       <path value="Observation.dataAbsentReason"/>
@@ -1985,6 +2024,25 @@
       <short value="SHR SleepQuality Profile"/>
       <definition value="Self-reported sleep quality."/>
     </element>
+    <element id="Observation:shr-behavior-SleepQuality.extension:codeableconcept">
+      <path value="Observation.extension"/>
+      <sliceName value="codeableconcept"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/PerformanceGradingScaleVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
     <element id="Observation:shr-behavior-SleepQuality.extension:observationreason">
       <path value="Observation.extension"/>
       <sliceName value="observationreason"/>
@@ -2011,14 +2069,27 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="Observation:shr-behavior-SleepQuality.extension:assessmenttool">
+    <element id="Observation:shr-behavior-SleepQuality.extension:setting">
       <path value="Observation.extension"/>
-      <sliceName value="assessmenttool"/>
+      <sliceName value="setting"/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-behavior-AssessmentTool-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Observation:shr-behavior-SleepQuality.extension:location">
+      <path value="Observation.extension"/>
+      <sliceName value="location"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2117,7 +2188,7 @@
     </element>
     <element id="Observation:shr-behavior-SleepQuality.category">
       <path value="Observation.category"/>
-      <slicing id="96">
+      <slicing id="100">
         <discriminator>
           <type value="value"/>
           <path value="coding"/>
@@ -2169,28 +2240,12 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
-      </type>
     </element>
     <element id="Observation:shr-behavior-SleepQuality.context">
       <path value="Observation.context"/>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
     </element>
     <element id="Observation:shr-behavior-SleepQuality.effective[x]">
@@ -2212,11 +2267,7 @@
       <path value="Observation.performer"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -2224,38 +2275,8 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
       </type>
-    </element>
-    <element id="Observation:shr-behavior-SleepQuality.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="97">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-SleepQuality.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.valueCodeableConcept"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/PerformanceGradingScaleVS"/>
-        </valueSetReference>
-      </binding>
     </element>
     <element id="Observation:shr-behavior-SleepQuality.method">
       <path value="Observation.method"/>

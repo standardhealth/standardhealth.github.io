@@ -33,7 +33,6 @@
       <sch:assert test="count(f:birthDate) &gt;= 1">birthDate: minimum cardinality of 'birthDate' is 1</sch:assert>
       <sch:assert test="count(f:address) &gt;= 1">address: minimum cardinality of 'address' is 1</sch:assert>
       <sch:assert test="count(f:maritalStatus) &gt;= 1">maritalStatus: minimum cardinality of 'maritalStatus' is 1</sch:assert>
-      <sch:assert test="count(f:multipleBirth[x]) &gt;= 1">multipleBirth[x]: minimum cardinality of 'multipleBirth[x]' is 1</sch:assert>
       <sch:assert test="count(f:communication) &gt;= 1">communication: minimum cardinality of 'communication' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>

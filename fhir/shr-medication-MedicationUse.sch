@@ -14,7 +14,6 @@
     <sch:rule context="f:MedicationStatement">
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Adherence-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Adherence-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:effective[x]) &gt;= 1">effective[x]: minimum cardinality of 'effective[x]' is 1</sch:assert>
-      <sch:assert test="count(f:reasonNotTaken) &lt;= 1">reasonNotTaken: maximum cardinality of 'reasonNotTaken' is 1</sch:assert>
       <sch:assert test="count(f:reasonCode) &gt;= 1">reasonCode: minimum cardinality of 'reasonCode' is 1</sch:assert>
       <sch:assert test="count(f:reasonCode) &lt;= 1">reasonCode: maximum cardinality of 'reasonCode' is 1</sch:assert>
       <sch:assert test="count(f:dosage) &lt;= 1">dosage: maximum cardinality of 'dosage' is 1</sch:assert>

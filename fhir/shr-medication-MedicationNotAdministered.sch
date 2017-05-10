@@ -13,7 +13,6 @@
     <sch:title>f:MedicationStatement</sch:title>
     <sch:rule context="f:MedicationStatement">
       <sch:assert test="count(f:effective[x]) &gt;= 1">effective[x]: minimum cardinality of 'effective[x]' is 1</sch:assert>
-      <sch:assert test="count(f:reasonNotTaken) &lt;= 1">reasonNotTaken: maximum cardinality of 'reasonNotTaken' is 1</sch:assert>
       <sch:assert test="count(f:reasonCode) &gt;= 1">reasonCode: minimum cardinality of 'reasonCode' is 1</sch:assert>
       <sch:assert test="count(f:reasonCode) &lt;= 1">reasonCode: maximum cardinality of 'reasonCode' is 1</sch:assert>
       <sch:assert test="count(f:dosage) &lt;= 1">dosage: maximum cardinality of 'dosage' is 1</sch:assert>
@@ -37,7 +36,7 @@
       <sch:assert test="count(f:text) &lt;= 0">text: maximum cardinality of 'text' is 0</sch:assert>
       <sch:assert test="count(f:additionalInstruction) &lt;= 0">additionalInstruction: maximum cardinality of 'additionalInstruction' is 0</sch:assert>
       <sch:assert test="count(f:patientInstruction) &lt;= 1">patientInstruction: maximum cardinality of 'patientInstruction' is 1</sch:assert>
-      <sch:assert test="count(f:timing) &lt;= 0">timing: maximum cardinality of 'timing' is 0</sch:assert>
+      <sch:assert test="count(f:timing) &lt;= 1">timing: maximum cardinality of 'timing' is 1</sch:assert>
       <sch:assert test="count(f:asNeeded[x]) &lt;= 0">asNeeded[x]: maximum cardinality of 'asNeeded[x]' is 0</sch:assert>
       <sch:assert test="count(f:site) &lt;= 0">site: maximum cardinality of 'site' is 0</sch:assert>
       <sch:assert test="count(f:route) &lt;= 0">route: maximum cardinality of 'route' is 0</sch:assert>

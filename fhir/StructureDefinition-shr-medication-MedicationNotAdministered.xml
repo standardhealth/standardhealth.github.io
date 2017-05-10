@@ -11,12 +11,10 @@
   Medication maps to medication[x].Reference
   PeriodOfUse maps to effective[x].Period
   Reason maps to reasonCode
-  MedicationNotUsedModifier maps to taken
-  MedicationNotUsedModifier.Reason maps to reasonNotTaken
+  MedicationWasTaken maps to taken
   constrain dosage to 0..1
   Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity
   Dosage.AmountPerDose.&lt;TBD &quot;Range&quot;&gt; maps to dosage.dose[x].Range
-  Dosage.TimingOfDoses maps to dosage.timing
   Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean
   Dosage.DoseInstructionsText maps to dosage.text
   Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction
@@ -35,7 +33,7 @@
   <version value="0.0.1"/>
   <name value="SHR MedicationNotAdministered Profile"/>
   <status value="draft"/>
-  <date value="2017-04-18T15:12:22.282Z"/>
+  <date value="2017-05-09T18:19:24.832Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -661,6 +659,11 @@
       <type>
         <code value="code"/>
       </type>
+      <patternCodeableConcept>
+        <coding>
+          <code value="n"/>
+        </coding>
+      </patternCodeableConcept>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
@@ -687,16 +690,19 @@
       <short value="True if asserting medication was not given"/>
       <definition value="A code indicating why the medication was not taken."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="mst-1"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationStatementNotTakenReason"/>
+        </extension>
+        <strength value="example"/>
+        <description value="A coded concept indicating the reason why the medication was not taken"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/reason-medication-not-taken-codes"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -926,7 +932,7 @@
       <comment value="This attribute may not always be populated while the Dosage.text is expected to be populated.  If both are populated, then the Dosage.text should reflect the content of the Dosage.timing."/>
       <requirements value="The timing schedule for giving the medication to the patient. The Schedule data type allows many different expressions. For example: &quot;Every 8 hours&quot;; &quot;Three times a day&quot;; &quot;1/2 an hour before breakfast for 10 days from 23-Dec 2011:&quot;; &quot;15 Oct 2013, 17 Oct 2013 and 1 Nov 2013&quot;.  Sometimes, a rate can imply duration when expressed as total volume / duration (e.g.  500mL/2 hours implies a duration of 2 hours).  However, when rate doesn&#39;t imply duration (e.g. 250mL/hour), then the timing.repeat.duration is needed to convey the infuse over time period."/>
       <min value="0"/>
-      <max value="0"/>
+      <max value="1"/>
       <type>
         <code value="Timing"/>
       </type>
@@ -1159,20 +1165,13 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-PeriodOfUse"/>
       </type>
     </element>
-    <element id="MedicationStatement:shr-medication-MedicationNotAdministered.reasonNotTaken">
-      <path value="MedicationStatement.reasonNotTaken"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"/>
-        </valueSetReference>
-      </binding>
+    <element id="MedicationStatement:shr-medication-MedicationNotAdministered.taken">
+      <path value="MedicationStatement.taken"/>
+      <patternCodeableConcept>
+        <coding>
+          <code value="n"/>
+        </coding>
+      </patternCodeableConcept>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationNotAdministered.reasonCode">
       <path value="MedicationStatement.reasonCode"/>
@@ -1207,11 +1206,6 @@
           <reference value="http://hl7.org/fhir/ValueSet/additional-instructions-codes"/>
         </valueSetReference>
       </binding>
-    </element>
-    <element id="MedicationStatement:shr-medication-MedicationNotAdministered.dosage.timing">
-      <path value="MedicationStatement.dosage.timing"/>
-      <min value="0"/>
-      <max value="0"/>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationNotAdministered.dosage.asNeeded[x]">
       <path value="MedicationStatement.dosage.asNeeded[x]"/>
