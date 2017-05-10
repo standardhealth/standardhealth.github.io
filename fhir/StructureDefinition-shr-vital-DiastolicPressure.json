@@ -3,7 +3,7 @@
   "id": "shr-vital-DiastolicPressure",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR DiastolicPressure Profile</b></p>\n  <p>The blood pressure after the contraction of the heart while the chambers of the heart refill with blood, when the pressure is lowest.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.vital.DiastolicPressure maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  ObservationCode maps to code\n  ObservationCategory maps to category\n  ObservationStatus maps to status\n  ObservationMethod maps to method\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Participant maps to performer\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR DiastolicPressure Profile</b></p>\n  <p>The blood pressure after the contraction of the heart while the chambers of the heart refill with blood, when the pressure is lowest.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.vital.DiastolicPressure maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  ObservationCode maps to code\n  ObservationCategory maps to category\n  ObservationStatus maps to status\n  ObservationMethod maps to method\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Participant maps to performer\n  Quantity maps to value[x].Quantity\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-vital-DiastolicPressure",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR DiastolicPressure Profile",
   "status": "draft",
-  "date": "2017-05-09T18:19:27.992Z",
+  "date": "2017-05-10T18:00:19.414Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -328,7 +328,7 @@
         "id": "Observation:shr-vital-DiastolicPressure.extension",
         "path": "Observation.extension",
         "slicing": {
-          "id": "375",
+          "id": "403",
           "discriminator": [
             {
               "type": "value",
@@ -357,43 +357,6 @@
             "code": "Extension"
           }
         ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-vital-DiastolicPressure.extension:quantity",
-        "path": "Observation.extension",
-        "sliceName": "quantity",
-        "definition": "A quantity with units.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity-extension"
-          }
-        ],
-        "patternQuantity": {
-          "system": "http://unitsofmeasure.org",
-          "code": "mm[Hg]"
-        },
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -537,7 +500,7 @@
         "id": "Observation:shr-vital-DiastolicPressure.modifierExtension",
         "path": "Observation.modifierExtension",
         "slicing": {
-          "id": "376",
+          "id": "404",
           "discriminator": [
             {
               "type": "value",
@@ -1047,45 +1010,27 @@
       {
         "id": "Observation:shr-vital-DiastolicPressure.value[x]",
         "path": "Observation.value[x]",
+        "slicing": {
+          "id": "402",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Actual result",
         "definition": "The information determined as a result of making the observation, if the information has a simple value.",
         "comment": "Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is \"'value' + the type name\" with a capital on the first letter of the type).\r\r\rIf the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below.",
         "requirements": "An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "Quantity"
-          },
-          {
-            "code": "CodeableConcept"
-          },
-          {
-            "code": "string"
-          },
-          {
-            "code": "boolean"
-          },
-          {
-            "code": "Range"
-          },
-          {
-            "code": "Ratio"
-          },
-          {
-            "code": "SampledData"
-          },
-          {
-            "code": "Attachment"
-          },
-          {
-            "code": "time"
-          },
-          {
-            "code": "dateTime"
-          },
-          {
-            "code": "Period"
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
           }
         ],
         "condition": [
@@ -1114,6 +1059,26 @@
             "map": "363714003 |Interprets|"
           }
         ]
+      },
+      {
+        "id": "Observation:shr-vital-DiastolicPressure.valueQuantity:shr-core-Quantity",
+        "path": "Observation.valueQuantity",
+        "sliceName": "shr-core-Quantity",
+        "short": "Actual result",
+        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+          }
+        ],
+        "patternQuantity": {
+          "system": "http://unitsofmeasure.org",
+          "code": "mm[Hg]"
+        },
+        "isSummary": true
       },
       {
         "id": "Observation:shr-vital-DiastolicPressure.dataAbsentReason",
@@ -2244,26 +2209,6 @@
         "definition": "The blood pressure after the contraction of the heart while the chambers of the heart refill with blood, when the pressure is lowest."
       },
       {
-        "id": "Observation:shr-vital-DiastolicPressure.extension:quantity",
-        "path": "Observation.extension",
-        "sliceName": "quantity",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity-extension"
-          }
-        ],
-        "patternQuantity": {
-          "system": "http://unitsofmeasure.org",
-          "code": "mm[Hg]"
-        },
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
         "id": "Observation:shr-vital-DiastolicPressure.extension:observationreason",
         "path": "Observation.extension",
         "sliceName": "observationreason",
@@ -2429,6 +2374,43 @@
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
           }
         ]
+      },
+      {
+        "id": "Observation:shr-vital-DiastolicPressure.value[x]",
+        "path": "Observation.value[x]",
+        "slicing": {
+          "id": "402",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-vital-DiastolicPressure.valueQuantity:shr-core-Quantity",
+        "path": "Observation.valueQuantity",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+          }
+        ],
+        "patternQuantity": {
+          "system": "http://unitsofmeasure.org",
+          "code": "mm[Hg]"
+        }
       },
       {
         "id": "Observation:shr-vital-DiastolicPressure.method",
