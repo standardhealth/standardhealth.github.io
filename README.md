@@ -59,7 +59,7 @@ After making changes to the website, one should run a local instance of the proj
 ## Pushing Your Project Changes:
 
 1. Run browser tests mentioned above on localhost.
-2. Push changes to your GitHub Project repository.
+2. Push changes to your GitHub Fork of the repository.
 3. Run tests on mobile devices when `your-account-name.github.io` has been updated.
 4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealthrecord.org`.
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
