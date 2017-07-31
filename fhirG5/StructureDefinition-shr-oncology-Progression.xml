@@ -1,0 +1,1444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="shr-oncology-Progression"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+  <p><b>SHR Progression Profile</b></p>
+  <p>A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition).</p>
+  <p><b>SHR Mapping Summary</b></p>
+  <p><pre>shr.oncology.Progression maps to ClinicalImpression:
+  Entry.FocalSubject maps to subject
+  Entry.AssociatedEncounter maps to context 
+  Entry.Informant maps to assessor
+  Entry.OriginalCreationDate maps to date
+  Status maps to status
+  SpecificType maps to code
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
+  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
+  Summary maps to summary
+  AssessmentResult.CodeableConcept maps to finding.item[x].CodeableConcept
+  Evidence maps to investigation.item 
+</pre></p>
+</div>
+  </text>
+  <url value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-Progression"/>
+  <identifier>
+    <system value="http://standardhealthrecord.org"/>
+    <value value="shr.oncology.Progression"/>
+  </identifier>
+  <version value="0.0.1"/>
+  <name value="SHR Progression Profile"/>
+  <status value="draft"/>
+  <date value="2017-07-31T16:44:33.980Z"/>
+  <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.standardhealthrecord.org"/>
+    </telecom>
+  </contact>
+  <description value="A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition)."/>
+  <fhirVersion value="3.0.0"/>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/w5"/>
+    <name value="W5 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="ClinicalImpression"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/ClinicalImpression"/>
+  <derivation value="constraint"/>
+  <snapshot>
+    <element id="ClinicalImpression:shr-oncology-Progression">
+      <path value="ClinicalImpression"/>
+      <short value="SHR Progression Profile"/>
+      <definition value="A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition)."/>
+      <min value="0"/>
+      <max value="*"/>
+      <constraint>
+        <key value="dom-2"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+        <expression value="contained.contained.empty()"/>
+        <xpath value="not(parent::f:contained and f:contained)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-1"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+        <expression value="contained.text.empty()"/>
+        <xpath value="not(parent::f:contained and f:text)"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-4"/>
+        <severity value="error"/>
+        <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+        <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-3"/>
+        <severity value="error"/>
+        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+        <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
+        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Entity. Role, or Act"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Partial mapping for problem evaluation"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="clinical.general"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.id">
+      <path value="ClinicalImpression.id"/>
+      <short value="Logical id of this artifact"/>
+      <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="id"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.meta">
+      <path value="ClinicalImpression.meta"/>
+      <short value="Metadata about the resource"/>
+      <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.meta"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Meta"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.implicitRules">
+      <path value="ClinicalImpression.implicitRules"/>
+      <short value="A set of rules under which this content was created"/>
+      <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. &#xA;&#xA;This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.implicitRules"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.language">
+      <path value="ClinicalImpression.language"/>
+      <short value="Language of the resource content"/>
+      <definition value="The base language in which the resource is written."/>
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Resource.language"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="A human language."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.text">
+      <path value="ClinicalImpression.text"/>
+      <short value="Text summary of the resource, for human interpretation"/>
+      <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
+      <alias value="narrative"/>
+      <alias value="html"/>
+      <alias value="xhtml"/>
+      <alias value="display"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.text"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Narrative"/>
+      </type>
+      <condition value="dom-1"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="Act.text?"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.contained">
+      <path value="ClinicalImpression.contained"/>
+      <short value="Contained, inline Resources"/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
+      <alias value="inline resources"/>
+      <alias value="anonymous resources"/>
+      <alias value="contained resources"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.contained"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Resource"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension">
+      <path value="ClinicalImpression.extension"/>
+      <slicing id="475">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:codeableconcept">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="codeableconcept"/>
+      <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/oncology/vs/SubjectiveProgressionVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="category"/>
+      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.id">
+      <path value="ClinicalImpression.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.extension:extension">
+      <path value="ClinicalImpression.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.url">
+      <path value="ClinicalImpression.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.valueCodeableConcept">
+      <path value="ClinicalImpression.extension.valueCodeableConcept"/>
+      <slicing id="474">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/assessment/vs/AssessmentTypeVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.valueCodeableConcept:C0421176">
+      <path value="ClinicalImpression.extension.valueCodeableConcept"/>
+      <sliceName value="C0421176"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <fixedCodeableConcept>
+        <coding>
+          <system value="http://ncimeta.nci.nih.gov"/>
+          <code value="C0421176"/>
+        </coding>
+      </fixedCodeableConcept>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:reason">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="reason"/>
+      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:occurrencetime">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="occurrencetime"/>
+      <definition value="The point in time or span of time in which something happens."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:participant">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="participant"/>
+      <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:assessmentfocus">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="assessmentfocus"/>
+      <definition value="The topic or target of an analysis or assessment. For example, if the question involves the progression of the subject&#39;s diabetes, then the FocalCondition would be diabetes. If the investigation involves the toxicity of chemotherapy regimen, the focus would be that regimen (currently the MedicationUse of the chemotherapy drug). If the analysis involves certain observations, they would be listed as the focus."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-assessment-AssessmentFocus-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:method">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="method"/>
+      <definition value="The method of the observation, for example, the specific imaging technical or assessment vehicle."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Method-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:evidencequality">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="evidencequality"/>
+      <definition value="An estimate of the quality and/or quantity of the source information that supports the assessment."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-assessment-EvidenceQuality-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.modifierExtension">
+      <path value="ClinicalImpression.modifierExtension"/>
+      <slicing id="476">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.modifierExtension:nonoccurrencemodifier">
+      <path value="ClinicalImpression.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.identifier">
+      <path value="ClinicalImpression.identifier"/>
+      <short value="Business identifier"/>
+      <definition value="A unique identifier assigned to the clinical impression that remains consistent regardless of what server the impression is stored on."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PID-3"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="id"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.status">
+      <path value="ClinicalImpression.status"/>
+      <short value="draft | completed | entered-in-error"/>
+      <definition value="Identifies the workflow status of the assessment."/>
+      <comment value="This element is labeled as a modifier because the status contains the code entered-in-error that marks the clinical impression as not currently valid."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ClinicalImpressionStatus"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The workflow state of a clinical impression."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/clinical-impression-status"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRB-14"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="status"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.code">
+      <path value="ClinicalImpression.code"/>
+      <short value="Kind of assessment performed"/>
+      <definition value="Categorizes the type of clinical assessment performed."/>
+      <comment value="This is present as a place-holder only and may be removed based on feedback/work group opinion."/>
+      <alias value="type"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="preferred"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="w5"/>
+        <map value="what"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.description">
+      <path value="ClinicalImpression.description"/>
+      <short value="Why/how the assessment was performed"/>
+      <definition value="A summary of the context and/or cause of the assessment - why / where was it performed, and what patient events/status prompted it."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.subject">
+      <path value="ClinicalImpression.subject"/>
+      <short value="Patient or group assessed"/>
+      <definition value="The patient or group of individuals assessed as part of this record."/>
+      <requirements value="Group is typically for veterinary and/or public health purposes."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PID-3"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.focus"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.context">
+      <path value="ClinicalImpression.context"/>
+      <short value="Encounter or Episode created from"/>
+      <definition value="The encounter or episode of care this impression was created as part of."/>
+      <alias value="encounter"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="w5"/>
+        <map value="context"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.effective[x]">
+      <path value="ClinicalImpression.effective[x]"/>
+      <short value="Time of assessment"/>
+      <definition value="The point in time or period over which the subject was assessed."/>
+      <comment value="This SHOULD be accurate to at least the minute, though some assessments only have a known date."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRB-2"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.done"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.date">
+      <path value="ClinicalImpression.date"/>
+      <short value="When the assessment was documented"/>
+      <definition value="Indicates when the documentation of the assessment was complete."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="w5"/>
+        <map value="when.recorded"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.assessor">
+      <path value="ClinicalImpression.assessor"/>
+      <short value="The clinician performing the assessment"/>
+      <definition value="The clinician performing the assessment."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ROL-4"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.author"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.previous">
+      <path value="ClinicalImpression.previous"/>
+      <short value="Reference to last assessment"/>
+      <definition value="A reference to the last assesment that was conducted bon this patient. Assessments are often/usually ongoing in nature; a care provider (practitioner or team) will make new assessments on an ongoing basis as new data arises or the patient&#39;s conditions changes."/>
+      <comment value="It is always likely that multiple previous assessments exist for a patient. The point of quoting a previous assessment is that this assessment is relative to it (see resolved)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ClinicalImpression"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.problem">
+      <path value="ClinicalImpression.problem"/>
+      <short value="Relevant impressions of patient state"/>
+      <definition value="This a list of the relevant problems/conditions for a patient."/>
+      <comment value="e.g. The patient is a pregnant, and cardiac congestive failure, &#x200E;Adenocarcinoma, and is allergic to penicillin."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRB-3 / IAM-7"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="why"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation">
+      <path value="ClinicalImpression.investigation"/>
+      <short value="One or more sets of investigations (signs, symptions, etc.)"/>
+      <definition value="One or more sets of investigations (signs, symptions, etc.). The actual grouping of investigations vary greatly depending on the type and context of the assessment. These investigations may include data generated during the assessment process, or data previously generated and recorded that is pertinent to the outcomes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.id">
+      <path value="ClinicalImpression.investigation.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.extension">
+      <path value="ClinicalImpression.investigation.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.modifierExtension">
+      <path value="ClinicalImpression.investigation.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.code">
+      <path value="ClinicalImpression.investigation.code"/>
+      <short value="A name/code for the set"/>
+      <definition value="A name/code for the group (&quot;set&quot;) of investigations. Typically, this will be something like &quot;signs&quot;, &quot;symptoms&quot;, &quot;clinical&quot;, &quot;diagnostic&quot;, but the list is not constrained, and others such groups such as (exposure|family|travel|nutitirional) history may be used."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="InvestigationGroupType"/>
+        </extension>
+        <strength value="example"/>
+        <description value="A name/code for a set of investigations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/investigation-sets"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.item">
+      <path value="ClinicalImpression.investigation.item"/>
+      <short value="Record of a specific investigation"/>
+      <definition value="A record of a specific investigation that was undertaken."/>
+      <comment value="Most investigations are observations of one kind of or another but some other specific types of data collection resources can also be used."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-21"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.protocol">
+      <path value="ClinicalImpression.protocol"/>
+      <short value="Clinical Protocol followed"/>
+      <definition value="Reference to a specific published clinical protocol that was followed during this assessment, and/or that provides evidence in support of the diagnosis."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="uri"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.summary">
+      <path value="ClinicalImpression.summary"/>
+      <short value="Summary of the assessment"/>
+      <definition value="A text summary of the investigations and the diagnosis."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding">
+      <path value="ClinicalImpression.finding"/>
+      <short value="Possible or likely findings and diagnoses"/>
+      <definition value="Specific findings or diagnoses that was considered likely or relevant to ongoing treatment."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="children().count() &gt; id.count()"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.id">
+      <path value="ClinicalImpression.finding.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.extension">
+      <path value="ClinicalImpression.finding.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.modifierExtension">
+      <path value="ClinicalImpression.finding.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.item[x]">
+      <path value="ClinicalImpression.finding.item[x]"/>
+      <short value="What was found"/>
+      <definition value="Specific text, code or reference for finding or diagnosis, which may include ruled-out or resolved conditions."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ConditionKind"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Identification of the Condition or diagnosis."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/condition-code"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.basis">
+      <path value="ClinicalImpression.finding.basis"/>
+      <short value="Which investigations support finding"/>
+      <definition value="Which investigations support finding or diagnosis."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.prognosisCodeableConcept">
+      <path value="ClinicalImpression.prognosisCodeableConcept"/>
+      <short value="Estimate of likely outcome"/>
+      <definition value="Estimate of likely outcome."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ClinicalImpressionPrognosis"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Prognosis or outlook findings"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/clinicalimpression-prognosis"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PRB-22"/>
+      </mapping>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.prognosisReference">
+      <path value="ClinicalImpression.prognosisReference"/>
+      <short value="RiskAssessment expressing likely outcome"/>
+      <definition value="RiskAssessment expressing likely outcome."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RiskAssessment"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.action">
+      <path value="ClinicalImpression.action"/>
+      <short value="Action taken as part of assessment procedure"/>
+      <definition value="Action taken as part of assessment procedure."/>
+      <comment value="Actions recommended as a result of the impression should not be captured using the &#39;action&#39; element."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ReferralRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ProcedureRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Appointment"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.note">
+      <path value="ClinicalImpression.note"/>
+      <short value="Comments made about the ClinicalImpression"/>
+      <definition value="Commentary about the impression, typically recorded after the impression itself was made, though supplemental notes by the original author could also appear."/>
+      <comment value="Don&#39;t use this element for content that should more properly appear as one of the specific elements of the impression."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Annotation"/>
+      </type>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="ClinicalImpression:shr-oncology-Progression">
+      <path value="ClinicalImpression"/>
+      <short value="SHR Progression Profile"/>
+      <definition value="A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition)."/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:codeableconcept">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="codeableconcept"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/oncology/vs/SubjectiveProgressionVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="category"/>
+      <slicing id="474">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/assessment/vs/AssessmentTypeVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:category.valueCodeableConcept:C0421176">
+      <path value="ClinicalImpression.extension.valueCodeableConcept"/>
+      <sliceName value="C0421176"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <fixedCodeableConcept>
+        <coding>
+          <system value="http://ncimeta.nci.nih.gov"/>
+          <code value="C0421176"/>
+        </coding>
+      </fixedCodeableConcept>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:reason">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="reason"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:occurrencetime">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="occurrencetime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:participant">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:assessmentfocus">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="assessmentfocus"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-assessment-AssessmentFocus-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:method">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="method"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Method-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.extension:evidencequality">
+      <path value="ClinicalImpression.extension"/>
+      <sliceName value="evidencequality"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-assessment-EvidenceQuality-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.modifierExtension:nonoccurrencemodifier">
+      <path value="ClinicalImpression.modifierExtension"/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.code">
+      <path value="ClinicalImpression.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.subject">
+      <path value="ClinicalImpression.subject"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.context">
+      <path value="ClinicalImpression.context"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.effective[x]">
+      <path value="ClinicalImpression.effective[x]"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.date">
+      <path value="ClinicalImpression.date"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.assessor">
+      <path value="ClinicalImpression.assessor"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation">
+      <path value="ClinicalImpression.investigation"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.investigation.item">
+      <path value="ClinicalImpression.investigation.item"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding">
+      <path value="ClinicalImpression.finding"/>
+    </element>
+    <element id="ClinicalImpression:shr-oncology-Progression.finding.item[x]">
+      <path value="ClinicalImpression.finding.item[x]"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
