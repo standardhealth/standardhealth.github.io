@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Condition Profile",
   "status": "draft",
-  "date": "2017-07-31T23:48:42.653Z",
+  "date": "2017-08-01T02:00:10.223Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A representation of a disorder, abnormality, problem, injury, complaint, risk, functionality, concern, illness, disease, ailment, sickness, affliction, upset, difficulty, disorder, symptom, worry, or trouble. Condition can be used to track a problem or a risk over a period of time. By virtue of its continuity over time, Condition is different from an Observation or Assessment; Observations represents evidence, and an Assessment is a judgment based on evidence and rendered at a point in time. Diagnosis is a type of Assessment that can lead to creation of a Condition (as can an assessment of risk). The two relate because observations can lead to conclusion that a Condition exists. A statement that a certain condition does not exist should be an assessment. Not all conditions are problems, but all problems are (in some sense) conditions.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "sct-concept",
@@ -108,7 +108,7 @@
             "severity": "error",
             "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
             "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
           },
           {
             "key": "con-3",
@@ -1049,7 +1049,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1249,7 +1249,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },

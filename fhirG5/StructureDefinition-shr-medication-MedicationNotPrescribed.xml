@@ -40,7 +40,7 @@
   <version value="0.0.1"/>
   <name value="SHR MedicationNotPrescribed Profile"/>
   <status value="draft"/>
-  <date value="2017-07-31T23:48:42.026Z"/>
+  <date value="2017-08-01T02:00:09.650Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -49,7 +49,7 @@
     </telecom>
   </contact>
   <description value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -1350,7 +1350,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1359,7 +1359,7 @@
         <severity value="error"/>
         <human value="onBehalfOf can only be specified if agent is practitioner or device"/>
         <expression value="(agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not()"/>
-        <xpath value="contains(f:agent, &#39;/Practitioner&#39;) or contains(f:agent, &#39;/Device&#39;) or not(exists(f:onBehalfOf))"/>
+        <xpath value="contains(f:agent/f:reference/@value, &#39;/Practitioner/&#39;) or contains(f:agent/f:reference/@value, &#39;/Device/&#39;) or not(exists(f:onBehalfOf))"/>
       </constraint>
       <isSummary value="true"/>
       <mapping>
@@ -2111,7 +2111,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -2310,7 +2310,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>

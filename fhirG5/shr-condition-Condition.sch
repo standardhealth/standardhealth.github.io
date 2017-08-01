@@ -28,7 +28,7 @@
       <sch:assert test="not(parent::f:contained and f:text)">If the resource is contained in another resource, it SHALL NOT contain any narrative</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
       <sch:assert test="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))">If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource</sch:assert>
-      <sch:assert test="not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))">If condition is abated, then clinicalStatus must be either inactive, resolved, or remission</sch:assert>
+      <sch:assert test="not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))">If condition is abated, then clinicalStatus must be either inactive, resolved, or remission</sch:assert>
       <sch:assert test="f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)">Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error</sch:assert>
     </sch:rule>
   </sch:pattern>

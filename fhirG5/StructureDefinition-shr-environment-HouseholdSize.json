@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR HouseholdSize Profile",
   "status": "draft",
-  "date": "2017-07-31T23:48:40.036Z",
+  "date": "2017-08-01T02:00:07.411Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -29,7 +29,7 @@
   ],
   "description": "The number of people living together with mutual financial dependency. Besides the subject, the household size may include spouse or partner, dependent children including adopted and foster children, dependent parents, dependent siblings and other relatives, but not roommates, ex-spouses, non-dependent children, and unborn children. If the subject lives alone, the household size is 1.",
   "purpose": "Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -121,7 +121,7 @@
             "severity": "error",
             "human": "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
             "expression": "value.empty() or code!=component.code",
-            "xpath": "not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
+            "xpath": "not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
           },
           {
             "key": "obs-6",
@@ -1774,7 +1774,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -2085,7 +2085,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2267,7 +2267,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }

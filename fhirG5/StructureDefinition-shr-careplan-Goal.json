@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Goal Profile",
   "status": "draft",
-  "date": "2017-07-31T23:48:42.183Z",
+  "date": "2017-08-01T02:00:09.804Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -757,7 +757,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -766,7 +766,7 @@
             "severity": "error",
             "human": "Goal.target.measure is required if Goal.target.detail is populated",
             "expression": "(detail.exists() and measure.exists()) or detail.exists().not()",
-            "xpath": "(exists(f:detail) and exists(f:measure)) or not(exists(f:detail))"
+            "xpath": "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
           }
         ]
       },
