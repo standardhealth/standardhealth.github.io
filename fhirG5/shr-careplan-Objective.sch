@@ -29,7 +29,7 @@
     <sch:title>Goal.target</sch:title>
     <sch:rule context="f:Goal/f:target">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="(exists(f:detail) and exists(f:measure)) or not(exists(f:detail))">Goal.target.measure is required if Goal.target.detail is populated</sch:assert>
+      <sch:assert test="(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))">Goal.target.measure is required if Goal.target.detail is populated</sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>

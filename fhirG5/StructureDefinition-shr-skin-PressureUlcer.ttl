@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR PressureUlcer Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-07-31T16:44:36.242Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-01T02:25:35.203Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "sct-concept" ];
@@ -111,7 +111,7 @@
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))" ]
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))" ]
        ], [
          fhir:index 5;
          fhir:ElementDefinition.constraint.key [ fhir:value "con-3" ];
@@ -318,7 +318,7 @@
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "538" ];
+         fhir:Element.id [ fhir:value "427" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -900,7 +900,7 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
            fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]
@@ -1147,7 +1147,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -1345,7 +1345,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -1724,7 +1724,7 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
            fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]

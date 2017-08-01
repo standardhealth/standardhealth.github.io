@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR BreastCancer Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:27.811Z",
+  "date": "2017-08-01T02:25:31.333Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "sct-concept",
@@ -108,7 +108,7 @@
             "severity": "error",
             "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
             "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
           },
           {
             "key": "con-3",
@@ -311,7 +311,7 @@
         "id": "Condition:shr-oncology-BreastCancer.extension",
         "path": "Condition.extension",
         "slicing": {
-          "id": "350",
+          "id": "308",
           "discriminator": [
             {
               "type": "value",
@@ -683,7 +683,7 @@
         "id": "Condition:shr-oncology-BreastCancer.category",
         "path": "Condition.category",
         "slicing": {
-          "id": "349",
+          "id": "307",
           "discriminator": [
             {
               "type": "value",
@@ -1120,7 +1120,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1313,7 +1313,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1615,7 +1615,7 @@
         "id": "Condition:shr-oncology-BreastCancer.category",
         "path": "Condition.category",
         "slicing": {
-          "id": "349",
+          "id": "307",
           "discriminator": [
             {
               "type": "value",

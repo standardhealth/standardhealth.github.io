@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR MedicationPrescription Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-07-31T16:44:24.785Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-01T02:25:28.175Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "Report of a medication prescription."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "workflow" ];
@@ -311,7 +311,7 @@
        fhir:Element.id [ fhir:value "MedicationRequest:shr-medication-MedicationPrescription.extension" ];
        fhir:ElementDefinition.path [ fhir:value "MedicationRequest.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "261" ];
+         fhir:Element.id [ fhir:value "231" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -521,7 +521,7 @@
        fhir:Element.id [ fhir:value "MedicationRequest:shr-medication-MedicationPrescription.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "MedicationRequest.modifierExtension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "262" ];
+         fhir:Element.id [ fhir:value "232" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -1246,7 +1246,7 @@
        fhir:Element.id [ fhir:value "MedicationRequest:shr-medication-MedicationPrescription.medication[x]" ];
        fhir:ElementDefinition.path [ fhir:value "MedicationRequest.medication[x]" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "260" ];
+         fhir:Element.id [ fhir:value "230" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "type" ];
@@ -1478,7 +1478,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -1487,7 +1487,7 @@
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "onBehalfOf can only be specified if agent is practitioner or device" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "(agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "contains(f:agent, '/Practitioner') or contains(f:agent, '/Device') or not(exists(f:onBehalfOf))" ]
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2386,7 +2386,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -2628,7 +2628,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -2991,7 +2991,7 @@
        fhir:Element.id [ fhir:value "MedicationRequest:shr-medication-MedicationPrescription.medication[x]" ];
        fhir:ElementDefinition.path [ fhir:value "MedicationRequest.medication[x]" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "260" ];
+         fhir:Element.id [ fhir:value "230" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "type" ];

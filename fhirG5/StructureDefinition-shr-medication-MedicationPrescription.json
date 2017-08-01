@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR MedicationPrescription Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:24.785Z",
+  "date": "2017-08-01T02:25:28.175Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "Report of a medication prescription.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -301,7 +301,7 @@
         "id": "MedicationRequest:shr-medication-MedicationPrescription.extension",
         "path": "MedicationRequest.extension",
         "slicing": {
-          "id": "261",
+          "id": "231",
           "discriminator": [
             {
               "type": "value",
@@ -506,7 +506,7 @@
         "id": "MedicationRequest:shr-medication-MedicationPrescription.modifierExtension",
         "path": "MedicationRequest.modifierExtension",
         "slicing": {
-          "id": "262",
+          "id": "232",
           "discriminator": [
             {
               "type": "value",
@@ -1260,7 +1260,7 @@
         "id": "MedicationRequest:shr-medication-MedicationPrescription.medication[x]",
         "path": "MedicationRequest.medication[x]",
         "slicing": {
-          "id": "260",
+          "id": "230",
           "discriminator": [
             {
               "type": "type",
@@ -1504,7 +1504,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1513,7 +1513,7 @@
             "severity": "error",
             "human": "onBehalfOf can only be specified if agent is practitioner or device",
             "expression": "(agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not()",
-            "xpath": "contains(f:agent, '/Practitioner') or contains(f:agent, '/Device') or not(exists(f:onBehalfOf))"
+            "xpath": "contains(f:agent/f:reference/@value, '/Practitioner/') or contains(f:agent/f:reference/@value, '/Device/') or not(exists(f:onBehalfOf))"
           }
         ],
         "isSummary": true,
@@ -2459,7 +2459,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2711,7 +2711,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -3084,7 +3084,7 @@
         "id": "MedicationRequest:shr-medication-MedicationPrescription.medication[x]",
         "path": "MedicationRequest.medication[x]",
         "slicing": {
-          "id": "260",
+          "id": "230",
           "discriminator": [
             {
               "type": "type",

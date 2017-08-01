@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR ProviderRelationship Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-07-31T16:44:15.749Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-01T02:25:17.668Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A person or organization responsible for providing a service to the person of record. Such a relationship can exist without a specific encounter or services being rendered; for example, an emergency contact relationship can exist without ever calling upon that person. The entry can also be used to state that a provider relationship does not exist, e.g., patient does not have a primary care provider."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "w5" ];
@@ -619,7 +619,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -628,7 +628,7 @@
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "onBehalfOf.exists() implies (member.resolve() is Practitioner)" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "contains(f:member, '/Practitioner') or not(exists(f:onBehalfOf))" ]
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))" ]
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;

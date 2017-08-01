@@ -3,7 +3,7 @@
   "id": "shr-oncology-Progression",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Progression Profile</b></p>\n  <p>A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.Progression maps to ClinicalImpression:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context \n  Entry.Informant maps to assessor\n  Entry.OriginalCreationDate maps to date\n  Status maps to status\n  SpecificType maps to code\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Summary maps to summary\n  AssessmentResult.CodeableConcept maps to finding.item[x].CodeableConcept\n  Evidence maps to investigation.item \n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Progression Profile</b></p>\n  <p>A finding related to the current trend of a disease. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The specific disorder being evaluated must be cited in the AssessmentFocus as a reference to a Condition.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.Progression maps to ClinicalImpression:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context \n  Entry.Informant maps to assessor\n  Entry.OriginalCreationDate maps to date\n  Status maps to status\n  SpecificType maps to code\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Summary maps to summary\n  AssessmentResult.CodeableConcept maps to finding.item[x].CodeableConcept\n  Evidence maps to investigation.item \n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-Progression",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Progression Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:33.980Z",
+  "date": "2017-08-01T02:25:33.041Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,8 +27,8 @@
       ]
     }
   ],
-  "description": "A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition).",
-  "fhirVersion": "3.0.0",
+  "description": "A finding related to the current trend of a disease. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The specific disorder being evaluated must be cited in the AssessmentFocus as a reference to a Condition.",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -57,7 +57,7 @@
         "id": "ClinicalImpression:shr-oncology-Progression",
         "path": "ClinicalImpression",
         "short": "SHR Progression Profile",
-        "definition": "A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition).",
+        "definition": "A finding related to the current trend of a disease. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The specific disorder being evaluated must be cited in the AssessmentFocus as a reference to a Condition.",
         "min": 0,
         "max": "*",
         "constraint": [
@@ -279,7 +279,7 @@
         "id": "ClinicalImpression:shr-oncology-Progression.extension",
         "path": "ClinicalImpression.extension",
         "slicing": {
-          "id": "475",
+          "id": "377",
           "discriminator": [
             {
               "type": "value",
@@ -465,7 +465,7 @@
         "id": "ClinicalImpression:shr-oncology-Progression.extension:category.valueCodeableConcept",
         "path": "ClinicalImpression.extension.valueCodeableConcept",
         "slicing": {
-          "id": "474",
+          "id": "376",
           "discriminator": [
             {
               "type": "value",
@@ -491,7 +491,7 @@
           }
         ],
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/assessment/vs/AssessmentTypeVS"
           }
@@ -726,7 +726,7 @@
         "id": "ClinicalImpression:shr-oncology-Progression.modifierExtension",
         "path": "ClinicalImpression.modifierExtension",
         "slicing": {
-          "id": "476",
+          "id": "378",
           "discriminator": [
             {
               "type": "value",
@@ -1090,7 +1090,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1280,7 +1280,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1519,7 +1519,7 @@
         "id": "ClinicalImpression:shr-oncology-Progression",
         "path": "ClinicalImpression",
         "short": "SHR Progression Profile",
-        "definition": "A finding related to the current trend of a disease over time. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The disorder being evaluated must be cited in the AssessmentFocus as ref(Condition)."
+        "definition": "A finding related to the current trend of a disease. This concept is most often used for chronic and incurable diseases where the status and trendline of the disease is an important determinant of therapy and prognosis. The specific disorder being evaluated must be cited in the AssessmentFocus as a reference to a Condition."
       },
       {
         "id": "ClinicalImpression:shr-oncology-Progression.extension:codeableconcept",
@@ -1548,7 +1548,7 @@
         "path": "ClinicalImpression.extension",
         "sliceName": "category",
         "slicing": {
-          "id": "474",
+          "id": "376",
           "discriminator": [
             {
               "type": "value",
@@ -1570,7 +1570,7 @@
         "isModifier": false,
         "isSummary": false,
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/assessment/vs/AssessmentTypeVS"
           }

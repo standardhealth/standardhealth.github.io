@@ -1,0 +1,879 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>SHR: Base</title>
+  <link rel="stylesheet" href="../../shr-github-markdown.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+      thead, th {display: none;}
+      .markdown-body {
+          box-sizing: border-box;
+          min-width: 200px;
+          max-width: 980px;
+          margin: 0 auto;
+          padding: 45px;
+      }
+  </style>
+</head>
+<body class="markdown-body">
+<h1>Base</h1>
+<h3><a name="AccessTime"></a>AccessTime</h3>
+<p>Point in time when data was accessed.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>dateTime</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Action"></a>Action</h3>
+<p>A deed or endeavor; an action taken to address a undesired health state, behavior, risk, or goal. An action can have various contexts: definitional, occurred/not occurred, ordered/not ordered, recommended/recommended against.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../core/index.html#SpecificType"><code>SpecificType</code></a></td>
+<td>optional</td>
+<td>A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.</td>
+</tr>
+<tr>
+<td><a href="#Status"><code>Status</code></a></td>
+<td>1</td>
+<td>The position of affairs at a particular time</td>
+</tr>
+<tr>
+<td><a href="#Category"><code>Category</code></a></td>
+<td>0 or more</td>
+<td>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</td>
+</tr>
+<tr>
+<td><a href="#NonOccurrenceModifier"><code>NonOccurrenceModifier</code></a></td>
+<td>optional</td>
+<td>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.</td>
+</tr>
+<tr>
+<td>When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Reason"><code>Reason</code></a></td>
+<td>0 or more</td>
+<td>The justification for an action or non-action, conclusion, opinion, etc.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
+<td>optional</td>
+<td>The point in time or span of time in which something happens.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Participant"><code>Participant</code></a></td>
+<td>0 or more</td>
+<td>A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="AssertionNegationModifier"></a>AssertionNegationModifier</h3>
+<p>When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is 'allergy to peanuts' and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="AssociatedEncounter"></a>AssociatedEncounter</h3>
+<p>The encounter or episode of care that led to creation of this entry.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: reference to <a href="../encounter/index.html#Encounter"><code>Encounter</code></a></td>
+<td></td>
+<td>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Author"></a>Author</h3>
+<p>The person or organization who created the entry and is responsible for (and may certify) its content.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | reference to <a href="../demographics/index.html#PersonOfRecord"><code>PersonOfRecord</code></a></td>
+<td>1</td>
+<td>Extended demographic information about the subject of this SHR.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../actor/index.html#Practitioner"><code>Practitioner</code></a></td>
+<td>1</td>
+<td>A person who practices a healing art.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../actor/index.html#RelatedPerson"><code>RelatedPerson</code></a></td>
+<td>1</td>
+<td>A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../actor/index.html#Organization"><code>Organization</code></a></td>
+<td>1</td>
+<td>A social or legal structure formed by human beings.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../device/index.html#Device"><code>Device</code></a></td>
+<td>1</td>
+<td>A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Category"></a>Category</h3>
+<p>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a></td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Entry"></a>Entry</h3>
+<p>An item inserted in an electronic record. <a href="http://ncimeta.nci.nih.gov/C1705654">C1705654</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#ShrId"><code>ShrId</code></a></td>
+<td>1</td>
+<td>A unique, persistent identifier for the Standard Health Record to which this entry belongs.</td>
+</tr>
+<tr>
+<td><a href="#EntryId"><code>EntryId</code></a></td>
+<td>1</td>
+<td>A unique, persistent, permanent identifier for an entry in a health record.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Version"><code>Version</code></a></td>
+<td>optional</td>
+<td>A string identifying the particular of form of something (such as a code system or software product) that is different in some way from another form of the same thing.</td>
+</tr>
+<tr>
+<td><a href="#EntryType"><code>EntryType</code></a></td>
+<td>1 or more</td>
+<td>The SHR data element identifier, for example, http://standardhealthrecord.org/allergy/SubstanceRisk. The EntryType array includes the entire 'based on' hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.</td>
+</tr>
+<tr>
+<td><a href="#FocalSubject"><code>FocalSubject</code></a></td>
+<td>1</td>
+<td>The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead).</td>
+</tr>
+<tr>
+<td><a href="#SubjectIsThirdPartyFlag"><code>SubjectIsThirdPartyFlag</code></a></td>
+<td>optional</td>
+<td>If true, the subject of this entry is someone other than the Person of Record, for example, a family member.</td>
+</tr>
+<tr>
+<td><a href="#Narrative"><code>Narrative</code></a></td>
+<td>optional</td>
+<td>A human-readable narrative, potentially including images, that contains a summary of the resource, and may be used to represent the content of the resource to a human.</td>
+</tr>
+<tr>
+<td><a href="#Informant"><code>Informant</code></a></td>
+<td>optional</td>
+<td>The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.</td>
+</tr>
+<tr>
+<td><a href="#Author"><code>Author</code></a></td>
+<td>optional</td>
+<td>The person or organization who created the entry and is responsible for (and may certify) its content.</td>
+</tr>
+<tr>
+<td><a href="#AssociatedEncounter"><code>AssociatedEncounter</code></a></td>
+<td>optional</td>
+<td>The encounter or episode of care that led to creation of this entry.</td>
+</tr>
+<tr>
+<td><a href="#OriginalCreationDate"><code>OriginalCreationDate</code></a></td>
+<td>1</td>
+<td>The point in time when the information was recorded in the system of record.</td>
+</tr>
+<tr>
+<td><a href="#LastUpdateDate"><code>LastUpdateDate</code></a></td>
+<td>1</td>
+<td>A date that the entry was changed.</td>
+</tr>
+<tr>
+<td><a href="#Language"><code>Language</code></a></td>
+<td>optional</td>
+<td>A human language, spoken or written.</td>
+</tr>
+<tr>
+<td><code>SecurityLabel</code> <em>(TBD)</em></td>
+<td>0 or more</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Tag</code> <em>(TBD)</em></td>
+<td>0 or more</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="EntryId"></a>EntryId</h3>
+<p>A unique, persistent, permanent identifier for an entry in a health record. <a href="http://ncimeta.nci.nih.gov/C0600091">C0600091</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>id</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="EntryType"></a>EntryType</h3>
+<p>The SHR data element identifier, for example, http://standardhealthrecord.org/allergy/SubstanceRisk. The EntryType array includes the entire 'based on' hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>uri</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="ExternalHealthRecord"></a>ExternalHealthRecord</h3>
+<p>A health record used to help populate the current health record.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../core/index.html#OrganizationalIdentifier"><code>OrganizationalIdentifier</code></a></td>
+<td>1</td>
+<td>Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.</td>
+</tr>
+<tr>
+<td><a href="#AccessTime"><code>AccessTime</code></a></td>
+<td>1</td>
+<td>Point in time when data was accessed.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="FocalSubject"></a>FocalSubject</h3>
+<p>The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | reference to <a href="../demographics/index.html#PersonOfRecord"><code>PersonOfRecord</code></a></td>
+<td>1</td>
+<td>Extended demographic information about the subject of this SHR.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../actor/index.html#Practitioner"><code>Practitioner</code></a></td>
+<td>1</td>
+<td>A person who practices a healing art.</td>
+</tr>
+<tr>
+<td>        | reference to <a href="../actor/index.html#RelatedPerson"><code>RelatedPerson</code></a></td>
+<td>1</td>
+<td>A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Informant"></a>Informant</h3>
+<p>The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program. <a href="http://ncimeta.nci.nih.gov/C0449416">C0449416</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="../demographics/index.html#PersonOfRecord"><code>PersonOfRecord</code></a></td>
+<td>1</td>
+<td>Extended demographic information about the subject of this SHR.</td>
+</tr>
+<tr>
+<td>        | <a href="../actor/index.html#Practitioner"><code>Practitioner</code></a></td>
+<td>1</td>
+<td>A person who practices a healing art.</td>
+</tr>
+<tr>
+<td>        | <a href="../actor/index.html#RelatedPerson"><code>RelatedPerson</code></a></td>
+<td>1</td>
+<td>A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Language"></a>Language</h3>
+<p>A human language, spoken or written. <a href="http://ncimeta.nci.nih.gov/C0023008">C0023008</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://hl7.org/fhir/ValueSet/languages</td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="LastUpdateDate"></a>LastUpdateDate</h3>
+<p>A date that the entry was changed.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>dateTime</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="MissingValueReason"></a>MissingValueReason</h3>
+<p>The reason a required element, complex type, or primitive value is missing. Missing value reason can be substituted for any value. By convention in SHR, any required element or value can be substituted with a missing value reason.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/base/vs/MissingValueReasonVS</td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Narrative"></a>Narrative</h3>
+<p>A human-readable narrative, potentially including images, that contains a summary of the resource, and may be used to represent the content of the resource to a human.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>xhtml</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#NarrativeQualifier"><code>NarrativeQualifier</code></a></td>
+<td>1</td>
+<td>Additional information on how the narrative was generated, and the scope of information contained.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="NarrativeQualifier"></a>NarrativeQualifier</h3>
+<p>Additional information on how the narrative was generated, and the scope of information contained.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>code</code> from http://hl7.org/fhir/ValueSet/narrative-status</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="NonOccurrenceModifier"></a>NonOccurrenceModifier</h3>
+<p>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
+When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Reason"><code>Reason</code></a></td>
+<td>optional</td>
+<td>The justification for an action or non-action, conclusion, opinion, etc.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="OriginalCreationDate"></a>OriginalCreationDate</h3>
+<p>The point in time when the information was recorded in the system of record. <a href="http://ncimeta.nci.nih.gov/C3669169">C3669169</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>dateTime</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="PatientInstructions"></a>PatientInstructions</h3>
+<p>Information for the patient, such as, where to get the test, how to prepare for the test, etc.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>string</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="PerformerInstructions"></a>PerformerInstructions</h3>
+<p>Information for the performer of the test, if needed.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>string</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="PriorityOfRequest"></a>PriorityOfRequest</h3>
+<p>Urgency level for which results must be reported to the requestor or responsible individual.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>code</code> from http://hl7.org/fhir/ValueSet/request-priority</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Request"></a>Request</h3>
+<p>An order for something to take place. <a href="http://ncimeta.nci.nih.gov/C1705178">C1705178</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Based On: <a href="#Action"><code>Action</code></a></td>
+<td></td>
+<td>A deed or endeavor; an action taken to address a undesired health state, behavior, risk, or goal. An action can have various contexts: definitional, occurred/not occurred, ordered/not ordered, recommended/recommended against.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#SpecificType"><code>SpecificType</code></a></td>
+<td>optional</td>
+<td>A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.</td>
+</tr>
+<tr>
+<td><a href="#Status"><code>Status</code></a></td>
+<td>1</td>
+<td>The position of affairs at a particular time</td>
+</tr>
+<tr>
+<td>        with <code>code</code> from http://hl7.org/fhir/ValueSet/request-status</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#Category"><code>Category</code></a></td>
+<td>0 or more</td>
+<td>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</td>
+</tr>
+<tr>
+<td><a href="#NonOccurrenceModifier"><code>NonOccurrenceModifier</code></a></td>
+<td>optional</td>
+<td>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.</td>
+</tr>
+<tr>
+<td>When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Reason"><code>Reason</code></a></td>
+<td>optional</td>
+<td>The justification for an action or non-action, conclusion, opinion, etc.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
+<td>optional</td>
+<td>The point in time or span of time in which something happens.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Participant"><code>Participant</code></a></td>
+<td>0 or more</td>
+<td>A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.</td>
+</tr>
+<tr>
+<td><a href="#RequestedPerformanceTime"><code>RequestedPerformanceTime</code></a></td>
+<td>optional</td>
+<td>When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.</td>
+</tr>
+<tr>
+<td><a href="#PriorityOfRequest"><code>PriorityOfRequest</code></a></td>
+<td>optional</td>
+<td>Urgency level for which results must be reported to the requestor or responsible individual.</td>
+</tr>
+<tr>
+<td>Choice</td>
+<td>optional</td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="#RequestedPerformerType"><code>RequestedPerformerType</code></a></td>
+<td>1</td>
+<td>What type of actor should carry out the testing.</td>
+</tr>
+<tr>
+<td>        | <a href="#RequestedPerformer"><code>RequestedPerformer</code></a></td>
+<td>1</td>
+<td>Who should carry out the tests. For example, the patient or caregiver.</td>
+</tr>
+<tr>
+<td><a href="#PerformerInstructions"><code>PerformerInstructions</code></a></td>
+<td>optional</td>
+<td>Information for the performer of the test, if needed.</td>
+</tr>
+<tr>
+<td><a href="#PatientInstructions"><code>PatientInstructions</code></a></td>
+<td>optional</td>
+<td>Information for the patient, such as, where to get the test, how to prepare for the test, etc.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="RequestedPerformanceTime"></a>RequestedPerformanceTime</h3>
+<p>When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | <code>dateTime</code></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>        | <code>date</code></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="../core/index.html#TimePeriod"><code>TimePeriod</code></a></td>
+<td>1</td>
+<td>A period of time defined by a start and end time, date, or year.</td>
+</tr>
+<tr>
+<td>        | <code>Timing</code> <em>(TBD)</em></td>
+<td>1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="RequestedPerformer"></a>RequestedPerformer</h3>
+<p>Who should carry out the tests. For example, the patient or caregiver.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="../demographics/index.html#PersonOfRecord"><code>PersonOfRecord</code></a></td>
+<td>1</td>
+<td>Extended demographic information about the subject of this SHR.</td>
+</tr>
+<tr>
+<td>        | <a href="../actor/index.html#Practitioner"><code>Practitioner</code></a></td>
+<td>1</td>
+<td>A person who practices a healing art.</td>
+</tr>
+<tr>
+<td>        | <a href="../actor/index.html#RelatedPerson"><code>RelatedPerson</code></a></td>
+<td>1</td>
+<td>A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.</td>
+</tr>
+<tr>
+<td>        | <a href="../actor/index.html#Organization"><code>Organization</code></a></td>
+<td>1</td>
+<td>A social or legal structure formed by human beings.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="RequestedPerformerType"></a>RequestedPerformerType</h3>
+<p>What type of actor should carry out the testing.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a></td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="ShrId"></a>ShrId</h3>
+<p>A unique, persistent identifier for the Standard Health Record to which this entry belongs. <a href="http://ncimeta.nci.nih.gov/C0600091">C0600091</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>id</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Status"></a>Status</h3>
+<p>The position of affairs at a particular time <a href="http://ncimeta.nci.nih.gov/C0449438">C0449438</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: Choice</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        | <code>code</code></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>        | <a href="../core/index.html#Coding"><code>Coding</code></a></td>
+<td>1</td>
+<td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.</td>
+</tr>
+<tr>
+<td>        | <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a></td>
+<td>1</td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="Study"></a>Study [Entry]</h3>
+<p>A clinical trial or other formal study.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../core/index.html#Title"><code>Title</code></a></td>
+<td>optional</td>
+<td>A distinguishing word or group of words naming an item.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Identifier"><code>Identifier</code></a></td>
+<td>optional</td>
+<td>A unique string that identifies a specific person or thing.</td>
+</tr>
+</tbody>
+</table>
+<h3><a name="SubjectIsThirdPartyFlag"></a>SubjectIsThirdPartyFlag</h3>
+<p>If true, the subject of this entry is someone other than the Person of Record, for example, a family member.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value: <code>boolean</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

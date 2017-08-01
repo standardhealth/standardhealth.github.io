@@ -25,25 +25,15 @@
   BodySite maps to bodySite
   Status maps to status
   Method maps to method
+  Participant maps to performer 	// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.
   &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
   DataAbsentReason maps to dataAbsentReason
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
   Interpretation maps to interpretation
   Comment maps to comment
-  PanelMembers.Observation maps to related.target  //both are observation types
-  Components.Observation.Quantity maps to component.value[x]
-  Components.Observation.CodeableConcept maps to component.value[x]
-  Components.Observation.string maps to component.value[x]
-  Components.Observation.Range maps to component.value[x]
-  Components.Observation.Ratio maps to component.value[x]
-  Components.Observation.time maps to component.value[x]
-  Components.Observation.dateTime maps to component.value[x]
-  Components.Observation.TimePeriod maps to component.value[x]
-  Components.Observation.SpecificType maps to component.code
-  Components.Observation.DataAbsentReason maps to component.dataAbsentReason
-  Components.Observation.Interpretation maps to component.interpretation
-  Participant maps to performer  
+  constrain component to 0..0
+  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
 </pre></p>
 </div>
   </text>
@@ -55,7 +45,7 @@
   <version value="0.0.1"/>
   <name value="SHR PhysicalActivityLimitation Profile"/>
   <status value="draft"/>
-  <date value="2017-07-31T16:44:20.463Z"/>
+  <date value="2017-08-01T02:25:23.529Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -65,7 +55,7 @@
   </contact>
   <description value="Anything that limits physical activity, including health factors, logistical, monetary, or social restrictions."/>
   <purpose value="Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -150,7 +140,7 @@
         <severity value="error"/>
         <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
         <expression value="value.empty() or code!=component.code"/>
-        <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
+        <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
       </constraint>
       <constraint>
         <key value="obs-6"/>
@@ -442,6 +432,32 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLimitation.extension:referencerange">
+      <path value="Observation.extension"/>
+      <sliceName value="referencerange"/>
+      <definition value="The usual or acceptable range for a test result."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -998,7 +1014,7 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
           <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
         </valueSetReference>
@@ -1511,7 +1527,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1754,7 +1770,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1887,7 +1903,7 @@
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1895,7 +1911,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1985,13 +2001,16 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="preferred"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCode"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying names of simple observations."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -2013,14 +2032,6 @@
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.value[x]">
       <path value="Observation.component.value[x]"/>
-      <slicing id="130">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Actual component result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from &lt;http://hl7.org/fhir/ValueSet/v2-0136&gt; (these &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed&quot;).  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type)."/>
@@ -2029,22 +2040,24 @@
       <max value="1"/>
       <type>
         <code value="Quantity"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <type>
         <code value="string"/>
       </type>
       <type>
         <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
       </type>
       <type>
         <code value="Ratio"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
       </type>
       <type>
         <code value="time"/>
@@ -2054,7 +2067,6 @@
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -2074,25 +2086,6 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.component.valueCodeableConcept"/>
-      <sliceName value="shr-core-CodeableConcept"/>
-      <short value="Actual component result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="example"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
     <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.dataAbsentReason">
       <path value="Observation.component.dataAbsentReason"/>
       <short value="Why the component result is missing"/>
@@ -2103,7 +2096,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-6"/>
       <binding>
@@ -2136,13 +2128,12 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
         </extension>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
@@ -2242,6 +2233,19 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLimitation.extension:referencerange">
+      <path value="Observation.extension"/>
+      <sliceName value="referencerange"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="Observation:shr-behavior-PhysicalActivityLimitation.modifierExtension:nonoccurrencemodifier">
       <path value="Observation.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
@@ -2281,7 +2285,7 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
           <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
         </valueSetReference>
@@ -2432,96 +2436,8 @@
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLimitation.component">
       <path value="Observation.component"/>
-    </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.code">
-      <path value="Observation.component.code"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.value[x]">
-      <path value="Observation.component.value[x]"/>
-      <slicing id="130">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <type>
-        <code value="Quantity"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
-      </type>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.component.valueCodeableConcept"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="example"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.dataAbsentReason">
-      <path value="Observation.component.dataAbsentReason"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-PhysicalActivityLimitation.component.interpretation">
-      <path value="Observation.component.interpretation"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationInterpretation"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes identifying interpretations of observations."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
-        </valueSetReference>
-      </binding>
+      <min value="0"/>
+      <max value="0"/>
     </element>
   </differential>
 </StructureDefinition>

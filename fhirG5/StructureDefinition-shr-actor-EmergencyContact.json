@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR EmergencyContact Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:15.773Z",
+  "date": "2017-08-01T02:25:17.699Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A personal contact specifically designated to be used for emergencies.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "w5",
@@ -621,7 +621,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -630,7 +630,7 @@
             "severity": "error",
             "human": "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
             "expression": "onBehalfOf.exists() implies (member.resolve() is Practitioner)",
-            "xpath": "contains(f:member, '/Practitioner') or not(exists(f:onBehalfOf))"
+            "xpath": "contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))"
           }
         ],
         "mapping": [

@@ -1,6 +1,6 @@
 "Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: HL7 v2 Mapping","Mapping: RIM Mapping"
 "Quantity","","","",0,*,"","","","","SHR DollarAmount Profile","An amount of money expressed in US dollars.","The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator.","","","","","","","","",,,,,"",,,,"",0,null,"ele-1
-","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 qty-3:If a code for the unit is present, the system SHALL also be present {code.empty() or system.exists()}","SN (see also Range) or CQ","n/a","PQ, IVL<PQ>, MO, CO, depending on the values"
 "Quantity.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -17,5 +17,5 @@ user content","",0,*,"","","","Extension
 "Quantity.system","","","",0,1,"","","Y","uri
 ","System that defines coded unit form","The identification of the system that provides the coded form of the unit.","","Need to know the system that defines the coded form of the unit.","","","","","","","",,,,,"",,,,"",0,null,"qty-3
 ","","(see OBX.6 etc.) / CQ.2","CO.codeSystem, PQ.translation.codeSystem"
-"Quantity.code","","","",1,1,"","","Y","code
+"Quantity.code","","","",0,1,"","","Y","code
 ","Coded form of the unit","A computer processable form of the unit in some unit representation system.","The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system.","Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest.","","","","","","","",,,,,"",,,,"",0,null,"","","(see OBX.6 etc.) / CQ.2","PQ.code, MO.currency, PQ.translation.code"

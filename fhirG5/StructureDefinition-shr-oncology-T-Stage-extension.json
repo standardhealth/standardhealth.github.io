@@ -16,7 +16,7 @@
   "name": "SHR T-Stage Extension",
   "title": "SHR T-Stage Extension",
   "status": "draft",
-  "date": "2017-07-31T16:44:28.127Z",
+  "date": "2017-08-01T02:25:31.525Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -29,7 +29,7 @@
     }
   ],
   "description": "The size and extent of the primary tumor (greatest dimension), based on criteria from the American Joint Committee on Cancer. See Table 152 in HL7 CDA® R2 Implementation Guide: Clinical Oncology Treatment Plan and Summary, Release 1 - US Realm",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "kind": "complex-type",
   "abstract": false,
   "contextType": "resource",
@@ -103,13 +103,23 @@
         ]
       },
       {
-        "id": "Extension:t-stage.extension:extension",
+        "id": "Extension:t-stage.extension",
         "path": "Extension.extension",
-        "sliceName": "extension",
+        "slicing": {
+          "id": "313",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Extension",
         "definition": "An Extension",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "Element.extension",
           "min": 0,
@@ -118,6 +128,142 @@
         "type": [
           {
             "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:codeableconcept",
+        "path": "Extension.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ],
+        "isModifier": false,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "urn:oid:2.16.840.1.113883.11.20.11.13"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:specifictype",
+        "path": "Extension.extension",
+        "sliceName": "specifictype",
+        "definition": "A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:dataabsentreason",
+        "path": "Extension.extension",
+        "sliceName": "dataabsentreason",
+        "definition": "Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-DataAbsentReason-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:interpretation",
+        "path": "Extension.extension",
+        "sliceName": "interpretation",
+        "definition": "A clinical interpretation of a measurement.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-Interpretation-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:referencerange",
+        "path": "Extension.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
           }
         ]
       },
@@ -150,12 +296,12 @@
         ]
       },
       {
-        "id": "Extension:t-stage.valueReference",
-        "path": "Extension.valueReference",
+        "id": "Extension:t-stage.value[x]",
+        "path": "Extension.value[x]",
         "short": "Value of extension",
         "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
-        "min": 1,
-        "max": "1",
+        "min": 0,
+        "max": "0",
         "base": {
           "path": "Extension.value[x]",
           "min": 0,
@@ -163,8 +309,118 @@
         },
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-T-Stage"
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
           }
         ],
         "mapping": [
@@ -187,10 +443,80 @@
         "max": "*"
       },
       {
-        "id": "Extension:t-stage.extension:extension",
+        "id": "Extension:t-stage.extension:codeableconcept",
         "path": "Extension.extension",
-        "sliceName": "extension",
-        "max": "0"
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "urn:oid:2.16.840.1.113883.11.20.11.13"
+          }
+        }
+      },
+      {
+        "id": "Extension:t-stage.extension:specifictype",
+        "path": "Extension.extension",
+        "sliceName": "specifictype",
+        "definition": "A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:dataabsentreason",
+        "path": "Extension.extension",
+        "sliceName": "dataabsentreason",
+        "definition": "Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-DataAbsentReason-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:interpretation",
+        "path": "Extension.extension",
+        "sliceName": "interpretation",
+        "definition": "A clinical interpretation of a measurement.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-Interpretation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:t-stage.extension:referencerange",
+        "path": "Extension.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
+          }
+        ]
       },
       {
         "id": "Extension:t-stage.url",
@@ -203,15 +529,10 @@
         "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-T-Stage-extension"
       },
       {
-        "id": "Extension:t-stage.valueReference",
-        "path": "Extension.valueReference",
-        "min": 1,
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-T-Stage"
-          }
-        ]
+        "id": "Extension:t-stage.value[x]",
+        "path": "Extension.value[x]",
+        "min": 0,
+        "max": "0"
       }
     ]
   }

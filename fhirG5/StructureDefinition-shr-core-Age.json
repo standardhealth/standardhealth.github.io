@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Age Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:15.850Z",
+  "date": "2017-08-01T02:25:17.808Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "How long something has existed (quantitative).",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "rim",
@@ -70,7 +70,7 @@
             "severity": "error",
             "human": "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive.",
             "expression": "(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value > 0)",
-            "xpath": "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))"
+            "xpath": "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value >=0)"
           }
         ],
         "mapping": [
@@ -307,7 +307,7 @@
         "definition": "A computer processable form of the unit in some unit representation system.",
         "comment": "The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system.",
         "requirements": "Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest.",
-        "min": 1,
+        "min": 0,
         "max": "1",
         "base": {
           "path": "Quantity.code",
@@ -344,12 +344,6 @@
       {
         "id": "Age:shr-core-Age.value",
         "path": "Age.value",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Age:shr-core-Age.code",
-        "path": "Age.code",
         "min": 1,
         "max": "1"
       }

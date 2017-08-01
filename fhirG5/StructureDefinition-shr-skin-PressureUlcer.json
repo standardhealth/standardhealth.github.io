@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR PressureUlcer Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:36.242Z",
+  "date": "2017-08-01T02:25:35.203Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "sct-concept",
@@ -108,7 +108,7 @@
             "severity": "error",
             "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
             "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
           },
           {
             "key": "con-3",
@@ -311,7 +311,7 @@
         "id": "Condition:shr-skin-PressureUlcer.extension",
         "path": "Condition.extension",
         "slicing": {
-          "id": "538",
+          "id": "427",
           "discriminator": [
             {
               "type": "value",
@@ -891,7 +891,7 @@
         ],
         "isSummary": true,
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"
           }
@@ -1148,7 +1148,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1348,7 +1348,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1739,7 +1739,7 @@
           }
         ],
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"
           }

@@ -52,7 +52,7 @@ user content","",0,1,"Y","Y","","Extension {http://standardhealthrecord.org/fhir
 
 This element is labeled as a modifier because the status contains codes that mark the encounter as not currently valid.","","","","","","","","",,"required","Current state of the encounter","http://hl7.org/fhir/ValueSet/encounter-status","",,,,"",0,null,"","",".statusCode","status","No clear equivalent in HL7 v2; active/finished could be inferred from PV1-44, PV1-45, PV2-24; inactive could be inferred from PV2-16"
 "Encounter.statusHistory","","","",0,*,"","","","BackboneElement
-","List of past encounter statuses","The status history permits the encounter resource to contain the status history without needing to read through the historical versions of the resource, or even have the server store them.","The current status is always found in the current version of the resource, not the status history.","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","List of past encounter statuses","The status history permits the encounter resource to contain the status history without needing to read through the historical versions of the resource, or even have the server store them.","The current status is always found in the current version of the resource, not the status history.","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ","n/a"
 "Encounter.statusHistory.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -67,11 +67,11 @@ user contentmodifiers","",0,*,"","Y","Y","Extension
 "Encounter.statusHistory.period","","","",1,1,"","","","Period
 ","The time that the episode was in the specified status","The time that the episode was in the specified status.","","","","","","","","","",,,,,"",,,,"",0,null,"","","n/a"
 "Encounter.class","","","",0,1,"","","Y","Coding {http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding}
-","inpatient | outpatient | ambulatory | emergency +","inpatient | outpatient | ambulatory | emergency +.","","","","","","","","","",,"required","Classification of the encounter","http://hl7.org/fhir/ValueSet/v3-ActEncounterCode","",,,,"",0,null,"","",".inboundRelationship[typeCode=SUBJ].source[classCode=LIST].code","class","PV1-2"
+","inpatient | outpatient | ambulatory | emergency +","inpatient | outpatient | ambulatory | emergency +.","","","","","","","","","",,"extensible","Classification of the encounter","http://hl7.org/fhir/ValueSet/v3-ActEncounterCode","",,,,"",0,null,"","",".inboundRelationship[typeCode=SUBJ].source[classCode=LIST].code","class","PV1-2"
 "Encounter.classHistory","","","",0,*,"","","","BackboneElement
 ","List of past encounter classes","The class history permits the tracking of the encounters transitions without needing to go  through the resource history.
 
-This would be used for a case where an admission starts of as an emergency encounter, then transisions into an inpatient scenario. Doing this and not restarting a new encounter ensures that any lab/diagnostic results can more easily follow the patient and not require re-processing and not get lost or cancelled during a kindof discharge from emergency to inpatient.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+This would be used for a case where an admission starts of as an emergency encounter, then transisions into an inpatient scenario. Doing this and not restarting a new encounter ensures that any lab/diagnostic results can more easily follow the patient and not require re-processing and not get lost or cancelled during a kindof discharge from emergency to inpatient.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ","n/a"
 "Encounter.classHistory.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -97,7 +97,7 @@ user contentmodifiers","",0,*,"","Y","Y","Extension
 "Encounter.incomingReferral","","","",0,*,"","","","Reference {http://hl7.org/fhir/StructureDefinition/ReferralRequest}
 ","The ReferralRequest that initiated this encounter","The referral request this encounter satisfies (incoming referral).","","","","","","","","","",,,,,"",,,,"",0,null,"","",".reason.ClinicalDocument"
 "Encounter.participant","","","",0,*,"","","Y","BackboneElement
-","List of participants involved in the encounter","The list of people responsible for providing the service.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","List of participants involved in the encounter","The list of people responsible for providing the service.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".participation[typeCode=PFM]","ROL"
 "Encounter.participant.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -123,7 +123,7 @@ Reference {http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Re
 Admission diagnosis","",0,*,"","","Y","CodeableConcept
 ","Reason the encounter takes place (code)","Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.","For systems that need to know which was the primary diagnosis, these will be marked with the standard extension primaryDiagnosis (which is a sequence value rather than a flag, 1 = primary diagnosis).","","","","","","","","",,"preferred","Reason why the encounter takes place.","http://hl7.org/fhir/ValueSet/encounter-reason","",,,,"",0,null,"","",".reasonCode","why","EVN-4 / PV2-3 (note: PV2-3 is nominally constrained to inpatient admissions; HL7 v2 makes no vocabulary suggestions for PV2-3; would not expect PV2 segment or PV2-3 to be in use in all implementations )"
 "Encounter.diagnosis","","","",0,*,"","","Y","BackboneElement
-","The list of diagnosis relevant to this encounter","The list of diagnosis relevant to this encounter.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","The list of diagnosis relevant to this encounter","The list of diagnosis relevant to this encounter.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".outboundRelationship[typeCode=RSON]"
 "Encounter.diagnosis.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -143,7 +143,7 @@ Reference {http://hl7.org/fhir/StructureDefinition/Procedure}","Reason the encou
 "Encounter.account","","","",0,*,"","","","Reference {http://hl7.org/fhir/StructureDefinition/Account}
 ","The set of accounts that may be used for billing for this Encounter","The set of accounts that may be used for billing for this Encounter.","The billing system may choose to allocate billable items associated with the Encounter to different referenced Accounts based on internal business rules.","","","","","","","","",,,,,"",,,,"",0,null,"","",".pertains.A_Account"
 "Encounter.hospitalization","","","",0,1,"","","","BackboneElement
-","Details about the admission to a healthcare service","Details about the admission to a healthcare service.","An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.The duration recorded in the period of this encounter covers the entire scope of this hospitalization record.","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","Details about the admission to a healthcare service","Details about the admission to a healthcare service.","An Encounter may cover more than just the inpatient stay. Contexts such as outpatients, community clinics, and aged care facilities are also included.The duration recorded in the period of this encounter covers the entire scope of this hospitalization record.","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".outboundRelationship[typeCode=COMP].target[classCode=ENC, moodCode=EVN]"
 "Encounter.hospitalization.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -172,7 +172,7 @@ user contentmodifiers","",0,*,"","Y","Y","Extension
 "Encounter.hospitalization.dischargeDisposition","","","",0,1,"","","","CodeableConcept
 ","Category or kind of location after discharge","Category or kind of location after discharge.","","","","","","","","","",,"example","Discharge Disposition","http://hl7.org/fhir/ValueSet/encounter-discharge-disposition","",,,,"",0,null,"","",".dischargeDispositionCode","PV1-36"
 "Encounter.location","","","",0,*,"","","","BackboneElement
-","List of locations where the patient has been","List of locations where  the patient has been during this encounter.","Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type ""kind"" such as ""client's home"" and an encounter.class = ""virtual"".","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","List of locations where the patient has been","List of locations where  the patient has been during this encounter.","Virtual encounters can be recorded in the Encounter by specifying a location reference to a location of type ""kind"" such as ""client's home"" and an encounter.class = ""virtual"".","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".participation[typeCode=LOC]"
 "Encounter.location.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"

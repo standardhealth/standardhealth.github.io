@@ -34,7 +34,7 @@
   <version value="0.0.1"/>
   <name value="SHR Objective Profile"/>
   <status value="draft"/>
-  <date value="2017-07-31T16:44:25.227Z"/>
+  <date value="2017-08-01T02:25:28.599Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -43,7 +43,7 @@
     </telecom>
   </contact>
   <description value="Describes the  of an expected or desired achievement that is well-defined, specific, measurable, and derived from one or more goals. There are similarities with Observation, since an objective can sometimes be interpreted as a yet-to-be-made, future observation with a certain target result. "/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -256,7 +256,7 @@
     </element>
     <element id="Goal:shr-careplan-Objective.extension">
       <path value="Goal.extension"/>
-      <slicing id="271">
+      <slicing id="241">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -338,7 +338,7 @@
     </element>
     <element id="Goal:shr-careplan-Objective.modifierExtension">
       <path value="Goal.modifierExtension"/>
-      <slicing id="272">
+      <slicing id="242">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -461,7 +461,7 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
           <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
         </valueSetReference>
@@ -600,7 +600,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -609,7 +609,7 @@
         <severity value="error"/>
         <human value="Goal.target.measure is required if Goal.target.detail is populated"/>
         <expression value="(detail.exists() and measure.exists()) or detail.exists().not()"/>
-        <xpath value="(exists(f:detail) and exists(f:measure)) or not(exists(f:detail))"/>
+        <xpath value="(exists(f:*[starts-with(local-name(.), &#39;detail&#39;)]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), &#39;detail&#39;)]))"/>
       </constraint>
     </element>
     <element id="Goal:shr-careplan-Objective.target.id">
@@ -927,7 +927,7 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
           <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
         </valueSetReference>

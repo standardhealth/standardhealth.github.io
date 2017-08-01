@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Age Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-07-31T16:44:15.850Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-01T02:25:17.808Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "How long something has existed (quantitative)."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -73,7 +73,7 @@
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive." ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value > 0)" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and not(contains(f:value/@value, '-'))" ]
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org') and (not(f:value/@value) or f:value/@value >=0)" ]
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -299,7 +299,7 @@
        fhir:ElementDefinition.definition [ fhir:value "A computer processable form of the unit in some unit representation system." ];
        fhir:ElementDefinition.comment [ fhir:value "The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system." ];
        fhir:ElementDefinition.requirements [ fhir:value "Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Quantity.code" ];
@@ -333,12 +333,6 @@
        fhir:index 1;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.value" ];
        fhir:ElementDefinition.path [ fhir:value "Age.value" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "Age:shr-core-Age.code" ];
-       fhir:ElementDefinition.path [ fhir:value "Age.code" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ]
