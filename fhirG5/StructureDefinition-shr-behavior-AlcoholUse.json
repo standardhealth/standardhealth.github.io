@@ -3,7 +3,7 @@
   "id": "shr-behavior-AlcoholUse",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AlcoholUse Profile</b></p>\n  <p>The history of the subject's use of alcohol.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.behavior.AlcoholUse maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  SpecificType maps to code\n  Category maps to category\n  BodySite maps to bodySite\n  Status maps to status\n  Method maps to method\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  DataAbsentReason maps to dataAbsentReason\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Interpretation maps to interpretation\n  Comment maps to comment\n  PanelMembers.Observation maps to related.target  //both are observation types\n  Components.Observation.Quantity maps to component.value[x]\n  Components.Observation.CodeableConcept maps to component.value[x]\n  Components.Observation.string maps to component.value[x]\n  Components.Observation.Range maps to component.value[x]\n  Components.Observation.Ratio maps to component.value[x]\n  Components.Observation.time maps to component.value[x]\n  Components.Observation.dateTime maps to component.value[x]\n  Components.Observation.TimePeriod maps to component.value[x]\n  Components.Observation.SpecificType maps to component.code\n  Components.Observation.DataAbsentReason maps to component.dataAbsentReason\n  Components.Observation.Interpretation maps to component.interpretation\n  Participant maps to performer  \n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AlcoholUse Profile</b></p>\n  <p>The history of the subject's use of alcohol.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.behavior.AlcoholUse maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  SpecificType maps to code\n  Category maps to category\n  BodySite maps to bodySite\n  Status maps to status\n  Method maps to method\n  Participant maps to performer \t// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  DataAbsentReason maps to dataAbsentReason\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Interpretation maps to interpretation\n  Comment maps to comment\n  constrain component to 0..0\n  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-behavior-AlcoholUse",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR AlcoholUse Profile",
   "status": "draft",
-  "date": "2017-07-31T16:44:18.819Z",
+  "date": "2017-07-31T23:48:34.529Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -328,7 +328,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.extension",
         "path": "Observation.extension",
         "slicing": {
-          "id": "94",
+          "id": "80",
           "discriminator": [
             {
               "type": "value",
@@ -497,6 +497,39 @@
         ]
       },
       {
+        "id": "Observation:shr-behavior-AlcoholUse.extension:referencerange",
+        "path": "Observation.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
         "id": "Observation:shr-behavior-AlcoholUse.extension:substance",
         "path": "Observation.extension",
         "sliceName": "substance",
@@ -635,39 +668,6 @@
             "reference": "http://standardhealthrecord.org/shr/behavior/vs/SubstanceOfAbuseVS"
           }
         },
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.extension:certainty",
-        "path": "Observation.extension",
-        "sliceName": "certainty",
-        "definition": "The degree of confidence in a conclusion or assertion.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Certainty-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -1015,7 +1015,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.modifierExtension",
         "path": "Observation.modifierExtension",
         "slicing": {
-          "id": "95",
+          "id": "81",
           "discriminator": [
             {
               "type": "value",
@@ -1653,7 +1653,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.category",
         "path": "Observation.category",
         "slicing": {
-          "id": "90",
+          "id": "77",
           "discriminator": [
             {
               "type": "value",
@@ -1676,7 +1676,7 @@
           }
         ],
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
           }
@@ -1981,7 +1981,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
-          "id": "92",
+          "id": "78",
           "discriminator": [
             {
               "type": "type",
@@ -2818,7 +2818,7 @@
         "comment": "For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below.",
         "requirements": "Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation.",
         "min": 0,
-        "max": "*",
+        "max": "0",
         "type": [
           {
             "code": "BackboneElement"
@@ -2944,15 +2944,21 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationCode"
+            }
+          ],
+          "strength": "example",
+          "description": "Codes identifying names of simple observations.",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-codes"
           }
         },
         "mapping": [
@@ -2977,17 +2983,6 @@
       {
         "id": "Observation:shr-behavior-AlcoholUse.component.value[x]",
         "path": "Observation.component.value[x]",
-        "slicing": {
-          "id": "91",
-          "discriminator": [
-            {
-              "type": "type",
-              "path": "$this"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
         "short": "Actual component result",
         "definition": "The information determined as a result of making the observation, if the information has a simple value.",
         "comment": "Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from <http://hl7.org/fhir/ValueSet/v2-0136> (these \"yes/no\" concepts can be mapped to the display name \"true/false\" or other mutually exclusive terms that may be needed\").  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is \"'value' + the type name\" with a capital on the first letter of the type).",
@@ -2996,23 +2991,25 @@
         "max": "1",
         "type": [
           {
-            "code": "Quantity",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+            "code": "Quantity"
           },
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           },
           {
             "code": "string"
           },
           {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"
+            "code": "Range"
           },
           {
-            "code": "Ratio",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"
+            "code": "Ratio"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Attachment"
           },
           {
             "code": "time"
@@ -3021,8 +3018,7 @@
             "code": "dateTime"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Period"
           }
         ],
         "isSummary": true,
@@ -3046,28 +3042,6 @@
         ]
       },
       {
-        "id": "Observation:shr-behavior-AlcoholUse.component.valueCodeableConcept:shr-core-CodeableConcept",
-        "path": "Observation.component.valueCodeableConcept",
-        "sliceName": "shr-core-CodeableConcept",
-        "short": "Actual component result",
-        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "isSummary": true,
-        "binding": {
-          "strength": "example",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"
-          }
-        }
-      },
-      {
         "id": "Observation:shr-behavior-AlcoholUse.component.dataAbsentReason",
         "path": "Observation.component.dataAbsentReason",
         "short": "Why the component result is missing",
@@ -3078,8 +3052,7 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -3123,8 +3096,7 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "binding": {
@@ -3134,7 +3106,7 @@
               "valueString": "ObservationInterpretation"
             }
           ],
-          "strength": "required",
+          "strength": "extensible",
           "description": "Codes identifying interpretations of observations.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
@@ -3255,6 +3227,22 @@
         "isSummary": false
       },
       {
+        "id": "Observation:shr-behavior-AlcoholUse.extension:referencerange",
+        "path": "Observation.extension",
+        "sliceName": "referencerange",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
         "id": "Observation:shr-behavior-AlcoholUse.extension:substance",
         "path": "Observation.extension",
         "sliceName": "substance",
@@ -3283,22 +3271,6 @@
             "reference": "http://standardhealthrecord.org/shr/behavior/vs/SubstanceOfAbuseVS"
           }
         }
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.extension:certainty",
-        "path": "Observation.extension",
-        "sliceName": "certainty",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Certainty-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
       },
       {
         "id": "Observation:shr-behavior-AlcoholUse.extension:exposuresourceorvector",
@@ -3460,7 +3432,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.category",
         "path": "Observation.category",
         "slicing": {
-          "id": "90",
+          "id": "77",
           "discriminator": [
             {
               "type": "value",
@@ -3477,7 +3449,7 @@
           }
         ],
         "binding": {
-          "strength": "required",
+          "strength": "extensible",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
           }
@@ -3612,7 +3584,7 @@
         "id": "Observation:shr-behavior-AlcoholUse.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
-          "id": "92",
+          "id": "78",
           "discriminator": [
             {
               "type": "type",
@@ -3716,118 +3688,9 @@
       },
       {
         "id": "Observation:shr-behavior-AlcoholUse.component",
-        "path": "Observation.component"
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.component.code",
-        "path": "Observation.component.code",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
-          }
-        }
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.component.value[x]",
-        "path": "Observation.component.value[x]",
-        "slicing": {
-          "id": "91",
-          "discriminator": [
-            {
-              "type": "type",
-              "path": "$this"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "type": [
-          {
-            "code": "Quantity",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
-          },
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          },
-          {
-            "code": "string"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"
-          },
-          {
-            "code": "Ratio",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"
-          },
-          {
-            "code": "time"
-          },
-          {
-            "code": "dateTime"
-          },
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.component.valueCodeableConcept:shr-core-CodeableConcept",
-        "path": "Observation.component.valueCodeableConcept",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "example",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"
-          }
-        }
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.component.dataAbsentReason",
-        "path": "Observation.component.dataAbsentReason",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-behavior-AlcoholUse.component.interpretation",
-        "path": "Observation.component.interpretation",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ObservationInterpretation"
-            }
-          ],
-          "strength": "required",
-          "description": "Codes identifying interpretations of observations.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
-          }
-        }
+        "path": "Observation.component",
+        "min": 0,
+        "max": "0"
       }
     ]
   }
