@@ -1,10 +1,899 @@
----
-layout: default_spec
-title: spec
----
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="The Standard Health Record Collaborative is working to create a single, high-quality health record for every individual in the United States.">
+      <meta name="keywords" content="HealthIT,medical errors,semantic interoperability,healthcare interoperability,interoperability,Electronic Health Record,Electronic Medical Record,EMR,EHR,synthetic patient,SyntheticMass,MITRE,Personal Health Record,Universal Health Record,National Health Record">
+  
+      <!-- Favicons -->
+      <link rel="icon" href="/../../assets/img/favicon.ico" type="image/x-icon">
+      
+      <!-- Material Design fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="/../../assets/css/bootstrap.min.css" type="text/css">
+      <!-- Bootstrap Material Design -->
+      <link rel="stylesheet" href="/../../assets/css/bootstrap-material-design.css" type="text/css">
+      <link rel="stylesheet" href="/../../assets/css/ripples.min.css" type="text/css">
+      <link rel="stylesheet" href="/../../assets/css/snackbar.css">
+      <!-- Font Awesome for Icons  -->
+      <link rel="stylesheet" href="/../../assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/../../assets/css/ssve.css">
+      <link rel="stylesheet" href="/../../assets/css/styles.css">
+      <link rel="stylesheet" href="/../../assets/css/shr-github-markdown.css">
+      <script src="https://use.fontawesome.com/b7720aa37b.js"></script>
+  
+      <!-- JS -->
+      <!-- Jquery 2.2.4-->
+      <script src="/../../assets/js/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/../../assets/js/bootstrap.min.js"></script>
+      <!-- Lodash -->
+      <script src="/../../assets/js/lodash.min.js"></script>
+      <script src="/../../assets/js/typeahead.jquery.js"></script>
+      <!-- D3.js -->
+      <script src="/../../assets/js/d3.min.js"></script>
+      <!--[if lt IE 9]>
+        <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+      <![endif]-->
+  
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+  
+      <title>
+        Standard Health Record Specification
+      </title>
+  </head>
+  <body>
+    <a class="sr-only" href="#content">Skip to main content</a>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-fixed-top" data-spy="affix" data-offset-top="20">
+          <div class="container navbar-container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
+                <span style="font-size: 0; line-height: 0;"> Navigation </span>
+                <span class="icon fa fa-2x fa-bars"></span>
+              </button>
+              <div class="logo-banner">
+                <a href="/#sitehomepage">
+                  <img src='/assets/img/shr_brand_logo.png' alt='Standard Helath Record Collaborative logo'> 
+                </a>
+              </div>
+            </div>
+            <div id="site-menu" class="navbar-collapse collapse" role="navigation">
+              <ul class="nav navbar-nav">
+                <!-- Search for the mobile layout -->
+                <li class="visible-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton-mobile">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input-mobile" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+                <li class="scroll active">
+                  <a href="/#sitehomepage">HOME</a>
+                </li>
+                <li class="aboutNav">
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_about" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ABOUT<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class="scroll visible-xs-block"><a class="dropdown-elem" data-toggle="collapse" data-target=".navbar-collapse" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li class="scroll hidden-xs"><a class="dropdown-elem" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li><a class="dropdown-elem" href="/collaborative.html">INITIATIVES</a></li>
+                    <li><a class="dropdown-elem" href="/evidence.html">EVIDENCE</a></li>
+                  </ul>
+                </li> 
+                <li>
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_spec" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SPEC<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-elem hidden-xs" href="/shr/graphic.html">SPEC VISUALIZATION</a></li>
+                    <li><a class="dropdown-elem" href="/shr/">SHR SPEC</a></li>
+                    <li><a class="dropdown-elem" href="/spec_terminology.html">SPEC TERMINOLOGY</a></li>
+                    <li><a class="dropdown-elem" href="/fhir/">SHR FHIR&reg; IG</a></li>
+                    <li class="divider"></li>
+                    <li><a class="dropdown-elem" href="/shr/index_all_elements.html">DATA ELEMENT INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/vs/">VALUE SET INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/cs/">CODE SYSTEM INDEX</a></li>
+                  </ul>
+                </li>
+      
+                <li class="">
+                  <a href="/faq.html">FAQ</a>
+                </li>
+                <li class="scroll">
+                  <a href="/#contact-landing">CONTACT</a>
+                </li>
+                <li class="hidden-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <section id="spec-viewer">
+            <div class="section-heading">
+                <h1>
+                    The SHR Specification
+                </h1>
+                <h2>
+                    The Standard Health Record is a rapidly evolving specification under active development. Ultimately, an
+                    individual's SHR will consist of a series of entries relevant to the health of that person. The entries are
+                    divided among the categories below, and each <a href="/shr/base/#Entry">entry</a> always includes basic
+                    information about itself (e.g. who created it and when). Click on the entries below to explore details of the
+                    Standard Health Record. Go to <a href="https://github.com/standardhealth" style="font-weight: 600;">the SHR
+                    GitHub</a> or <a href="mailto:shr-project-list@lists.mitre.org" style="font-weight: 600;">email the
+                    collaborative</a> to get involved.
+                </h2>
+            </div>
+            <div class="section-content">
+                <div class="container">
+                                <div class="row">
+                                  <h2><a href="/shr/actor">Actor</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/actor#EmergencyContact">EmergencyContact</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/actor#NoPrimaryCareProvider">NoPrimaryCareProvider</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/actor#PrimaryCareProvider">PrimaryCareProvider</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/actor#ProviderRelationship">ProviderRelationship</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/adverse">Adverse</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/adverse#AdverseEvent">AdverseEvent</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/adverse#AdverseReaction">AdverseReaction</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/allergy">Allergy</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#AllergyIntolerance">AllergyIntolerance</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#DrugAllergy">DrugAllergy</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#FoodAllergy">FoodAllergy</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#NoKnownAllergy">NoKnownAllergy</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#NoKnownDrugAllergy">NoKnownDrugAllergy</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#NoKnownEnvironmentalAllergy">NoKnownEnvironmentalAllergy</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/allergy#NoKnownFoodAllergy">NoKnownFoodAllergy</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/assessment">Assessment</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/assessment#Assessment">Assessment</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/base">Base</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/base#Study">Study</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/behavior">Behavior</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#AlcoholUse">AlcoholUse</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#DietAndNutrition">DietAndNutrition</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#IntravenousDrugUse">IntravenousDrugUse</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#NicotineUse">NicotineUse</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#ONCSmokingStatus">ONCSmokingStatus</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#PhysicalActivityLevel">PhysicalActivityLevel</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#ReligiousPractice">ReligiousPractice</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#SleepQuality">SleepQuality</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#SubstanceAbuseTreatment">SubstanceAbuseTreatment</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#SubstanceUse">SubstanceUse</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/behavior#ViolentBehaviorRisk">ViolentBehaviorRisk</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/careplan">Careplan</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/careplan#CarePlan">CarePlan</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/careplan#Goal">Goal</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/condition">Condition</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/condition#AcademicProblem">AcademicProblem</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/condition#Asplenia">Asplenia</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/condition#Condition">Condition</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/condition#Injury">Injury</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/condition#MentalHealthCondition">MentalHealthCondition</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/demographics">Demographics</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/demographics#HealthInsurance">HealthInsurance</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/demographics#PersonOfRecord">PersonOfRecord</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/device">Device</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/device#DeviceUse">DeviceUse</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/encounter">Encounter</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/encounter#Encounter">Encounter</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/environment">Environment</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#AnimalExposure">AnimalExposure</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#AnnualIncome">AnnualIncome</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordChildCare">CanAffordChildCare</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordClothing">CanAffordClothing</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordDentalCare">CanAffordDentalCare</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordFood">CanAffordFood</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordHousing">CanAffordHousing</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordMedication">CanAffordMedication</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordTransportation">CanAffordTransportation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#CanAffordUtilities">CanAffordUtilities</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#Coinhabitant">Coinhabitant</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#DomesticViolence">DomesticViolence</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#EmotionalSafety">EmotionalSafety</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#EnvironmentalExposures">EnvironmentalExposures</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#ExposureToSubstance">ExposureToSubstance</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#FinancialSituation">FinancialSituation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#HomeEnvironmentRisk">HomeEnvironmentRisk</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#HouseholdSituation">HouseholdSituation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#HouseholdSize">HouseholdSize</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#HousingSecurity">HousingSecurity</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#IncomeSource">IncomeSource</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#IncomeStability">IncomeStability</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#NonCashBenefit">NonCashBenefit</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#NumberOfDependents">NumberOfDependents</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#PhysicalSafety">PhysicalSafety</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#SocialEnvironment">SocialEnvironment</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/environment#TransportationAvailability">TransportationAvailability</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/immunization">Immunization</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/immunization#Immunization">Immunization</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/immunization#ImmunizationAdministered">ImmunizationAdministered</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/immunization#ImmunizationNotGiven">ImmunizationNotGiven</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/lab">Lab</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lab#HIVScreeningTest">HIVScreeningTest</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lab#HIVScreeningTestRequest">HIVScreeningTestRequest</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lab#HIVSupplementalTest">HIVSupplementalTest</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lab#HIVSupplementalTestRequest">HIVSupplementalTestRequest</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lab#TestRequest">TestRequest</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/lifehistory">Lifehistory</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#CongenitalAbnormality">CongenitalAbnormality</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#EducationalAttainment">EducationalAttainment</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#Employment">Employment</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#MilitaryService">MilitaryService</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#Occupation">Occupation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#PrenatalExposure">PrenatalExposure</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/lifehistory#Travel">Travel</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/medication">Medication</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationChange">MedicationChange</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationNotAdministered">MedicationNotAdministered</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationNotPrescribed">MedicationNotPrescribed</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationPrescription">MedicationPrescription</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationRegimen">MedicationRegimen</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/medication#MedicationUse">MedicationUse</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/observation">Observation</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/observation#BodyStructureObservation">BodyStructureObservation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/observation#Observation">Observation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/observation#Panel">Panel</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/oncology">Oncology</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#BreastCancer">BreastCancer</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#BreastCancerGeneticAnalysis">BreastCancerGeneticAnalysis</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#BreastCancerReceptorStatus">BreastCancerReceptorStatus</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#CancerGrowthPotential">CancerGrowthPotential</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#CancerLymphaticInvolvement">CancerLymphaticInvolvement</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#EstrogenReceptorStatus">EstrogenReceptorStatus</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#HistologicGrade">HistologicGrade</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#HumanEpiduralGrowthFactorReceptor2Status">HumanEpiduralGrowthFactorReceptor2Status</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#NeoplasmObservation">NeoplasmObservation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#ProgesteroneReceptorStatus">ProgesteroneReceptorStatus</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#Progression">Progression</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#ReceptorStatusObservation">ReceptorStatusObservation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#TNMStage">TNMStage</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#ToxicReaction">ToxicReaction</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/oncology#TumorSize">TumorSize</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/sex">Sex</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#ContraceptiveMethodRecommendation">ContraceptiveMethodRecommendation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#ContraceptiveUse">ContraceptiveUse</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#CurrentPregnancyStatus">CurrentPregnancyStatus</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#GenderIdentity">GenderIdentity</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#IntercourseDifficulty">IntercourseDifficulty</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#NumberOfLivingChildren">NumberOfLivingChildren</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#NumberOfPreviousPregnancies">NumberOfPreviousPregnancies</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#NumberOfSexualPartnersPastYear">NumberOfSexualPartnersPastYear</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#PregnancyHistory">PregnancyHistory</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#PregnancyIntention">PregnancyIntention</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#SexualActivity">SexualActivity</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#SexualBehavior">SexualBehavior</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#SexualIdentity">SexualIdentity</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/sex#SexualOrientation">SexualOrientation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/skin">Skin</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/skin#PressureUlcer">PressureUlcer</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/skin#PressureUlcerManifestation">PressureUlcerManifestation</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <h2><a href="/shr/vital">Vital</a></h2>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BloodPressure">BloodPressure</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BodyHeight">BodyHeight</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BodyLength">BodyLength</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BodyMassIndex">BodyMassIndex</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BodyTemperature">BodyTemperature</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#BodyWeight">BodyWeight</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#HeadCircumference">HeadCircumference</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#HeartRate">HeartRate</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4"> 
+                                        <ul class="spec-data-element-list">
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#OxygenSaturation">OxygenSaturation</a><br>
+                                              </li>
+                                              <li class="spec-data-element">
+                                                <a href="/shr/vital#RespiratoryRate">RespiratoryRate</a><br>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                </div>
+            </div>
 
-<div class="main">
-  <div class="container">
-    {% include spec/index.html %}
-  </div>
-</div>
+        </section>
+      </div>
+      <div class="wrapper-padding">
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 links">
+            <div class="row">
+              <div class="col-md-push-1 col-xs-4 landing-links ">
+                <ul class="list-unstyled">
+                  <li class="scroll ">
+                    <a href="/#sitehomepage">HOME</a>
+                  </li>
+                  <li>
+                    <a href="/#about-landing">SHR COLLABORATIVE</a>
+                  </li>
+    
+                  <li>
+                    <a href="/collaborative.html">INITIATIVES</a>
+                  </li> 
+                  <li>
+                    <a href="/evidence.html">EVIDENCE</a>
+                  </li>
+                  <!--                <li>
+                    <a href="/evidence.html">INTEROPERABILITY</a>
+                  </li> --> 
+    <!--               <li class="">
+                    <a href="/spec.html">SPECIFICATION</a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="col-xs-offset-1 col-xs-5 sister-links ">
+                <ul class="list-unstyled">
+                  <li class="">
+                    <a href="/shr/graphic.html" class="hidden-xs">SPEC VISUALIZATION</a>
+                  </li>
+                  <li class="">
+                    <a href="/shr/">SHR SPEC</a>
+                  </li>
+                  <li class="">
+                    <a href="/faq.html">FAQ</a>
+                  </li>
+                  <li class="scroll">
+                    <a href="/#contact-landing">CONTACT</a>
+                  </li>
+                </ul>
+              </div>
+            </div>  
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-12"> 
+                <p class="logo">
+                  <a href="https://www.mitre.org/">
+                    <img src="/assets/img/MITRE.png" alt="MITRE Logo"> <span class="sr-only">MITRE Home Page</span>
+                  </a>
+                </p>
+                <p class="copyright">Copyright © 2016 The MITRE Corporation | Approved for Public Release; Distribution Unlimited. Case Number 16&#8209;1988</p>
+                <p class="copyright">FHIR® is the registered trademark of HL7 and is used with the permission of HL7</p>
+              </div>  
+            </div> 
+          </div>
+        </div>
+      </div>
+      <!-- Scripts for rendering -->
+      <script src="/assets/js/material.min.js"></script>
+      <script src="/assets/js/ripples.min.js"></script>
+      <script src="/assets/js/snackbar.min.js"></script>
+    
+      <script> 
+        $(document).ready(function(){
+          $.material.init()
+          $('[data-toggle="tooltip"]').tooltip(); 
+        });
+      </script>
+    
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/typeahead.jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/main.js"></script>  
+    <script type="text/javascript" src="/assets/js/search.js"></script>
+    <script type="text/javascript" src="/assets/js/parse.js"></script> 
+  </body>
+</html>
+
