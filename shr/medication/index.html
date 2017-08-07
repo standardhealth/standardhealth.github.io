@@ -1,13 +1,2273 @@
----
-layout: default_spec
-title: spec
----
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="The Standard Health Record Collaborative is working to create a single, high-quality health record for every individual in the United States.">
+      <meta name="keywords" content="HealthIT,medical errors,semantic interoperability,healthcare interoperability,interoperability,Electronic Health Record,Electronic Medical Record,EMR,EHR,synthetic patient,SyntheticMass,MITRE,Personal Health Record,Universal Health Record,National Health Record">
+  
+      <!-- Favicons -->
+      <link rel="icon" href="/../../../assets/img/favicon.ico" type="image/x-icon">
+      
+      <!-- Material Design fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap.min.css" type="text/css">
+      <!-- Bootstrap Material Design -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap-material-design.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/ripples.min.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/snackbar.css">
+      <!-- Font Awesome for Icons  -->
+      <link rel="stylesheet" href="/../../../assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/../../../assets/css/ssve.css">
+      <link rel="stylesheet" href="/../../../assets/css/styles.css">
+      <link rel="stylesheet" href="/../../../assets/css/shr-github-markdown.css">
+      <script src="https://use.fontawesome.com/b7720aa37b.js"></script>
+  
+      <!-- JS -->
+      <!-- Jquery 2.2.4-->
+      <script src="/../../../assets/js/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/../../../assets/js/bootstrap.min.js"></script>
+      <!-- Lodash -->
+      <script src="/../../../assets/js/lodash.min.js"></script>
+      <script src="/../../../assets/js/typeahead.jquery.js"></script>
+      <!-- D3.js -->
+      <script src="/../../../assets/js/d3.min.js"></script>
+      <!--[if lt IE 9]>
+        <script src="../../../assets/js/ie8-responsive-file-warning.js"></script>
+      <![endif]-->
+  
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+  
+      <title>
+        Standard Health Record Specification
+      </title>
+  </head>
+  <body>
+    <a class="sr-only" href="#content">Skip to main content</a>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-fixed-top" data-spy="affix" data-offset-top="20">
+          <div class="container navbar-container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
+                <span style="font-size: 0; line-height: 0;"> Navigation </span>
+                <span class="icon fa fa-2x fa-bars"></span>
+              </button>
+              <div class="logo-banner">
+                <a href="/#sitehomepage">
+                  <img src='/assets/img/shr_brand_logo.png' alt='Standard Helath Record Collaborative logo'> 
+                </a>
+              </div>
+            </div>
+            <div id="site-menu" class="navbar-collapse collapse" role="navigation">
+              <ul class="nav navbar-nav">
+                <!-- Search for the mobile layout -->
+                <li class="visible-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton-mobile">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input-mobile" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+                <li class="scroll active">
+                  <a href="/#sitehomepage">HOME</a>
+                </li>
+                <li class="aboutNav">
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_about" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ABOUT<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class="scroll visible-xs-block"><a class="dropdown-elem" data-toggle="collapse" data-target=".navbar-collapse" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li class="scroll hidden-xs"><a class="dropdown-elem" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li><a class="dropdown-elem" href="/collaborative.html">INITIATIVES</a></li>
+                    <li><a class="dropdown-elem" href="/evidence.html">EVIDENCE</a></li>
+                  </ul>
+                </li> 
+                <li>
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_spec" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SPEC<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-elem hidden-xs" href="/shr/graphic.html">SPEC VISUALIZATION</a></li>
+                    <li><a class="dropdown-elem" href="/shr/">SHR SPEC</a></li>
+                    <li><a class="dropdown-elem" href="/spec_terminology.html">SPEC TERMINOLOGY</a></li>
+                    <li><a class="dropdown-elem" href="/fhir/">SHR FHIR&reg; IG</a></li>
+                    <li class="divider"></li>
+                    <li><a class="dropdown-elem" href="/shr/index_all_elements.html">DATA ELEMENT INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/vs/">VALUE SET INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/cs/">CODE SYSTEM INDEX</a></li>
+                  </ul>
+                </li>
+      
+                <li class="">
+                  <a href="/faq.html">FAQ</a>
+                </li>
+                <li class="scroll">
+                  <a href="/#contact-landing">CONTACT</a>
+                </li>
+                <li class="hidden-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <section id="spec-viewer">
+            <div class="container markdown-body">
+                <div class="row">
+                  <h1>Medication</h1> 
+                  <h2 style="border: none;">The SHR Medication domain contains definitions related to medications taken, or not taken, by the person of record, both currently and in the past.</h2>
+                  <div class="spec-data-elements">
+                        <h3>
+                            <a class='paddedId' id="AdditionalDoseInstruction"></a>AdditionalDoseInstruction
+                        </h3>
+                        <p>
+                                Supplemental instructions - e.g. &#x27;with meals&#x27;.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1644714;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1644714">C1644714</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    								from <a href="http://hl7.org/fhir/ValueSet/additional-instructions-codes"><code>http://hl7.org/fhir/ValueSet/additional-instructions-codes</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Adherence"></a>Adherence
+                        </h3>
+                        <p>
+                                A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C2364172;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C2364172">C2364172</a>
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      				Choice
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	
+                        		      </td>
+                        		    </tr>
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  				<a><code>MedicationTreatment</code></a>
+                        						  (TBD)
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	Description TBD
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  				<a><code>SupplementTreatment</code></a>
+                        						  (TBD)
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	Description TBD
+                        						  </td>
+                        						</tr>			
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AdherenceLevel"> <code>AdherenceLevel</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The frequency that the stated treatment plan, prescription, or protocol is followed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#NonAdherenceReason"> <code>NonAdherenceReason</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Reason for not following the stated treatment plan, prescription, or protocol.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Details"> <code>Details</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Particulars considered individually and in relation to a whole.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="AdherenceLevel"></a>AdherenceLevel
+                        </h3>
+                        <p>
+                                The frequency that the stated treatment plan, prescription, or protocol is followed.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1510802;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1510802">C1510802</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    									from <a href="/shr/core/vs/#QualitativeFrequencyVS"><code>QualitativeFrequencyVS</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="AdministrationBodySite"></a>AdministrationBodySite
+                        </h3>
+                        <p>
+                                The anatomic site at which medical intervention is applied.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0229986;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0229986">C0229986</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#BodySite"> <code>BodySite</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A location in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="AdministrationMethod"></a>AdministrationMethod
+                        </h3>
+                        <p>
+                                Technique for administering medication.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1547585;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1547585">C1547585</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    								from <a href="http://hl7.org/fhir/ValueSet/administration-method-codes"><code>http://hl7.org/fhir/ValueSet/administration-method-codes</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="AmountOfMedication"></a>AmountOfMedication
+                        </h3>
+                        <p>
+                                A standardized measure or discrete amount of medication serving as a reference for dosing or strength, for example, 1 tablet.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#Quantity"> <code>Quantity</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A quantity with units.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="AmountPerDose"></a>AmountPerDose
+                        </h3>
+                        <p>
+                                The amount of medication taken at each dose, as a quantity or range.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    				Choice
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/core#Quantity"> <code>Quantity</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	A quantity with units.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  				<a><code>Range</code></a>
+                        						  (TBD)
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	Description TBD
+                        						  </td>
+                        						</tr>			
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Brand"></a>Brand
+                        </h3>
+                        <p>
+                                If the product is branded, and if so, the brand name of a product.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#BrandName"> <code>BrandName</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The marketing name for a brand name product
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="BrandName"></a>BrandName
+                        </h3>
+                        <p>
+                                The marketing name for a brand name product
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Dosage"></a>Dosage
+                        </h3>
+                        <p>
+                                The dosage of the medication as prescribed.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0178602;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0178602">C0178602</a>
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AmountPerDose"> <code>AmountPerDose</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The amount of medication taken at each dose, as a quantity or range.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#TimingOfDoses"> <code>TimingOfDoses</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	When doses of medication should be administered.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#DoseAsNeededIndicator"> <code>DoseAsNeededIndicator</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Indicates that a drug or therapy should be used as often as the patient decides it is necessary.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#DoseInstructionsText"> <code>DoseInstructionsText</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The directions (signetur) on the drug prescription or dispensing record.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AdditionalDoseInstruction"> <code>AdditionalDoseInstruction</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Supplemental instructions - e.g. &#x27;with meals&#x27;.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#RouteIntoBody"> <code>RouteIntoBody</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The way a substance enters an organism after contact, particularly, the route of drug administration.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AdministrationMethod"> <code>AdministrationMethod</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Technique for administering medication.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AdministrationBodySite"> <code>AdministrationBodySite</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The anatomic site at which medical intervention is applied.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MaximumDosePerTimePeriod"> <code>MaximumDosePerTimePeriod</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	The maximum amount of a medication to be taken in a given period of time.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="DoseAsNeededIndicator"></a>DoseAsNeededIndicator
+                        </h3>
+                        <p>
+                                Indicates that a drug or therapy should be used as often as the patient decides it is necessary.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1883728;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1883728">C1883728</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="DoseForm"></a>DoseForm
+                        </h3>
+                        <p>
+                                The form in which active and/or inert ingredient(s) are physically presented.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0013058;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0013058">C0013058</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    								from <a href="http://hl7.org/fhir/ValueSet/medication-form-codes"><code>http://hl7.org/fhir/ValueSet/medication-form-codes</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="DoseInstructionsText"></a>DoseInstructionsText
+                        </h3>
+                        <p>
+                                The directions (signetur) on the drug prescription or dispensing record.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Ingredient"></a>Ingredient
+                        </h3>
+                        <p>
+                                Specifies how many (or how much) of an ingredient there is in this Medication. For example, 250 mg per tablet is expressed as a ratio where the numerator is 250mg and the denominator is 1 tablet.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C3176062;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C3176062">C3176062</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    									from <a href="/shr/medication/vs/#MedicationVS"><code>MedicationVS</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#IngredientAmount"> <code>IngredientAmount</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The amount of an ingredient in a medication.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AmountOfMedication"> <code>AmountOfMedication</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A standardized measure or discrete amount of medication serving as a reference for dosing or strength, for example, 1 tablet.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#IsActiveIngredient"> <code>IsActiveIngredient</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	True if the ingredient is an active ingredient in the medication.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="IngredientAmount"></a>IngredientAmount
+                        </h3>
+                        <p>
+                                The amount of an ingredient in a medication.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#Quantity"> <code>Quantity</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A quantity with units.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="IsActiveIngredient"></a>IsActiveIngredient
+                        </h3>
+                        <p>
+                                True if the ingredient is an active ingredient in the medication.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MaximumDosePerTimePeriod"></a>MaximumDosePerTimePeriod
+                        </h3>
+                        <p>
+                                The maximum amount of a medication to be taken in a given period of time.
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#AmountOfMedication"> <code>AmountOfMedication</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A standardized measure or discrete amount of medication serving as a reference for dosing or strength, for example, 1 tablet.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Duration"> <code>Duration</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The length of time that something continues.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Medication"></a>Medication
+                        </h3>
+                        <p>
+                                A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0013227;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0013227">C0013227</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#SpecificType"> <code>SpecificType</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    									from <a href="/shr/medication/vs/#MedicationVS"><code>MedicationVS</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.
+                                    </td>
+                        
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#DoseForm"> <code>DoseForm</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The form in which active and/or inert ingredient(s) are physically presented.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Ingredient"> <code>Ingredient</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Specifies how many (or how much) of an ingredient there is in this Medication. For example, 250 mg per tablet is expressed as a ratio where the numerator is 250mg and the denominator is 1 tablet.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Brand"> <code>Brand</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	If the product is branded, and if so, the brand name of a product.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#OverTheCounter"> <code>OverTheCounter</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	True if the medication is available to consumers without a prescription.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationAfterChange"></a>MedicationAfterChange
+                        </h3>
+                        <p>
+                                A medication taken, after the change.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/medication#MedicationUse"> <code>MedicationUse</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationBeforeChange"></a>MedicationBeforeChange
+                        </h3>
+                        <p>
+                                The medication taken, prior to the change.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/medication#MedicationUse"> <code>MedicationUse</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationChange"></a>MedicationChange
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                Description of a modification or change of a medication or dosage.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0554834;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0554834">C0554834</a>
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#EffectiveDate"> <code>EffectiveDate</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The date when something is to take effect.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#TypeOfChange"> <code>TypeOfChange</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Whether the change is a dose change, switch to a new medication, or discontinuation.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MedicationBeforeChange"> <code>MedicationBeforeChange</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	The medication taken, prior to the change.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MedicationAfterChange"> <code>MedicationAfterChange</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	A medication taken, after the change.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      				<a><code>ReasonForMedicationChange</code></a>
+                        		      (TBD)
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Description TBD
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationNotAdministered"></a>MedicationNotAdministered
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                A record of a medication NOT administered. Recorded when deviating from the care plan.
+                        </p>
+                        		<p>Based On 			<a href="/shr/medication#MedicationUse"> <code>MedicationUse</code></a>
+                         <!-- namespace=namespace label=label -->
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Medication"> <code>Medication</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MedicationWasTaken"> <code>MedicationWasTaken</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      						is <a href="" title="no (null:n)">no (n)</a>
+                        		      			
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Indicator of the certainty of whether the medication was taken by the patient.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Dosage"> <code>Dosage</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				not used
+                        		      </td>
+                        		      <td>
+                        		      	The dosage of the medication as prescribed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Adherence"> <code>Adherence</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				not used
+                        		      </td>
+                        		      <td>
+                        		      	A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The justification for an action or non-action, conclusion, opinion, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#PeriodOfUse"> <code>PeriodOfUse</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationUse" data-original-title="Found in MedicationUse" href="/shr/medication#MedicationUse" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A period of time when a device, medication, or other therapy is used.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationNotPrescribed"></a>MedicationNotPrescribed
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care.
+                        </p>
+                        		<p>Based On 			<a href="/shr/medication#MedicationPrescription"> <code>MedicationPrescription</code></a>
+                         <!-- namespace=namespace label=label -->
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#NonOccurrenceModifier"> <code>NonOccurrenceModifier</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      				is true
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
+                        		      When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Medication"> <code>Medication</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationPrescription" data-original-title="Found in MedicationPrescription" href="/shr/medication#MedicationPrescription" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Status"> <code>Status</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/medication-request-status"><code>http://hl7.org/fhir/ValueSet/medication-request-status</code></a>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The position of affairs at a particular time
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PriorityOfRequest"> <code>PriorityOfRequest</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/medication-request-priority"><code>http://hl7.org/fhir/ValueSet/medication-request-priority</code></a>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Urgency level for which results must be reported to the requestor or responsible individual.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Dosage"> <code>Dosage</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationPrescription" data-original-title="Found in MedicationPrescription" href="/shr/medication#MedicationPrescription" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The dosage of the medication as prescribed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#NumberOfRepeatsAllowed"> <code>NumberOfRepeatsAllowed</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationPrescription" data-original-title="Found in MedicationPrescription" href="/shr/medication#MedicationPrescription" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	How many times the medication prescription can be refilled. This integer does NOT include the original order dispense. This means that if an order indicates dispense 30 tablets plus 3 repeats, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#QuantityPerDispense"> <code>QuantityPerDispense</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationPrescription" data-original-title="Found in MedicationPrescription" href="/shr/medication#MedicationPrescription" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The amount that is to be dispensed for one fill.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#SupplyDuration"> <code>SupplyDuration</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in MedicationPrescription" data-original-title="Found in MedicationPrescription" href="/shr/medication#MedicationPrescription" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Identifies the period time over which the supplied product is expected to be used, or the length of time the dispense is expected to last.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#RequestedPerformanceTime"> <code>RequestedPerformanceTime</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The justification for an action or non-action, conclusion, opinion, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      				Choice
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	
+                        		      </td>
+                        		    </tr>
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/base#RequestedPerformerType"> <code>RequestedPerformerType</code></a>
+                        						              <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	What type of actor should carry out the testing.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/base#RequestedPerformer"> <code>RequestedPerformer</code></a>
+                        						              <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	Who should carry out the tests. For example, the patient or caregiver.
+                        						  </td>
+                        						</tr>			
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PerformerInstructions"> <code>PerformerInstructions</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Information for the performer of the test, if needed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PatientInstructions"> <code>PatientInstructions</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Information for the patient, such as, where to get the test, how to prepare for the test, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#SpecificType"> <code>SpecificType</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Category"> <code>Category</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#OccurrenceTime"> <code>OccurrenceTime</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The point in time or span of time in which something happens.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/actor#Participant"> <code>Participant</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationPrescription"></a>MedicationPrescription
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                Report of a medication prescription.
+                        </p>
+                        		<p>Based On 			<a href="/shr/base#Request"> <code>Request</code></a>
+                         <!-- namespace=namespace label=label -->
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Medication"> <code>Medication</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Status"> <code>Status</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/medication-request-status"><code>http://hl7.org/fhir/ValueSet/medication-request-status</code></a>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The position of affairs at a particular time
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PriorityOfRequest"> <code>PriorityOfRequest</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/medication-request-priority"><code>http://hl7.org/fhir/ValueSet/medication-request-priority</code></a>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Urgency level for which results must be reported to the requestor or responsible individual.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Dosage"> <code>Dosage</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The dosage of the medication as prescribed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#NumberOfRepeatsAllowed"> <code>NumberOfRepeatsAllowed</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	How many times the medication prescription can be refilled. This integer does NOT include the original order dispense. This means that if an order indicates dispense 30 tablets plus 3 repeats, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#QuantityPerDispense"> <code>QuantityPerDispense</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The amount that is to be dispensed for one fill.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#SupplyDuration"> <code>SupplyDuration</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Identifies the period time over which the supplied product is expected to be used, or the length of time the dispense is expected to last.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#RequestedPerformanceTime"> <code>RequestedPerformanceTime</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The justification for an action or non-action, conclusion, opinion, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      				Choice
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	
+                        		      </td>
+                        		    </tr>
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/base#RequestedPerformerType"> <code>RequestedPerformerType</code></a>
+                        						              <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	What type of actor should carry out the testing.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/base#RequestedPerformer"> <code>RequestedPerformer</code></a>
+                        						              <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td>				required
+                        						  </td>
+                        						  <td>
+                        						  	Who should carry out the tests. For example, the patient or caregiver.
+                        						  </td>
+                        						</tr>			
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PerformerInstructions"> <code>PerformerInstructions</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Information for the performer of the test, if needed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PatientInstructions"> <code>PatientInstructions</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Request" data-original-title="Found in Request" href="/shr/base#Request" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Information for the patient, such as, where to get the test, how to prepare for the test, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#SpecificType"> <code>SpecificType</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Category"> <code>Category</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#NonOccurrenceModifier"> <code>NonOccurrenceModifier</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
+                        		      When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#OccurrenceTime"> <code>OccurrenceTime</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The point in time or span of time in which something happens.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/actor#Participant"> <code>Participant</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationRegimen"></a>MedicationRegimen
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                Use or application of over-the-counter and prescribed/recommended medications and infusions to meet guidelines for therapeutic action, safety, and schedule.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0237125;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0237125">C0237125</a>
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MedicationPrescription"> <code>MedicationPrescription</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		1 or more
+                        		      </td>
+                        		      <td>
+                        		      	Report of a medication prescription.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationUse"></a>MedicationUse
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Medication"> <code>Medication</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#MedicationWasTaken"> <code>MedicationWasTaken</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Indicator of the certainty of whether the medication was taken by the patient.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The justification for an action or non-action, conclusion, opinion, etc.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Dosage"> <code>Dosage</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The dosage of the medication as prescribed.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/medication#Adherence"> <code>Adherence</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	A statement of the ability and cooperation of the patient in taking medicine or supplement as recommended or prescribed. This includes correct timing, dosage, and frequency.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#PeriodOfUse"> <code>PeriodOfUse</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A period of time when a device, medication, or other therapy is used.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="MedicationWasTaken"></a>MedicationWasTaken
+                        </h3>
+                        <p>
+                                Indicator of the certainty of whether the medication was taken by the patient.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    								from <a href="http://hl7.org/fhir/ValueSet/medication-statement-taken"><code>http://hl7.org/fhir/ValueSet/medication-statement-taken</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="NonAdherenceReason"></a>NonAdherenceReason
+                        </h3>
+                        <p>
+                                Reason for not following the stated treatment plan, prescription, or protocol.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    									from <a href="/shr/medication/vs/#MedicationNonAdherenceReasonVS"><code>MedicationNonAdherenceReasonVS</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="NumberOfRepeatsAllowed"></a>NumberOfRepeatsAllowed
+                        </h3>
+                        <p>
+                                How many times the medication prescription can be refilled. This integer does NOT include the original order dispense. This means that if an order indicates dispense 30 tablets plus 3 repeats, then the order can be dispensed a total of 4 times and the patient can receive a total of 120 tablets.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">positiveInt</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="OverTheCounter"></a>OverTheCounter
+                        </h3>
+                        <p>
+                                True if the medication is available to consumers without a prescription.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="QuantityPerDispense"></a>QuantityPerDispense
+                        </h3>
+                        <p>
+                                The amount that is to be dispensed for one fill.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#Quantity"> <code>Quantity</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A quantity with units.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="RouteIntoBody"></a>RouteIntoBody
+                        </h3>
+                        <p>
+                                The way a substance enters an organism after contact, particularly, the route of drug administration.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0013153;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0013153">C0013153</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    								from <a href="http://hl7.org/fhir/ValueSet/route-codes"><code>http://hl7.org/fhir/ValueSet/route-codes</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="SupplyDuration"></a>SupplyDuration
+                        </h3>
+                        <p>
+                                Identifies the period time over which the supplied product is expected to be used, or the length of time the dispense is expected to last.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#Duration"> <code>Duration</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	The length of time that something continues.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="TimingOfDoses"></a>TimingOfDoses
+                        </h3>
+                        <p>
+                                When doses of medication should be administered.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    				<a><code>Timing</code></a>
+                                    (TBD)
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	Description TBD
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="TypeOfChange"></a>TypeOfChange
+                        </h3>
+                        <p>
+                                Whether the change is a dose change, switch to a new medication, or discontinuation.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    							must be 
+                                    									from <a href="/shr/medication/vs/#MedicationChangeTypeVS"><code>MedicationChangeTypeVS</code></a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
+            </div>
 
-<div class="main">
-  <div class="container markdown-body"> 
+        </section>
+      </div>
+      <div class="wrapper-padding">
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 links">
+            <div class="row">
+              <div class="col-md-push-1 col-xs-4 landing-links ">
+                <ul class="list-unstyled">
+                  <li class="scroll ">
+                    <a href="/#sitehomepage">HOME</a>
+                  </li>
+                  <li>
+                    <a href="/#about-landing">SHR COLLABORATIVE</a>
+                  </li>
+    
+                  <li>
+                    <a href="/collaborative.html">INITIATIVES</a>
+                  </li> 
+                  <li>
+                    <a href="/evidence.html">EVIDENCE</a>
+                  </li>
+                  <!--                <li>
+                    <a href="/evidence.html">INTEROPERABILITY</a>
+                  </li> --> 
+    <!--               <li class="">
+                    <a href="/spec.html">SPECIFICATION</a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="col-xs-offset-1 col-xs-5 sister-links ">
+                <ul class="list-unstyled">
+                  <li class="">
+                    <a href="/shr/graphic.html" class="hidden-xs">SPEC VISUALIZATION</a>
+                  </li>
+                  <li class="">
+                    <a href="/shr/">SHR SPEC</a>
+                  </li>
+                  <li class="">
+                    <a href="/faq.html">FAQ</a>
+                  </li>
+                  <li class="scroll">
+                    <a href="/#contact-landing">CONTACT</a>
+                  </li>
+                </ul>
+              </div>
+            </div>  
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-12"> 
+                <p class="logo">
+                  <a href="https://www.mitre.org/">
+                    <img src="/assets/img/MITRE.png" alt="MITRE Logo"> <span class="sr-only">MITRE Home Page</span>
+                  </a>
+                </p>
+                <p class="copyright">Copyright © 2016 The MITRE Corporation | Approved for Public Release; Distribution Unlimited. Case Number 16&#8209;1988</p>
+                <p class="copyright">FHIR® is the registered trademark of HL7 and is used with the permission of HL7</p>
+              </div>  
+            </div> 
+          </div>
+        </div>
+      </div>
+      <!-- Scripts for rendering -->
+      <script src="/assets/js/material.min.js"></script>
+      <script src="/assets/js/ripples.min.js"></script>
+      <script src="/assets/js/snackbar.min.js"></script>
+    
+      <script> 
+        $(document).ready(function(){
+          $.material.init()
+          $('[data-toggle="tooltip"]').tooltip(); 
+        });
+      </script>
+    
+    </footer>
 
-    {% include spec/shr/medication/index.html %}
+    <script type="text/javascript" src="/assets/js/typeahead.jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/main.js"></script>  
+    <script type="text/javascript" src="/assets/js/search.js"></script>
+    <script type="text/javascript" src="/assets/js/parse.js"></script> 
+  </body>
+</html>
 
-  </div>
-</div>
- <!-- /.main -->
