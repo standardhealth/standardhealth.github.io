@@ -23,7 +23,7 @@
   <version value="0.0.1"/>
   <name value="SHR ProviderRelationship Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:13.149Z"/>
+  <date value="2017-08-08T15:56:20.469Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -32,7 +32,7 @@
     </telecom>
   </contact>
   <description value="A person or organization responsible for providing a service to the person of record. Such a relationship can exist without a specific encounter or services being rendered; for example, an emergency contact relationship can exist without ever calling upon that person. The entry can also be used to state that a provider relationship does not exist, e.g., patient does not have a primary care provider."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="w5"/>
     <uri value="http://hl7.org/fhir/w5"/>
@@ -236,7 +236,7 @@
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.extension">
       <path value="CareTeam.extension"/>
-      <slicing id="11">
+      <slicing id="10">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -292,7 +292,7 @@
     </element>
     <element id="CareTeam:shr-actor-ProviderRelationship.modifierExtension">
       <path value="CareTeam.modifierExtension"/>
-      <slicing id="12">
+      <slicing id="11">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -324,7 +324,7 @@
     <element id="CareTeam:shr-actor-ProviderRelationship.modifierExtension:nonoccurrencemodifier">
       <path value="CareTeam.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -501,7 +501,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -510,7 +510,7 @@
         <severity value="error"/>
         <human value="CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner"/>
         <expression value="onBehalfOf.exists() implies (member.resolve() is Practitioner)"/>
-        <xpath value="contains(f:member, &#39;/Practitioner&#39;) or not(exists(f:onBehalfOf))"/>
+        <xpath value="contains(f:member/f:reference/@value, &#39;/Practitioner/&#39;) or not(exists(f:onBehalfOf))"/>
       </constraint>
       <mapping>
         <identity value="v2"/>

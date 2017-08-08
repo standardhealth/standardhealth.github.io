@@ -10,7 +10,7 @@
   <p><pre>shr.actor.Organization maps to Organization:
   OrganizationName maps to name
   OrganizationAlias maps to alias  // I wish FHIR allowed multiple names, but it doesn't
-  OrganizationType maps to type
+  SpecificType maps to type
   OrganizationIdentifyingCode maps to identifier
   AddressUsed maps to address
   Telecom maps to telecom
@@ -26,7 +26,7 @@
   <version value="0.0.1"/>
   <name value="SHR Organization Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:13.131Z"/>
+  <date value="2017-08-08T15:56:20.450Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -35,7 +35,7 @@
     </telecom>
   </contact>
   <description value="A social or legal structure formed by human beings."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -315,7 +315,7 @@
       <max value="*"/>
       <type>
         <code value="Identifier"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"/>
       </type>
       <condition value="org-1"/>
       <isSummary value="true"/>
@@ -384,7 +384,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="OrganizationType"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="Used to categorize the organization"/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/organization-type"/>
@@ -555,7 +555,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -740,7 +740,7 @@
       <path value="Organization.identifier"/>
       <type>
         <code value="Identifier"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"/>
       </type>
     </element>
     <element id="Organization:shr-actor-Organization.type">
@@ -751,6 +751,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="OrganizationType"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Used to categorize the organization"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/organization-type"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Organization:shr-actor-Organization.name">
       <path value="Organization.name"/>

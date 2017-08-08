@@ -66,7 +66,7 @@
       <span class="icon-bar"> </span>
       <span class="icon-bar"> </span>
      </button>
-        <a class="navbar-brand hidden" href="http://hl7.org/fhir/2017Jan/index.html">FHIR</a>
+        <a class="navbar-brand hidden" href="http://hl7.org/fhir/STU3/index.html">FHIR</a>
         <div class="nav-collapse collapse navbar-inverse-collapse">
           <ul class="nav navbar-nav">
             <li><a href="index.html">Home</a></li>
@@ -198,18 +198,13 @@
     </tr>
     <tr>
       <td>Adverse</td>
+      <td><a href="StructureDefinition-shr-adverse-AdverseEventGrade-extension.html">AdverseEventGrade</a></td>
+      <td>A coded value specifying the level of injury suffered by the subject for whom the event is reported, using the CTCAE coding system.</td>
+    </tr>
+    <tr>
+      <td>Adverse</td>
       <td><a href="StructureDefinition-shr-adverse-AdverseReaction-extension.html">AdverseReaction</a></td>
-      <td>Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction.</td>
-    </tr>
-    <tr>
-      <td>Adverse</td>
-      <td><a href="StructureDefinition-shr-adverse-AdverseReactionAttribution-extension.html">AdverseReactionAttribution</a></td>
-      <td>The cause of the adverse reaction (either known or theorized).</td>
-    </tr>
-    <tr>
-      <td>Adverse</td>
-      <td><a href="StructureDefinition-shr-adverse-AttributionCertainty-extension.html">AttributionCertainty</a></td>
-      <td>A specific identifiable level (defined qualitatively or quantitatively) of probability of adverse event being caused or associated with the product or procedure administration to a patient.</td>
+      <td>Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes.</td>
     </tr>
     <tr>
       <td>Allergy</td>
@@ -217,9 +212,24 @@
       <td>An immune or biochemical adverse reaction to a food substance.</td>
     </tr>
     <tr>
+      <td>Assessment</td>
+      <td><a href="StructureDefinition-shr-assessment-AssessmentFocus-extension.html">AssessmentFocus</a></td>
+      <td>The topic or target of an analysis or assessment. For example, if the question involves the progression of the subject&#039;s diabetes, then the FocalCondition would be diabetes. If the investigation involves the toxicity of chemotherapy regimen, the focus would be that regimen (currently the MedicationUse of the chemotherapy drug). If the analysis involves certain observations, they would be listed as the focus.</td>
+    </tr>
+    <tr>
+      <td>Assessment</td>
+      <td><a href="StructureDefinition-shr-assessment-EvidenceQuality-extension.html">EvidenceQuality</a></td>
+      <td>An estimate of the quality and/or quantity of the source information that supports the assessment.</td>
+    </tr>
+    <tr>
       <td>Base</td>
-      <td><a href="StructureDefinition-shr-base-ActionCode-extension.html">ActionCode</a></td>
-      <td>The code for the action, such as an intervention or test, to be carried out.</td>
+      <td><a href="StructureDefinition-shr-base-Action-extension.html">Action</a></td>
+      <td>A deed or endeavor; an action taken to address a undesired health state, behavior, risk, or goal. An action can have various contexts: definitional, occurred/not occurred, ordered/not ordered, recommended/recommended against.</td>
+    </tr>
+    <tr>
+      <td>Base</td>
+      <td><a href="StructureDefinition-shr-base-AssertionNegationModifier-extension.html">AssertionNegationModifier</a></td>
+      <td>When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is &#039;allergy to peanuts&#039; and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.</td>
     </tr>
     <tr>
       <td>Base</td>
@@ -230,6 +240,11 @@
       <td>Base</td>
       <td><a href="StructureDefinition-shr-base-Author-extension.html">Author</a></td>
       <td>The person or organization who created the entry and is responsible for (and may certify) its content.</td>
+    </tr>
+    <tr>
+      <td>Base</td>
+      <td><a href="StructureDefinition-shr-base-Category-extension.html">Category</a></td>
+      <td>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</td>
     </tr>
     <tr>
       <td>Base</td>
@@ -249,7 +264,8 @@
     <tr>
       <td>Base</td>
       <td><a href="StructureDefinition-shr-base-NonOccurrenceModifier-extension.html">NonOccurrenceModifier</a></td>
-      <td>When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist.</td>
+      <td>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
+When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</td>
     </tr>
     <tr>
       <td>Base</td>
@@ -273,7 +289,12 @@
     </tr>
     <tr>
       <td>Base</td>
-      <td><a href="StructureDefinition-shr-base-SubjectIsThirdPartyModifier-extension.html">SubjectIsThirdPartyModifier</a></td>
+      <td><a href="StructureDefinition-shr-base-Status-extension.html">Status</a></td>
+      <td>The position of affairs at a particular time</td>
+    </tr>
+    <tr>
+      <td>Base</td>
+      <td><a href="StructureDefinition-shr-base-SubjectIsThirdPartyFlag-extension.html">SubjectIsThirdPartyFlag</a></td>
       <td>If true, the subject of this entry is someone other than the Person of Record, for example, a family member.</td>
     </tr>
     <tr>
@@ -299,7 +320,7 @@
     <tr>
       <td>Behavior</td>
       <td><a href="StructureDefinition-shr-behavior-HasSufficientFood-extension.html">HasSufficientFood</a></td>
-      <td></td>
+      <td>Frequency that the person of record unable to obtain food to stay hunger.</td>
     </tr>
     <tr>
       <td>Behavior</td>
@@ -315,6 +336,16 @@
       <td>Behavior</td>
       <td><a href="StructureDefinition-shr-behavior-ReadinessToChange-extension.html">ReadinessToChange</a></td>
       <td>How motivated the subject is to change the behavior, if the behavior is ongoing, and change would be beneficial.</td>
+    </tr>
+    <tr>
+      <td>Behavior</td>
+      <td><a href="StructureDefinition-shr-behavior-Religion-extension.html">Religion</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Behavior</td>
+      <td><a href="StructureDefinition-shr-behavior-ReligiousCongregation-extension.html">ReligiousCongregation</a></td>
+      <td>A group of place of religious practice.</td>
     </tr>
     <tr>
       <td>Behavior</td>
@@ -362,6 +393,51 @@
       <td>How often the subject feels rested when they wake up.</td>
     </tr>
     <tr>
+      <td>Careplan</td>
+      <td><a href="StructureDefinition-shr-careplan-AssociatedGoal-extension.html">AssociatedGoal</a></td>
+      <td>The goal  associated with this objective.</td>
+    </tr>
+    <tr>
+      <td>Careplan</td>
+      <td><a href="StructureDefinition-shr-careplan-Goal-extension.html">Goal</a></td>
+      <td>A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.</td>
+    </tr>
+    <tr>
+      <td>Careplan</td>
+      <td><a href="StructureDefinition-shr-careplan-Objective-extension.html">Objective</a></td>
+      <td>Describes the  of an expected or desired achievement that is well-defined, specific, measurable, and derived from one or more goals. There are similarities with Observation, since an objective can sometimes be interpreted as a yet-to-be-made, future observation with a certain target result. </td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-Abatement-extension.html">Abatement</a></td>
+      <td>The end, remission or resolution.</td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-Criticality-extension.html">Criticality</a></td>
+      <td>The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-IncludeOnProblemList-extension.html">IncludeOnProblemList</a></td>
+      <td>Whether or not to include this condition on the subject&#039;s current problem list.</td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-Preexisting-extension.html">Preexisting</a></td>
+      <td>If the problem or condition existed before the current episode of care.</td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-Severity-extension.html">Severity</a></td>
+      <td>Degree of harshness or extent of a symptom, disorder, or condition.</td>
+    </tr>
+    <tr>
+      <td>Condition</td>
+      <td><a href="StructureDefinition-shr-condition-WhenClinicallyRecognized-extension.html">WhenClinicallyRecognized</a></td>
+      <td>The time at which a condition or condition was first identified in a healthcare context.</td>
+    </tr>
+    <tr>
       <td>Core</td>
       <td><a href="StructureDefinition-shr-core-Age-extension.html">Age</a></td>
       <td>How long something has existed (quantitative).</td>
@@ -383,8 +459,8 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-BodySite-extension.html">BodySite</a></td>
-      <td>Location on or in the body.</td>
+      <td><a href="StructureDefinition-shr-core-BodySiteMarker-extension.html">BodySiteMarker</a></td>
+      <td>A marker surgically placed at the site, often during a biopsy procedure, to pinpoint the location. The marker is typically a metal clip or radioactive seed.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -403,11 +479,6 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-CodingQualifier-extension.html">CodingQualifier</a></td>
-      <td>A description of the purpose or origin of the code that assists in the interpretation of the code.</td>
-    </tr>
-    <tr>
-      <td>Core</td>
       <td><a href="StructureDefinition-shr-core-Country-extension.html">Country</a></td>
       <td>Country - a nation as commonly understood or generally accepted, expressed in ISO 3166 Alpha-2 (2-letter) codes.</td>
     </tr>
@@ -418,8 +489,18 @@
     </tr>
     <tr>
       <td>Core</td>
+      <td><a href="StructureDefinition-shr-core-Description-extension.html">Description</a></td>
+      <td>An account, representation, statement, or explanation of something.</td>
+    </tr>
+    <tr>
+      <td>Core</td>
       <td><a href="StructureDefinition-shr-core-Details-extension.html">Details</a></td>
       <td>Particulars considered individually and in relation to a whole.</td>
+    </tr>
+    <tr>
+      <td>Core</td>
+      <td><a href="StructureDefinition-shr-core-Distance-extension.html">Distance</a></td>
+      <td>The space separating two objects or points.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -433,11 +514,6 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-Explanation-extension.html">Explanation</a></td>
-      <td>A set of statements describing a group of facts that clarifies the cause, context and/or consequence of those facts.</td>
-    </tr>
-    <tr>
-      <td>Core</td>
       <td><a href="StructureDefinition-shr-core-GeneralizedAge-extension.html">GeneralizedAge</a></td>
       <td>Qualitative or quantitative, exact or inexact description of age.</td>
     </tr>
@@ -445,11 +521,6 @@
       <td>Core</td>
       <td><a href="StructureDefinition-shr-core-GeneralizedDateTime-extension.html">GeneralizedDateTime</a></td>
       <td>A point in time, specified qualitatively or quantitatively.</td>
-    </tr>
-    <tr>
-      <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-GeneralizedLikelihood-extension.html">GeneralizedLikelihood</a></td>
-      <td>Quantitative or qualitative measure of likelihood.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -473,13 +544,13 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-Length-extension.html">Length</a></td>
-      <td>The measurement or linear extent of something from end to end; the greater of two or the greatest of three dimensions of a body.</td>
+      <td><a href="StructureDefinition-shr-core-Identifier-extension.html">Identifier</a></td>
+      <td>A unique string that identifies a specific person or thing.</td>
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-Likelihood-extension.html">Likelihood</a></td>
-      <td>A measure of the expectation of the occurrence of a particular event, as a percentage.</td>
+      <td><a href="StructureDefinition-shr-core-Length-extension.html">Length</a></td>
+      <td>The measurement or linear extent of something from end to end; the greatest dimensions of a body.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -488,18 +559,8 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-LowerBound-extension.html">LowerBound</a></td>
-      <td>A measured or measurable amount with units that is known to be bounded from below by the quantity represented.</td>
-    </tr>
-    <tr>
-      <td>Core</td>
       <td><a href="StructureDefinition-shr-core-OccurrenceTime-extension.html">OccurrenceTime</a></td>
       <td>The point in time or span of time in which something happens.</td>
-    </tr>
-    <tr>
-      <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-Percentage-extension.html">Percentage</a></td>
-      <td>A percentage value where 100.0 represents 100%.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -513,8 +574,8 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-QualitativeLikelihood-extension.html">QualitativeLikelihood</a></td>
-      <td>A qualitative (subjective) likelihood.</td>
+      <td><a href="StructureDefinition-shr-core-Quantity-extension.html">Quantity</a></td>
+      <td>A quantity with units.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -525,6 +586,11 @@
       <td>Core</td>
       <td><a href="StructureDefinition-shr-core-Setting-extension.html">Setting</a></td>
       <td>Description of the place or type of surroundings where something is positioned or where an event takes place.</td>
+    </tr>
+    <tr>
+      <td>Core</td>
+      <td><a href="StructureDefinition-shr-core-SpecificType-extension.html">SpecificType</a></td>
+      <td>A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -548,8 +614,13 @@
     </tr>
     <tr>
       <td>Core</td>
-      <td><a href="StructureDefinition-shr-core-UpperBound-extension.html">UpperBound</a></td>
-      <td>A measured or measurable amount with units that is known to be bounded from above by the quantity represented.</td>
+      <td><a href="StructureDefinition-shr-core-Title-extension.html">Title</a></td>
+      <td>A distinguishing word or group of words naming an item.</td>
+    </tr>
+    <tr>
+      <td>Core</td>
+      <td><a href="StructureDefinition-shr-core-Version-extension.html">Version</a></td>
+      <td>A string identifying the particular of form of something (such as a code system or software product) that is different in some way from another form of the same thing.</td>
     </tr>
     <tr>
       <td>Core</td>
@@ -658,6 +729,61 @@
     </tr>
     <tr>
       <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-AnnualIncome-extension.html">AnnualIncome</a></td>
+      <td>The amount of earnings made by a family unit in one year, estimated or self-reported.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordChildCare-extension.html">CanAffordChildCare</a></td>
+      <td>How often can the subject afford child care?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordClothing-extension.html">CanAffordClothing</a></td>
+      <td>How often can the subject afford clothing?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordDentalCare-extension.html">CanAffordDentalCare</a></td>
+      <td>How often can the subject afford dental care?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordFood-extension.html">CanAffordFood</a></td>
+      <td>How often can the subject afford food?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordHousing-extension.html">CanAffordHousing</a></td>
+      <td>How often can the subject afford housing?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordMedication-extension.html">CanAffordMedication</a></td>
+      <td>How often can the subject afford medications?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordTransportation-extension.html">CanAffordTransportation</a></td>
+      <td>How often can the subject afford transportation?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-CanAffordUtilities-extension.html">CanAffordUtilities</a></td>
+      <td>How often can the subject afford utilities?</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-DomesticViolence-extension.html">DomesticViolence</a></td>
+      <td>Whether the subject experiences domestic violence.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-EmotionalSafety-extension.html">EmotionalSafety</a></td>
+      <td>Whether the subject feels physically safe in the subject&#039;s home environment.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
       <td><a href="StructureDefinition-shr-environment-ExposureMethod-extension.html">ExposureMethod</a></td>
       <td>How the exposure occurred, e.g. cutaneous contact, injection, ingestion, sexual contact, inhalation.</td>
     </tr>
@@ -672,9 +798,49 @@
       <td>Where the substance originated. Vectors include animals (e.g., tick, mosquito, cats, livestock) capable of transmitting an infectious agent among vertebrates. Sources could include food, contaminated drinking water, air, radon gas in the home, etc.</td>
     </tr>
     <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-HomeEnvironmentRisk-extension.html">HomeEnvironmentRisk</a></td>
+      <td>A risk experienced in the home environment.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-HousingSecurity-extension.html">HousingSecurity</a></td>
+      <td>Whether the subject is at-risk of losing their housing or in a stable housing situation.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-IncomeSource-extension.html">IncomeSource</a></td>
+      <td>Where the household income comes from.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-IncomeStability-extension.html">IncomeStability</a></td>
+      <td>Whether the subject regards his or her source of income as dependable.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-NonCashBenefit-extension.html">NonCashBenefit</a></td>
+      <td>Government benefits received by the focal subject, other than cash benefits.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-PhysicalSafety-extension.html">PhysicalSafety</a></td>
+      <td>How often the subject feels physically safe in the subject&#039;s home environment.</td>
+    </tr>
+    <tr>
+      <td>Environment</td>
+      <td><a href="StructureDefinition-shr-environment-TransportationAvailability-extension.html">TransportationAvailability</a></td>
+      <td>Whether the subject has reliable transportation to bring him or her to medical appointments and to get medications.</td>
+    </tr>
+    <tr>
       <td>Lab</td>
       <td><a href="StructureDefinition-shr-lab-ChangeFlag-extension.html">ChangeFlag</a></td>
       <td>Indicator of significant change (delta) from the last or previous measurement.</td>
+    </tr>
+    <tr>
+      <td>Lab</td>
+      <td><a href="StructureDefinition-shr-lab-Interpretation-extension.html">Interpretation</a></td>
+      <td>A clinical interpretation of a measurement.</td>
     </tr>
     <tr>
       <td>Lab</td>
@@ -690,31 +856,6 @@
       <td>Lifehistory</td>
       <td><a href="StructureDefinition-shr-lifehistory-EmploymentStatus-extension.html">EmploymentStatus</a></td>
       <td>Condition of employment including full- or part-time, temporary or permanent, and unemployment.</td>
-    </tr>
-    <tr>
-      <td>Lifehistory</td>
-      <td><a href="StructureDefinition-shr-lifehistory-MilitaryBranch-extension.html">MilitaryBranch</a></td>
-      <td>The branch of the US military that the subject has served.</td>
-    </tr>
-    <tr>
-      <td>Lifehistory</td>
-      <td><a href="StructureDefinition-shr-lifehistory-MilitaryServiceDischargeStatus-extension.html">MilitaryServiceDischargeStatus</a></td>
-      <td>How the subject was formally discharged from the US Military.</td>
-    </tr>
-    <tr>
-      <td>Lifehistory</td>
-      <td><a href="StructureDefinition-shr-lifehistory-MilitaryServiceEra-extension.html">MilitaryServiceEra</a></td>
-      <td>The time period of US military service.</td>
-    </tr>
-    <tr>
-      <td>Lifehistory</td>
-      <td><a href="StructureDefinition-shr-lifehistory-MilitaryStatus-extension.html">MilitaryStatus</a></td>
-      <td>The current connection to the US military.</td>
-    </tr>
-    <tr>
-      <td>Lifehistory</td>
-      <td><a href="StructureDefinition-shr-lifehistory-ServiceConnectedDisability-extension.html">ServiceConnectedDisability</a></td>
-      <td>Percentage disability resulting from US Military Service.</td>
     </tr>
     <tr>
       <td>Medication</td>
@@ -738,8 +879,8 @@
     </tr>
     <tr>
       <td>Medication</td>
-      <td><a href="StructureDefinition-shr-medication-MedicationNotPrescribedModifier-extension.html">MedicationNotPrescribedModifier</a></td>
-      <td>True, if the medication should not, or was not prescribed for a particular reason.</td>
+      <td><a href="StructureDefinition-shr-medication-MedicationPrescription-extension.html">MedicationPrescription</a></td>
+      <td>Report of a medication prescription.</td>
     </tr>
     <tr>
       <td>Medication</td>
@@ -758,18 +899,23 @@
     </tr>
     <tr>
       <td>Observation</td>
-      <td><a href="StructureDefinition-shr-observation-ObservationCode-extension.html">ObservationCode</a></td>
-      <td>A term from a controlled vocabulary that defines the data element (the question, not the answer) as specifically as possible. The specific code should always align with the concept of the element, but may be more specific. For example, the concept associated with medications is code for &#039;medication used&#039;, but the ObservationCode is the code for the particular medication used. For tests, ObservationCode identifies the specific test being performed, and for observations, the specific question being asked.</td>
+      <td><a href="StructureDefinition-shr-observation-AssociatedStudy-extension.html">AssociatedStudy</a></td>
+      <td>The clinical trial or other formal study related to this finding.</td>
     </tr>
     <tr>
       <td>Observation</td>
-      <td><a href="StructureDefinition-shr-observation-ObservationMethod-extension.html">ObservationMethod</a></td>
+      <td><a href="StructureDefinition-shr-observation-DataAbsentReason-extension.html">DataAbsentReason</a></td>
+      <td>Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).</td>
+    </tr>
+    <tr>
+      <td>Observation</td>
+      <td><a href="StructureDefinition-shr-observation-Manifestation-extension.html">Manifestation</a></td>
+      <td>A complaint or observed indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
+    </tr>
+    <tr>
+      <td>Observation</td>
+      <td><a href="StructureDefinition-shr-observation-Method-extension.html">Method</a></td>
       <td>The method of the observation, for example, the specific imaging technical or assessment vehicle.</td>
-    </tr>
-    <tr>
-      <td>Observation</td>
-      <td><a href="StructureDefinition-shr-observation-ObservationNonOccurrenceModifier-extension.html">ObservationNonOccurrenceModifier</a></td>
-      <td>True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected.</td>
     </tr>
     <tr>
       <td>Observation</td>
@@ -778,18 +924,98 @@
     </tr>
     <tr>
       <td>Observation</td>
-      <td><a href="StructureDefinition-shr-observation-ObservationReason-extension.html">ObservationReason</a></td>
-      <td>The reason for making the observation.</td>
+      <td><a href="StructureDefinition-shr-observation-ReferenceRange-extension.html">ReferenceRange</a></td>
+      <td>The usual or acceptable range for a test result.</td>
     </tr>
     <tr>
       <td>Oncology</td>
-      <td><a href="StructureDefinition-shr-oncology-PostSurgeryIndicator-extension.html">PostSurgeryIndicator</a></td>
-      <td>Indicator, when true, indicates the stage is reflects the tumor size extent and location after surgical removal. If missing, it is assumed the staging is not post-surgical.</td>
+      <td><a href="StructureDefinition-shr-oncology-BRCA1Variant-extension.html">BRCA1Variant</a></td>
+      <td>Whether the patient has a mutation in the BRCA1 gene.</td>
     </tr>
     <tr>
       <td>Oncology</td>
-      <td><a href="StructureDefinition-shr-oncology-Receptor-extension.html">Receptor</a></td>
-      <td>A protein located on the cell surface, or in the cytoplasm, that binds to a specific signaling factor, such as a hormone, antigen, or neurotransmitter, causing a conformational and functional change in the receptor molecule. The ligand-bound receptor then alters its interaction with target molecules, which leads to changes in cellular physiology through modification of the activity of one or more signal transduction pathways.</td>
+      <td><a href="StructureDefinition-shr-oncology-BRCA2Variant-extension.html">BRCA2Variant</a></td>
+      <td>Whether the patient has a mutation in the BRCA2 gene.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-Cellularity-extension.html">Cellularity</a></td>
+      <td>Percentage of cells in a sample that are cancerous</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-DegreeOfLymphaticInvolvement-extension.html">DegreeOfLymphaticInvolvement</a></td>
+      <td>Assessment of how much cancer is in a lymph node.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-EstrogenReceptorStatus-extension.html">EstrogenReceptorStatus</a></td>
+      <td>Estrogen receptor alpha is the predominant estrogen receptor expressed in breast tissue and is overexpressed in around 50% of breast carcinomas. ER status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-GeneIdentifier-extension.html">GeneIdentifier</a></td>
+      <td>A unique code for a gene, including protein coding genes, ncRNA genes and pseudogenes, to allow unambiguous communication, drawn from HUGO Gene Nomenclature Committee.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-HumanEpiduralGrowthFactorReceptor2Status-extension.html">HumanEpiduralGrowthFactorReceptor2Status</a></td>
+      <td>HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</td>
+    </tr>
+    <tr>
+      <td>Oncology Ki</td>
+      <td><a href="StructureDefinition-shr-oncology-Ki-67LabelingIndex-extension.html">Ki-67LabelingIndex</a></td>
+      <td>Ki-67 is a protein phosphatase whose expression is strongly associated with cell proliferation and encoded by the MKI67 gene. The Ki67 labeling index is the fraction of Ki-67-positive cells to total cells in a tumor specimen and may be useful for determining prognosis with respect to survival and disease recurrence. The more positive cells there are, the more quickly they are dividing and forming new cells.	ReferenceRange: Low &lt;10, Intermediate 10-20, &gt;20 High</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-LargestLymphNodeSize-extension.html">LargestLymphNodeSize</a></td>
+      <td>The largest dimension of the largest lymph node invaded by cancer cells.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-LymphaticSystemSubdivision-extension.html">LymphaticSystemSubdivision</a></td>
+      <td>A lymph node area or nodal group; a subdivision of the entire lymphatic system. For breast cancer, this includes 5 areas: internal mammary lymph nodes, axillary lymph nodes level I, II, and III, and the supraclavicular lymph nodes.</td>
+    </tr>
+    <tr>
+      <td>Oncology M</td>
+      <td><a href="StructureDefinition-shr-oncology-M-Stage-extension.html">M-Stage</a></td>
+      <td>Part of the TNM classification system representing metastases.  The system is used to describe the spread of cancer to other parts of the body. See Table 144 in HL7 CDA® R2 Implementation Guide: Clinical Oncology Treatment Plan and Summary, Release 1 - US Realm</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-MitoticCountScore-extension.html">MitoticCountScore</a></td>
+      <td>How fast the tumor cells are growing and dividing, determined from the number of mitotic cells present. Scored 1 to 3, with 3 being the most mitotic cells.</td>
+    </tr>
+    <tr>
+      <td>Oncology N</td>
+      <td><a href="StructureDefinition-shr-oncology-N-Stage-extension.html">N-Stage</a></td>
+      <td>The presence of metastases in regional lymph nodes. TNM node category for staging derived from the American Joint Committee on Cancer. See Table 147 in HL7 CDA® R2 Implementation Guide: Clinical Oncology Treatment Plan and Summary, Release 1 - US Realm</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-NuclearPleomorphismScore-extension.html">NuclearPleomorphismScore</a></td>
+      <td>How large and varied the nuclei of the tumor cells are. Scored 1 to 3, with 3 being the most pleomorphism.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-NumberOfLymphNodesInvolved-extension.html">NumberOfLymphNodesInvolved</a></td>
+      <td>A count of lymph nodes invaded by cancer cells of those examined.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-PercentageInSituCarcinoma-extension.html">PercentageInSituCarcinoma</a></td>
+      <td>The percentage of the cancer that is in situ, as opposed to invading other tissues.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-ProgesteroneReceptorStatus-extension.html">ProgesteroneReceptorStatus</a></td>
+      <td>Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-ReceptorAllredTotalScore-extension.html">ReceptorAllredTotalScore</a></td>
+      <td>Part of the Allred scoring, the total of proportion and intensity scores, from 0 to 8.</td>
     </tr>
     <tr>
       <td>Oncology</td>
@@ -808,8 +1034,53 @@
     </tr>
     <tr>
       <td>Oncology</td>
-      <td><a href="StructureDefinition-shr-oncology-ReceptorTotalScore-extension.html">ReceptorTotalScore</a></td>
-      <td>Part of the Allred scoring, the total of proportion and intensity scores, from 0 to 8.</td>
+      <td><a href="StructureDefinition-shr-oncology-ReceptorType-extension.html">ReceptorType</a></td>
+      <td>A protein located on the cell surface, or in the cytoplasm, that binds to a specific signaling factor, such as a hormone, antigen, or neurotransmitter, causing a conformational and functional change in the receptor molecule. The ligand-bound receptor then alters its interaction with target molecules, which leads to changes in cellular physiology through modification of the activity of one or more signal transduction pathways.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-Refseq-extension.html">Refseq</a></td>
+      <td>The Reference Sequence (RefSeq) collection provides a comprehensive, integrated, non-redundant, well-annotated set of sequences, including genomic DNA, transcripts, and proteins. RefSeq sequences form a foundation for medical, functional, and diversity studies. They provide a stable reference for genome annotation, gene identification and characterization, mutation and polymorphism analysis (especially RefSeqGene records), expression studies, and comparative analyses.</td>
+    </tr>
+    <tr>
+      <td>Oncology S</td>
+      <td><a href="StructureDefinition-shr-oncology-S-PhaseFraction-extension.html">S-PhaseFraction</a></td>
+      <td>An expression of the number of mitoses found in a stated number of cells. The S-phase fraction number tells you what percentage of cells in the tissue sample are in the process of copying their genetic information (DNA). This S-phase, short for synthesis phase, happens just before a cell divides into two new cells. ReferenceRange: Low &lt;6, Intermediate 6-10, &gt;10 High.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-SizeOfGrossTumorBed-extension.html">SizeOfGrossTumorBed</a></td>
+      <td>The largest dimension of the gross tumor bed/fibrotic area.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-StagingSystem-extension.html">StagingSystem</a></td>
+      <td>What staging system are used </td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-StagingTiming-extension.html">StagingTiming</a></td>
+      <td>Indicates when the staging was done, in terms of treatment landmarks, for example, at diagnosis (clinical), at surgery(pathologic), after treatment (post-neoadjuvant), at entry to a clinical trial, or at recurrence.</td>
+    </tr>
+    <tr>
+      <td>Oncology T</td>
+      <td><a href="StructureDefinition-shr-oncology-T-Stage-extension.html">T-Stage</a></td>
+      <td>The size and extent of the primary tumor (greatest dimension), based on criteria from the American Joint Committee on Cancer. See Table 152 in HL7 CDA® R2 Implementation Guide: Clinical Oncology Treatment Plan and Summary, Release 1 - US Realm</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-TubuleFormationScore-extension.html">TubuleFormationScore</a></td>
+      <td>A comparison between structures formed by the tumor cells as opposed to those formed by normal cells. Scored 1 to 3 with 3 being the most abnormal.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-TumorMargins-extension.html">TumorMargins</a></td>
+      <td>The edge or border of the tissue removed in cancer surgery. The margin is described as negative or clean when the pathologist finds no cancer cells at the edge of the tissue, suggesting that all of the cancer has been removed. The margin is described as positive or involved when the pathologist finds cancer cells at the edge of the tissue, suggesting that all of the cancer has not been removed.</td>
+    </tr>
+    <tr>
+      <td>Oncology</td>
+      <td><a href="StructureDefinition-shr-oncology-TumorSecondaryDimensionSize-extension.html">TumorSecondaryDimensionSize</a></td>
+      <td>The longest perpendicular diameter of the primary tumor.</td>
     </tr>
     <tr>
       <td>Primitive</td>
@@ -897,44 +1168,19 @@
       <td>The xhtml that represents the value of the SHR element to which it is applied.</td>
     </tr>
     <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-Abatement-extension.html">Abatement</a></td>
-      <td>The end, remission or resolution.</td>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-ContraceptiveMethodUsed-extension.html">ContraceptiveMethodUsed</a></td>
+      <td>A contraceptive method used by the subject.</td>
     </tr>
     <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-Criticality-extension.html">Criticality</a></td>
-      <td>A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.</td>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-ContraceptiveNotUsedReason-extension.html">ContraceptiveNotUsedReason</a></td>
+      <td>If not using a method of contraception, why.</td>
     </tr>
     <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-IncludeOnProblemList-extension.html">IncludeOnProblemList</a></td>
-      <td>Whether or not to include this problem on the subject&#039;s current problem list.</td>
-    </tr>
-    <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-Manifestation-extension.html">Manifestation</a></td>
-      <td>A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.</td>
-    </tr>
-    <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-Preexisting-extension.html">Preexisting</a></td>
-      <td>If the problem or condition existed before the current episode of care.</td>
-    </tr>
-    <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-Severity-extension.html">Severity</a></td>
-      <td>Degree of severity of a symptom, disorder, or problem.</td>
-    </tr>
-    <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-SupportingEvidenceQuality-extension.html">SupportingEvidenceQuality</a></td>
-      <td>An assessment of the quality and/or quantity of the source information that supports judgment.</td>
-    </tr>
-    <tr>
-      <td>Problem</td>
-      <td><a href="StructureDefinition-shr-problem-WhenClinicallyRecognized-extension.html">WhenClinicallyRecognized</a></td>
-      <td>The time at which a condition or problem was first identified in a healthcare context.</td>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-CurrentPregnancyStatus-extension.html">CurrentPregnancyStatus</a></td>
+      <td>Whether or not the subject is currently pregnant.</td>
     </tr>
     <tr>
       <td>Sex</td>
@@ -943,8 +1189,33 @@
     </tr>
     <tr>
       <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-IntercourseDifficulty-extension.html">IntercourseDifficulty</a></td>
+      <td>Condition affecting sexual intercourse.</td>
+    </tr>
+    <tr>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-NumberOfLivingChildren-extension.html">NumberOfLivingChildren</a></td>
+      <td>Number of living children.</td>
+    </tr>
+    <tr>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-NumberOfPreviousPregnancies-extension.html">NumberOfPreviousPregnancies</a></td>
+      <td>Number of previous pregnancies.</td>
+    </tr>
+    <tr>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-NumberOfSexualPartnersPastYear-extension.html">NumberOfSexualPartnersPastYear</a></td>
+      <td>Number of sexual partners in past year.</td>
+    </tr>
+    <tr>
+      <td>Sex</td>
       <td><a href="StructureDefinition-shr-sex-ReasonForNotRecommendingContraceptive-extension.html">ReasonForNotRecommendingContraceptive</a></td>
       <td>If not using a method of contraception, why.</td>
+    </tr>
+    <tr>
+      <td>Sex</td>
+      <td><a href="StructureDefinition-shr-sex-SexualActivity-extension.html">SexualActivity</a></td>
+      <td>Characterization of the sexual activity of the subject.</td>
     </tr>
     <tr>
       <td>Skin</td>
@@ -955,6 +1226,11 @@
       <td>Skin</td>
       <td><a href="StructureDefinition-shr-skin-ImmersionDepth-extension.html">ImmersionDepth</a></td>
       <td>Depth of penetration (sinking) into a support surface.</td>
+    </tr>
+    <tr>
+      <td>Skin</td>
+      <td><a href="StructureDefinition-shr-skin-PressureUlcerManifestation-extension.html">PressureUlcerManifestation</a></td>
+      <td>Observation regarding the properties and severity of a single pressure ulcer.</td>
     </tr>
     <tr>
       <td>Skin</td>
@@ -1008,8 +1284,28 @@
     </tr>
     <tr>
       <td>Vital</td>
+      <td><a href="StructureDefinition-shr-vital-BodyHeight-extension.html">BodyHeight</a></td>
+      <td>The distance from the sole to the crown of the head.</td>
+    </tr>
+    <tr>
+      <td>Vital</td>
+      <td><a href="StructureDefinition-shr-vital-BodyWeight-extension.html">BodyWeight</a></td>
+      <td>The mass or quantity of heaviness of an individual. Does not include estimates of fetal bodyweight.</td>
+    </tr>
+    <tr>
+      <td>Vital</td>
+      <td><a href="StructureDefinition-shr-vital-DiastolicPressure-extension.html">DiastolicPressure</a></td>
+      <td>The blood pressure after the contraction of the heart while the chambers of the heart refill with blood, when the pressure is lowest.</td>
+    </tr>
+    <tr>
+      <td>Vital</td>
       <td><a href="StructureDefinition-shr-vital-HeadTiltAngle-extension.html">HeadTiltAngle</a></td>
       <td>The angle at which the head is tilted relative to a level position while physiologic tests are taken.</td>
+    </tr>
+    <tr>
+      <td>Vital</td>
+      <td><a href="StructureDefinition-shr-vital-SystolicPressure-extension.html">SystolicPressure</a></td>
+      <td>The blood pressure during the contraction of the left ventricle of the heart, when blood pressure is at its highest.</td>
     </tr>
     
   </tbody>
@@ -1032,8 +1328,8 @@
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.0-11681) generated
-        on Wed, May 10, 2017 14:01-0400.</p>
+    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.1-11916) generated
+        on Tue, Aug 8, 2017 11:57-0400.</p>
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->

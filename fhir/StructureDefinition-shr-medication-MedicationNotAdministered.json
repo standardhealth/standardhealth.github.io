@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR MedicationNotAdministered Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.025Z",
+  "date": "2017-08-08T15:56:30.716Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A record of a medication NOT administered. Recorded when deviating from the care plan.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -571,12 +571,27 @@
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.medication[x]",
         "path": "MedicationStatement.medication[x]",
+        "slicing": {
+          "id": "229",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "What medication was taken",
         "definition": "Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.",
         "comment": "If only a code is specified, then it needs to be a code for a specific product. If more information is required, then the use of the medication resource is recommended.  For example if you require form or lot number, then you must reference the Medication resource. .",
         "min": 1,
         "max": "1",
         "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
@@ -610,6 +625,28 @@
             "map": "what"
           }
         ]
+      },
+      {
+        "id": "MedicationStatement:shr-medication-MedicationNotAdministered.medicationCodeableConcept:shr-core-CodeableConcept",
+        "path": "MedicationStatement.medicationCodeableConcept",
+        "sliceName": "shr-core-CodeableConcept",
+        "short": "What medication was taken",
+        "definition": "Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationVS"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.effective[x]",
@@ -1221,7 +1258,7 @@
               "valueString": "RouteOfAdministration"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/route-codes"
@@ -1257,7 +1294,7 @@
               "valueString": "MedicationAdministrationMethod"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept describing the technique by which the medicine is administered.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/administration-method-codes"
@@ -1403,12 +1440,43 @@
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.medication[x]",
         "path": "MedicationStatement.medication[x]",
+        "slicing": {
+          "id": "229",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
           }
         ]
+      },
+      {
+        "id": "MedicationStatement:shr-medication-MedicationNotAdministered.medicationCodeableConcept:shr-core-CodeableConcept",
+        "path": "MedicationStatement.medicationCodeableConcept",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationVS"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.effective[x]",
@@ -1514,7 +1582,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "RouteOfAdministration"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.dosage.method",
@@ -1526,7 +1607,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MedicationAdministrationMethod"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept describing the technique by which the medicine is administered.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/administration-method-codes"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationNotAdministered.dosage.dose[x]",

@@ -36,7 +36,7 @@
     <sch:title>CareTeam.participant</sch:title>
     <sch:rule context="f:CareTeam/f:participant">
       <sch:assert test="@value|f:*|h:div">All FHIR elements must have a @value or children</sch:assert>
-      <sch:assert test="contains(f:member, '/Practitioner') or not(exists(f:onBehalfOf))">CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner</sch:assert>
+      <sch:assert test="contains(f:member/f:reference/@value, '/Practitioner/') or not(exists(f:onBehalfOf))">CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner</sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>

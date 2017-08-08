@@ -31,17 +31,42 @@
 <tr>
 <td>Based On: <a href="../base/index.html#Request"><code>Request</code></a></td>
 <td></td>
-<td>An order for something to take place. Using NonOccurrenceModifier, it may document why a request was NOT made.</td>
+<td>An order for something to take place.</td>
 </tr>
 <tr>
-<td><a href="../base/index.html#ActionCode"><code>ActionCode</code></a></td>
+<td><a href="../core/index.html#SpecificType"><code>SpecificType</code></a></td>
+<td>optional</td>
+<td>A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.</td>
+</tr>
+<tr>
+<td><a href="../base/index.html#Status"><code>Status</code></a></td>
 <td>1</td>
-<td>The code for the action, such as an intervention or test, to be carried out.</td>
+<td>The position of affairs at a particular time</td>
+</tr>
+<tr>
+<td>        with <code>code</code> from http://hl7.org/fhir/ValueSet/medication-request-status</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../base/index.html#Category"><code>Category</code></a></td>
+<td>0 or more</td>
+<td>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</td>
 </tr>
 <tr>
 <td><a href="../base/index.html#NonOccurrenceModifier"><code>NonOccurrenceModifier</code></a></td>
 <td>optional</td>
-<td>When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist.</td>
+<td>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.</td>
+</tr>
+<tr>
+<td>When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#Reason"><code>Reason</code></a>.<a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS</td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
 </tr>
 <tr>
 <td><a href="../core/index.html#Reason"><code>Reason</code></a></td>
@@ -59,24 +84,9 @@
 <td>A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.</td>
 </tr>
 <tr>
-<td><a href="../base/index.html#RequestNotToPerformActionModifier"><code>RequestNotToPerformActionModifier</code></a> is <a href="index.html#MedicationNotPrescribedModifier"><code>MedicationNotPrescribedModifier</code></a></td>
-<td>optional</td>
-<td>True, if the medication should not, or was not prescribed for a particular reason.</td>
-</tr>
-<tr>
-<td><a href="../base/index.html#RequestStatus"><code>RequestStatus</code></a></td>
-<td>1</td>
-<td>The extent to which the ordering process has progressed, for this order.</td>
-</tr>
-<tr>
-<td>        with <code>code</code> from http://hl7.org/fhir/ValueSet/medication-request-status</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
 <td><a href="../base/index.html#RequestedPerformanceTime"><code>RequestedPerformanceTime</code></a></td>
 <td>optional</td>
-<td>When test or tests should be done. If the tests are a series or recur (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.</td>
+<td>When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.</td>
 </tr>
 <tr>
 <td><a href="../base/index.html#PriorityOfRequest"><code>PriorityOfRequest</code></a></td>

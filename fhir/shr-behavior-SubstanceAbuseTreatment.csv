@@ -25,6 +25,9 @@ user content","",0,*,"","","","Extension
 "Procedure.extension","codeableconcept","extensions
 user content","",1,1,"","","","Extension {http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension}
 ","","A set of codes drawn from different coding systems, representing the same concept.","There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.","","","","","","","","",,"required","","http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS","",,,,"DomainResource.extension",0,*,"","","N/A"
+"Procedure.extension","category","extensions
+user content","",0,*,"","","","Extension {http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension}
+","","A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.","There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.","","","","","","","","",,,,,"",,,,"DomainResource.extension",0,*,"","","N/A"
 "Procedure.modifierExtension","","extensions
 user content","",0,*,"","Y","","Extension
 ","Extensions that cannot be ignored","May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.","There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.","","","","","","","","",,,,,"",,,,"DomainResource.modifierExtension",0,*,"","","N/A"
@@ -52,8 +55,8 @@ This element is labeled as a modifier because it indicates that a procedure didn
 "Procedure.category","","","",0,1,"","","Y","CodeableConcept
 ","Classification of the procedure","A code that classifies the procedure for searching, sorting and display purposes (e.g. ""Surgical Procedure"").","","","","","","","","","",,"example","A code that classifies a procedure for searching, sorting and display purposes.","http://hl7.org/fhir/ValueSet/procedure-category","",,,,"",0,null,"","",".outboundRelationship[typeCode=""COMP].target[classCode=""LIST"", moodCode=""EVN""].code","class"
 "Procedure.code","","type
-","",0,1,"","","Y","CodeableConcept
-","Identification of the procedure","The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. ""Laparoscopic Appendectomy"").","","0..1 to account for primarily narrative only resources.","","","","","","","",,"example","A code to identify a specific procedure .","http://hl7.org/fhir/ValueSet/procedure-code","",,,,"",0,null,"","",".code","what","OBR-44/OBR-45"
+","",0,1,"","","Y","CodeableConcept {http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept}
+","Identification of the procedure","The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. ""Laparoscopic Appendectomy"").","","0..1 to account for primarily narrative only resources.","","","","","","","",,"preferred","","http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS","",,,,"",0,null,"","",".code","what","OBR-44/OBR-45"
 "Procedure.subject","","patient
 ","",1,1,"","","Y","Reference {http://hl7.org/fhir/StructureDefinition/Patient}
 Reference {http://hl7.org/fhir/StructureDefinition/Group}","Who the procedure was performed on","The person, animal or group on which the procedure was performed.","","","","","","","","","",,,,,"",,,,"",0,null,"","",".participation[typeCode=SBJ].role","who.focus","PID-3"
@@ -63,7 +66,7 @@ Reference {http://hl7.org/fhir/StructureDefinition/EpisodeOfCare}","Encounter or
 "Procedure.performed[x]","","","",0,1,"","","Y","dateTime
 Period {http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod}","Date/Period the procedure was performed","The date(time)/period over which the procedure was performed. Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured.","","","","","","","","","",,,,,"",,,,"",0,null,"","",".effectiveTime","when.done","OBR-7"
 "Procedure.performer","","","",0,*,"","","Y","BackboneElement
-","The people who performed the procedure","Limited to 'real' people rather than equipment.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","The people who performed the procedure","Limited to 'real' people rather than equipment.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".participation[typeCode=PRF]"
 "Procedure.performer.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
@@ -100,7 +103,7 @@ Reference {http://hl7.org/fhir/StructureDefinition/Observation}","Condition that
 "Procedure.note","","","",0,*,"","","","Annotation
 ","Additional information about the procedure","Any other notes about the procedure.  E.g. the operative notes.","","","","","","","","","",,,,,"",,,,"",0,null,"","",".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=""annotation""].value","NTE"
 "Procedure.focalDevice","","","",0,*,"","","","BackboneElement
-","Device changed in procedure","A device that is implanted, removed or otherwise manipulated (calibration, battery replacement, fitting a prosthesis, attaching a wound-vac, etc.) as a focal portion of the Procedure.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {children().count() > id.count()}
+","Device changed in procedure","A device that is implanted, removed or otherwise manipulated (calibration, battery replacement, fitting a prosthesis, attaching a wound-vac, etc.) as a focal portion of the Procedure.","","","","","","","","","",,,,,"",,,,"",0,null,"","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ",".participation[typeCode=DEV].role[classCode=MANU]"
 "Procedure.focalDevice.id","","","",0,1,"","","","string
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"

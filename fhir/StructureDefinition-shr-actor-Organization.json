@@ -3,7 +3,7 @@
   "id": "shr-actor-Organization",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Organization Profile</b></p>\n  <p>A social or legal structure formed by human beings.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.actor.Organization maps to Organization:\n  OrganizationName maps to name\n  OrganizationAlias maps to alias  // I wish FHIR allowed multiple names, but it doesn't\n  OrganizationType maps to type\n  OrganizationIdentifyingCode maps to identifier\n  AddressUsed maps to address\n  Telecom maps to telecom\n  ActiveFlag maps to active\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Organization Profile</b></p>\n  <p>A social or legal structure formed by human beings.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.actor.Organization maps to Organization:\n  OrganizationName maps to name\n  OrganizationAlias maps to alias  // I wish FHIR allowed multiple names, but it doesn't\n  SpecificType maps to type\n  OrganizationIdentifyingCode maps to identifier\n  AddressUsed maps to address\n  Telecom maps to telecom\n  ActiveFlag maps to active\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Organization Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:13.131Z",
+  "date": "2017-08-08T15:56:20.450Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A social or legal structure formed by human beings.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -365,7 +365,7 @@
         "type": [
           {
             "code": "Identifier",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"
           }
         ],
         "condition": [
@@ -450,7 +450,7 @@
               "valueString": "OrganizationType"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "Used to categorize the organization",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/organization-type"
@@ -662,7 +662,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -904,7 +904,7 @@
         "type": [
           {
             "code": "Identifier",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"
           }
         ]
       },
@@ -918,7 +918,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "OrganizationType"
+            }
+          ],
+          "strength": "required",
+          "description": "Used to categorize the organization",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/organization-type"
+          }
+        }
       },
       {
         "id": "Organization:shr-actor-Organization.name",

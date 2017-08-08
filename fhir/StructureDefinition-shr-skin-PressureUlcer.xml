@@ -10,17 +10,17 @@
   <p><pre>shr.skin.PressureUlcer maps to Condition:
   Entry.Informant maps to asserter
   Entry.OriginalCreationDate maps to assertedDate
-  CodeableConcept maps to code
-  ProblemCategory maps to category
+  SpecificType maps to code
+  Category maps to category
   ClinicalStatus maps to clinicalStatus
   Onset maps to onset[x]
   Abatement maps to abatement[x]
   BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource
   Severity maps to severity
-  GradeOrStage maps to stage
-  GradeOrStage.CodeableConcept maps to stage.summary
-  Manifestation maps to evidence
-  Manifestation.ObservationCode maps to evidence.code
+  Stage maps to stage
+  Stage.CodeableConcept maps to stage.summary
+  Observation maps to evidence
+  Observation.SpecificType maps to evidence.code
 </pre></p>
 </div>
   </text>
@@ -32,7 +32,7 @@
   <version value="0.0.1"/>
   <name value="SHR PressureUlcer Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:18.441Z"/>
+  <date value="2017-08-08T15:56:38.387Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -41,7 +41,7 @@
     </telecom>
   </contact>
   <description value="A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="sct-concept"/>
     <uri value="http://snomed.info/conceptdomain"/>
@@ -116,7 +116,7 @@
         <severity value="error"/>
         <human value="If condition is abated, then clinicalStatus must be either inactive, resolved, or remission"/>
         <expression value="abatement.empty() or (abatement as boolean).not()  or clinicalStatus=&#39;resolved&#39; or clinicalStatus=&#39;remission&#39; or clinicalStatus=&#39;inactive&#39;"/>
-        <xpath value="not(f:abatementBoolean=&#39;true&#39; or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), &#39;abatement&#39;)])) or f:clinicalStatus/@value=(&#39;resolved&#39;, &#39;remission&#39;, &#39;inactive&#39;))"/>
+        <xpath value="not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), &#39;abatement&#39;)])) or f:clinicalStatus/@value=(&#39;resolved&#39;, &#39;remission&#39;, &#39;inactive&#39;))"/>
       </constraint>
       <constraint>
         <key value="con-3"/>
@@ -281,7 +281,7 @@
     </element>
     <element id="Condition:shr-skin-PressureUlcer.extension">
       <path value="Condition.extension"/>
-      <slicing id="339">
+      <slicing id="427">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -309,14 +309,14 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Condition:shr-skin-PressureUlcer.extension:generalizedlikelihood">
+    <element id="Condition:shr-skin-PressureUlcer.extension:codeableconcept">
       <path value="Condition.extension"/>
-      <sliceName value="generalizedlikelihood"/>
-      <definition value="Quantitative or qualitative measure of likelihood."/>
+      <sliceName value="codeableconcept"/>
+      <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
       <base>
         <path value="DomainResource.extension"/>
@@ -325,33 +325,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-skin-PressureUlcer.extension:supportingevidencequality">
-      <path value="Condition.extension"/>
-      <sliceName value="supportingevidencequality"/>
-      <definition value="An assessment of the quality and/or quantity of the source information that supports judgment."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -364,7 +338,7 @@
     <element id="Condition:shr-skin-PressureUlcer.extension:includeonproblemlist">
       <path value="Condition.extension"/>
       <sliceName value="includeonproblemlist"/>
-      <definition value="Whether or not to include this problem on the subject&#39;s current problem list."/>
+      <definition value="Whether or not to include this condition on the subject&#39;s current problem list."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -377,7 +351,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -390,7 +364,7 @@
     <element id="Condition:shr-skin-PressureUlcer.extension:whenclinicallyrecognized">
       <path value="Condition.extension"/>
       <sliceName value="whenclinicallyrecognized"/>
-      <definition value="The time at which a condition or problem was first identified in a healthcare context."/>
+      <definition value="The time at which a condition or condition was first identified in a healthcare context."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -403,7 +377,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -429,7 +403,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -442,7 +416,7 @@
     <element id="Condition:shr-skin-PressureUlcer.extension:criticality">
       <path value="Condition.extension"/>
       <sliceName value="criticality"/>
-      <definition value="A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality."/>
+      <definition value="The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -455,7 +429,33 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Condition:shr-skin-PressureUlcer.extension:pressureulcermanifestation">
+      <path value="Condition.extension"/>
+      <sliceName value="pressureulcermanifestation"/>
+      <definition value="Observation regarding the properties and severity of a single pressure ulcer."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcerManifestation-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -493,14 +493,6 @@
     </element>
     <element id="Condition:shr-skin-PressureUlcer.modifierExtension">
       <path value="Condition.modifierExtension"/>
-      <slicing id="340">
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -517,32 +509,6 @@
         <code value="Extension"/>
       </type>
       <isModifier value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-skin-PressureUlcer.modifierExtension:nonoccurrencemodifier">
-      <path value="Condition.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -668,7 +634,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS"/>
+          <reference value="http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -703,7 +669,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ConditionSeverity"/>
         </extension>
-        <strength value="preferred"/>
+        <strength value="required"/>
         <description value="A subjective assessment of the severity of the condition as evaluated by the clinician."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/condition-severity"/>
@@ -744,13 +710,9 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionKind"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Identification of the condition or diagnosis."/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-code"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -787,9 +749,9 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -883,6 +845,10 @@
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
+      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -914,6 +880,10 @@
       <type>
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
       <condition value="con-4"/>
       <mapping>
@@ -994,7 +964,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1089,9 +1059,13 @@
       </type>
       <condition value="con-1"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ConditionStage"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes describing condition stages (e.g. Cancer stages)."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/condition-stage"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1145,7 +1119,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1241,9 +1215,9 @@
       <condition value="con-2"/>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ManifestationVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1305,27 +1279,14 @@
       <short value="SHR PressureUlcer Profile"/>
       <definition value="A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer."/>
     </element>
-    <element id="Condition:shr-skin-PressureUlcer.extension:generalizedlikelihood">
+    <element id="Condition:shr-skin-PressureUlcer.extension:codeableconcept">
       <path value="Condition.extension"/>
-      <sliceName value="generalizedlikelihood"/>
-      <min value="0"/>
+      <sliceName value="codeableconcept"/>
+      <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-skin-PressureUlcer.extension:supportingevidencequality">
-      <path value="Condition.extension"/>
-      <sliceName value="supportingevidencequality"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1338,7 +1299,7 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1351,7 +1312,7 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1364,7 +1325,7 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1377,7 +1338,20 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Condition:shr-skin-PressureUlcer.extension:pressureulcermanifestation">
+      <path value="Condition.extension"/>
+      <sliceName value="pressureulcermanifestation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcerManifestation-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1396,19 +1370,6 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="Condition:shr-skin-PressureUlcer.modifierExtension:nonoccurrencemodifier">
-      <path value="Condition.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-    </element>
     <element id="Condition:shr-skin-PressureUlcer.clinicalStatus">
       <path value="Condition.clinicalStatus"/>
       <min value="1"/>
@@ -1423,7 +1384,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS"/>
+          <reference value="http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -1433,6 +1394,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ConditionSeverity"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A subjective assessment of the severity of the condition as evaluated by the clinician."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/condition-severity"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.code">
       <path value="Condition.code"/>
@@ -1442,6 +1413,12 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="preferred"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.bodySite">
       <path value="Condition.bodySite"/>
@@ -1450,9 +1427,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -1469,6 +1446,10 @@
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
+      </type>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.abatement[x]">
       <path value="Condition.abatement[x]"/>
@@ -1482,6 +1463,10 @@
       <type>
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.assertedDate">
@@ -1513,12 +1498,6 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS"/>
-        </valueSetReference>
-      </binding>
     </element>
     <element id="Condition:shr-skin-PressureUlcer.evidence">
       <path value="Condition.evidence"/>
@@ -1530,9 +1509,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ManifestationVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
     </element>

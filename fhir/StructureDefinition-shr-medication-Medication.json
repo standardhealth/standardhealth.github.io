@@ -3,7 +3,7 @@
   "id": "shr-medication-Medication",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Medication Profile</b></p>\n  <p>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.Medication maps to Medication:\n  CodeableConcept maps to code\n  DoseForm maps to form\n  Ingredient maps to ingredient.item[x].CodeableConcept\n  Ingredient.IngredientAmount maps to ingredient.amount.numerator\n  Ingredient.AmountOfMedication maps to ingredient.amount.denominator\n  Ingredient.IsActiveIngredient maps to ingredient.isActive\n  Brand maps to isBrand\n  OverTheCounter maps to isOverTheCounter\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Medication Profile</b></p>\n  <p>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.Medication maps to Medication:\n  SpecificType maps to code\n  DoseForm maps to form\n  Ingredient maps to ingredient.item[x].CodeableConcept\n  Ingredient.IngredientAmount maps to ingredient.amount.numerator\n  Ingredient.AmountOfMedication maps to ingredient.amount.denominator\n  Ingredient.IsActiveIngredient maps to ingredient.isActive\n  Brand maps to isBrand\n  OverTheCounter maps to isOverTheCounter\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Medication Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:15.994Z",
+  "date": "2017-08-08T15:56:30.666Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "script10.6",
@@ -523,7 +523,7 @@
               "valueString": "MedicationForm"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept defining the form of a medication",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/medication-form-codes"
@@ -562,7 +562,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -666,7 +666,7 @@
         "id": "Medication:shr-medication-Medication.ingredient.item[x]",
         "path": "Medication.ingredient.item[x]",
         "slicing": {
-          "id": "184",
+          "id": "225",
           "discriminator": [
             {
               "type": "type",
@@ -894,7 +894,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1051,7 +1051,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1223,7 +1223,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1437,7 +1437,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MedicationForm"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept defining the form of a medication",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/medication-form-codes"
+          }
+        }
       },
       {
         "id": "Medication:shr-medication-Medication.ingredient",
@@ -1447,7 +1460,7 @@
         "id": "Medication:shr-medication-Medication.ingredient.item[x]",
         "path": "Medication.ingredient.item[x]",
         "slicing": {
-          "id": "184",
+          "id": "225",
           "discriminator": [
             {
               "type": "type",

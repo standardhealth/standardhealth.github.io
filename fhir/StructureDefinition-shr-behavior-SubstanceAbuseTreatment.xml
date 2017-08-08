@@ -8,16 +8,17 @@
   <p>The treatment program used to address a substance abuse problem.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.behavior.SubstanceAbuseTreatment maps to Procedure:
-  ProcedureStatus maps to status
+  SpecificType maps to code
+  Status maps to status
   NonOccurrenceModifier maps to notDone
   NonOccurrenceModifier.Reason maps to notDoneReason
   OccurrenceTime.dateTime maps to performed[x].dateTime
   OccurrenceTime.TimePeriod maps to performed[x].Period
-  ProcedureParticipant maps to performer
-  ProcedureParticipant.PersonOfRecord maps to performer.actor
-  ProcedureParticipant.Practitioner maps to performer.actor
-  ProcedureParticipant.RelatedPerson maps to performer.actor
-  ProcedureParticipant.ParticipationType maps to performer.role
+  Participant maps to performer
+  Participant.PersonOfRecord maps to performer.actor
+  Participant.Practitioner maps to performer.actor
+  Participant.RelatedPerson maps to performer.actor
+  Participant.ParticipationType maps to performer.role
   Facility maps to location
   Reason maps to reasonCode
 </pre></p>
@@ -31,7 +32,7 @@
   <version value="0.0.1"/>
   <name value="SHR SubstanceAbuseTreatment Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:14.546Z"/>
+  <date value="2017-08-08T15:56:26.183Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -40,7 +41,7 @@
     </telecom>
   </contact>
   <description value="The treatment program used to address a substance abuse problem."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -255,7 +256,7 @@
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension">
       <path value="Procedure.extension"/>
-      <slicing id="102">
+      <slicing id="134">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -310,6 +311,32 @@
           <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS"/>
         </valueSetReference>
       </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category">
+      <path value="Procedure.extension"/>
+      <sliceName value="category"/>
+      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -552,16 +579,13 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ProcedureCode"/>
-        </extension>
-        <strength value="example"/>
-        <description value="A code to identify a specific procedure ."/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/procedure-code"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -675,7 +699,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1070,7 +1094,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1261,12 +1285,38 @@
         </valueSetReference>
       </binding>
     </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category">
+      <path value="Procedure.extension"/>
+      <sliceName value="category"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason">
       <path value="Procedure.notDoneReason"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.code">
+      <path value="Procedure.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performed[x]">
       <path value="Procedure.performed[x]"/>

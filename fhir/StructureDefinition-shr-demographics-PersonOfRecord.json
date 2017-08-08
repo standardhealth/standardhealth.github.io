@@ -3,7 +3,7 @@
   "id": "shr-demographics-PersonOfRecord",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PersonOfRecord Profile</b></p>\n  <p>Extended demographic information about the subject of this SHR.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.demographics.PersonOfRecord maps to Patient:\n  HumanName maps to name\n  DateOfBirth maps to birthDate\n  MultipleBirth maps to multipleBirth[x].boolean\n  MultipleBirth.MultipleBirthOrder maps to multipleBirth[x].integer\n  BirthSex maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex\n  PlaceOfBirth maps to http://hl7.org/fhir/StructureDefinition/birthPlace\n  AdministrativeGender maps to gender\n  Race maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\n  Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\n  MaritalStatus maps to maritalStatus\n  MothersMaidenName maps to http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName\n  AddressUsed maps to address\n  Telecom maps to telecom\n  LanguageUsed maps to communication\n  Deceased.boolean maps to deceased[x].boolean\n  MedicalInterpreterNeeded maps to http://hl7.org/fhir/StructureDefinition/patient-interpreterRequired\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PersonOfRecord Profile</b></p>\n  <p>Extended demographic information about the subject of this SHR.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.demographics.PersonOfRecord maps to Patient:\n  HumanName maps to name\n  DateOfBirth maps to birthDate\n  MultipleBirth maps to multipleBirth[x].boolean\n  MultipleBirth.MultipleBirthOrder maps to multipleBirth[x].integer\n  BirthSex maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-birthsex\n  PlaceOfBirth maps to http://hl7.org/fhir/StructureDefinition/birthPlace\n  AdministrativeGender maps to gender\n  Race maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-race\n  Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity\n  MaritalStatus maps to maritalStatus\n  MothersMaidenName maps to http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName\n  AddressUsed maps to address\n  Telecom maps to telecom\n  LanguageUsed maps to communication\n  Deceased maps to deceased[x].boolean\n  MedicalInterpreterNeeded maps to http://hl7.org/fhir/StructureDefinition/patient-interpreterRequired\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR PersonOfRecord Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.188Z",
+  "date": "2017-08-08T15:56:31.936Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -29,7 +29,7 @@
   ],
   "description": "Extended demographic information about the subject of this SHR.",
   "purpose": "Tracking patient is the center of the healthcare process.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "rim",
@@ -297,7 +297,7 @@
         "id": "Patient:shr-demographics-PersonOfRecord.extension",
         "path": "Patient.extension",
         "slicing": {
-          "id": "200",
+          "id": "257",
           "discriminator": [
             {
               "type": "value",
@@ -1087,7 +1087,7 @@
               "valueBoolean": true
             }
           ],
-          "strength": "extensible",
+          "strength": "required",
           "description": "The domestic partnership status of a person.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/marital-status"
@@ -1193,7 +1193,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1555,7 +1555,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1808,7 +1808,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2075,7 +2075,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2535,7 +2535,24 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MaritalStatus"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "required",
+          "description": "The domestic partnership status of a person.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/marital-status"
+          }
+        }
       },
       {
         "id": "Patient:shr-demographics-PersonOfRecord.communication",

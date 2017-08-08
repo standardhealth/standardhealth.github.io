@@ -3,7 +3,7 @@
   "id": "shr-core-DollarAmount",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR DollarAmount Profile</b></p>\n  <p>An amount of money expressed in US dollars.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.DollarAmount maps to Quantity:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.Vocabulary maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR DollarAmount Profile</b></p>\n  <p>An amount of money expressed in US dollars.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.DollarAmount maps to Quantity:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-DollarAmount",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR DollarAmount Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:14.776Z",
+  "date": "2017-08-08T15:56:20.573Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -29,7 +29,7 @@
   ],
   "description": "An amount of money expressed in US dollars.",
   "purpose": "Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -65,7 +65,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -291,7 +291,7 @@
         "definition": "A computer processable form of the unit in some unit representation system.",
         "comment": "The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system.",
         "requirements": "Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest.",
-        "min": 1,
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -323,12 +323,6 @@
       {
         "id": "Quantity:shr-core-DollarAmount.value",
         "path": "Quantity.value",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Quantity:shr-core-DollarAmount.code",
-        "path": "Quantity.code",
         "min": 1,
         "max": "1"
       }

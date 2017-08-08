@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-skin-PressureUlcer"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PressureUlcer Profile</b></p>\n  <p>A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.PressureUlcer maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR PressureUlcer Profile</b></p>\n  <p>A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.PressureUlcer maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  SpecificType maps to code\n  Category maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  Stage maps to stage\n  Stage.CodeableConcept maps to stage.summary\n  Observation maps to evidence\n  Observation.SpecificType maps to evidence.code\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcer"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR PressureUlcer Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-05-10T18:00:18.441Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:38.387Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "sct-concept" ];
@@ -111,7 +111,7 @@
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))" ]
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))" ]
        ], [
          fhir:index 5;
          fhir:ElementDefinition.constraint.key [ fhir:value "con-3" ];
@@ -318,7 +318,7 @@
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "339" ];
+         fhir:Element.id [ fhir:value "427" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -355,10 +355,10 @@
        ]
      ], [
        fhir:index 8;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:generalizedlikelihood" ];
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:codeableconcept" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "generalizedlikelihood" ];
-       fhir:ElementDefinition.definition [ fhir:value "Quantitative or qualitative measure of likelihood." ];
+       fhir:ElementDefinition.sliceName [ fhir:value "codeableconcept" ];
+       fhir:ElementDefinition.definition [ fhir:value "A set of codes drawn from different coding systems, representing the same concept." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
@@ -367,7 +367,7 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
@@ -377,7 +377,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -389,10 +389,10 @@
        ]
      ], [
        fhir:index 9;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:supportingevidencequality" ];
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:includeonproblemlist" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "supportingevidencequality" ];
-       fhir:ElementDefinition.definition [ fhir:value "An assessment of the quality and/or quantity of the source information that supports judgment." ];
+       fhir:ElementDefinition.sliceName [ fhir:value "includeonproblemlist" ];
+       fhir:ElementDefinition.definition [ fhir:value "Whether or not to include this condition on the subject's current problem list." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
@@ -411,7 +411,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -423,10 +423,10 @@
        ]
      ], [
        fhir:index 10;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:includeonproblemlist" ];
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:whenclinicallyrecognized" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "includeonproblemlist" ];
-       fhir:ElementDefinition.definition [ fhir:value "Whether or not to include this problem on the subject's current problem list." ];
+       fhir:ElementDefinition.sliceName [ fhir:value "whenclinicallyrecognized" ];
+       fhir:ElementDefinition.definition [ fhir:value "The time at which a condition or condition was first identified in a healthcare context." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
@@ -445,7 +445,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -457,40 +457,6 @@
        ]
      ], [
        fhir:index 11;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:whenclinicallyrecognized" ];
-       fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "whenclinicallyrecognized" ];
-       fhir:ElementDefinition.definition [ fhir:value "The time at which a condition or problem was first identified in a healthcare context." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "*" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 12;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:preexisting" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "preexisting" ];
@@ -513,7 +479,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -524,11 +490,11 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 13;
+       fhir:index 12;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:criticality" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "criticality" ];
-       fhir:ElementDefinition.definition [ fhir:value "A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality." ];
+       fhir:ElementDefinition.definition [ fhir:value "The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
@@ -547,7 +513,41 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension" ]
+       ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
+       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
+       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+       ]
+     ], [
+       fhir:index 13;
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:pressureulcermanifestation" ];
+       fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "pressureulcermanifestation" ];
+       fhir:ElementDefinition.definition [ fhir:value "Observation regarding the properties and severity of a single pressure ulcer." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcerManifestation-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -595,16 +595,6 @@
        fhir:index 15;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.modifierExtension" ];
-       fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "340" ];
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.ordered [ fhir:value "false"^^xsd:boolean ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
@@ -634,40 +624,6 @@
        ]
      ], [
        fhir:index 16;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.modifierExtension:nonoccurrencemodifier" ];
-       fhir:ElementDefinition.path [ fhir:value "Condition.modifierExtension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "nonoccurrencemodifier" ];
-       fhir:ElementDefinition.definition [ fhir:value "When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "DomainResource.modifierExtension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "*" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 17;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.identifier" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.identifier" ];
        fhir:ElementDefinition.short [ fhir:value "External Ids for this condition" ];
@@ -690,7 +646,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ]
      ], [
-       fhir:index 18;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.clinicalStatus" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.clinicalStatus" ];
        fhir:ElementDefinition.short [ fhir:value "active | recurrence | inactive | remission | resolved" ];
@@ -742,7 +698,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
-       fhir:index 19;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.verificationStatus" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.verificationStatus" ];
        fhir:ElementDefinition.short [ fhir:value "provisional | differential | confirmed | refuted | entered-in-error | unknown" ];
@@ -796,7 +752,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
-       fhir:index 20;
+       fhir:index 19;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.category" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.category" ];
        fhir:ElementDefinition.short [ fhir:value "problem-list-item | encounter-diagnosis" ];
@@ -812,8 +768,8 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -834,7 +790,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "class" ]
        ]
      ], [
-       fhir:index 21;
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.severity" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.severity" ];
        fhir:ElementDefinition.short [ fhir:value "Subjective severity of condition" ];
@@ -853,7 +809,7 @@
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
            fhir:Extension.valueString [ fhir:value "ConditionSeverity" ]
          ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "A subjective assessment of the severity of the condition as evaluated by the clinician." ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://hl7.org/fhir/ValueSet/condition-severity>;
@@ -882,7 +838,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "grade" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 21;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.code" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.code" ];
        fhir:ElementDefinition.short [ fhir:value "Identification of the condition, problem or diagnosis" ];
@@ -901,16 +857,10 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "ConditionKind" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Identification of the condition or diagnosis." ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/condition-code>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/condition-code" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -935,7 +885,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 23;
+       fhir:index 22;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.bodySite" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.bodySite" ];
        fhir:ElementDefinition.short [ fhir:value "Anatomical location, if relevant" ];
@@ -950,10 +900,10 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -970,7 +920,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "363698007" ]
        ]
      ], [
-       fhir:index 24;
+       fhir:index 23;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.subject" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.subject" ];
        fhir:ElementDefinition.short [ fhir:value "Who has the condition?" ];
@@ -1006,7 +956,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 25;
+       fhir:index 24;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.context" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.context" ];
        fhir:ElementDefinition.short [ fhir:value "Encounter or episode when condition first asserted" ];
@@ -1042,7 +992,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "context" ]
        ]
      ], [
-       fhir:index 26;
+       fhir:index 25;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.onset[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.onset[x]" ];
        fhir:ElementDefinition.short [ fhir:value "Estimated or actual date,  date-time, or age" ];
@@ -1061,6 +1011,10 @@
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.type.code [ fhir:value "Range" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1077,7 +1031,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "when.init" ]
        ]
      ], [
-       fhir:index 27;
+       fhir:index 26;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.abatement[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.abatement[x]" ];
        fhir:ElementDefinition.short [ fhir:value "If/when in resolution/remission" ];
@@ -1096,6 +1050,10 @@
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.type.code [ fhir:value "Range" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange" ]
        ];
        fhir:ElementDefinition.condition [
          fhir:value "con-4";
@@ -1111,7 +1069,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "when.done" ]
        ]
      ], [
-       fhir:index 28;
+       fhir:index 27;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.assertedDate" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.assertedDate" ];
        fhir:ElementDefinition.short [ fhir:value "Date record was believed accurate" ];
@@ -1138,7 +1096,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "when.recorded" ]
        ]
      ], [
-       fhir:index 29;
+       fhir:index 28;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.asserter" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.asserter" ];
        fhir:ElementDefinition.short [ fhir:value "Person who asserts this condition" ];
@@ -1173,7 +1131,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.author" ]
        ]
      ], [
-       fhir:index 30;
+       fhir:index 29;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage" ];
        fhir:ElementDefinition.short [ fhir:value "Stage/grade, usually assessed formally" ];
@@ -1189,7 +1147,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -1206,7 +1164,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"stage/grade\"]" ]
        ]
      ], [
-       fhir:index 31;
+       fhir:index 30;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.id" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.id" ];
        fhir:ElementDefinition.representation [
@@ -1232,7 +1190,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 32;
+       fhir:index 31;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
@@ -1262,7 +1220,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 33;
+       fhir:index 32;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -1297,7 +1255,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 34;
+       fhir:index 33;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.summary" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.summary" ];
        fhir:ElementDefinition.short [ fhir:value "Simple summary (disease specific)" ];
@@ -1314,10 +1272,16 @@
          fhir:index 0
        ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ConditionStage" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Codes describing condition stages (e.g. Cancer stages)." ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS" ]
+           fhir:link <http://hl7.org/fhir/ValueSet/condition-stage>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/condition-stage" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -1334,7 +1298,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".value" ]
        ]
      ], [
-       fhir:index 35;
+       fhir:index 34;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.assessment" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.assessment" ];
        fhir:ElementDefinition.short [ fhir:value "Formal record of assessment" ];
@@ -1364,7 +1328,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".self" ]
        ]
      ], [
-       fhir:index 36;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence" ];
        fhir:ElementDefinition.short [ fhir:value "Supporting evidence" ];
@@ -1381,7 +1345,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
@@ -1398,7 +1362,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".outboundRelationship[typeCode=SPRT].target[classCode=OBS, moodCode=EVN]" ]
        ]
      ], [
-       fhir:index 37;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.id" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.id" ];
        fhir:ElementDefinition.representation [
@@ -1424,7 +1388,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 38;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
@@ -1454,7 +1418,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 39;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -1489,7 +1453,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 40;
+       fhir:index 39;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.code" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.code" ];
        fhir:ElementDefinition.short [ fhir:value "Manifestation/symptom" ];
@@ -1507,10 +1471,10 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/core/vs/ManifestationVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/ManifestationVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -1527,7 +1491,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "why" ]
        ]
      ], [
-       fhir:index 41;
+       fhir:index 40;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.detail" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.detail" ];
        fhir:ElementDefinition.short [ fhir:value "Supporting information found elsewhere" ];
@@ -1554,7 +1518,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "why" ]
        ]
      ], [
-       fhir:index 42;
+       fhir:index 41;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.note" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.note" ];
        fhir:ElementDefinition.short [ fhir:value "Additional information about the Condition" ];
@@ -1585,36 +1549,21 @@
        fhir:ElementDefinition.definition [ fhir:value "A single pressure ulcer, tracked over a period of time. Multiple PressureUlcerAssessments (at different times) may be associated with a single PressureUlcer." ]
      ], [
        fhir:index 1;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:generalizedlikelihood" ];
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:codeableconcept" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "generalizedlikelihood" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.sliceName [ fhir:value "codeableconcept" ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 2;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:supportingevidencequality" ];
-       fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "supportingevidencequality" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 3;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:includeonproblemlist" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "includeonproblemlist" ];
@@ -1623,13 +1572,13 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 4;
+       fhir:index 3;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:whenclinicallyrecognized" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "whenclinicallyrecognized" ];
@@ -1638,13 +1587,13 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 5;
+       fhir:index 4;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:preexisting" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "preexisting" ];
@@ -1653,13 +1602,13 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 6;
+       fhir:index 5;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:criticality" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "criticality" ];
@@ -1668,7 +1617,22 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension" ]
+       ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
+       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
+       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 6;
+       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.extension:pressureulcermanifestation" ];
+       fhir:ElementDefinition.path [ fhir:value "Condition.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "pressureulcermanifestation" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-PressureUlcerManifestation-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -1690,27 +1654,12 @@
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 8;
-       fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.modifierExtension:nonoccurrencemodifier" ];
-       fhir:ElementDefinition.path [ fhir:value "Condition.modifierExtension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "nonoccurrencemodifier" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 9;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.clinicalStatus" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.clinicalStatus" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
-       fhir:index 10;
+       fhir:index 9;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.category" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.category" ];
        fhir:ElementDefinition.type [
@@ -1721,21 +1670,34 @@
        fhir:ElementDefinition.binding [
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS" ]
          ]
        ]
      ], [
-       fhir:index 11;
+       fhir:index 10;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.severity" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.severity" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "ConditionSeverity" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "A subjective assessment of the severity of the condition as evaluated by the clinician." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/condition-severity>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/condition-severity" ]
+         ]
        ]
      ], [
-       fhir:index 12;
+       fhir:index 11;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.code" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.code" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
@@ -1744,9 +1706,16 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
+         ]
        ]
      ], [
-       fhir:index 13;
+       fhir:index 12;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.bodySite" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.bodySite" ];
        fhir:ElementDefinition.type [
@@ -1755,14 +1724,14 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/core/vs/BodySiteVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/BodySiteVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/skin/vs/PressureUlcerBodySiteVS" ]
          ]
        ]
      ], [
-       fhir:index 14;
+       fhir:index 13;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.onset[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.onset[x]" ];
        fhir:ElementDefinition.type [
@@ -1776,9 +1745,13 @@
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.type.code [ fhir:value "Range" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange" ]
        ]
      ], [
-       fhir:index 15;
+       fhir:index 14;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.abatement[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.abatement[x]" ];
        fhir:ElementDefinition.type [
@@ -1792,15 +1765,19 @@
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.type.code [ fhir:value "Range" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange" ]
        ]
      ], [
-       fhir:index 16;
+       fhir:index 15;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.assertedDate" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.assertedDate" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
-       fhir:index 17;
+       fhir:index 16;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.asserter" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.asserter" ];
        fhir:ElementDefinition.type [
@@ -1817,31 +1794,24 @@
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
        ]
      ], [
-       fhir:index 18;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage" ]
      ], [
-       fhir:index 19;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.stage.summary" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.stage.summary" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
-       ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS" ]
-         ]
        ]
      ], [
-       fhir:index 20;
+       fhir:index 19;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence" ]
      ], [
-       fhir:index 21;
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Condition:shr-skin-PressureUlcer.evidence.code" ];
        fhir:ElementDefinition.path [ fhir:value "Condition.evidence.code" ];
        fhir:ElementDefinition.type [
@@ -1850,10 +1820,10 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/core/vs/ManifestationVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/ManifestationVS" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
          ]
        ]
      ]
@@ -1869,7 +1839,7 @@
 
 <http://hl7.org/fhir/ValueSet/condition-severity> a fhir:ValueSet .
 
-<http://hl7.org/fhir/ValueSet/condition-code> a fhir:ValueSet .
+<http://hl7.org/fhir/ValueSet/condition-stage> a fhir:ValueSet .
 
 # - ontology header ------------------------------------------------------------
 

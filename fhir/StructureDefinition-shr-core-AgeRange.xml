@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="shr-core-AgeRange"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+  <p><b>SHR AgeRange Profile</b></p>
+  <p>A quantitative range of ages. One of the two ages must be specified.</p>
+  <p><b>SHR Mapping Summary</b></p>
+  <p><pre>shr.core.AgeRange maps to Range:
+  LowerBound maps to low
+  UpperBound maps to high
+</pre></p>
+</div>
+  </text>
+  <url value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
+  <identifier>
+    <system value="http://standardhealthrecord.org"/>
+    <value value="shr.core.AgeRange"/>
+  </identifier>
+  <version value="0.0.1"/>
+  <name value="SHR AgeRange Profile"/>
+  <status value="draft"/>
+  <date value="2017-08-08T15:56:20.578Z"/>
+  <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.standardhealthrecord.org"/>
+    </telecom>
+  </contact>
+  <description value="A quantitative range of ages. One of the two ages must be specified."/>
+  <purpose value="Need to be able to specify ranges of values."/>
+  <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="Range"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Range"/>
+  <derivation value="constraint"/>
+  <snapshot>
+    <element id="Range:shr-core-AgeRange">
+      <path value="Range"/>
+      <short value="SHR AgeRange Profile"/>
+      <definition value="A quantitative range of ages. One of the two ages must be specified."/>
+      <comment value="The stated low and high value are assumed to have arbitrarily high precision when it comes to determining which values are in the range. I.e. 1.99 is not in the range 2 -&gt; 3."/>
+      <min value="0"/>
+      <max value="*"/>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <constraint>
+        <key value="rng-2"/>
+        <severity value="error"/>
+        <human value="If present, low SHALL have a lower value than high"/>
+        <expression value="low.empty() or high.empty() or (low &lt;= high)"/>
+        <xpath value="not(exists(f:low/f:value/@value)) or not(exists(f:high/f:value/@value)) or (number(f:low/f:value/@value) &lt;= number(f:high/f:value/@value))"/>
+      </constraint>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="NR and also possibly SN (but see also quantity)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="IVL&lt;QTY[not(type=&quot;TS&quot;)]&gt; [lowClosed=&quot;true&quot; and highClosed=&quot;true&quot;]or URG&lt;QTY[not(type=&quot;TS&quot;)]&gt;"/>
+      </mapping>
+    </element>
+    <element id="Range:shr-core-AgeRange.id">
+      <path value="Range.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Range:shr-core-AgeRange.extension">
+      <path value="Range.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Range:shr-core-AgeRange.low">
+      <path value="Range.low"/>
+      <short value="Low limit"/>
+      <definition value="The low limit. The boundary is inclusive."/>
+      <comment value="If the low element is missing, the low boundary is not known."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-LowerBound"/>
+      </type>
+      <condition value="rng-2"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="NR.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./low"/>
+      </mapping>
+    </element>
+    <element id="Range:shr-core-AgeRange.high">
+      <path value="Range.high"/>
+      <short value="High limit"/>
+      <definition value="The high limit. The boundary is inclusive."/>
+      <comment value="If the high element is missing, the high boundary is not known."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-UpperBound"/>
+      </type>
+      <condition value="rng-2"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="NR.2"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./high"/>
+      </mapping>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="Range:shr-core-AgeRange">
+      <path value="Range"/>
+      <short value="SHR AgeRange Profile"/>
+      <definition value="A quantitative range of ages. One of the two ages must be specified."/>
+    </element>
+    <element id="Range:shr-core-AgeRange.low">
+      <path value="Range.low"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-LowerBound"/>
+      </type>
+    </element>
+    <element id="Range:shr-core-AgeRange.high">
+      <path value="Range.high"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-UpperBound"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

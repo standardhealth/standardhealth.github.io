@@ -9,8 +9,8 @@
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.core.Coding maps to Coding:
   code maps to code
-  Vocabulary maps to system
-  VocabularyVersion maps to version
+  CodeSystem maps to system
+  CodeSystemVersion maps to version
   DisplayText maps to display
 </pre></p>
 </div>
@@ -23,7 +23,7 @@
   <version value="0.0.1"/>
   <name value="SHR Coding Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.118Z"/>
+  <date value="2017-08-08T15:56:20.557Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -33,7 +33,7 @@
   </contact>
   <description value="Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code."/>
   <purpose value="References to codes are very common in healthcare models."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -67,7 +67,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -138,40 +138,6 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Coding:shr-core-Coding.extension:codingqualifier">
-      <path value="Coding.extension"/>
-      <sliceName value="codingqualifier"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <definition value="A description of the purpose or origin of the code that assists in the interpretation of the code."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodingQualifier-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
     <element id="Coding:shr-core-Coding.system">
       <path value="Coding.system"/>
       <short value="Identity of the terminology system"/>
@@ -226,7 +192,7 @@
       <short value="Symbol in syntax defined by the system"/>
       <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
       <requirements value="Need to refer to a particular code in the system."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="code"/>
@@ -303,24 +269,6 @@
       <path value="Coding"/>
       <short value="SHR Coding Profile"/>
       <definition value="Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code."/>
-    </element>
-    <element id="Coding:shr-core-Coding.extension:codingqualifier">
-      <path value="Coding.extension"/>
-      <sliceName value="codingqualifier"/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodingQualifier-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Coding:shr-core-Coding.code">
-      <path value="Coding.code"/>
-      <min value="1"/>
-      <max value="1"/>
     </element>
   </differential>
 </StructureDefinition>

@@ -3,7 +3,7 @@
   "id": "shr-lab-HIVScreeningTestRequest",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR HIVScreeningTestRequest Profile</b></p>\n  <p>A request for a rapid HIV screening test.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lab.HIVScreeningTestRequest maps to ProcedureRequest:\n  Entry.Author maps to requester.agent\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Reason maps to reasonCode\n  OccurrenceTime maps to authoredOn   // or could potentially map Entry.DateEntered to authoredOn\n  ActionCode maps to code\n  RequestNotToPerformActionModifier maps to doNotPerform\n  RequestStatus maps to status\n  RequestedPerformanceTime maps to occurrence[x]\n  PriorityOfRequest maps to priority\n  RequestedPerformerType maps to performerType\n  RequestedPerformer maps to performer\n  BodySite maps to bodySite\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR HIVScreeningTestRequest Profile</b></p>\n  <p>A request for a rapid HIV screening test.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.lab.HIVScreeningTestRequest maps to ProcedureRequest:\n  Entry.Author maps to requester.agent\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Reason maps to reasonCode\n  OccurrenceTime maps to authoredOn   // or could potentially map Entry.DateEntered to authoredOn\n  SpecificType maps to code\n  NonOccurrenceModifier maps to doNotPerform\n  Status maps to status\n  RequestedPerformanceTime maps to occurrence[x]\n  PriorityOfRequest maps to priority\n  RequestedPerformerType maps to performerType\n  RequestedPerformer maps to performer\n  BodySite maps to bodySite\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-HIVScreeningTestRequest",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR HIVScreeningTestRequest Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.510Z",
+  "date": "2017-08-08T15:56:32.879Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A request for a rapid HIV screening test.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -300,7 +300,7 @@
         "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.extension",
         "path": "ProcedureRequest.extension",
         "slicing": {
-          "id": "216",
+          "id": "278",
           "discriminator": [
             {
               "type": "value",
@@ -329,6 +329,39 @@
             "code": "Extension"
           }
         ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.extension:category",
+        "path": "ProcedureRequest.extension",
+        "sliceName": "category",
+        "definition": "A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -438,17 +471,6 @@
       {
         "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.modifierExtension",
         "path": "ProcedureRequest.modifierExtension",
-        "slicing": {
-          "id": "217",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -469,39 +491,6 @@
           }
         ],
         "isModifier": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.modifierExtension:nonoccurrencemodifier",
-        "path": "ProcedureRequest.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
-        "definition": "When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -1145,7 +1134,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1266,6 +1255,10 @@
         "min": 1,
         "max": "1",
         "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
@@ -1676,6 +1669,22 @@
         "definition": "A request for a rapid HIV screening test."
       },
       {
+        "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.extension:category",
+        "path": "ProcedureRequest.extension",
+        "sliceName": "category",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
         "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.extension:participant",
         "path": "ProcedureRequest.extension",
         "sliceName": "participant",
@@ -1721,22 +1730,6 @@
         ],
         "mustSupport": false,
         "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.modifierExtension:nonoccurrencemodifier",
-        "path": "ProcedureRequest.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
         "isSummary": false
       },
       {
@@ -1796,6 +1789,10 @@
         "id": "ProcedureRequest:shr-lab-HIVScreeningTestRequest.requester.agent",
         "path": "ProcedureRequest.requester.agent",
         "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"

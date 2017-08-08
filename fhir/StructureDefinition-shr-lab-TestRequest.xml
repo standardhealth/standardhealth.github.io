@@ -13,9 +13,9 @@
   Entry.AssociatedEncounter maps to context
   Reason maps to reasonCode
   OccurrenceTime maps to authoredOn   // or could potentially map Entry.DateEntered to authoredOn
-  ActionCode maps to code
-  RequestNotToPerformActionModifier maps to doNotPerform
-  RequestStatus maps to status
+  SpecificType maps to code
+  NonOccurrenceModifier maps to doNotPerform
+  Status maps to status
   RequestedPerformanceTime maps to occurrence[x]
   PriorityOfRequest maps to priority
   RequestedPerformerType maps to performerType
@@ -33,7 +33,7 @@
   <version value="0.0.1"/>
   <name value="SHR TestRequest Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.354Z"/>
+  <date value="2017-08-08T15:56:32.383Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -42,7 +42,7 @@
     </telecom>
   </contact>
   <description value="A record of a request (order) for a test to be performed."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -269,7 +269,7 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.extension">
       <path value="ProcedureRequest.extension"/>
-      <slicing id="210">
+      <slicing id="271">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -292,6 +292,32 @@
       <type>
         <code value="Extension"/>
       </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.extension:category">
+      <path value="ProcedureRequest.extension"/>
+      <sliceName value="category"/>
+      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -377,14 +403,6 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension">
       <path value="ProcedureRequest.modifierExtension"/>
-      <slicing id="211">
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -401,32 +419,6 @@
         <code value="Extension"/>
       </type>
       <isModifier value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension:nonoccurrencemodifier">
-      <path value="ProcedureRequest.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -748,9 +740,9 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -955,7 +947,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1050,6 +1042,10 @@
       <definition value="The device, practitioner or organization who initiated the request."/>
       <min value="1"/>
       <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
@@ -1393,6 +1389,19 @@
       <short value="SHR TestRequest Profile"/>
       <definition value="A record of a request (order) for a test to be performed."/>
     </element>
+    <element id="ProcedureRequest:shr-lab-TestRequest.extension:category">
+      <path value="ProcedureRequest.extension"/>
+      <sliceName value="category"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.extension:participant">
       <path value="ProcedureRequest.extension"/>
       <sliceName value="participant"/>
@@ -1432,19 +1441,6 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="ProcedureRequest:shr-lab-TestRequest.modifierExtension:nonoccurrencemodifier">
-      <path value="ProcedureRequest.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-    </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.code">
       <path value="ProcedureRequest.code"/>
       <type>
@@ -1452,9 +1448,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -1487,6 +1483,10 @@
     </element>
     <element id="ProcedureRequest:shr-lab-TestRequest.requester.agent">
       <path value="ProcedureRequest.requester.agent"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>

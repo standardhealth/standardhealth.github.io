@@ -3,7 +3,7 @@
   "id": "shr-core-Identifier",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Identifier Profile</b></p>\n  <p>A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Identifier maps to Identifier:\n  string maps to value\n  TimePeriod maps to period\n  Organization maps to assigner\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Identifier Profile</b></p>\n  <p>A unique string that identifies a specific person or thing.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Identifier maps to Identifier:\n  string maps to value\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Identifier Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.160Z",
+  "date": "2017-08-08T15:56:20.560Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,9 +27,9 @@
       ]
     }
   ],
-  "description": "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.",
+  "description": "A unique string that identifies a specific person or thing.",
   "purpose": "Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -58,7 +58,7 @@
         "id": "Identifier:shr-core-Identifier",
         "path": "Identifier",
         "short": "SHR Identifier Profile",
-        "definition": "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.",
+        "definition": "A unique string that identifies a specific person or thing.",
         "min": 0,
         "max": "*",
         "condition": [
@@ -69,7 +69,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -321,8 +321,7 @@
         "max": "1",
         "type": [
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Period"
           }
         ],
         "isSummary": true,
@@ -352,7 +351,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
           }
         ],
         "isSummary": true,
@@ -379,33 +378,13 @@
         "id": "Identifier:shr-core-Identifier",
         "path": "Identifier",
         "short": "SHR Identifier Profile",
-        "definition": "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors."
+        "definition": "A unique string that identifies a specific person or thing."
       },
       {
         "id": "Identifier:shr-core-Identifier.value",
         "path": "Identifier.value",
         "min": 1,
         "max": "1"
-      },
-      {
-        "id": "Identifier:shr-core-Identifier.period",
-        "path": "Identifier.period",
-        "type": [
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          }
-        ]
-      },
-      {
-        "id": "Identifier:shr-core-Identifier.assigner",
-        "path": "Identifier.assigner",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
-          }
-        ]
       }
     ]
   }
