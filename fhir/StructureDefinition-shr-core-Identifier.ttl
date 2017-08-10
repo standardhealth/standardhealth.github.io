@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-Identifier"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Identifier Profile</b></p>\n  <p>A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Identifier maps to Identifier:\n  string maps to value\n  TimePeriod maps to period\n  Organization maps to assigner\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Identifier Profile</b></p>\n  <p>A unique string that identifies a specific person or thing.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Identifier maps to Identifier:\n  string maps to value\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Identifier Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-05-10T18:00:16.160Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.560Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -31,9 +31,9 @@
        fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.description [ fhir:value "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors."];
+  fhir:StructureDefinition.description [ fhir:value "A unique string that identifies a specific person or thing."];
   fhir:StructureDefinition.purpose [ fhir:value "Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
@@ -61,7 +61,7 @@
        fhir:Element.id [ fhir:value "Identifier:shr-core-Identifier" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Identifier Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors." ];
+       fhir:ElementDefinition.definition [ fhir:value "A unique string that identifies a specific person or thing." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.condition [
@@ -73,7 +73,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -312,8 +312,7 @@
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -341,7 +340,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Organization" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -365,31 +364,13 @@
        fhir:Element.id [ fhir:value "Identifier:shr-core-Identifier" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Identifier Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "A numeric or alphanumeric string that is associated with a single object or entity within a given system. Typically, identifiers are used to connect content in resources to external content available in other frameworks or protocols. Identifiers are associated with objects, and may be changed or retired due to human or system process and errors." ]
+       fhir:ElementDefinition.definition [ fhir:value "A unique string that identifies a specific person or thing." ]
      ], [
        fhir:index 1;
        fhir:Element.id [ fhir:value "Identifier:shr-core-Identifier.value" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.value" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "Identifier:shr-core-Identifier.period" ];
-       fhir:ElementDefinition.path [ fhir:value "Identifier.period" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
-       ]
-     ], [
-       fhir:index 3;
-       fhir:Element.id [ fhir:value "Identifier:shr-core-Identifier.assigner" ];
-       fhir:ElementDefinition.path [ fhir:value "Identifier.assigner" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
-       ]
      ]
   ] .
 

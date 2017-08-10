@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-actor-Organization"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Organization Profile</b></p>\n  <p>A social or legal structure formed by human beings.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.actor.Organization maps to Organization:\n  OrganizationName maps to name\n  OrganizationAlias maps to alias  // I wish FHIR allowed multiple names, but it doesn't\n  OrganizationType maps to type\n  OrganizationIdentifyingCode maps to identifier\n  AddressUsed maps to address\n  Telecom maps to telecom\n  ActiveFlag maps to active\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Organization Profile</b></p>\n  <p>A social or legal structure formed by human beings.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.actor.Organization maps to Organization:\n  OrganizationName maps to name\n  OrganizationAlias maps to alias  // I wish FHIR allowed multiple names, but it doesn't\n  SpecificType maps to type\n  OrganizationIdentifyingCode maps to identifier\n  AddressUsed maps to address\n  Telecom maps to telecom\n  ActiveFlag maps to active\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Organization Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-05-10T18:00:13.131Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.450Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A social or legal structure formed by human beings."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
@@ -374,7 +374,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Identifier" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier" ]
        ];
        fhir:ElementDefinition.condition [
          fhir:value "org-1";
@@ -454,7 +454,7 @@
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
            fhir:Extension.valueString [ fhir:value "OrganizationType" ]
          ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "Used to categorize the organization" ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://hl7.org/fhir/ValueSet/organization-type>;
@@ -656,7 +656,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -888,7 +888,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Identifier" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier" ]
        ]
      ], [
        fhir:index 2;
@@ -900,6 +900,19 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "OrganizationType" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Used to categorize the organization" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/organization-type>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/organization-type" ]
+         ]
        ]
      ], [
        fhir:index 3;

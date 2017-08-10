@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-procedure-Procedure"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  ProcedureStatus maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  ProcedureParticipant maps to performer\n  ProcedureParticipant.PersonOfRecord maps to performer.actor\n  ProcedureParticipant.Practitioner maps to performer.actor\n  ProcedureParticipant.RelatedPerson maps to performer.actor\n  ProcedureParticipant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  SpecificType maps to code\n  Status maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  Participant maps to performer\n  Participant.PersonOfRecord maps to performer.actor\n  Participant.Practitioner maps to performer.actor\n  Participant.RelatedPerson maps to performer.actor\n  Participant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-Procedure"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Procedure Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-05-10T18:00:16.167Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:31.145Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -293,7 +293,7 @@
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "194" ];
+         fhir:Element.id [ fhir:value "238" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -330,10 +330,10 @@
        ]
      ], [
        fhir:index 8;
-       fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.extension:codeableconcept" ];
+       fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.extension:category" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "codeableconcept" ];
-       fhir:ElementDefinition.definition [ fhir:value "A set of codes drawn from different coding systems, representing the same concept." ];
+       fhir:ElementDefinition.sliceName [ fhir:value "category" ];
+       fhir:ElementDefinition.definition [ fhir:value "A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
        fhir:ElementDefinition.alias [
          fhir:value "extensions";
@@ -342,8 +342,8 @@
          fhir:value "user content";
          fhir:index 1
        ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "DomainResource.extension" ];
          fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
@@ -352,7 +352,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -654,20 +654,15 @@
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "ProcedureCode" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "A code to identify a specific procedure ." ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/procedure-code>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/procedure-code" ]
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -800,7 +795,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -1278,7 +1273,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -1496,15 +1491,15 @@
        fhir:ElementDefinition.definition [ fhir:value "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy." ]
      ], [
        fhir:index 1;
-       fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.extension:codeableconcept" ];
+       fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.extension:category" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "codeableconcept" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "category" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension" ]
        ];
        fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
@@ -1520,6 +1515,22 @@
        ]
      ], [
        fhir:index 3;
+       fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.code" ];
+       fhir:ElementDefinition.path [ fhir:value "Procedure.code" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS" ]
+         ]
+       ]
+     ], [
+       fhir:index 4;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.performed[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.performed[x]" ];
        fhir:ElementDefinition.type [
@@ -1531,11 +1542,11 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
        ]
      ], [
-       fhir:index 4;
+       fhir:index 5;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.performer" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.performer" ]
      ], [
-       fhir:index 5;
+       fhir:index 6;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.performer.role" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.performer.role" ];
        fhir:ElementDefinition.type [
@@ -1551,7 +1562,7 @@
          ]
        ]
      ], [
-       fhir:index 6;
+       fhir:index 7;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.performer.actor" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.performer.actor" ];
        fhir:ElementDefinition.type [
@@ -1568,7 +1579,7 @@
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
        ]
      ], [
-       fhir:index 7;
+       fhir:index 8;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.location" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.location" ];
        fhir:ElementDefinition.type [
@@ -1577,7 +1588,7 @@
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility" ]
        ]
      ], [
-       fhir:index 8;
+       fhir:index 9;
        fhir:Element.id [ fhir:value "Procedure:shr-procedure-Procedure.reasonCode" ];
        fhir:ElementDefinition.path [ fhir:value "Procedure.reasonCode" ];
        fhir:ElementDefinition.type [
@@ -1597,8 +1608,6 @@
 <http://hl7.org/fhir/ValueSet/procedure-not-performed-reason> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/procedure-category> a fhir:ValueSet .
-
-<http://hl7.org/fhir/ValueSet/procedure-code> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/v3-ParticipationType> a fhir:ValueSet .
 

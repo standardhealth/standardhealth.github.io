@@ -3,7 +3,7 @@
   "id": "shr-medication-MedicationUse",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MedicationUse Profile</b></p>\n  <p>Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.MedicationUse maps to MedicationStatement:\n  Medication maps to medication[x].Reference\n  PeriodOfUse maps to effective[x].Period\n  Reason maps to reasonCode\n  MedicationWasTaken maps to taken\n  constrain dosage to 0..1\n  Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity\n  Dosage.AmountPerDose.&lt;TBD &quot;Range&quot;&gt; maps to dosage.dose[x].Range\n  Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean\n  Dosage.DoseInstructionsText maps to dosage.text\n  Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction\n  Dosage.RouteIntoBody maps to dosage.route\n  Dosage.AdministrationMethod maps to dosage.method\n  Dosage.AdministrationBodySite maps to dosage.site\n  Dosage.MaximumDosePerTimePeriod maps to dosage.maxDosePerPeriod\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MedicationUse Profile</b></p>\n  <p>Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.medication.MedicationUse maps to MedicationStatement:\n  Medication maps to medication[x].Reference\n  PeriodOfUse maps to effective[x].Period\n  Reason maps to reasonCode\n  MedicationWasTaken maps to taken\n  constrain dosage to 0..1\n  Dosage.AmountPerDose.Quantity maps to dosage.dose[x].SimpleQuantity\n  Dosage.AmountPerDose.&lt;TBD &quot;Range&quot;&gt; maps to dosage.dose[x].Range\n  Dosage.DoseAsNeededIndicator maps to dosage.asNeeded[x].boolean\n  Dosage.DoseInstructionsText maps to dosage.text\n  Dosage.AdditionalDoseInstruction maps to dosage.additionalInstruction\n  Dosage.RouteIntoBody maps to dosage.route\n  Dosage.AdministrationMethod maps to dosage.method\n  Dosage.AdministrationBodySite maps to dosage.site\n  Dosage.MaximumDosePerTimePeriod maps to dosage.maxDosePerPeriod\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationUse",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR MedicationUse Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.005Z",
+  "date": "2017-08-08T15:56:30.680Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,8 +27,8 @@
       ]
     }
   ],
-  "description": "Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.",
-  "fhirVersion": "3.0.0",
+  "description": "Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -62,7 +62,7 @@
         "id": "MedicationStatement:shr-medication-MedicationUse",
         "path": "MedicationStatement",
         "short": "SHR MedicationUse Profile",
-        "definition": "Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.",
+        "definition": "Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.",
         "comment": "When interpreting a medicationStatement, the value of the status and NotTaken needed to be considered:\rMedicationStatement.status + MedicationStatement.wasNotTaken\rStatus=Active + NotTaken=T = Not currently taking\rStatus=Completed + NotTaken=T = Not taken in the past\rStatus=Intended + NotTaken=T = No intention of taking\rStatus=Active + NotTaken=F = Taking, but not as prescribed\rStatus=Active + NotTaken=F = Taking\rStatus=Intended +NotTaken= F = Will be taking (not started)\rStatus=Completed + NotTaken=F = Taken in past\rStatus=In Error + NotTaken=N/A = In Error.",
         "min": 0,
         "max": "*",
@@ -296,7 +296,7 @@
         "id": "MedicationStatement:shr-medication-MedicationUse.extension",
         "path": "MedicationStatement.extension",
         "slicing": {
-          "id": "186",
+          "id": "228",
           "discriminator": [
             {
               "type": "value",
@@ -615,12 +615,27 @@
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.medication[x]",
         "path": "MedicationStatement.medication[x]",
+        "slicing": {
+          "id": "226",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "What medication was taken",
         "definition": "Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.",
         "comment": "If only a code is specified, then it needs to be a code for a specific product. If more information is required, then the use of the medication resource is recommended.  For example if you require form or lot number, then you must reference the Medication resource. .",
         "min": 1,
         "max": "1",
         "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
@@ -654,6 +669,28 @@
             "map": "what"
           }
         ]
+      },
+      {
+        "id": "MedicationStatement:shr-medication-MedicationUse.medicationCodeableConcept:shr-core-CodeableConcept",
+        "path": "MedicationStatement.medicationCodeableConcept",
+        "sliceName": "shr-core-CodeableConcept",
+        "short": "What medication was taken",
+        "definition": "Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationVS"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.effective[x]",
@@ -1258,7 +1295,7 @@
               "valueString": "RouteOfAdministration"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/route-codes"
@@ -1294,7 +1331,7 @@
               "valueString": "MedicationAdministrationMethod"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept describing the technique by which the medicine is administered.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/administration-method-codes"
@@ -1435,7 +1472,7 @@
         "id": "MedicationStatement:shr-medication-MedicationUse",
         "path": "MedicationStatement",
         "short": "SHR MedicationUse Profile",
-        "definition": "Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."
+        "definition": "Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.extension:adherence",
@@ -1456,12 +1493,43 @@
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.medication[x]",
         "path": "MedicationStatement.medication[x]",
+        "slicing": {
+          "id": "226",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
           {
             "code": "Reference",
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
           }
         ]
+      },
+      {
+        "id": "MedicationStatement:shr-medication-MedicationUse.medicationCodeableConcept:shr-core-CodeableConcept",
+        "path": "MedicationStatement.medicationCodeableConcept",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationVS"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.effective[x]",
@@ -1542,7 +1610,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "RouteOfAdministration"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.dosage.method",
@@ -1552,7 +1633,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "MedicationAdministrationMethod"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept describing the technique by which the medicine is administered.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/administration-method-codes"
+          }
+        }
       },
       {
         "id": "MedicationStatement:shr-medication-MedicationUse.dosage.dose[x]",

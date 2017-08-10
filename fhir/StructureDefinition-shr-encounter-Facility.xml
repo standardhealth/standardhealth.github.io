@@ -27,7 +27,7 @@
   <version value="0.0.1"/>
   <name value="SHR Facility Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.231Z"/>
+  <date value="2017-08-08T15:56:32.008Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -36,7 +36,7 @@
     </telecom>
   </contact>
   <description value="Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -239,7 +239,7 @@
     </element>
     <element id="Location:shr-encounter-Facility.extension">
       <path value="Location.extension"/>
-      <slicing id="203">
+      <slicing id="260">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -491,7 +491,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="LocationType"/>
         </extension>
-        <strength value="extensible"/>
+        <strength value="required"/>
         <description value="Indicates the type of function performed at the location."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType"/>
@@ -582,7 +582,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -783,6 +783,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="LocationType"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Indicates the type of function performed at the location."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/v3-ServiceDeliveryLocationRoleType"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Location:shr-encounter-Facility.telecom">
       <path value="Location.telecom"/>

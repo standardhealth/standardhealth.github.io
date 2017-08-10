@@ -3,7 +3,7 @@
   "id": "shr-oncology-BreastCancerReceptorStatus",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR BreastCancerReceptorStatus Profile</b></p>\n  <p>Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.BreastCancerReceptorStatus maps to DiagnosticReport:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  PanelCode maps to code\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  Interpretation maps to codedDiagnosis\n  ServiceCategory maps to category\n  Comment maps to conclusion\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  ReportStatus maps to status\n  EstrogenReceptorStatus maps to result (slice on = code)\n  ProgesteroneReceptorStatus maps to result\n  HumanEpiduralGrowthFactorReceptor2Status maps to result\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR BreastCancerReceptorStatus Profile</b></p>\n  <p>Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.BreastCancerReceptorStatus maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  SpecificType maps to code\n  Category maps to category\n  BodySite maps to bodySite\n  Status maps to status\n  Method maps to method\n  Participant maps to performer \t// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  DataAbsentReason maps to dataAbsentReason\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Interpretation maps to interpretation\n  Comment maps to comment\n  constrain component to 0..0\n  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-BreastCancerReceptorStatus",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR BreastCancerReceptorStatus Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:17.309Z",
+  "date": "2017-08-08T15:56:34.423Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,13 +28,18 @@
     }
   ],
   "description": "Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status",
-  "purpose": "To support reporting for any diagnostic report into a clinical data repository.",
-  "fhirVersion": "3.0.0",
+  "purpose": "Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms.",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
       "uri": "http://hl7.org/fhir/workflow",
       "name": "Workflow Mapping"
+    },
+    {
+      "identity": "sct-concept",
+      "uri": "http://snomed.info/conceptdomain",
+      "name": "SNOMED CT Concept Domain Binding"
     },
     {
       "identity": "v2",
@@ -50,28 +55,31 @@
       "identity": "w5",
       "uri": "http://hl7.org/fhir/w5",
       "name": "W5 Mapping"
+    },
+    {
+      "identity": "sct-attr",
+      "uri": "http://snomed.info/sct",
+      "name": "SNOMED CT Attribute Binding"
     }
   ],
   "kind": "resource",
   "abstract": false,
-  "type": "DiagnosticReport",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport",
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
   "derivation": "constraint",
   "snapshot": {
     "element": [
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus",
-        "path": "DiagnosticReport",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus",
+        "path": "Observation",
         "short": "SHR BreastCancerReceptorStatus Profile",
         "definition": "Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status",
-        "comment": "This is intended to capture a single report, and is not suitable for use in displaying summary information that covers multiple reports.  For example, this resource has not been designed for laboratory cumulative reporting formats nor detailed structured reports for sequencing.",
+        "comment": "Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc.",
         "alias": [
-          "Report",
-          "Test",
-          "Result",
+          "Vital Signs",
+          "Measurement",
           "Results",
-          "Labs",
-          "Laboratory"
+          "Tests"
         ],
         "min": 0,
         "max": "*",
@@ -107,6 +115,20 @@
             "expression": "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
             "xpath": "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))",
             "source": "DomainResource"
+          },
+          {
+            "key": "obs-7",
+            "severity": "error",
+            "human": "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
+            "expression": "value.empty() or code!=component.code",
+            "xpath": "not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
+          },
+          {
+            "key": "obs-6",
+            "severity": "error",
+            "human": "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
+            "expression": "dataAbsentReason.empty() or value.empty()",
+            "xpath": "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
           }
         ],
         "mapping": [
@@ -119,8 +141,12 @@
             "map": "Event"
           },
           {
+            "identity": "sct-concept",
+            "map": "< 363787002 |Observable entity|"
+          },
+          {
             "identity": "v2",
-            "map": "ORU -> OBR"
+            "map": "OBX"
           },
           {
             "identity": "rim",
@@ -133,8 +159,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.id",
-        "path": "DiagnosticReport.id",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.id",
+        "path": "Observation.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
         "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
@@ -153,8 +179,8 @@
         "isSummary": true
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.meta",
-        "path": "DiagnosticReport.meta",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.meta",
+        "path": "Observation.meta",
         "short": "Metadata about the resource",
         "definition": "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.",
         "min": 0,
@@ -172,8 +198,8 @@
         "isSummary": true
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.implicitRules",
-        "path": "DiagnosticReport.implicitRules",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.implicitRules",
+        "path": "Observation.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
         "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
@@ -193,8 +219,8 @@
         "isSummary": true
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.language",
-        "path": "DiagnosticReport.language",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.language",
+        "path": "Observation.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
         "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
@@ -235,8 +261,8 @@
         }
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.text",
-        "path": "DiagnosticReport.text",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.text",
+        "path": "Observation.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
         "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
@@ -269,8 +295,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.contained",
-        "path": "DiagnosticReport.contained",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.contained",
+        "path": "Observation.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
         "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
@@ -299,10 +325,10 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension",
-        "path": "DiagnosticReport.extension",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension",
+        "path": "Observation.extension",
         "slicing": {
-          "id": "267",
+          "id": "332",
           "discriminator": [
             {
               "type": "value",
@@ -339,10 +365,10 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:observationreason",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "observationreason",
-        "definition": "The reason for making the observation.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:reason",
+        "path": "Observation.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -358,7 +384,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
           }
         ],
         "mustSupport": false,
@@ -372,10 +398,10 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:observationmethod",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "observationmethod",
-        "definition": "The method of the observation, for example, the specific imaging technical or assessment vehicle.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:occurrencetime",
+        "path": "Observation.extension",
+        "sliceName": "occurrencetime",
+        "definition": "The point in time or span of time in which something happens.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -391,7 +417,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
           }
         ],
         "mustSupport": false,
@@ -405,10 +431,43 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:participant",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "participant",
-        "definition": "A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:associatedstudy",
+        "path": "Observation.extension",
+        "sliceName": "associatedstudy",
+        "definition": "The clinical trial or other formal study related to this finding.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:observationqualifier",
+        "path": "Observation.extension",
+        "sliceName": "observationqualifier",
+        "definition": "A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -424,7 +483,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"
           }
         ],
         "mustSupport": false,
@@ -438,10 +497,10 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:setting",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "setting",
-        "definition": "Description of the place or type of surroundings where something is positioned or where an event takes place.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:referencerange",
+        "path": "Observation.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -457,7 +516,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
           }
         ],
         "mustSupport": false,
@@ -471,17 +530,17 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:location",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "location",
-        "definition": "A position, site, or point in space where something can be found.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:estrogenreceptorstatus",
+        "path": "Observation.extension",
+        "sliceName": "estrogenreceptorstatus",
+        "definition": "Estrogen receptor alpha is the predominant estrogen receptor expressed in breast tissue and is overexpressed in around 50% of breast carcinomas. ER status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
         ],
         "min": 0,
-        "max": "*",
+        "max": "1",
         "base": {
           "path": "DomainResource.extension",
           "min": 0,
@@ -490,7 +549,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-EstrogenReceptorStatus-extension"
           }
         ],
         "mustSupport": false,
@@ -504,10 +563,76 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.modifierExtension",
-        "path": "DiagnosticReport.modifierExtension",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:progesteronereceptorstatus",
+        "path": "Observation.extension",
+        "sliceName": "progesteronereceptorstatus",
+        "definition": "Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ProgesteroneReceptorStatus-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:humanepiduralgrowthfactorreceptor2status",
+        "path": "Observation.extension",
+        "sliceName": "humanepiduralgrowthfactorreceptor2status",
+        "definition": "HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HumanEpiduralGrowthFactorReceptor2Status-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension",
+        "path": "Observation.modifierExtension",
         "slicing": {
-          "id": "268",
+          "id": "333",
           "discriminator": [
             {
               "type": "value",
@@ -545,10 +670,10 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.modifierExtension:observationnonoccurrencemodifier",
-        "path": "DiagnosticReport.modifierExtension",
-        "sliceName": "observationnonoccurrencemodifier",
-        "definition": "True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "nonoccurrencemodifier",
+        "definition": "When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.\nWhen applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -564,7 +689,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
           }
         ],
         "mustSupport": true,
@@ -578,17 +703,427 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.identifier",
-        "path": "DiagnosticReport.identifier",
-        "short": "Business identifier for report",
-        "definition": "Identifiers assigned to this report by the performer or other systems.",
-        "comment": "Usually assigned by the Information System of the diagnostic service provider (filler id).",
-        "requirements": "Need to know what identifier to use when making queries about this report from the source laboratory, and for linking to the report outside FHIR context.",
-        "alias": [
-          "ReportID",
-          "Filler ID",
-          "Placer ID"
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.id",
+        "path": "Observation.modifierExtension.id",
+        "representation": [
+          "xmlAttr"
         ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension",
+        "path": "Observation.modifierExtension.extension",
+        "slicing": {
+          "id": "9",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:boolean",
+        "path": "Observation.modifierExtension.extension",
+        "sliceName": "boolean",
+        "definition": "When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.\nWhen applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason",
+        "path": "Observation.modifierExtension.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.id",
+        "path": "Observation.modifierExtension.extension.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension",
+        "path": "Observation.modifierExtension.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.url",
+        "path": "Observation.modifierExtension.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.value[x]",
+        "path": "Observation.modifierExtension.extension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          },
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.url",
+        "path": "Observation.modifierExtension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier.value[x]",
+        "path": "Observation.modifierExtension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:assertionnegationmodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "assertionnegationmodifier",
+        "definition": "When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is 'allergy to peanuts' and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
+          }
+        ],
+        "mustSupport": true,
+        "isModifier": true,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.identifier",
+        "path": "Observation.identifier",
+        "short": "Business Identifier for observation",
+        "definition": "A unique identifier assigned to this observation.",
+        "requirements": "Allows observations to be distinguished and referenced.",
         "min": 0,
         "max": "*",
         "type": [
@@ -604,7 +1139,7 @@
           },
           {
             "identity": "v2",
-            "map": "OBR-51"
+            "map": "OBX.21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 2) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."
           },
           {
             "identity": "rim",
@@ -617,14 +1152,13 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.basedOn",
-        "path": "DiagnosticReport.basedOn",
-        "short": "What was requested",
-        "definition": "Details concerning a test or procedure requested.",
-        "comment": "Note: Usually there is one test request for each result, however in some circumstances multiple test requests may be represented using a single test result resource. Note that there are also cases where one request leads to multiple reports.",
-        "requirements": "This allows tracing of authorization for the report and tracking whether proposals/recommendations were acted upon.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.basedOn",
+        "path": "Observation.basedOn",
+        "short": "Fulfills plan, proposal or order",
+        "definition": "A plan, proposal or order that is fulfilled in whole or in part by this event.",
+        "requirements": "Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon.",
         "alias": [
-          "Request"
+          "Fulfills"
         ],
         "min": 0,
         "max": "*",
@@ -632,6 +1166,10 @@
           {
             "code": "Reference",
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/CarePlan"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DeviceRequest"
           },
           {
             "code": "Reference",
@@ -654,6 +1192,7 @@
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/ReferralRequest"
           }
         ],
+        "isSummary": true,
         "mapping": [
           {
             "identity": "workflow",
@@ -661,21 +1200,27 @@
           },
           {
             "identity": "v2",
-            "map": "ORC? OBR-2/3?"
+            "map": "ORC"
           },
           {
             "identity": "rim",
-            "map": "outboundRelationship[typeCode=FLFS].target"
+            "map": ".outboundRelationship[typeCode=FLFS].target"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.status",
-        "path": "DiagnosticReport.status",
-        "short": "registered | partial | preliminary | final +",
-        "definition": "The status of the diagnostic report as a whole.",
-        "comment": "This is labeled as \"Is Modifier\" because applications need to take appropriate action if a report is withdrawn.",
-        "requirements": "Diagnostic services routinely issue provisional/incomplete reports, and sometimes withdraw previously released reports.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.status",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint",
+            "valueString": "default: final"
+          }
+        ],
+        "path": "Observation.status",
+        "short": "registered | preliminary | final | amended +",
+        "definition": "The status of the result value.",
+        "comment": "This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.",
+        "requirements": "Need to track the status of individual results. Some results are finalized before the whole report is finalized.",
         "min": 1,
         "max": "1",
         "type": [
@@ -689,13 +1234,13 @@
           "extension": [
             {
               "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "DiagnosticReportStatus"
+              "valueString": "ObservationStatus"
             }
           ],
           "strength": "required",
-          "description": "The status of the diagnostic report as a whole.",
+          "description": "Codes providing the status of an observation.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/diagnostic-report-status"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-status"
           }
         },
         "mapping": [
@@ -704,12 +1249,16 @@
             "map": "Event.status"
           },
           {
+            "identity": "sct-concept",
+            "map": "< 445584004 |Report by finality status|"
+          },
+          {
             "identity": "v2",
-            "map": "OBR-25 (not 1:1 mapping)"
+            "map": "OBX-11"
           },
           {
             "identity": "rim",
-            "map": "statusCode  Note: final and amended are distinguished by whether observation is the subject of a ControlAct event of type \"revise\""
+            "map": "status  Amended & Final are differentiated by whether it is the subject of a ControlAct event with a type of \"revise\""
           },
           {
             "identity": "w5",
@@ -718,47 +1267,30 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.category",
-        "path": "DiagnosticReport.category",
-        "short": "Service category",
-        "definition": "A code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This is used for searching, sorting and display purposes.",
-        "comment": "The level of granularity is defined by the category concepts in the value set. More fine-grained filtering can be performed using the metadata and/or terminology hierarchy in DiagnosticReport.code.",
-        "alias": [
-          "Department",
-          "Sub-department",
-          "Service",
-          "Discipline"
-        ],
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.category",
+        "path": "Observation.category",
+        "short": "Classification of  type of observation",
+        "definition": "A code that classifies the general type of observation being made.",
+        "comment": "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.",
+        "requirements": "Used for filtering what observations are retrieved and displayed.",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
-        "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "DiagnosticServiceSection"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes for diagnostic service sections.",
+          "strength": "extensible",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/diagnostic-service-sections"
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
           }
         },
         "mapping": [
           {
-            "identity": "v2",
-            "map": "OBR-24"
-          },
-          {
             "identity": "rim",
-            "map": "inboundRelationship[typeCode=COMP].source[classCode=LIST, moodCode=EVN, code < LabService].code"
+            "map": ".outboundRelationship[typeCode=\"COMP].target[classCode=\"LIST\", moodCode=\"EVN\"].code"
           },
           {
             "identity": "w5",
@@ -767,12 +1299,13 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.code",
-        "path": "DiagnosticReport.code",
-        "short": "Name/Code for this diagnostic report",
-        "definition": "A code or name that describes this diagnostic report.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.code",
+        "path": "Observation.code",
+        "short": "Type of observation (code / type)",
+        "definition": "Describes what was observed. Sometimes this is called the observation \"name\".",
+        "requirements": "Knowing what kind of observation is being made is essential to understanding the observation.",
         "alias": [
-          "Type"
+          "Name"
         ],
         "min": 1,
         "max": "1",
@@ -784,16 +1317,9 @@
         ],
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "DiagnosticReportCodes"
-            }
-          ],
           "strength": "preferred",
-          "description": "Codes that describe Diagnostic Reports.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/report-codes"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
           }
         },
         "mapping": [
@@ -802,12 +1328,20 @@
             "map": "Event.code"
           },
           {
+            "identity": "sct-concept",
+            "map": "< 363787002 |Observable entity| OR < 386053000 |Evaluation procedure|"
+          },
+          {
             "identity": "v2",
-            "map": "OBR-4 (HL7 v2 doesn't provide an easy way to indicate both the ordered test and the performed panel)"
+            "map": "OBX-3"
           },
           {
             "identity": "rim",
             "map": "code"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "116680003 |Is a|"
           },
           {
             "identity": "w5",
@@ -816,14 +1350,12 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.subject",
-        "path": "DiagnosticReport.subject",
-        "short": "The subject of the report - usually, but not always, the patient",
-        "definition": "The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.",
-        "requirements": "SHALL know the subject context.",
-        "alias": [
-          "Patient"
-        ],
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.subject",
+        "path": "Observation.subject",
+        "short": "Who and/or what this is about",
+        "definition": "The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject.",
+        "comment": "One would expect this element to be a cardinality  of 1..1.  The only circumstance in which the subject can be missing is when the observation is made by a device that does not know the patient. In this case, the observation SHALL be matched to a patient through some context/channel matching technique, and at this point, the observation should be updated.\r\rIf the target of the observation is different than the subject, the general extension [observation-focal-subject](extension-observation-focal-subject.html).  may be used.  However, the distinction between the patient's own value for an observation versus that of the fetus, or the donor or blood product unit, etc., are often specified in the observation code.",
+        "requirements": "Observations have no value if you don't know who or what they're about.",
         "min": 1,
         "max": "1",
         "type": [
@@ -840,7 +1372,7 @@
           },
           {
             "identity": "v2",
-            "map": "PID-3 (no HL7 v2 mapping for Group or Device)"
+            "map": "PID-3"
           },
           {
             "identity": "rim",
@@ -853,12 +1385,12 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.context",
-        "path": "DiagnosticReport.context",
-        "short": "Health care event when test ordered",
-        "definition": "The healthcare event  (e.g. a patient and healthcare provider interaction) which this DiagnosticReport per is about.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.context",
+        "path": "Observation.context",
+        "short": "Healthcare event during which this observation is made",
+        "definition": "The healthcare event  (e.g. a patient and healthcare provider interaction) during which this observation is made.",
         "comment": "This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests).",
-        "requirements": "Links the request to the Encounter context.",
+        "requirements": "For some observations it may be important to know the link between an observation and a particular encounter.",
         "alias": [
           "Encounter"
         ],
@@ -870,7 +1402,6 @@
             "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"
           }
         ],
-        "isSummary": true,
         "mapping": [
           {
             "identity": "workflow",
@@ -878,7 +1409,7 @@
           },
           {
             "identity": "v2",
-            "map": "PV1-19"
+            "map": "PV1"
           },
           {
             "identity": "rim",
@@ -891,15 +1422,13 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.effective[x]",
-        "path": "DiagnosticReport.effective[x]",
-        "short": "Clinically relevant time/time-period for report",
-        "definition": "The time or time-period the observed values are related to. When the subject of the report is a patient, this is usually either the time of the procedure or of specimen collection(s), but very often the source of the date/time is not known, only the date/time itself.",
-        "comment": "If the diagnostic procedure was performed on the patient, this is the time it was performed. If there are specimens, the diagnostically relevant time can be derived from the specimen collection times, but the specimen information is not always available, and the exact relationship between the specimens and the diagnostically relevant time is not always automatic.",
-        "requirements": "Need to know where in the patient history to file/present this report.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.effective[x]",
+        "path": "Observation.effective[x]",
+        "short": "Clinically relevant time/time-period for observation",
+        "definition": "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
+        "comment": "At least a date should be present unless this observation is a historical report.",
+        "requirements": "Knowing when an observation was deemed true is important to its relevance as well as determining trends.",
         "alias": [
-          "Observation time",
-          "Effective Time",
           "Occurrence"
         ],
         "min": 0,
@@ -921,7 +1450,7 @@
           },
           {
             "identity": "v2",
-            "map": "OBR-7"
+            "map": "OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"
           },
           {
             "identity": "rim",
@@ -934,17 +1463,11 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.issued",
-        "path": "DiagnosticReport.issued",
-        "short": "DateTime this version was released",
-        "definition": "The date and time that this version of the report was released from the source diagnostic service.",
-        "comment": "May be different from the update time of the resource itself, because that is the status of the record (potentially a secondary copy), not the actual release time of the report.",
-        "requirements": "Clinicians need to be able to check the date that the report was released.",
-        "alias": [
-          "Date Created",
-          "Date published",
-          "Date Issued"
-        ],
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.issued",
+        "path": "Observation.issued",
+        "short": "Date/Time this was made available",
+        "definition": "The date and time this observation was made available to providers, typically after the results have been reviewed and verified.",
+        "comment": "Updated when the result is updated.",
         "min": 1,
         "max": "1",
         "type": [
@@ -956,11 +1479,11 @@
         "mapping": [
           {
             "identity": "v2",
-            "map": "OBR-22"
+            "map": "OBR.22 (or MSH.7), or perhaps OBX-19 (depends on who observation made)"
           },
           {
             "identity": "rim",
-            "map": "participation[typeCode=VRF or AUT].time"
+            "map": "participation[typeCode=AUT].time"
           },
           {
             "identity": "w5",
@@ -969,17 +1492,428 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer",
-        "path": "DiagnosticReport.performer",
-        "short": "Participants in producing the report",
-        "definition": "Indicates who or what participated in producing the report.",
-        "alias": [
-          "Laboratory",
-          "Service",
-          "Practitioner",
-          "Department",
-          "Company"
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.performer",
+        "path": "Observation.performer",
+        "short": "Who is responsible for the observation",
+        "definition": "Who was responsible for asserting the observed value as \"true\".",
+        "requirements": "May give a degree of confidence in the observation and also indicates where follow-up questions should be directed.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+          }
         ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.performer"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX.15 / (Practitioner)  OBX-16,  PRT-5:PRT-4='RO' /  (Device)  OBX-18 , PRT-10:PRT-4='EQUIP' / (Organization)  OBX-23,  PRT-8:PRT-4='PO'"
+          },
+          {
+            "identity": "rim",
+            "map": "participation[typeCode=PRF]"
+          },
+          {
+            "identity": "w5",
+            "map": "who.actor"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.value[x]",
+        "path": "Observation.value[x]",
+        "slicing": {
+          "id": "331",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Actual result",
+        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
+        "comment": "Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is \"'value' + the type name\" with a capital on the first letter of the type).\r\r\rIf the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below.",
+        "requirements": "An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+          },
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "Range",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"
+          },
+          {
+            "code": "Ratio",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+          }
+        ],
+        "condition": [
+          "obs-7"
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"
+          },
+          {
+            "identity": "sct-concept",
+            "map": "< 441742003 |Evaluation finding|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX.2, OBX.5, OBX.6"
+          },
+          {
+            "identity": "rim",
+            "map": "value"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "363714003 |Interprets|"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.valueCodeableConcept:shr-core-CodeableConcept",
+        "path": "Observation.valueCodeableConcept",
+        "sliceName": "shr-core-CodeableConcept",
+        "short": "Actual result",
+        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "strength": "example",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"
+          }
+        }
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.dataAbsentReason",
+        "path": "Observation.dataAbsentReason",
+        "short": "Why the result is missing",
+        "definition": "Provides a reason why the expected value in the element Observation.value[x] is missing.",
+        "comment": "Null or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  \"detected\", \"not detected\", \"inconclusive\", or  \"specimen unsatisfactory\".   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code \"error\" could be used when the measurement was not completed. Note that an observation may only be reported if there are values to report. For example differential cell counts values may be reported only when > 0.  Because of these options, use-case agreements are required to interpret general observations for null or exceptional values.",
+        "requirements": "For many results it is necessary to handle exceptional values in measurements.",
+        "min": 0,
+        "max": "0",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "condition": [
+          "obs-6"
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationValueAbsentReason"
+            }
+          ],
+          "strength": "extensible",
+          "description": "Codes specifying why the result (Observation.value[x]) is missing.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-valueabsentreason"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"
+          },
+          {
+            "identity": "v2",
+            "map": "N/A"
+          },
+          {
+            "identity": "rim",
+            "map": "value.nullFlavor"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.interpretation",
+        "path": "Observation.interpretation",
+        "short": "High, low, normal, etc.",
+        "definition": "The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag.",
+        "requirements": "For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result.",
+        "alias": [
+          "Abnormal Flag"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationInterpretation"
+            }
+          ],
+          "strength": "required",
+          "description": "Codes identifying interpretations of observations.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 260245000 |Findings values|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX-8"
+          },
+          {
+            "identity": "rim",
+            "map": "interpretationCode"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "363713009 |Has interpretation|"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.comment",
+        "path": "Observation.comment",
+        "short": "Comments about result",
+        "definition": "May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.",
+        "requirements": "Need to be able to provide free text additional information.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "workflow",
+            "map": "Event.note"
+          },
+          {
+            "identity": "v2",
+            "map": "NTE.3 (partner NTE to OBX, or sometimes another (child?) OBX)"
+          },
+          {
+            "identity": "rim",
+            "map": "subjectOf.observationEvent[code=\"annotation\"].value"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.bodySite",
+        "path": "Observation.bodySite",
+        "short": "Observed body part",
+        "definition": "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
+        "comment": "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   If the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ body-site-instance](extension-body-site-instance.html).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 123037004 |Body structure|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX-20"
+          },
+          {
+            "identity": "rim",
+            "map": "targetSiteCode"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "718497002 |Inherent location|"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.method",
+        "path": "Observation.method",
+        "short": "How it was done",
+        "definition": "Indicates the mechanism used to perform the observation.",
+        "comment": "Only used if not implicit in code for Observation.code.",
+        "requirements": "In some cases, method can impact results and is thus used for determining whether results can be compared or determining significance of results.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationMethod"
+            }
+          ],
+          "strength": "example",
+          "description": "Methods for simple observations.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-methods"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "OBX-17"
+          },
+          {
+            "identity": "rim",
+            "map": "methodCode"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.specimen",
+        "path": "Observation.specimen",
+        "short": "Specimen used for this observation",
+        "definition": "The specimen that was used when this observation was made.",
+        "comment": "Should only be used if not implicit in code found in `Observation.code`.  Observations are not made on specimens themselves; they are made on a subject, but in many cases by the means of a specimen. Note that although specimens are often involved, they are not always tracked and reported explicitly. Also note that observation resources may be used in contexts that track the specimen explicitly (e.g. Diagnostic Report).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Specimen"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 123038009 |Specimen|"
+          },
+          {
+            "identity": "v2",
+            "map": "SPM segment"
+          },
+          {
+            "identity": "rim",
+            "map": "participation[typeCode=SPC].specimen"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "704319004 |Inherent in|"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.device",
+        "path": "Observation.device",
+        "short": "(Measurement) Device",
+        "definition": "The device used to generate the observation data.",
+        "comment": "An extension should be used if further typing of the device is needed.  Devices used to support obtaining an observation can be represented using either an extension or through the Observation.related element.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DeviceMetric"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 49062001 |Device|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX-17 / PRT -10"
+          },
+          {
+            "identity": "rim",
+            "map": "participation[typeCode=DEV]"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "424226004 |Using device|"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange",
+        "path": "Observation.referenceRange",
+        "short": "Provides guide for interpretation",
+        "definition": "Guidance on how to interpret the value by comparison to a normal or recommended range.",
+        "comment": "Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.",
+        "requirements": "Knowing what values are considered \"normal\" can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts.",
         "min": 0,
         "max": "*",
         "type": [
@@ -992,34 +1926,32 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "workflow",
-            "map": "Event.performer"
           },
           {
+            "key": "obs-3",
+            "severity": "error",
+            "human": "Must have at least a low or a high or text",
+            "expression": "low.exists() or high.exists() or text.exists()",
+            "xpath": "(exists(f:low) or exists(f:high)or exists(f:text))"
+          }
+        ],
+        "mapping": [
+          {
             "identity": "v2",
-            "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
+            "map": "OBX.7"
           },
           {
             "identity": "rim",
-            "map": ".participation[typeCode=PRF]"
-          },
-          {
-            "identity": "w5",
-            "map": "who.witness"
+            "map": "outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer.id",
-        "path": "DiagnosticReport.performer.id",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.id",
+        "path": "Observation.referenceRange.id",
         "representation": [
           "xmlAttr"
         ],
@@ -1045,8 +1977,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer.extension",
-        "path": "DiagnosticReport.performer.extension",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.extension",
+        "path": "Observation.referenceRange.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -1074,8 +2006,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer.modifierExtension",
-        "path": "DiagnosticReport.performer.modifierExtension",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.modifierExtension",
+        "path": "Observation.referenceRange.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -1106,11 +2038,499 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer.role",
-        "path": "DiagnosticReport.performer.role",
-        "short": "Type of performer",
-        "definition": "Describes the type of participation (e.g.  a responsible party, author, or verifier).",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.low",
+        "path": "Observation.referenceRange.low",
+        "short": "Low Range, if relevant",
+        "definition": "The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is >=5 - <=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is <=2.3).",
         "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://hl7.org/fhir/StructureDefinition/SimpleQuantity"
+          }
+        ],
+        "condition": [
+          "obs-3"
+        ],
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "OBX-7"
+          },
+          {
+            "identity": "rim",
+            "map": "value:IVL_PQ.low"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.high",
+        "path": "Observation.referenceRange.high",
+        "short": "High Range, if relevant",
+        "definition": "The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is >=5 - <=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is >= 2.3).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://hl7.org/fhir/StructureDefinition/SimpleQuantity"
+          }
+        ],
+        "condition": [
+          "obs-3"
+        ],
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "OBX-7"
+          },
+          {
+            "identity": "rim",
+            "map": "value:IVL_PQ.high"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.type",
+        "path": "Observation.referenceRange.type",
+        "short": "Reference range qualifier",
+        "definition": "Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range.",
+        "comment": "This SHOULD be populated if there is more than one range.  If this element is not present then the normal range is assumed.",
+        "requirements": "Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationRangeMeaning"
+            }
+          ],
+          "strength": "extensible",
+          "description": "Code for the meaning of a reference range.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/referencerange-meaning"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 260245000 |Findings values| OR  \r< 365860008 |General clinical state finding| \rOR \r< 250171008 |Clinical history or observation findings| OR  \r< 415229000 |Racial group| OR \r< 365400002 |Finding of puberty stage| OR\r< 443938003 |Procedure carried out on subject|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX-10"
+          },
+          {
+            "identity": "rim",
+            "map": "interpretationCode"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.appliesTo",
+        "path": "Observation.referenceRange.appliesTo",
+        "short": "Reference range population",
+        "definition": "Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race.",
+        "comment": "This SHOULD be populated if there is more than one range.  If this element is not present then the normal population is assumed.",
+        "requirements": "Need to be able to identify the target population for proper interpretation.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationRangeType"
+            }
+          ],
+          "strength": "example",
+          "description": "Codes identifying the population the reference range applies to.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/referencerange-appliesto"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "sct-concept",
+            "map": "< 260245000 |Findings values| OR  \r< 365860008 |General clinical state finding| \rOR \r< 250171008 |Clinical history or observation findings| OR  \r< 415229000 |Racial group| OR \r< 365400002 |Finding of puberty stage| OR\r< 443938003 |Procedure carried out on subject|"
+          },
+          {
+            "identity": "v2",
+            "map": "OBX-10"
+          },
+          {
+            "identity": "rim",
+            "map": "interpretationCode"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.age",
+        "path": "Observation.referenceRange.age",
+        "short": "Applicable age range, if relevant",
+        "definition": "The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so.",
+        "requirements": "Some analytes vary greatly over age.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Range"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "outboundRelationship[typeCode=PRCN].targetObservationCriterion[code=\"age\"].value"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.referenceRange.text",
+        "path": "Observation.referenceRange.text",
+        "short": "Text based reference range in an observation",
+        "definition": "Text based reference range in an observation which may be used when a quantitative range is not appropriate for an observation.  An example would be a reference value of \"Negative\" or a list or table of 'normals'.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "OBX-7"
+          },
+          {
+            "identity": "rim",
+            "map": "value:ST"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related",
+        "path": "Observation.related",
+        "short": "Resource related to this observation",
+        "definition": "A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code.",
+        "comment": "For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4).",
+        "requirements": "Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "hasValue() | (children().count() > id.count())",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "Relationships established by OBX-4 usage"
+          },
+          {
+            "identity": "rim",
+            "map": "outBoundRelationship"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.id",
+        "path": "Observation.related.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.extension",
+        "path": "Observation.related.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.modifierExtension",
+        "path": "Observation.related.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.type",
+        "path": "Observation.related.type",
+        "short": "has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by",
+        "definition": "A code specifying the kind of relationship that exists with the target resource.",
+        "comment": "The \"derived-from\" type is the only logical choice when referencing the QuestionnaireAnswer resource.",
+        "requirements": "A relationship type SHOULD be provided.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationRelationshipType"
+            }
+          ],
+          "strength": "required",
+          "description": "Codes specifying how two observations are related.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-relationshiptypes"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "N/A"
+          },
+          {
+            "identity": "rim",
+            "map": ".typeCode"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.target",
+        "path": "Observation.related.target",
+        "short": "Resource that is related to this one",
+        "definition": "A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": ".targetObservation"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component",
+        "path": "Observation.component",
+        "short": "Component results",
+        "definition": "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
+        "comment": "For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below.",
+        "requirements": "Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation.",
+        "min": 0,
+        "max": "0",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "hasValue() | (children().count() > id.count())",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "containment by OBX-4?"
+          },
+          {
+            "identity": "rim",
+            "map": "outBoundRelationship[typeCode=COMP]"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.id",
+        "path": "Observation.component.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.extension",
+        "path": "Observation.component.extension",
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.modifierExtension",
+        "path": "Observation.component.modifierExtension",
+        "short": "Extensions that cannot be ignored",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content",
+          "modifiers"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "BackboneElement.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "isModifier": true,
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.code",
+        "path": "Observation.component.code",
+        "short": "Type of component observation (code / type)",
+        "definition": "Describes what was observed. Sometimes this is called the observation \"code\".",
+        "requirements": "Knowing what kind of observation is being made is essential to understanding the observation.",
+        "min": 1,
         "max": "1",
         "type": [
           {
@@ -1122,523 +2542,203 @@
           "extension": [
             {
               "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "Role"
+              "valueString": "ObservationCode"
             }
           ],
           "strength": "example",
-          "description": "Indicate a role of diagnostic report performer",
+          "description": "Codes identifying names of simple observations.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/performer-role"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-codes"
           }
         },
         "mapping": [
           {
-            "identity": "workflow",
-            "map": "Event.performer.role"
+            "identity": "sct-concept",
+            "map": "< 363787002 |Observable entity| OR \r< 386053000 |Evaluation procedure|"
           },
           {
             "identity": "v2",
-            "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
+            "map": "OBX-3"
           },
           {
             "identity": "rim",
-            "map": ".functionCode"
+            "map": "code"
+          },
+          {
+            "identity": "w5",
+            "map": "what"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.performer.actor",
-        "path": "DiagnosticReport.performer.actor",
-        "short": "Practitioner or Organization  participant",
-        "definition": "The reference to the  practitioner or organization involved in producing the report. For example, the diagnostic service that is responsible for issuing the report.",
-        "comment": "This is not necessarily the source of the atomic data items. It is the entity that takes responsibility for the clinical report.",
-        "requirements": "Need to know whom to contact if there are queries about the results. Also may need to track the source of reports for secondary data analysis.",
-        "min": 1,
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.value[x]",
+        "path": "Observation.component.value[x]",
+        "short": "Actual component result",
+        "definition": "The information determined as a result of making the observation, if the information has a simple value.",
+        "comment": "Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from <http://hl7.org/fhir/ValueSet/v2-0136> (these \"yes/no\" concepts can be mapped to the display name \"true/false\" or other mutually exclusive terms that may be needed\").  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is \"'value' + the type name\" with a capital on the first letter of the type).",
+        "requirements": "An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations.",
+        "min": 0,
         "max": "1",
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+            "code": "Quantity"
           },
           {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Period"
           }
         ],
         "isSummary": true,
         "mapping": [
           {
-            "identity": "workflow",
-            "map": "Event.performer.actor"
+            "identity": "sct-concept",
+            "map": "363714003 |Interprets| < 441742003 |Evaluation finding|"
           },
           {
             "identity": "v2",
-            "map": "PRT-8 (where this PRT-4-Participation = \"PO\")"
+            "map": "OBX.2, OBX.5, OBX.6"
           },
           {
             "identity": "rim",
-            "map": ".role"
+            "map": "value"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "363714003 |Interprets|"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.specimen",
-        "path": "DiagnosticReport.specimen",
-        "short": "Specimens this report is based on",
-        "definition": "Details about the specimens on which this diagnostic report is based.",
-        "comment": "If the specimen is sufficiently specified with a code in the test result name, then this additional data may be redundant. If there are multiple specimens, these may be represented per observation or group.",
-        "requirements": "Need to be able to report information about the collected specimens on which the report is based.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.dataAbsentReason",
+        "path": "Observation.component.dataAbsentReason",
+        "short": "Why the component result is missing",
+        "definition": "Provides a reason why the expected value in the element Observation.value[x] is missing.",
+        "comment": "\"Null\" or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  \"detected\", \"not detected\", \"inconclusive\", or  \"test not done\".   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code \"error\" could be used when the measurement was not completed.  Because of these options, use-case agreements are required to interpret general observations for exceptional values.",
+        "requirements": "For many results it is necessary to handle exceptional values in measurements.",
         "min": 0,
-        "max": "*",
+        "max": "1",
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Specimen"
+            "code": "CodeableConcept"
           }
         ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "SPM"
-          },
-          {
-            "identity": "rim",
-            "map": "participation[typeCode=SBJ]"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result",
-        "path": "DiagnosticReport.result",
-        "slicing": {
-          "id": "266",
-          "discriminator": [
+        "condition": [
+          "obs-6"
+        ],
+        "binding": {
+          "extension": [
             {
-              "type": "value",
-              "path": "code"
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationValueAbsentReason"
             }
           ],
-          "ordered": false,
-          "rules": "open"
+          "strength": "extensible",
+          "description": "Codes specifying why the result (Observation.value[x]) is missing.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-valueabsentreason"
+          }
         },
-        "short": "Observations - simple, or complex nested groups",
-        "definition": "Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. \"atomic\" results), or they can be grouping observations that include references to other members of the group (e.g. \"panels\").",
-        "requirements": "Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations.",
-        "alias": [
-          "Data",
-          "Atomic Value",
-          "Result",
-          "Atomic result",
-          "Data",
-          "Test",
-          "Analyte",
-          "Battery",
-          "Organizer"
-        ],
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
-          }
-        ],
         "mapping": [
           {
             "identity": "v2",
-            "map": "OBXs"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-EstrogenReceptorStatus",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-EstrogenReceptorStatus",
-        "short": "Observations - simple, or complex nested groups",
-        "definition": "Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. \"atomic\" results), or they can be grouping observations that include references to other members of the group (e.g. \"panels\").",
-        "requirements": "Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations.",
-        "alias": [
-          "Data",
-          "Atomic Value",
-          "Result",
-          "Atomic result",
-          "Data",
-          "Test",
-          "Analyte",
-          "Battery",
-          "Organizer"
-        ],
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-EstrogenReceptorStatus"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "OBXs"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-ProgesteroneReceptorStatus",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-ProgesteroneReceptorStatus",
-        "short": "Observations - simple, or complex nested groups",
-        "definition": "Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. \"atomic\" results), or they can be grouping observations that include references to other members of the group (e.g. \"panels\").",
-        "requirements": "Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations.",
-        "alias": [
-          "Data",
-          "Atomic Value",
-          "Result",
-          "Atomic result",
-          "Data",
-          "Test",
-          "Analyte",
-          "Battery",
-          "Organizer"
-        ],
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ProgesteroneReceptorStatus"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "OBXs"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-HumanEpiduralGrowthFactorReceptor2Status",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-HumanEpiduralGrowthFactorReceptor2Status",
-        "short": "Observations - simple, or complex nested groups",
-        "definition": "Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. \"atomic\" results), or they can be grouping observations that include references to other members of the group (e.g. \"panels\").",
-        "requirements": "Need to support individual results, or report groups of results, where the result grouping is arbitrary, but meaningful. This structure is recursive - observations can contain observations.",
-        "alias": [
-          "Data",
-          "Atomic Value",
-          "Result",
-          "Atomic result",
-          "Data",
-          "Test",
-          "Analyte",
-          "Battery",
-          "Organizer"
-        ],
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HumanEpiduralGrowthFactorReceptor2Status"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "OBXs"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.imagingStudy",
-        "path": "DiagnosticReport.imagingStudy",
-        "short": "Reference to full details of imaging associated with the diagnostic report",
-        "definition": "One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.",
-        "comment": "ImagingStudy and ImageManifest and the image element are somewhat overlapping - typically, the list of image references in the image element will also be found in one of the imaging study resources. However each caters to different types of displays for different types of purposes. Neither, either, or both may be provided.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ImagingStudy"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ImagingManifest"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target[classsCode=DGIMG, moodCode=EVN]"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image",
-        "path": "DiagnosticReport.image",
-        "short": "Key images associated with this report",
-        "definition": "A list of key images associated with this report. The images are generally created during the diagnostic process, and may be directly of the patient, or of treated specimens (i.e. slides of interest).",
-        "requirements": "Many diagnostic services include images in the report as part of their service.",
-        "alias": [
-          "DICOM",
-          "Slides",
-          "Scans"
-        ],
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "BackboneElement"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
-            "xpath": "@value|f:*|h:div",
-            "source": "Element"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "OBX?"
-          },
-          {
-            "identity": "rim",
-            "map": "outboundRelationship[typeCode=COMP].target"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image.id",
-        "path": "DiagnosticReport.image.id",
-        "representation": [
-          "xmlAttr"
-        ],
-        "short": "xml:id (or equivalent in JSON)",
-        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "Element.id",
-          "min": 0,
-          "max": "1"
-        },
-        "type": [
-          {
-            "code": "string"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image.extension",
-        "path": "DiagnosticReport.image.extension",
-        "short": "Additional Content defined by implementations",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "Element.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image.modifierExtension",
-        "path": "DiagnosticReport.image.modifierExtension",
-        "short": "Extensions that cannot be ignored",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content",
-          "modifiers"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "BackboneElement.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "isModifier": true,
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
             "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image.comment",
-        "path": "DiagnosticReport.image.comment",
-        "short": "Comment about the image (e.g. explanation)",
-        "definition": "A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.",
-        "comment": "The comment should be displayed with the image. It would be common for the report to include additional discussion of the image contents in other sections such as the conclusion.",
-        "requirements": "The provider of the report should make a comment about each image included in the report.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "string"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".inboundRelationship[typeCode=COMP].source[classCode=OBS, moodCode=EVN, code=\"annotation\"].value"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.image.link",
-        "path": "DiagnosticReport.image.link",
-        "short": "Reference to the image source",
-        "definition": "Reference to the image source.",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Media"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".value.reference"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.conclusion",
-        "path": "DiagnosticReport.conclusion",
-        "short": "Clinical Interpretation of test results",
-        "definition": "Concise and clinically contextualized impression / summary of the diagnostic report.",
-        "requirements": "Need to be able to provide a conclusion that is not lost among the basic result data.",
-        "alias": [
-          "Report"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "string"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "OBX"
           },
           {
             "identity": "rim",
-            "map": "inboundRelationship[typeCode=\"SPRT\"].source[classCode=OBS, moodCode=EVN, code=LOINC:48767-8].value (type=ST)"
+            "map": "value.nullFlavor"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.codedDiagnosis",
-        "path": "DiagnosticReport.codedDiagnosis",
-        "short": "Codes for the conclusion",
-        "definition": "Codes for the conclusion.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.interpretation",
+        "path": "Observation.component.interpretation",
+        "short": "High, low, normal, etc.",
+        "definition": "The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag.",
+        "comment": "The component interpretation applies only to the individual component value.  For an overall interpretation all components together use thes Observation.interpretation element.",
+        "requirements": "For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result.",
+        "alias": [
+          "Abnormal Flag"
+        ],
         "min": 0,
-        "max": "*",
+        "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "binding": {
-          "strength": "required",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationInterpretation"
+            }
+          ],
+          "strength": "extensible",
+          "description": "Codes identifying interpretations of observations.",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"
+            "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
           }
         },
         "mapping": [
           {
+            "identity": "sct-concept",
+            "map": "< 260245000 |Findings values|"
+          },
+          {
             "identity": "v2",
-            "map": "OBX"
+            "map": "OBX-8"
           },
           {
             "identity": "rim",
-            "map": "inboundRelationship[typeCode=SPRT].source[classCode=OBS, moodCode=EVN, code=LOINC:54531-9].value (type=CD)"
+            "map": "interpretationCode"
+          },
+          {
+            "identity": "sct-attr",
+            "map": "363713009 |Has interpretation|"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.presentedForm",
-        "path": "DiagnosticReport.presentedForm",
-        "short": "Entire report as issued",
-        "definition": "Rich text representation of the entire result as issued by the diagnostic service. Multiple formats are allowed but they SHALL be semantically equivalent.",
-        "comment": "\"application/pdf\" is recommended as the most reliable and interoperable in this context.",
-        "requirements": "Gives laboratory the ability to provide its own fully formatted report for clinical fidelity.",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component.referenceRange",
+        "path": "Observation.component.referenceRange",
+        "short": "Provides guide for interpretation of component result",
+        "definition": "Guidance on how to interpret the value by comparison to a normal or recommended range.",
+        "comment": "Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient's age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties.",
+        "requirements": "Knowing what values are considered \"normal\" can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts.",
         "min": 0,
         "max": "*",
-        "type": [
-          {
-            "code": "Attachment"
-          }
-        ],
+        "contentReference": "#Observation.referenceRange",
         "mapping": [
           {
             "identity": "v2",
-            "map": "OBX"
+            "map": "OBX.7"
           },
           {
             "identity": "rim",
-            "map": "text (type=ED)"
+            "map": "outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"
           }
         ]
       }
@@ -1647,21 +2747,21 @@
   "differential": {
     "element": [
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus",
-        "path": "DiagnosticReport",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus",
+        "path": "Observation",
         "short": "SHR BreastCancerReceptorStatus Profile",
         "definition": "Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status"
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:observationreason",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "observationreason",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:reason",
+        "path": "Observation.extension",
+        "sliceName": "reason",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
           }
         ],
         "mustSupport": false,
@@ -1669,15 +2769,15 @@
         "isSummary": false
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:observationmethod",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "observationmethod",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:occurrencetime",
+        "path": "Observation.extension",
+        "sliceName": "occurrencetime",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationMethod-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
           }
         ],
         "mustSupport": false,
@@ -1685,63 +2785,133 @@
         "isSummary": false
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:participant",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "participant",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:setting",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "setting",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.extension:location",
-        "path": "DiagnosticReport.extension",
-        "sliceName": "location",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.modifierExtension:observationnonoccurrencemodifier",
-        "path": "DiagnosticReport.modifierExtension",
-        "sliceName": "observationnonoccurrencemodifier",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:associatedstudy",
+        "path": "Observation.extension",
+        "sliceName": "associatedstudy",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:observationqualifier",
+        "path": "Observation.extension",
+        "sliceName": "observationqualifier",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:referencerange",
+        "path": "Observation.extension",
+        "sliceName": "referencerange",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:estrogenreceptorstatus",
+        "path": "Observation.extension",
+        "sliceName": "estrogenreceptorstatus",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-EstrogenReceptorStatus-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:progesteronereceptorstatus",
+        "path": "Observation.extension",
+        "sliceName": "progesteronereceptorstatus",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ProgesteroneReceptorStatus-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.extension:humanepiduralgrowthfactorreceptor2status",
+        "path": "Observation.extension",
+        "sliceName": "humanepiduralgrowthfactorreceptor2status",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HumanEpiduralGrowthFactorReceptor2Status-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:nonoccurrencemodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "nonoccurrencemodifier",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
+          }
+        ],
+        "mustSupport": true,
+        "isModifier": true,
+        "isSummary": false,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"
+          }
+        }
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.modifierExtension:assertionnegationmodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "assertionnegationmodifier",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
           }
         ],
         "mustSupport": true,
@@ -1749,28 +2919,40 @@
         "isSummary": false
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.category",
-        "path": "DiagnosticReport.category",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.category",
+        "path": "Observation.category",
         "type": [
           {
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "strength": "extensible",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
+          }
+        }
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.code",
-        "path": "DiagnosticReport.code",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.code",
+        "path": "Observation.code",
         "type": [
           {
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "strength": "preferred",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+          }
+        }
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.subject",
-        "path": "DiagnosticReport.subject",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.subject",
+        "path": "Observation.subject",
         "min": 1,
         "max": "1",
         "type": [
@@ -1781,8 +2963,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.context",
-        "path": "DiagnosticReport.context",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.context",
+        "path": "Observation.context",
         "type": [
           {
             "code": "Reference",
@@ -1791,8 +2973,8 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.effective[x]",
-        "path": "DiagnosticReport.effective[x]",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.effective[x]",
+        "path": "Observation.effective[x]",
         "type": [
           {
             "code": "dateTime"
@@ -1804,68 +2986,132 @@
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.issued",
-        "path": "DiagnosticReport.issued",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.issued",
+        "path": "Observation.issued",
         "min": 1,
         "max": "1"
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result",
-        "path": "DiagnosticReport.result",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.performer",
+        "path": "Observation.performer",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.value[x]",
+        "path": "Observation.value[x]",
         "slicing": {
-          "id": "266",
+          "id": "331",
           "discriminator": [
             {
-              "type": "value",
-              "path": "code"
+              "type": "type",
+              "path": "$this"
             }
           ],
           "ordered": false,
           "rules": "open"
+        },
+        "type": [
+          {
+            "code": "Quantity",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"
+          },
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "Range",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"
+          },
+          {
+            "code": "Ratio",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Period",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.valueCodeableConcept:shr-core-CodeableConcept",
+        "path": "Observation.valueCodeableConcept",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "example",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationResultVS"
+          }
         }
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-EstrogenReceptorStatus",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-EstrogenReceptorStatus",
-        "min": 1,
-        "max": "1",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.dataAbsentReason",
+        "path": "Observation.dataAbsentReason",
+        "min": 0,
+        "max": "0",
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-EstrogenReceptorStatus"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ]
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-ProgesteroneReceptorStatus",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-ProgesteroneReceptorStatus",
-        "min": 1,
-        "max": "1",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.interpretation",
+        "path": "Observation.interpretation",
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ProgesteroneReceptorStatus"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationInterpretation"
+            }
+          ],
+          "strength": "required",
+          "description": "Codes identifying interpretations of observations.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+          }
+        }
       },
       {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.result:shr-oncology-HumanEpiduralGrowthFactorReceptor2Status",
-        "path": "DiagnosticReport.result",
-        "sliceName": "shr-oncology-HumanEpiduralGrowthFactorReceptor2Status",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HumanEpiduralGrowthFactorReceptor2Status"
-          }
-        ]
-      },
-      {
-        "id": "DiagnosticReport:shr-oncology-BreastCancerReceptorStatus.codedDiagnosis",
-        "path": "DiagnosticReport.codedDiagnosis",
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.bodySite",
+        "path": "Observation.bodySite",
         "type": [
           {
             "code": "CodeableConcept",
@@ -1875,9 +3121,39 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/lab/vs/TestInterpretationVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         }
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.method",
+        "path": "Observation.method",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related",
+        "path": "Observation.related"
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.related.target",
+        "path": "Observation.related.target",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-BreastCancerReceptorStatus.component",
+        "path": "Observation.component",
+        "min": 0,
+        "max": "0"
       }
     ]
   }

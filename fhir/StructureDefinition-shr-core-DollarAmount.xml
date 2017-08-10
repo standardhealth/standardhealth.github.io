@@ -10,7 +10,7 @@
   <p><pre>shr.core.DollarAmount maps to Quantity:
   decimal maps to value
   Units.Coding.code maps to code
-  Units.Coding.Vocabulary maps to system
+  Units.Coding.CodeSystem maps to system
   Units.Coding.DisplayText maps to unit
 </pre></p>
 </div>
@@ -23,7 +23,7 @@
   <version value="0.0.1"/>
   <name value="SHR DollarAmount Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:14.776Z"/>
+  <date value="2017-08-08T15:56:20.573Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -33,7 +33,7 @@
   </contact>
   <description value="An amount of money expressed in US dollars."/>
   <purpose value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -62,7 +62,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -240,7 +240,7 @@
       <definition value="A computer processable form of the unit in some unit representation system."/>
       <comment value="The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system."/>
       <requirements value="Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="code"/>
@@ -264,11 +264,6 @@
     </element>
     <element id="Quantity:shr-core-DollarAmount.value">
       <path value="Quantity.value"/>
-      <min value="1"/>
-      <max value="1"/>
-    </element>
-    <element id="Quantity:shr-core-DollarAmount.code">
-      <path value="Quantity.code"/>
       <min value="1"/>
       <max value="1"/>
     </element>

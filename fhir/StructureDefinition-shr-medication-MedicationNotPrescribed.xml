@@ -10,7 +10,7 @@
   <p><pre>shr.medication.MedicationNotPrescribed maps to MedicationRequest:
   Medication maps to medication[x].Reference
   Reason maps to reasonCode
-  RequestStatus maps to status
+  Status maps to status
   RequestedPerformanceTime maps to dispenseRequest.validityPeriod
   PriorityOfRequest maps to priority
   RequestedPerformer.Organization maps to dispenseRequest.performer
@@ -40,7 +40,7 @@
   <version value="0.0.1"/>
   <name value="SHR MedicationNotPrescribed Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.081Z"/>
+  <date value="2017-08-08T15:56:30.953Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -49,7 +49,7 @@
     </telecom>
   </contact>
   <description value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -277,7 +277,7 @@
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension">
       <path value="MedicationRequest.extension"/>
-      <slicing id="190">
+      <slicing id="235">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -305,14 +305,14 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:actioncode">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:specifictype">
       <path value="MedicationRequest.extension"/>
-      <sliceName value="actioncode"/>
-      <definition value="The code for the action, such as an intervention or test, to be carried out."/>
+      <sliceName value="specifictype"/>
+      <definition value="A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="DomainResource.extension"/>
@@ -321,7 +321,33 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:category">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="category"/>
+      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -411,7 +437,7 @@
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension">
       <path value="MedicationRequest.modifierExtension"/>
-      <slicing id="191">
+      <slicing id="236">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -443,11 +469,11 @@
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier">
       <path value="MedicationRequest.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
       <base>
         <path value="DomainResource.modifierExtension"/>
@@ -466,33 +492,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier">
-      <path value="MedicationRequest.modifierExtension"/>
-      <sliceName value="medicationnotprescribedmodifier"/>
-      <definition value="True, if the medication should not, or was not prescribed for a particular reason."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.id">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.id">
       <path value="MedicationRequest.modifierExtension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -512,9 +512,9 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension">
       <path value="MedicationRequest.modifierExtension.extension"/>
-      <slicing id="187">
+      <slicing id="9">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -535,10 +535,10 @@
         <code value="Extension"/>
       </type>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:boolean">
       <path value="MedicationRequest.modifierExtension.extension"/>
       <sliceName value="boolean"/>
-      <definition value="True, if the medication should not, or was not prescribed for a particular reason."/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -556,7 +556,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.id">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:boolean.id">
       <path value="MedicationRequest.modifierExtension.extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -576,7 +576,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.extension:extension">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:boolean.extension:extension">
       <path value="MedicationRequest.modifierExtension.extension.extension"/>
       <sliceName value="extension"/>
       <short value="Extension"/>
@@ -592,7 +592,7 @@
         <code value="Extension"/>
       </type>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.url">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:boolean.url">
       <path value="MedicationRequest.modifierExtension.extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
@@ -613,7 +613,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:boolean.valueBoolean">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:boolean.valueBoolean">
       <path value="MedicationRequest.modifierExtension.extension.valueBoolean"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
@@ -633,7 +633,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:reason">
       <path value="MedicationRequest.modifierExtension.extension"/>
       <sliceName value="reason"/>
       <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
@@ -654,7 +654,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.id">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:reason.id">
       <path value="MedicationRequest.modifierExtension.extension.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -674,7 +674,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.extension:extension">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension">
       <path value="MedicationRequest.modifierExtension.extension.extension"/>
       <sliceName value="extension"/>
       <short value="Extension"/>
@@ -690,7 +690,7 @@
         <code value="Extension"/>
       </type>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.url">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:reason.url">
       <path value="MedicationRequest.modifierExtension.extension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
@@ -711,7 +711,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.extension:reason.value[x]">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.extension:reason.value[x]">
       <path value="MedicationRequest.modifierExtension.extension.value[x]"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
@@ -729,6 +729,10 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"/>
+      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -740,7 +744,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.url">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.url">
       <path value="MedicationRequest.modifierExtension.url"/>
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
@@ -755,13 +759,13 @@
       <type>
         <code value="uri"/>
       </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier.value[x]">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier.value[x]">
       <path value="MedicationRequest.modifierExtension.value[x]"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
@@ -1138,11 +1142,23 @@
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medication[x]">
       <path value="MedicationRequest.medication[x]"/>
+      <slicing id="234">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Medication to be taken"/>
       <definition value="Identifies the medication being requested. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications."/>
       <comment value="If only a code is specified, then it needs to be a code for a specific product. If more information is required, then the use of the medication resource is recommended.&#xA0; For example, if&#xA0;you require&#xA0;form or&#xA0;lot number or if the medication is compounded or extemporaneously prepared, then you must&#xA0;reference the Medication resource.&#xA0;."/>
       <min value="1"/>
       <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
@@ -1178,6 +1194,25 @@
         <identity value="w5"/>
         <map value="what"/>
       </mapping>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medicationCodeableConcept:shr-core-CodeableConcept">
+      <path value="MedicationRequest.medicationCodeableConcept"/>
+      <sliceName value="shr-core-CodeableConcept"/>
+      <short value="Medication to be taken"/>
+      <definition value="Identifies the medication being requested. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.subject">
       <path value="MedicationRequest.subject"/>
@@ -1315,7 +1350,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1324,7 +1359,7 @@
         <severity value="error"/>
         <human value="onBehalfOf can only be specified if agent is practitioner or device"/>
         <expression value="(agent.resolve().empty()) or (agent.resolve() is Device) or (agent.resolve() is Practitioner) or onBehalfOf.exists().not()"/>
-        <xpath value="contains(f:agent, &#39;/Practitioner&#39;) or contains(f:agent, &#39;/Device&#39;) or not(exists(f:onBehalfOf))"/>
+        <xpath value="contains(f:agent/f:reference/@value, &#39;/Practitioner/&#39;) or contains(f:agent/f:reference/@value, &#39;/Device/&#39;) or not(exists(f:onBehalfOf))"/>
       </constraint>
       <isSummary value="true"/>
       <mapping>
@@ -1929,7 +1964,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="RouteOfAdministration"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/route-codes"/>
@@ -1957,7 +1992,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="MedicationAdministrationMethod"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="A coded concept describing the technique by which the medicine is administered."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/administration-method-codes"/>
@@ -2076,7 +2111,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -2275,7 +2310,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -2479,14 +2514,27 @@
       <short value="SHR MedicationNotPrescribed Profile"/>
       <definition value="A record of a medication NOT prescribed. Recorded only when deviating from the normal expectation, care plan, or standard of care."/>
     </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:actioncode">
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:specifictype">
       <path value="MedicationRequest.extension"/>
-      <sliceName value="actioncode"/>
-      <min value="1"/>
+      <sliceName value="specifictype"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ActionCode-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.extension:category">
+      <path value="MedicationRequest.extension"/>
+      <sliceName value="category"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2534,29 +2582,22 @@
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:nonoccurrencemodifier">
       <path value="MedicationRequest.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
       </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.modifierExtension:medicationnotprescribedmodifier">
-      <path value="MedicationRequest.modifierExtension"/>
-      <sliceName value="medicationnotprescribedmodifier"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationNotPrescribedModifier-extension"/>
-      </type>
       <fixedBoolean value="true"/>
       <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/ReasonMedicationNotUsedVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.status">
       <path value="MedicationRequest.status"/>
@@ -2565,10 +2606,35 @@
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medication[x]">
       <path value="MedicationRequest.medication[x]"/>
+      <slicing id="234">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
       </type>
+    </element>
+    <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.medicationCodeableConcept:shr-core-CodeableConcept">
+      <path value="MedicationRequest.medicationCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.reasonCode">
       <path value="MedicationRequest.reasonCode"/>
@@ -2627,6 +2693,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="RouteOfAdministration"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/route-codes"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dosageInstruction.method">
       <path value="MedicationRequest.dosageInstruction.method"/>
@@ -2634,6 +2710,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationAdministrationMethod"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept describing the technique by which the medicine is administered."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/administration-method-codes"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationRequest:shr-medication-MedicationNotPrescribed.dosageInstruction.dose[x]">
       <path value="MedicationRequest.dosageInstruction.dose[x]"/>

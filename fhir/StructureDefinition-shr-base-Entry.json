@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Entry Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:13.199Z",
+  "date": "2017-08-08T15:56:20.628Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "An item inserted in an electronic record.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "rim",
@@ -353,7 +353,7 @@
               "valueBoolean": true
             }
           ],
-          "strength": "extensible",
+          "strength": "required",
           "description": "A human language.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/languages"
@@ -513,6 +513,44 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag",
+        "path": "DomainResource.extension",
+        "sliceName": "subjectisthirdpartyflag",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "If true, the subject of this entry is someone other than the Person of Record, for example, a family member.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"
           }
         ],
         "mustSupport": false,
@@ -711,44 +749,6 @@
             "map": "N/A"
           }
         ]
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.modifierExtension:subjectisthirdpartymodifier",
-        "path": "DomainResource.modifierExtension",
-        "sliceName": "subjectisthirdpartymodifier",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "If true, the subject of this entry is someone other than the Person of Record, for example, a family member.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
       }
     ]
   },
@@ -783,6 +783,33 @@
         "path": "DomainResource.meta.profile",
         "min": 1,
         "max": "*"
+      },
+      {
+        "id": "DomainResource:shr-base-Entry.language",
+        "path": "DomainResource.language",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet",
+              "valueReference": {
+                "reference": "http://hl7.org/fhir/ValueSet/all-languages"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "Language"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+              "valueBoolean": true
+            }
+          ],
+          "strength": "required",
+          "description": "A human language.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/languages"
+          }
+        }
       },
       {
         "id": "DomainResource:shr-base-Entry.text",
@@ -820,6 +847,22 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag",
+        "path": "DomainResource.extension",
+        "sliceName": "subjectisthirdpartyflag",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"
           }
         ],
         "mustSupport": false,
@@ -888,22 +931,6 @@
         ],
         "mustSupport": false,
         "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.modifierExtension:subjectisthirdpartymodifier",
-        "path": "DomainResource.modifierExtension",
-        "sliceName": "subjectisthirdpartymodifier",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
         "isSummary": false
       }
     ]

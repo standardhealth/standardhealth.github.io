@@ -44,39 +44,89 @@
 <td>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.</td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationCode"><code>ObservationCode</code></a> is <a href="../lab/index.html#TestCode"><code>TestCode</code></a></td>
+<td><a href="../core/index.html#SpecificType"><code>SpecificType</code></a></td>
 <td>1</td>
-<td>The code for a laboratory, radiologic, and other clinical test or measurement that helps to determine the presence, absence, or degree of a condition, or assess the health of an individual.</td>
+<td>A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.</td>
 </tr>
 <tr>
-<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> is <a href="http://s.details.loinc.org/LOINC/9279-1.html">9279-1</a></td>
+<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://hl7.org/fhir/ValueSet/observation-codes</td>
 <td></td>
 <td>A set of codes drawn from different coding systems, representing the same concept.</td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationCategory"><code>ObservationCategory</code></a></td>
-<td>1 or more</td>
-<td>A categorization of the observation according to how the observation was collected or its clinical area.</td>
+<td><a href="../base/index.html#Status"><code>Status</code></a></td>
+<td>1</td>
+<td>The position of affairs at a particular time</td>
 </tr>
 <tr>
-<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> includes <a href="http://hl7.org/fhir/observation-category/vital-signs">vital-signs</a></td>
+<td>        with <code>code</code> from http://hl7.org/fhir/ValueSet/observation-status</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="../base/index.html#Category"><code>Category</code></a></td>
+<td>0 or more</td>
+<td>A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS is <a href="null/vital-signs">vital-signs</a></td>
 <td></td>
 <td>A set of codes drawn from different coding systems, representing the same concept.</td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationReason"><code>ObservationReason</code></a></td>
+<td><a href="../base/index.html#NonOccurrenceModifier"><code>NonOccurrenceModifier</code></a></td>
 <td>optional</td>
-<td>The reason for making the observation.</td>
+<td>When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.</td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationNonOccurrenceModifier"><code>ObservationNonOccurrenceModifier</code></a></td>
-<td>optional</td>
-<td>True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected.</td>
+<td>When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationStatus"><code>ObservationStatus</code></a></td>
-<td>1</td>
-<td>A qualifier describing the stage or administrative state of the observation. If not given, it is assumed the status is final.</td>
+<td>        with <a href="../core/index.html#Reason"><code>Reason</code></a>.<a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS</td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Reason"><code>Reason</code></a></td>
+<td>optional</td>
+<td>The justification for an action or non-action, conclusion, opinion, etc.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#OccurrenceTime"><code>OccurrenceTime</code></a></td>
+<td>optional</td>
+<td>The point in time or span of time in which something happens.</td>
+</tr>
+<tr>
+<td><a href="../actor/index.html#Participant"><code>Participant</code></a></td>
+<td>0 or more</td>
+<td>A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#BodySite"><code>BodySite</code></a></td>
+<td>optional</td>
+<td>A location in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.</td>
+</tr>
+<tr>
+<td><a href="../observation/index.html#AssociatedStudy"><code>AssociatedStudy</code></a></td>
+<td>optional</td>
+<td>The clinical trial or other formal study related to this finding.</td>
+</tr>
+<tr>
+<td><a href="../observation/index.html#Method"><code>Method</code></a> is <a href="../lab/index.html#TestMethod"><code>TestMethod</code></a></td>
+<td>optional</td>
+<td>The technique used to carry out a procedure, if not implicit in the test code.</td>
+</tr>
+<tr>
+<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/vital/vs/RespiratoryRateMethodVS</td>
+<td></td>
+<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+</tr>
+<tr>
+<td><a href="../base/index.html#AssertionNegationModifier"><code>AssertionNegationModifier</code></a></td>
+<td>optional</td>
+<td>When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is 'allergy to peanuts' and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.</td>
 </tr>
 <tr>
 <td><a href="../observation/index.html#ObservationQualifier"><code>ObservationQualifier</code></a></td>
@@ -89,14 +139,9 @@
 <td>A set of codes drawn from different coding systems, representing the same concept.</td>
 </tr>
 <tr>
-<td><a href="../observation/index.html#ObservationMethod"><code>ObservationMethod</code></a> is <a href="../lab/index.html#TestMethod"><code>TestMethod</code></a></td>
+<td><a href="../observation/index.html#DataAbsentReason"><code>DataAbsentReason</code></a></td>
 <td>optional</td>
-<td>The technique used to carry out a procedure, if not implicit in the test code.</td>
-</tr>
-<tr>
-<td>        with <a href="../core/index.html#CodeableConcept"><code>CodeableConcept</code></a> from http://standardhealthrecord.org/shr/vital/vs/RespiratoryRateMethodVS</td>
-<td></td>
-<td>A set of codes drawn from different coding systems, representing the same concept.</td>
+<td>Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).</td>
 </tr>
 <tr>
 <td><a href="../observation/index.html#ClinicallyRelevantTime"><code>ClinicallyRelevantTime</code></a></td>
@@ -104,24 +149,24 @@
 <td>The time or time period that the observation addresses. The clinically relevant time is not necessarily when the information is gathered or when a test is carried out, but for example, when a specimen was collected, or the time period referred to by the question. Use a TimePeriod for a measurement or specimen collection continued over a significant period of time (e.g. 24 hour Urine Sodium).</td>
 </tr>
 <tr>
-<td><a href="../actor/index.html#Participant"><code>Participant</code></a></td>
-<td>0 or more</td>
-<td>A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#Setting"><code>Setting</code></a></td>
-<td>0 or more</td>
-<td>Description of the place or type of surroundings where something is positioned or where an event takes place.</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#Location"><code>Location</code></a></td>
-<td>0 or more</td>
-<td>A position, site, or point in space where something can be found.</td>
-</tr>
-<tr>
-<td><a href="../core/index.html#BodySite"><code>BodySite</code></a></td>
+<td><a href="../observation/index.html#ReferenceRange"><code>ReferenceRange</code></a></td>
 <td>optional</td>
-<td>Location on or in the body.</td>
+<td>The usual or acceptable range for a test result.</td>
+</tr>
+<tr>
+<td><a href="../lab/index.html#Interpretation"><code>Interpretation</code></a></td>
+<td>optional</td>
+<td>A clinical interpretation of a measurement.</td>
+</tr>
+<tr>
+<td><a href="../core/index.html#Comment"><code>Comment</code></a></td>
+<td>optional</td>
+<td>A critical or explanatory note written to discuss, support, explain changes to, or dispute information.</td>
+</tr>
+<tr>
+<td><a href="../observation/index.html#PanelMembers"><code>PanelMembers</code></a></td>
+<td>optional</td>
+<td>PanelMembers represent the elements of a group of a related observations. Examples are the measurements that compose a complete blood count (CBC), or the elements of a pathology report. Each member is an independent observation, but the grouping reflects a composite lab order, shared specimen, or a single report author.</td>
 </tr>
 <tr>
 <td><a href="../core/index.html#BodyPosition"><code>BodyPosition</code></a></td>
@@ -137,16 +182,6 @@
 <td><code>Specimen</code> <em>(TBD)</em></td>
 <td>optional</td>
 <td></td>
-</tr>
-<tr>
-<td><a href="../lab/index.html#Interpretation"><code>Interpretation</code></a></td>
-<td>optional</td>
-<td>A clinical interpretation of a measurement.</td>
-</tr>
-<tr>
-<td><a href="../lab/index.html#ReferenceRange"><code>ReferenceRange</code></a></td>
-<td>optional</td>
-<td>The usual or acceptable range for a test result.</td>
 </tr>
 <tr>
 <td><a href="../lab/index.html#ChangeFlag"><code>ChangeFlag</code></a></td>

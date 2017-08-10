@@ -3,7 +3,7 @@
   "id": "shr-oncology-ProgesteroneReceptorStatus",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ProgesteroneReceptorStatus Profile</b></p>\n  <p>Progesterone receptor is expressed in 65% of breast carcinomas.13 PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.ProgesteroneReceptorStatus maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  ObservationCode maps to code\n  ObservationCategory maps to category\n  ObservationStatus maps to status\n  ObservationMethod maps to method\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Participant maps to performer\n  CodeableConcept maps to value[x].CodeableConcept\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ProgesteroneReceptorStatus Profile</b></p>\n  <p>Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.ProgesteroneReceptorStatus maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  SpecificType maps to code\n  Category maps to category\n  BodySite maps to bodySite\n  Status maps to status\n  Method maps to method\n  Participant maps to performer \t// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  DataAbsentReason maps to dataAbsentReason\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Interpretation maps to interpretation\n  Comment maps to comment\n  constrain component to 0..0\n  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ProgesteroneReceptorStatus",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR ProgesteroneReceptorStatus Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:17.399Z",
+  "date": "2017-08-08T15:56:34.940Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,9 +27,9 @@
       ]
     }
   ],
-  "description": "Progesterone receptor is expressed in 65% of breast carcinomas.13 PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
+  "description": "Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
   "purpose": "Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "workflow",
@@ -73,7 +73,7 @@
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus",
         "path": "Observation",
         "short": "SHR ProgesteroneReceptorStatus Profile",
-        "definition": "Progesterone receptor is expressed in 65% of breast carcinomas.13 PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
+        "definition": "Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.",
         "comment": "Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc.",
         "alias": [
           "Vital Signs",
@@ -121,7 +121,7 @@
             "severity": "error",
             "human": "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
             "expression": "value.empty() or code!=component.code",
-            "xpath": "not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
+            "xpath": "not(exists(f:*[starts-with(local-name(.), 'value')])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
           },
           {
             "key": "obs-6",
@@ -328,7 +328,7 @@
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension",
         "path": "Observation.extension",
         "slicing": {
-          "id": "273",
+          "id": "338",
           "discriminator": [
             {
               "type": "value",
@@ -365,10 +365,10 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:observationreason",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:reason",
         "path": "Observation.extension",
-        "sliceName": "observationreason",
-        "definition": "The reason for making the observation.",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -384,7 +384,73 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:occurrencetime",
+        "path": "Observation.extension",
+        "sliceName": "occurrencetime",
+        "definition": "The point in time or span of time in which something happens.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:associatedstudy",
+        "path": "Observation.extension",
+        "sliceName": "associatedstudy",
+        "definition": "The clinical trial or other formal study related to this finding.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"
           }
         ],
         "mustSupport": false,
@@ -431,10 +497,10 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:setting",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:referencerange",
         "path": "Observation.extension",
-        "sliceName": "setting",
-        "definition": "Description of the place or type of surroundings where something is positioned or where an event takes place.",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -450,7 +516,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
           }
         ],
         "mustSupport": false,
@@ -464,42 +530,9 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:location",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype",
         "path": "Observation.extension",
-        "sliceName": "location",
-        "definition": "A position, site, or point in space where something can be found.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor",
-        "path": "Observation.extension",
-        "sliceName": "receptor",
+        "sliceName": "receptortype",
         "definition": "A protein located on the cell surface, or in the cytoplasm, that binds to a specific signaling factor, such as a hormone, antigen, or neurotransmitter, causing a conformational and functional change in the receptor molecule. The ligand-bound receptor then alters its interaction with target molecules, which leads to changes in cellular physiology through modification of the activity of one or more signal transduction pathways.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
@@ -516,7 +549,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-Receptor-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorType-extension"
           }
         ],
         "mustSupport": false,
@@ -530,7 +563,7 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor.id",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype.id",
         "path": "Observation.extension.id",
         "representation": [
           "xmlAttr"
@@ -557,7 +590,7 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor.extension:extension",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype.extension:extension",
         "path": "Observation.extension.extension",
         "sliceName": "extension",
         "short": "Extension",
@@ -576,7 +609,7 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor.url",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype.url",
         "path": "Observation.extension.url",
         "representation": [
           "xmlAttr"
@@ -595,7 +628,7 @@
             "code": "uri"
           }
         ],
-        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-Receptor-extension",
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorType-extension",
         "mapping": [
           {
             "identity": "rim",
@@ -604,7 +637,7 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor.valueCodeableConcept",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype.valueCodeableConcept",
         "path": "Observation.extension.valueCodeableConcept",
         "short": "Value of extension",
         "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
@@ -624,8 +657,8 @@
         "patternCodeableConcept": {
           "coding": [
             {
-              "system": "http://snomed.info/sct",
-              "code": "61078009"
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C0034833"
             }
           ]
         },
@@ -663,6 +696,39 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorPositivityPercentage-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptorallredtotalscore",
+        "path": "Observation.extension",
+        "sliceName": "receptorallredtotalscore",
+        "definition": "Part of the Allred scoring, the total of proportion and intensity scores, from 0 to 8.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorAllredTotalScore-extension"
           }
         ],
         "mustSupport": false,
@@ -742,43 +808,10 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortotalscore",
-        "path": "Observation.extension",
-        "sliceName": "receptortotalscore",
-        "definition": "Part of the Allred scoring, the total of proportion and intensity scores, from 0 to 8.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorTotalScore-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension",
         "path": "Observation.modifierExtension",
         "slicing": {
-          "id": "274",
+          "id": "339",
           "discriminator": [
             {
               "type": "value",
@@ -816,10 +849,10 @@
         ]
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:observationnonoccurrencemodifier",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier",
         "path": "Observation.modifierExtension",
-        "sliceName": "observationnonoccurrencemodifier",
-        "definition": "True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected.",
+        "sliceName": "nonoccurrencemodifier",
+        "definition": "When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.\nWhen applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
@@ -835,7 +868,423 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
+          }
+        ],
+        "mustSupport": true,
+        "isModifier": true,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.id",
+        "path": "Observation.modifierExtension.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension",
+        "path": "Observation.modifierExtension.extension",
+        "slicing": {
+          "id": "9",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:boolean",
+        "path": "Observation.modifierExtension.extension",
+        "sliceName": "boolean",
+        "definition": "When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.\nWhen applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason",
+        "path": "Observation.modifierExtension.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.id",
+        "path": "Observation.modifierExtension.extension.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension",
+        "path": "Observation.modifierExtension.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.url",
+        "path": "Observation.modifierExtension.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.extension:reason.value[x]",
+        "path": "Observation.modifierExtension.extension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          },
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.url",
+        "path": "Observation.modifierExtension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier.value[x]",
+        "path": "Observation.modifierExtension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:assertionnegationmodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "assertionnegationmodifier",
+        "definition": "When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is 'allergy to peanuts' and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.modifierExtension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
           }
         ],
         "mustSupport": true,
@@ -1012,16 +1461,9 @@
           }
         ],
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ObservationCategory"
-            }
-          ],
-          "strength": "preferred",
-          "description": "Codes for high level observation categories.",
+          "strength": "extensible",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/observation-category"
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
           }
         },
         "mapping": [
@@ -1052,18 +1494,19 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "16113-3"
+            }
+          ]
+        },
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ObservationCode"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes identifying names of simple observations.",
+          "strength": "preferred",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/observation-codes"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
           }
         },
         "mapping": [
@@ -1281,7 +1724,7 @@
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
-          "id": "272",
+          "id": "337",
           "discriminator": [
             {
               "type": "type",
@@ -1363,7 +1806,8 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "condition": [
@@ -1410,7 +1854,8 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "binding": {
@@ -1420,7 +1865,7 @@
               "valueString": "ObservationInterpretation"
             }
           ],
-          "strength": "extensible",
+          "strength": "required",
           "description": "Codes identifying interpretations of observations.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
@@ -1483,20 +1928,14 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "BodySite"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes describing anatomical locations. May include laterality.",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/body-site"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         },
         "mapping": [
@@ -1646,7 +2085,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           },
@@ -1957,7 +2396,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2110,15 +2549,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Sequence"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"
           }
         ],
         "mapping": [
@@ -2136,7 +2567,7 @@
         "comment": "For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below.",
         "requirements": "Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation.",
         "min": 0,
-        "max": "*",
+        "max": "0",
         "type": [
           {
             "code": "BackboneElement"
@@ -2147,7 +2578,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -2478,18 +2909,50 @@
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus",
         "path": "Observation",
         "short": "SHR ProgesteroneReceptorStatus Profile",
-        "definition": "Progesterone receptor is expressed in 65% of breast carcinomas.13 PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."
+        "definition": "Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:observationreason",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:reason",
         "path": "Observation.extension",
-        "sliceName": "observationreason",
+        "sliceName": "reason",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:occurrencetime",
+        "path": "Observation.extension",
+        "sliceName": "occurrencetime",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:associatedstudy",
+        "path": "Observation.extension",
+        "sliceName": "associatedstudy",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"
           }
         ],
         "mustSupport": false,
@@ -2513,15 +2976,15 @@
         "isSummary": false
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:setting",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:referencerange",
         "path": "Observation.extension",
-        "sliceName": "setting",
+        "sliceName": "referencerange",
         "min": 0,
         "max": "*",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"
           }
         ],
         "mustSupport": false,
@@ -2529,38 +2992,22 @@
         "isSummary": false
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:location",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortype",
         "path": "Observation.extension",
-        "sliceName": "location",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptor",
-        "path": "Observation.extension",
-        "sliceName": "receptor",
+        "sliceName": "receptortype",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-Receptor-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorType-extension"
           }
         ],
         "patternCodeableConcept": {
           "coding": [
             {
-              "system": "http://snomed.info/sct",
-              "code": "61078009"
+              "system": "http://ncimeta.nci.nih.gov",
+              "code": "C0034833"
             }
           ]
         },
@@ -2578,6 +3025,22 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorPositivityPercentage-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptorallredtotalscore",
+        "path": "Observation.extension",
+        "sliceName": "receptorallredtotalscore",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorAllredTotalScore-extension"
           }
         ],
         "mustSupport": false,
@@ -2617,31 +3080,37 @@
         "isSummary": false
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.extension:receptortotalscore",
-        "path": "Observation.extension",
-        "sliceName": "receptortotalscore",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:nonoccurrencemodifier",
+        "path": "Observation.modifierExtension",
+        "sliceName": "nonoccurrencemodifier",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-ReceptorTotalScore-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
           }
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        "mustSupport": true,
+        "isModifier": true,
+        "isSummary": false,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"
+          }
+        }
       },
       {
-        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:observationnonoccurrencemodifier",
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.modifierExtension:assertionnegationmodifier",
         "path": "Observation.modifierExtension",
-        "sliceName": "observationnonoccurrencemodifier",
+        "sliceName": "assertionnegationmodifier",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
           }
         ],
         "mustSupport": true,
@@ -2656,7 +3125,13 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "strength": "extensible",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"
+          }
+        }
       },
       {
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.code",
@@ -2666,7 +3141,21 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "16113-3"
+            }
+          ]
+        },
+        "binding": {
+          "strength": "preferred",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+          }
+        }
       },
       {
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.subject",
@@ -2731,7 +3220,7 @@
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
-          "id": "272",
+          "id": "337",
           "discriminator": [
             {
               "type": "type",
@@ -2767,6 +3256,55 @@
         }
       },
       {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.dataAbsentReason",
+        "path": "Observation.dataAbsentReason",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.interpretation",
+        "path": "Observation.interpretation",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ObservationInterpretation"
+            }
+          ],
+          "strength": "required",
+          "description": "Codes identifying interpretations of observations.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+          }
+        }
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.bodySite",
+        "path": "Observation.bodySite",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
+          }
+        }
+      },
+      {
         "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.method",
         "path": "Observation.method",
         "type": [
@@ -2775,6 +3313,26 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.related",
+        "path": "Observation.related"
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.related.target",
+        "path": "Observation.related.target",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-oncology-ProgesteroneReceptorStatus.component",
+        "path": "Observation.component",
+        "min": 0,
+        "max": "0"
       }
     ]
   }

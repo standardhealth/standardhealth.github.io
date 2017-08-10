@@ -1,10 +1,946 @@
----
-layout: default_spec
-title: spec
----
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="The Standard Health Record Collaborative is working to create a single, high-quality health record for every individual in the United States.">
+      <meta name="keywords" content="HealthIT,medical errors,semantic interoperability,healthcare interoperability,interoperability,Electronic Health Record,Electronic Medical Record,EMR,EHR,synthetic patient,SyntheticMass,MITRE,Personal Health Record,Universal Health Record,National Health Record">
+  
+      <!-- Favicons -->
+      <link rel="icon" href="/../../../assets/img/favicon.ico" type="image/x-icon">
+      
+      <!-- Material Design fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap.min.css" type="text/css">
+      <!-- Bootstrap Material Design -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap-material-design.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/ripples.min.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/snackbar.css">
+      <!-- Font Awesome for Icons  -->
+      <link rel="stylesheet" href="/../../../assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/../../../assets/css/ssve.css">
+      <link rel="stylesheet" href="/../../../assets/css/styles.css">
+      <link rel="stylesheet" href="/../../../assets/css/shr-github-markdown.css">
+      <script src="https://use.fontawesome.com/b7720aa37b.js"></script>
+  
+      <!-- JS -->
+      <!-- Jquery 2.2.4-->
+      <script src="/../../../assets/js/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/../../../assets/js/bootstrap.min.js"></script>
+      <!-- Lodash -->
+      <script src="/../../../assets/js/lodash.min.js"></script>
+      <script src="/../../../assets/js/typeahead.jquery.js"></script>
+      <!-- D3.js -->
+      <script src="/../../../assets/js/d3.min.js"></script>
+      <!--[if lt IE 9]>
+        <script src="../../../assets/js/ie8-responsive-file-warning.js"></script>
+      <![endif]-->
+  
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+  
+      <title>
+        Standard Health Record Specification
+      </title>
+  </head>
+  <body>
+    <a class="sr-only" href="#content">Skip to main content</a>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-fixed-top" data-spy="affix" data-offset-top="20">
+          <div class="container navbar-container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
+                <span style="font-size: 0; line-height: 0;"> Navigation </span>
+                <span class="icon fa fa-2x fa-bars"></span>
+              </button>
+              <div class="logo-banner">
+                <a href="/#sitehomepage">
+                  <img src='/assets/img/shr_brand_logo.png' alt='Standard Helath Record Collaborative logo'> 
+                </a>
+              </div>
+            </div>
+            <div id="site-menu" class="navbar-collapse collapse" role="navigation">
+              <ul class="nav navbar-nav">
+                <!-- Search for the mobile layout -->
+                <li class="visible-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton-mobile">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input-mobile" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+                <li class="scroll active">
+                  <a href="/#sitehomepage">HOME</a>
+                </li>
+                <li class="aboutNav">
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_about" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ABOUT<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class="scroll visible-xs-block"><a class="dropdown-elem" data-toggle="collapse" data-target=".navbar-collapse" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li class="scroll hidden-xs"><a class="dropdown-elem" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li><a class="dropdown-elem" href="/collaborative.html">INITIATIVES</a></li>
+                    <li><a class="dropdown-elem" href="/evidence.html">EVIDENCE</a></li>
+                  </ul>
+                </li> 
+                <li>
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_spec" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SPEC<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-elem hidden-xs" href="/shr/graphic.html">SPEC VISUALIZATION</a></li>
+                    <li><a class="dropdown-elem" href="/shr/">SHR SPEC</a></li>
+                    <li><a class="dropdown-elem" href="/spec_terminology.html">SPEC TERMINOLOGY</a></li>
+                    <li><a class="dropdown-elem" href="/fhir/">SHR FHIR&reg; IG</a></li>
+                    <li class="divider"></li>
+                    <li><a class="dropdown-elem" href="/shr/index_all_elements.html">DATA ELEMENT INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/vs/">VALUE SET INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/cs/">CODE SYSTEM INDEX</a></li>
+                  </ul>
+                </li>
+      
+                <li class="">
+                  <a href="/faq.html">FAQ</a>
+                </li>
+                <li class="scroll">
+                  <a href="/#contact-landing">CONTACT</a>
+                </li>
+                <li class="hidden-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <section id="spec-viewer">
+            <div class="section-heading">
+              <h1> 
+                  The Standard Health Record Value Sets
+              </h1> 
+            </div>
+            <div class="section-content">
+              <div class="container">
+                    <div class="row">
+                    <h2><a href="/shr/actor/vs">Actor</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/actor/vs/#HealthcareRoleVS">HealthcareRoleVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/actor/vs/#AgeGroupVS">AgeGroupVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/actor/vs/#LanguageQualifierVS">LanguageQualifierVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/adverse/vs">Adverse</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/adverse/vs/#MedDRAVS">MedDRAVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/adverse/vs/#AdverseEventGradeVS">AdverseEventGradeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/allergy/vs">Allergy</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/allergy/vs/#AllergenIrritantVS">AllergenIrritantVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/allergy/vs/#FoodSubstanceVS">FoodSubstanceVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/allergy/vs/#DrugIngredientVS">DrugIngredientVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/allergy/vs/#AllergyVerificationStatusVS">AllergyVerificationStatusVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/assessment/vs">Assessment</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/assessment/vs/#AssessmentTypeVS">AssessmentTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/assessment/vs/#EvidenceQualityVS">EvidenceQualityVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/base/vs">Base</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/base/vs/#MissingValueReasonVS">MissingValueReasonVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/base/vs/#GenericAnswersVS">GenericAnswersVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/behavior/vs">Behavior</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#ReligiousPracticeStatusVS">ReligiousPracticeStatusVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#ReligiousRestrictionVS">ReligiousRestrictionVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#SubstanceOfAbuseVS">SubstanceOfAbuseVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#SubstanceAbuseTreatmentTypeVS">SubstanceAbuseTreatmentTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#AlcoholUseScreeningToolVS">AlcoholUseScreeningToolVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#SpecialDietFollowedVS">SpecialDietFollowedVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#DietNutritionConcernVS">DietNutritionConcernVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#SleepQualityReasonVS">SleepQualityReasonVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/behavior/vs/#PhysicalActivityLimitationVS">PhysicalActivityLimitationVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/condition/vs">Condition</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/condition/vs/#DSMVS">DSMVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/condition/vs/#ConditionVS">ConditionVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/condition/vs/#ConditionCategoryVS">ConditionCategoryVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/core/vs">Core</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#CodingQualifierVS">CodingQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#ClockDirectionVS">ClockDirectionVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#UpperBoundTypeVS">UpperBoundTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#LowerBoundTypeVS">LowerBoundTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#StatisticTypeVS">StatisticTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#TimeUnitOfMeasureVS">TimeUnitOfMeasureVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#QualitativeDateTimeVS">QualitativeDateTimeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#SemiquantitativeDurationVS">SemiquantitativeDurationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#SemiquantitativeFrequencyVS">SemiquantitativeFrequencyVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#QualitativeFrequencyVS">QualitativeFrequencyVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#ThreeValueLogicVS">ThreeValueLogicVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#QualitativeValueScaleVS">QualitativeValueScaleVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#QualitativeLikelihoodVS">QualitativeLikelihoodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#ThreePriorityVS">ThreePriorityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#SettingVS">SettingVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#BodyPositionVS">BodyPositionVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#BodySiteVS">BodySiteVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#BodyStructureVS">BodyStructureVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#LateralityVS">LateralityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#DirectionalityVS">DirectionalityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#PortionTotalityVS">PortionTotalityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#PerformanceGradingScaleVS">PerformanceGradingScaleVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#DiseaseFindingVS">DiseaseFindingVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#ClinicalFindingAbsentVS">ClinicalFindingAbsentVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/core/vs/#SpecificTypeVS">SpecificTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/demographics/vs">Demographics</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/demographics/vs/#AddressUseVS">AddressUseVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/demographics/vs/#TelephoneTypeVS">TelephoneTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/demographics/vs/#TelecomQualifierVS">TelecomQualifierVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/demographics/vs/#InsuranceProviderTypeVS">InsuranceProviderTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/device/vs">Device</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/device/vs/#RespiratoryRateSettingVS">RespiratoryRateSettingVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/device/vs/#RespiratoryAssistDeviceVS">RespiratoryAssistDeviceVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/encounter/vs">Encounter</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#EpisodeOfCareCompletionVS">EpisodeOfCareCompletionVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#EncounterUrgencyVS">EncounterUrgencyVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#EncounterTypeVS">EncounterTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#ReferralSourceTypeVS">ReferralSourceTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#TreatmentCooperationVS">TreatmentCooperationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/encounter/vs/#ReasonEncounterDidNotHappenVS">ReasonEncounterDidNotHappenVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/environment/vs">Environment</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#ResourceStabilityVS">ResourceStabilityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#IncomeSourceVS">IncomeSourceVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#NonCashBenefitVS">NonCashBenefitVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#AnimalExposureVS">AnimalExposureVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#CoinhabitantVS">CoinhabitantVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/environment/vs/#HomeEnvironmentRiskVS">HomeEnvironmentRiskVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/immunization/vs">Immunization</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/immunization/vs/#ImmunizationNotGivenReasonVS">ImmunizationNotGivenReasonVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/lab/vs">Lab</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#TestInterpretationVS">TestInterpretationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#ChangeFlagVS">ChangeFlagVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#PositiveNegativeVS">PositiveNegativeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#HIVScreeningTestCodeVS">HIVScreeningTestCodeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#HIVScreeningTestResultVS">HIVScreeningTestResultVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#HIVSupplementalTestCodeVS">HIVSupplementalTestCodeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lab/vs/#HIVSupplementalTestResultVS">HIVSupplementalTestResultVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/lifehistory/vs">Lifehistory</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#EducationalAttainmentVS">EducationalAttainmentVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#TeratogenVS">TeratogenVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#CongenitalAbnormalitiesVS">CongenitalAbnormalitiesVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#EmploymentStatusVS">EmploymentStatusVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#MilitaryStatusVS">MilitaryStatusVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#USMilitaryBranchVS">USMilitaryBranchVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#MilitaryServiceDischargeStatusVS">MilitaryServiceDischargeStatusVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/lifehistory/vs/#MilitaryServiceEraVS">MilitaryServiceEraVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/medication/vs">Medication</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/medication/vs/#MedicationVS">MedicationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/medication/vs/#ReasonMedicationNotUsedVS">ReasonMedicationNotUsedVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/medication/vs/#MedicationNonAdherenceReasonVS">MedicationNonAdherenceReasonVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/medication/vs/#MedicationChangeTypeVS">MedicationChangeTypeVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/medication/vs/#MedicationChangeReasonVS">MedicationChangeReasonVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/observation/vs">Observation</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#ObservationCategoryVS">ObservationCategoryVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#NonLabObservationStatusVS">NonLabObservationStatusVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#ExposureReasonVS">ExposureReasonVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#ObservationNotMadeReasonVS">ObservationNotMadeReasonVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#ManifestationVS">ManifestationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/observation/vs/#ObservationResultVS">ObservationResultVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/oncology/vs">Oncology</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#NeoplasmObservationVS">NeoplasmObservationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#NeoplasmObservationMethodVS">NeoplasmObservationMethodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#BreastCancerTypeVS">BreastCancerTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#ReceptorVS">ReceptorVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#NottinghamCombinedGradeVS">NottinghamCombinedGradeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#LymphSystemSubdivisionVS">LymphSystemSubdivisionVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#HER2MethodVS">HER2MethodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#DegreeOfLymphaticInvolvementVS">DegreeOfLymphaticInvolvementVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#GeneIdentifierVS">GeneIdentifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#SubjectiveProgressionVS">SubjectiveProgressionVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#ProgressionEvidenceTypeVS">ProgressionEvidenceTypeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#TumorMarginDescriptionVS">TumorMarginDescriptionVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#StagingTimeVS">StagingTimeVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#TubuleFormationScoreVS">TubuleFormationScoreVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#NuclearPleomorphismScoreVS">NuclearPleomorphismScoreVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/oncology/vs/#ToxicReactionVS">ToxicReactionVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/sex/vs">Sex</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#GenderIdentityVS">GenderIdentityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#SexualOrientationVS">SexualOrientationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#CommonPregnancyComplicationVS">CommonPregnancyComplicationVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#ContraceptiveMethodVS">ContraceptiveMethodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#ContraceptiveMethodReasonVS">ContraceptiveMethodReasonVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#ContraceptiveNotUsedReasonVS">ContraceptiveNotUsedReasonVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#SexualActivityVS">SexualActivityVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/sex/vs/#IntercourseDifficultyVS">IntercourseDifficultyVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/skin/vs">Skin</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#SupportSurfaceVS">SupportSurfaceVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#SupportSurfaceCategoryVS">SupportSurfaceCategoryVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#SupportSurfaceBodyPositionVS">SupportSurfaceBodyPositionVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#SupportSurfaceComponentVS">SupportSurfaceComponentVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#SupportSurfaceFeatureVS">SupportSurfaceFeatureVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#PressureUlcerBodySiteVS">PressureUlcerBodySiteVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#PressureUlcerAssociationVS">PressureUlcerAssociationVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#VisibleInternalStructureVS">VisibleInternalStructureVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/skin/vs/#WoundEdgeAppearanceVS">WoundEdgeAppearanceVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <h2><a href="/shr/vital/vs">Vital</a></h2>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#RespiratoryRateQualifierVS">RespiratoryRateQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#RespiratoryRateMethodVS">RespiratoryRateMethodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#HeartRateQualifierVS">HeartRateQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#HeartRateMethodVS">HeartRateMethodVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#OxygenSaturationBodySiteVS">OxygenSaturationBodySiteVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BodyTemperatureQualifierVS">BodyTemperatureQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BodyTemperatureBodySiteVS">BodyTemperatureBodySiteVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BodyHeightQualifierVS">BodyHeightQualifierVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4"> 
+                            <ul class="spec-data-element-list">
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BodyWeightQualifierVS">BodyWeightQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BloodPressureMethodVS">BloodPressureMethodVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BloodPressureQualifierVS">BloodPressureQualifierVS</a><br>
+                                    </li>
+                                    <li class="spec-data-element">
+                                      <a href="/shr/vital/vs/#BloodPressureBodySiteVS">BloodPressureBodySiteVS</a><br>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+              </div>
+            </div>
+        </section>
+      </div>
+      <div class="wrapper-padding">
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 links">
+            <div class="row">
+              <div class="col-md-push-1 col-xs-4 landing-links ">
+                <ul class="list-unstyled">
+                  <li class="scroll ">
+                    <a href="/#sitehomepage">HOME</a>
+                  </li>
+                  <li>
+                    <a href="/#about-landing">SHR COLLABORATIVE</a>
+                  </li>
+    
+                  <li>
+                    <a href="/collaborative.html">INITIATIVES</a>
+                  </li> 
+                  <li>
+                    <a href="/evidence.html">EVIDENCE</a>
+                  </li>
+                  <!--                <li>
+                    <a href="/evidence.html">INTEROPERABILITY</a>
+                  </li> --> 
+    <!--               <li class="">
+                    <a href="/spec.html">SPECIFICATION</a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="col-xs-offset-1 col-xs-5 sister-links ">
+                <ul class="list-unstyled">
+                  <li class="">
+                    <a href="/shr/graphic.html" class="hidden-xs">SPEC VISUALIZATION</a>
+                  </li>
+                  <li class="">
+                    <a href="/shr/">SHR SPEC</a>
+                  </li>
+                  <li class="">
+                    <a href="/faq.html">FAQ</a>
+                  </li>
+                  <li class="scroll">
+                    <a href="/#contact-landing">CONTACT</a>
+                  </li>
+                </ul>
+              </div>
+            </div>  
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-12"> 
+                <p class="logo">
+                  <a href="https://www.mitre.org/">
+                    <img src="/assets/img/MITRE.png" alt="MITRE Logo"> <span class="sr-only">MITRE Home Page</span>
+                  </a>
+                </p>
+                <p class="copyright">Copyright © 2016 The MITRE Corporation | Approved for Public Release; Distribution Unlimited. Case Number 16&#8209;1988</p>
+                <p class="copyright">FHIR® is the registered trademark of HL7 and is used with the permission of HL7</p>
+              </div>  
+            </div> 
+          </div>
+        </div>
+      </div>
+      <!-- Scripts for rendering -->
+      <script src="/assets/js/material.min.js"></script>
+      <script src="/assets/js/ripples.min.js"></script>
+      <script src="/assets/js/snackbar.min.js"></script>
+    
+      <script> 
+        $(document).ready(function(){
+          $.material.init()
+          $('[data-toggle="tooltip"]').tooltip(); 
+        });
+      </script>
+    
+    </footer>
 
-<div class="main">
-  <div class="container">
-    {% include spec/shr/vs/index.html %}
-  </div>
-</div>
+    <script type="text/javascript" src="/assets/js/typeahead.jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/main.js"></script>  
+    <script type="text/javascript" src="/assets/js/search.js"></script>
+    <script type="text/javascript" src="/assets/js/parse.js"></script> 
+  </body>
+</html>
+

@@ -3,7 +3,7 @@
   "id": "shr-core-Coding",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coding Profile</b></p>\n  <p>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Coding maps to Coding:\n  code maps to code\n  Vocabulary maps to system\n  VocabularyVersion maps to version\n  DisplayText maps to display\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coding Profile</b></p>\n  <p>Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Coding maps to Coding:\n  code maps to code\n  CodeSystem maps to system\n  CodeSystemVersion maps to version\n  DisplayText maps to display\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Coding Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.118Z",
+  "date": "2017-08-08T15:56:20.557Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -29,7 +29,7 @@
   ],
   "description": "Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.",
   "purpose": "References to codes are very common in healthcare models.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -70,7 +70,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -161,49 +161,6 @@
         ]
       },
       {
-        "id": "Coding:shr-core-Coding.extension:codingqualifier",
-        "path": "Coding.extension",
-        "sliceName": "codingqualifier",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "A description of the purpose or origin of the code that assists in the interpretation of the code.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "Element.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodingQualifier-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
         "id": "Coding:shr-core-Coding.system",
         "path": "Coding.system",
         "short": "Identity of the terminology system",
@@ -268,7 +225,7 @@
         "short": "Symbol in syntax defined by the system",
         "definition": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
         "requirements": "Need to refer to a particular code in the system.",
-        "min": 1,
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -365,28 +322,6 @@
         "path": "Coding",
         "short": "SHR Coding Profile",
         "definition": "Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code."
-      },
-      {
-        "id": "Coding:shr-core-Coding.extension:codingqualifier",
-        "path": "Coding.extension",
-        "sliceName": "codingqualifier",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodingQualifier-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Coding:shr-core-Coding.code",
-        "path": "Coding.code",
-        "min": 1,
-        "max": "1"
       }
     ]
   }

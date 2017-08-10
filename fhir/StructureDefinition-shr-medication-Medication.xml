@@ -8,7 +8,7 @@
   <p>A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.medication.Medication maps to Medication:
-  CodeableConcept maps to code
+  SpecificType maps to code
   DoseForm maps to form
   Ingredient maps to ingredient.item[x].CodeableConcept
   Ingredient.IngredientAmount maps to ingredient.amount.numerator
@@ -27,7 +27,7 @@
   <version value="0.0.1"/>
   <name value="SHR Medication Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:15.994Z"/>
+  <date value="2017-08-08T15:56:30.666Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -36,7 +36,7 @@
     </telecom>
   </contact>
   <description value="A type of prescription drug or over-the-counter drug that is used to prevent, treat, or relieve symptoms of a disease or abnormal condition, but excluding vaccines."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="script10.6"/>
     <uri value="http://ncpdp.org/SCRIPT10_6"/>
@@ -442,7 +442,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="MedicationForm"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="A coded concept defining the form of a medication"/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/medication-form-codes"/>
@@ -475,7 +475,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -553,7 +553,7 @@
     </element>
     <element id="Medication:shr-medication-Medication.ingredient.item[x]">
       <path value="Medication.ingredient.item[x]"/>
-      <slicing id="184">
+      <slicing id="225">
         <discriminator>
           <type value="type"/>
           <path value="$this"/>
@@ -732,7 +732,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -853,7 +853,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -987,7 +987,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1154,13 +1154,23 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationForm"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept defining the form of a medication"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/medication-form-codes"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Medication:shr-medication-Medication.ingredient">
       <path value="Medication.ingredient"/>
     </element>
     <element id="Medication:shr-medication-Medication.ingredient.item[x]">
       <path value="Medication.ingredient.item[x]"/>
-      <slicing id="184">
+      <slicing id="225">
         <discriminator>
           <type value="type"/>
           <path value="$this"/>

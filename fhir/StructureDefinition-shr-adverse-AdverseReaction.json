@@ -3,7 +3,7 @@
   "id": "shr-adverse-AdverseReaction",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AdverseReaction Profile</b></p>\n  <p>Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.adverse.AdverseReaction maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  CodeableConcept maps to code\n  ProblemCategory maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  GradeOrStage maps to stage\n  GradeOrStage.CodeableConcept maps to stage.summary\n  Manifestation maps to evidence\n  Manifestation.ObservationCode maps to evidence.code\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AdverseReaction Profile</b></p>\n  <p>Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.adverse.AdverseReaction maps to AdverseEvent:\n  CodeableConcept maps to type \n  SeriousAdverseEvent maps to seriousness\n  AdverseEventOutcome maps to outcome\n  AssociatedStudy maps to study\n  AdverseReactionAttribution maps to suspectEntity.instance\n  AdverseReactionAttribution.Certainty maps to suspectEntity.causalityAssessment\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseReaction",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR AdverseReaction Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:13.436Z",
+  "date": "2017-08-08T15:56:20.709Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,47 +27,35 @@
       ]
     }
   ],
-  "description": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction.",
-  "fhirVersion": "3.0.0",
+  "description": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes.",
+  "fhirVersion": "3.0.1",
   "mapping": [
-    {
-      "identity": "sct-concept",
-      "uri": "http://snomed.info/conceptdomain",
-      "name": "SNOMED CT Concept Domain Binding"
-    },
-    {
-      "identity": "v2",
-      "uri": "http://hl7.org/v2",
-      "name": "HL7 v2 Mapping"
-    },
-    {
-      "identity": "rim",
-      "uri": "http://hl7.org/v3",
-      "name": "RIM Mapping"
-    },
     {
       "identity": "w5",
       "uri": "http://hl7.org/fhir/w5",
       "name": "W5 Mapping"
     },
     {
-      "identity": "sct-attr",
-      "uri": "http://snomed.info/sct",
-      "name": "SNOMED CT Attribute Binding"
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
     }
   ],
   "kind": "resource",
   "abstract": false,
-  "type": "Condition",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "type": "AdverseEvent",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/AdverseEvent",
   "derivation": "constraint",
   "snapshot": {
     "element": [
       {
-        "id": "Condition:shr-adverse-AdverseReaction",
-        "path": "Condition",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction",
+        "path": "AdverseEvent",
         "short": "SHR AdverseReaction Profile",
-        "definition": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction.",
+        "definition": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes.",
+        "alias": [
+          "AE"
+        ],
         "min": 0,
         "max": "*",
         "constraint": [
@@ -102,20 +90,6 @@
             "expression": "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
             "xpath": "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))",
             "source": "DomainResource"
-          },
-          {
-            "key": "con-4",
-            "severity": "error",
-            "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
-            "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean='true' or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
-          },
-          {
-            "key": "con-3",
-            "severity": "error",
-            "human": "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
-            "expression": "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
           }
         ],
         "mapping": [
@@ -124,26 +98,14 @@
             "map": "Entity. Role, or Act"
           },
           {
-            "identity": "sct-concept",
-            "map": "< 243796009 |Situation with explicit context|:\n246090004 |Associated finding| =\n((< 404684003 |Clinical finding| MINUS\n<< 420134006 |Propensity to adverse reactions| MINUS \n<< 473010000 |Hypersensitivity condition| MINUS \n<< 79899007 |Drug interaction| MINUS\n<< 69449002 |Drug action| MINUS \n<< 441742003 |Evaluation finding| MINUS \n<< 307824009 |Administrative status| MINUS \n<< 385356007 |Tumor stage finding|) OR\n< 272379006 |Event|)"
-          },
-          {
-            "identity": "v2",
-            "map": "PPR message"
-          },
-          {
-            "identity": "rim",
-            "map": "Observation[classCode=OBS, moodCode=EVN, code=ASSERTION, value<Diagnosis]"
-          },
-          {
             "identity": "w5",
             "map": "clinical.general"
           }
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.id",
-        "path": "Condition.id",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.id",
+        "path": "AdverseEvent.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
         "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
@@ -162,8 +124,8 @@
         "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.meta",
-        "path": "Condition.meta",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.meta",
+        "path": "AdverseEvent.meta",
         "short": "Metadata about the resource",
         "definition": "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.",
         "min": 0,
@@ -181,8 +143,8 @@
         "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.implicitRules",
-        "path": "Condition.implicitRules",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.implicitRules",
+        "path": "AdverseEvent.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
         "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
@@ -202,8 +164,8 @@
         "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.language",
-        "path": "Condition.language",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.language",
+        "path": "AdverseEvent.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
         "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
@@ -244,8 +206,8 @@
         }
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.text",
-        "path": "Condition.text",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.text",
+        "path": "AdverseEvent.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
         "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
@@ -278,8 +240,8 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.contained",
-        "path": "Condition.contained",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.contained",
+        "path": "AdverseEvent.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
         "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
@@ -308,10 +270,10 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.extension",
-        "path": "Condition.extension",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.extension",
+        "path": "AdverseEvent.extension",
         "slicing": {
-          "id": "37",
+          "id": "20",
           "discriminator": [
             {
               "type": "value",
@@ -348,16 +310,16 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:generalizedlikelihood",
-        "path": "Condition.extension",
-        "sliceName": "generalizedlikelihood",
-        "definition": "Quantitative or qualitative measure of likelihood.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.extension:adverseeventgrade",
+        "path": "AdverseEvent.extension",
+        "sliceName": "adverseeventgrade",
+        "definition": "A coded value specifying the level of injury suffered by the subject for whom the event is reported, using the CTCAE coding system.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
         ],
-        "min": 0,
+        "min": 1,
         "max": "1",
         "base": {
           "path": "DomainResource.extension",
@@ -367,7 +329,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseEventGrade-extension"
           }
         ],
         "mustSupport": false,
@@ -381,217 +343,8 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:supportingevidencequality",
-        "path": "Condition.extension",
-        "sliceName": "supportingevidencequality",
-        "definition": "An assessment of the quality and/or quantity of the source information that supports judgment.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:includeonproblemlist",
-        "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
-        "definition": "Whether or not to include this problem on the subject's current problem list.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:whenclinicallyrecognized",
-        "path": "Condition.extension",
-        "sliceName": "whenclinicallyrecognized",
-        "definition": "The time at which a condition or problem was first identified in a healthcare context.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:preexisting",
-        "path": "Condition.extension",
-        "sliceName": "preexisting",
-        "definition": "If the problem or condition existed before the current episode of care.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:criticality",
-        "path": "Condition.extension",
-        "sliceName": "criticality",
-        "definition": "A clinical judgment of potential clinical harm, or seriousness, of a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:adversereactionattribution",
-        "path": "Condition.extension",
-        "sliceName": "adversereactionattribution",
-        "definition": "The cause of the adverse reaction (either known or theorized).",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseReactionAttribution-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.modifierExtension",
-        "path": "Condition.modifierExtension",
-        "slicing": {
-          "id": "38",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.modifierExtension",
+        "path": "AdverseEvent.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -620,120 +373,24 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.modifierExtension:nonoccurrencemodifier",
-        "path": "Condition.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
-        "definition": "When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.identifier",
+        "path": "AdverseEvent.identifier",
+        "short": "Business identifier for the event",
+        "definition": "The identifier(s) of this adverse event that are assigned by business processes and/or used to refer to it when a direct URL reference to the resource itsefl is not appropriate.",
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.identifier",
-        "path": "Condition.identifier",
-        "short": "External Ids for this condition",
-        "definition": "This records identifiers associated with this condition that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).",
-        "requirements": "Need to allow connection to a wider workflow.",
-        "min": 0,
-        "max": "*",
         "type": [
           {
             "code": "Identifier"
           }
         ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".id"
-          },
-          {
-            "identity": "w5",
-            "map": "id"
-          }
-        ]
+        "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.clinicalStatus",
-        "path": "Condition.clinicalStatus",
-        "short": "active | recurrence | inactive | remission | resolved",
-        "definition": "The clinical status of the condition.",
-        "comment": "This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern.",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "code"
-          }
-        ],
-        "condition": [
-          "con-3",
-          "con-4"
-        ],
-        "isModifier": true,
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionClinicalStatus"
-            }
-          ],
-          "strength": "required",
-          "description": "The clinical status of the condition or diagnosis.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/condition-clinical"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 303105007 |Disease phases|"
-          },
-          {
-            "identity": "v2",
-            "map": "PRB-14 / DG1-6"
-          },
-          {
-            "identity": "rim",
-            "map": "Observation ACT\n.inboundRelationship[typeCode=COMP].source[classCode=OBS, code=\"clinicalStatus\", moodCode=EVN].value"
-          },
-          {
-            "identity": "w5",
-            "map": "status"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.verificationStatus",
-        "path": "Condition.verificationStatus",
-        "short": "provisional | differential | confirmed | refuted | entered-in-error | unknown",
-        "definition": "The verification status to support the clinical status of the condition.",
-        "comment": "verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.\n\nThis element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.category",
+        "path": "AdverseEvent.category",
+        "short": "AE | PAE \rAn adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not",
+        "definition": "The type of event which is important to characterize what occurred and caused harm to the subject, or had the potential to cause harm to the subject.",
         "min": 0,
         "max": "1",
         "type": [
@@ -741,92 +398,21 @@
             "code": "code"
           }
         ],
-        "defaultValueCode": "unknown",
-        "condition": [
-          "con-3"
-        ],
-        "isModifier": true,
         "isSummary": true,
         "binding": {
           "extension": [
             {
               "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionVerificationStatus"
+              "valueString": "AdverseEventCategory"
             }
           ],
           "strength": "required",
-          "description": "The verification status to support or decline the clinical status of the condition or diagnosis.",
+          "description": "Overall categorization of the event, e.g. real or potential",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/condition-ver-status"
+            "reference": "http://hl7.org/fhir/ValueSet/adverse-event-category"
           }
         },
         "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 410514004 |Finding context value|"
-          },
-          {
-            "identity": "v2",
-            "map": "PRB-13"
-          },
-          {
-            "identity": "rim",
-            "map": "Observation ACT\n.inboundRelationship[typeCode=COMP].source[classCode=OBS, code=\"verificationStatus\", moodCode=EVN].value"
-          },
-          {
-            "identity": "sct-attr",
-            "map": "408729009"
-          },
-          {
-            "identity": "w5",
-            "map": "status"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.category",
-        "path": "Condition.category",
-        "slicing": {
-          "id": "35",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "coding"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "short": "problem-list-item | encounter-diagnosis",
-        "definition": "A category assigned to the condition.",
-        "comment": "The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts.",
-        "min": 1,
-        "max": "*",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 404684003 |Clinical finding|"
-          },
-          {
-            "identity": "v2",
-            "map": "'problem' if from PRB-3. 'diagnosis' if from DG1 segment in PV1 message"
-          },
-          {
-            "identity": "rim",
-            "map": ".code"
-          },
           {
             "identity": "w5",
             "map": "class"
@@ -834,85 +420,10 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.category:adverse_reaction",
-        "path": "Condition.category",
-        "sliceName": "adverse_reaction",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "fixedCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://standardhealthrecord.org/shr/problem/cs/ProblemCategoryCS",
-              "code": "adverse_reaction"
-            }
-          ]
-        }
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.severity",
-        "path": "Condition.severity",
-        "short": "Subjective severity of condition",
-        "definition": "A subjective assessment of the severity of the condition as evaluated by the clinician.",
-        "comment": "Coding of the severity with a terminology is preferred, where possible.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionSeverity"
-            }
-          ],
-          "strength": "preferred",
-          "description": "A subjective assessment of the severity of the condition as evaluated by the clinician.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/condition-severity"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 272141005 |Severities|"
-          },
-          {
-            "identity": "v2",
-            "map": "PRB-26 / ABS-3"
-          },
-          {
-            "identity": "rim",
-            "map": "Can be pre/post-coordinated into value.  Or ./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"severity\"].value"
-          },
-          {
-            "identity": "sct-attr",
-            "map": "246112005"
-          },
-          {
-            "identity": "w5",
-            "map": "grade"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.code",
-        "path": "Condition.code",
-        "short": "Identification of the condition, problem or diagnosis",
-        "definition": "Identification of the condition, problem or diagnosis.",
-        "requirements": "0..1 to account for primarily narrative only resources.",
-        "alias": [
-          "type"
-        ],
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.type",
+        "path": "AdverseEvent.type",
+        "short": "actual | potential",
+        "definition": "This element defines the specific type of event that occurred or that was prevented from occurring.",
         "min": 1,
         "max": "1",
         "type": [
@@ -930,73 +441,20 @@
         },
         "mapping": [
           {
-            "identity": "sct-concept",
-            "map": "code 246090004 |Associated finding| (< 404684003 |Clinical finding| MINUS\n<< 420134006 |Propensity to adverse reactions| MINUS \n<< 473010000 |Hypersensitivity condition| MINUS \n<< 79899007 |Drug interaction| MINUS\n<< 69449002 |Drug action| MINUS \n<< 441742003 |Evaluation finding| MINUS \n<< 307824009 |Administrative status| MINUS \n<< 385356007 |Tumor stage finding|) \nOR < 413350009 |Finding with explicit context|\nOR < 272379006 |Event|"
-          },
-          {
-            "identity": "v2",
-            "map": "PRB-3"
-          },
-          {
-            "identity": "rim",
-            "map": ".value"
-          },
-          {
-            "identity": "sct-attr",
-            "map": "246090004"
-          },
-          {
             "identity": "w5",
             "map": "what"
           }
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.bodySite",
-        "path": "Condition.bodySite",
-        "short": "Anatomical location, if relevant",
-        "definition": "The anatomical location where this condition manifests itself.",
-        "comment": "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [body-site-instance](extension-body-site-instance.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "isSummary": true,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 442083009  |Anatomical or acquired body structure|"
-          },
-          {
-            "identity": "rim",
-            "map": ".targetBodySiteCode"
-          },
-          {
-            "identity": "sct-attr",
-            "map": "363698007"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.subject",
-        "path": "Condition.subject",
-        "short": "Who has the condition?",
-        "definition": "Indicates the patient or group who the condition record is associated with.",
-        "requirements": "Group is typically used for veterinary or public health use cases.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.subject",
+        "path": "AdverseEvent.subject",
+        "short": "Subject or group impacted by event",
+        "definition": "This subject or group impacted by the event.  With a prospective adverse event, there will be no subject as the adverse event was prevented.",
         "alias": [
           "patient"
         ],
-        "min": 1,
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -1005,93 +463,39 @@
           },
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ResearchSubject"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Medication"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
           }
         ],
         "isSummary": true,
         "mapping": [
           {
-            "identity": "v2",
-            "map": "PID-3"
-          },
-          {
-            "identity": "rim",
-            "map": ".participation[typeCode=SBJ].role[classCode=PAT]"
-          },
-          {
             "identity": "w5",
-            "map": "who.focus"
+            "map": "who"
           }
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.context",
-        "path": "Condition.context",
-        "short": "Encounter or episode when condition first asserted",
-        "definition": "Encounter during which the condition was first asserted.",
-        "comment": "This record indicates the encounter this particular record is associated with.  In the case of a \"new\" diagnosis reflecting ongoing/revised information about the condition, this might be distinct from the first encounter in which the underlying condition was first \"known\".",
-        "alias": [
-          "encounter"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "PV1-19 (+PV1-54)"
-          },
-          {
-            "identity": "rim",
-            "map": ".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]"
-          },
-          {
-            "identity": "w5",
-            "map": "context"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.onset[x]",
-        "path": "Condition.onset[x]",
-        "short": "Estimated or actual date,  date-time, or age",
-        "definition": "Estimated or actual date or date-time  the condition began, in the opinion of the clinician.",
-        "comment": "Age is generally used when the patient reports an age at which the Condition began to occur.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.date",
+        "path": "AdverseEvent.date",
+        "short": "When the event occurred",
+        "definition": "The date (and perhaps time) when the adverse event occurred.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "dateTime"
-          },
-          {
-            "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
-          },
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
           }
         ],
         "isSummary": true,
         "mapping": [
-          {
-            "identity": "v2",
-            "map": "PRB-16"
-          },
-          {
-            "identity": "rim",
-            "map": ".effectiveTime.low or .inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"age at onset\"].value"
-          },
           {
             "identity": "w5",
             "map": "when.init"
@@ -1099,100 +503,107 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.abatement[x]",
-        "path": "Condition.abatement[x]",
-        "short": "If/when in resolution/remission",
-        "definition": "The date or estimated date that the condition resolved or went into remission. This is called \"abatement\" because of the many overloaded connotations associated with \"remission\" or \"resolution\" - Conditions are never really resolved, but they can abate.",
-        "comment": "There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.reaction",
+        "path": "AdverseEvent.reaction",
+        "short": "Adverse Reaction Events linked to exposure to substance",
+        "definition": "Includes information about the reaction that occurred as a result of exposure to a substance (for example, a drug or a chemical).",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
-            "code": "dateTime"
-          },
-          {
-            "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
-          },
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
           }
         ],
-        "condition": [
-          "con-4"
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".effectiveTime.high or .inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"age at remission\"].value or .inboundRelationship[typeCode=SUBJ]source[classCode=CONC, moodCode=EVN].status=completed"
-          },
-          {
-            "identity": "w5",
-            "map": "when.done"
-          }
-        ]
+        "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.assertedDate",
-        "path": "Condition.assertedDate",
-        "short": "Date record was believed accurate",
-        "definition": "The date on which the existance of the Condition was first asserted or acknowledged.",
-        "comment": "The assertedDate represents the date when this particular Condition record was created in the EHR, not the date of the most recent update in terms of when severity, abatement, etc. were specified.  The date of the last record modification can be retrieved from the resource metadata.",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "dateTime"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "REL-11"
-          },
-          {
-            "identity": "rim",
-            "map": ".participation[typeCode=AUT].time"
-          },
-          {
-            "identity": "w5",
-            "map": "when.recorded"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.asserter",
-        "path": "Condition.asserter",
-        "short": "Person who asserts this condition",
-        "definition": "Individual who is making the condition statement.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.location",
+        "path": "AdverseEvent.location",
+        "short": "Location where adverse event occurred",
+        "definition": "The information about where the adverse event occurred.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Location"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.seriousness",
+        "path": "AdverseEvent.seriousness",
+        "short": "Mild | Moderate | Severe",
+        "definition": "Describes the seriousness or severity of the adverse event.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"
+          }
+        }
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.outcome",
+        "path": "AdverseEvent.outcome",
+        "short": "resolved | recovering | ongoing | resolvedWithSequelae | fatal | unknown",
+        "definition": "Describes the type of outcome from the adverse event.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdverseEventOutcome"
+            }
+          ],
+          "strength": "required",
+          "description": "TODO (and should this be required?)",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/adverse-event-outcome"
+          }
+        }
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.recorder",
+        "path": "AdverseEvent.recorder",
+        "short": "Who recorded the adverse event",
+        "definition": "Information on who recorded the adverse event.  May be the patient or a practitioner.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
           }
         ],
         "isSummary": true,
         "mapping": [
-          {
-            "identity": "v2",
-            "map": "REL-7.1 identifier + REL-7.12 type code"
-          },
-          {
-            "identity": "rim",
-            "map": ".participation[typeCode=AUT].role"
-          },
           {
             "identity": "w5",
             "map": "who.author"
@@ -1200,12 +611,45 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage",
-        "path": "Condition.stage",
-        "short": "Stage/grade, usually assessed formally",
-        "definition": "Clinical stage or grade of a condition. May include formal severity assessments.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.eventParticipant",
+        "path": "AdverseEvent.eventParticipant",
+        "short": "Who  was involved in the adverse event or the potential adverse event",
+        "definition": "Parties that may or should contribute or have contributed information to the Act. Such information includes information leading to the decision to perform the Act and how to perform the Act (e.g. consultant), information that the Act itself seeks to reveal (e.g. informant of clinical history), or information about what Act was performed (e.g. informant witness).",
         "min": 0,
         "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.description",
+        "path": "AdverseEvent.description",
+        "short": "Description of the adverse event",
+        "definition": "Describes the adverse event in text.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity",
+        "path": "AdverseEvent.suspectEntity",
+        "short": "The suspected agent causing the adverse event",
+        "definition": "Describes the entity that is suspected to have caused the adverse event.",
+        "min": 0,
+        "max": "*",
         "type": [
           {
             "code": "BackboneElement"
@@ -1216,28 +660,16 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
-          },
-          {
-            "key": "con-1",
-            "severity": "error",
-            "human": "Stage SHALL have summary or assessment",
-            "expression": "summary.exists() or assessment.exists()",
-            "xpath": "exists(f:summary) or exists(f:assessment)"
           }
         ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"stage/grade\"]"
-          }
-        ]
+        "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.id",
-        "path": "Condition.stage.id",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.id",
+        "path": "AdverseEvent.suspectEntity.id",
         "representation": [
           "xmlAttr"
         ],
@@ -1263,8 +695,8 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.extension",
-        "path": "Condition.stage.extension",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.extension",
+        "path": "AdverseEvent.suspectEntity.extension",
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -1292,8 +724,8 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.modifierExtension",
-        "path": "Condition.stage.modifierExtension",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.modifierExtension",
+        "path": "AdverseEvent.suspectEntity.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -1324,10 +756,63 @@
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.summary",
-        "path": "Condition.stage.summary",
-        "short": "Simple summary (disease specific)",
-        "definition": "A simple summary of the stage such as \"Stage 3\". The determination of the stage is disease-specific.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.instance",
+        "path": "AdverseEvent.suspectEntity.instance",
+        "short": "Refers to the specific entity that caused the adverse event",
+        "definition": "Identifies the actual instance of what caused the adverse event.  May be a substance, medication, medication administration, medication statement or a device.",
+        "alias": [
+          "Substance or Medication or Device"
+        ],
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationUse"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causality",
+        "path": "AdverseEvent.suspectEntity.causality",
+        "short": "causality1 | causality2",
+        "definition": "causality1 | causality2.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdverseEventCausality"
+            }
+          ],
+          "strength": "required",
+          "description": "TODO",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/adverse-event-causality"
+          }
+        }
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityAssessment",
+        "path": "AdverseEvent.suspectEntity.causalityAssessment",
+        "short": "assess1 | assess2",
+        "definition": "assess1 | assess2.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1336,482 +821,195 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
-        "condition": [
-          "con-1"
-        ],
+        "isSummary": true,
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/QualitativeValueScaleVS"
           }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 254291000 |Staging and scales|"
-          },
-          {
-            "identity": "v2",
-            "map": "PRB-14"
-          },
-          {
-            "identity": "rim",
-            "map": ".value"
-          }
-        ]
+        }
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.assessment",
-        "path": "Condition.stage.assessment",
-        "short": "Formal record of assessment",
-        "definition": "Reference to a formal record of the evidence on which the staging assessment is based.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityProductRelatedness",
+        "path": "AdverseEvent.suspectEntity.causalityProductRelatedness",
+        "short": "AdverseEvent.suspectEntity.causalityProductRelatedness",
+        "definition": "AdverseEvent.suspectEntity.causalityProductRelatedness.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityMethod",
+        "path": "AdverseEvent.suspectEntity.causalityMethod",
+        "short": "method1 | method2",
+        "definition": "method1 | method2.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdverseEventCausalityMethod"
+            }
+          ],
+          "strength": "example",
+          "description": "TODO",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/adverse-event-causality-method"
+          }
+        }
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityAuthor",
+        "path": "AdverseEvent.suspectEntity.causalityAuthor",
+        "short": "AdverseEvent.suspectEntity.causalityAuthor",
+        "definition": "AdverseEvent.suspectEntity.causalityAuthor.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/PractitionerRole"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityResult",
+        "path": "AdverseEvent.suspectEntity.causalityResult",
+        "short": "result1 | result2",
+        "definition": "result1 | result2.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "isSummary": true,
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "AdverseEventCausalityResult"
+            }
+          ],
+          "strength": "example",
+          "description": "TODO",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/adverse-event-causality-result"
+          }
+        }
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.subjectMedicalHistory",
+        "path": "AdverseEvent.subjectMedicalHistory",
+        "short": "AdverseEvent.subjectMedicalHistory",
+        "definition": "AdverseEvent.subjectMedicalHistory.",
         "min": 0,
         "max": "*",
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/ClinicalImpression"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Condition"
           },
           {
             "code": "Reference",
             "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
-          }
-        ],
-        "condition": [
-          "con-1"
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".self"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence",
-        "path": "Condition.evidence",
-        "short": "Supporting evidence",
-        "definition": "Supporting Evidence / manifestations that are the basis on which this condition is suspected or confirmed.",
-        "comment": "The evidence may be a simple list of coded symptoms/manifestations, or references to observations or formal assessments, or both.",
-        "min": 1,
-        "max": "*",
-        "type": [
-          {
-            "code": "BackboneElement"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
-            "xpath": "@value|f:*|h:div",
-            "source": "Element"
           },
           {
-            "key": "con-2",
-            "severity": "error",
-            "human": "evidence SHALL have code or details",
-            "expression": "code.exists() or detail.exists()",
-            "xpath": "exists(f:code) or exists(f:detail)"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".outboundRelationship[typeCode=SPRT].target[classCode=OBS, moodCode=EVN]"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.id",
-        "path": "Condition.evidence.id",
-        "representation": [
-          "xmlAttr"
-        ],
-        "short": "xml:id (or equivalent in JSON)",
-        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "Element.id",
-          "min": 0,
-          "max": "1"
-        },
-        "type": [
-          {
-            "code": "string"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.extension",
-        "path": "Condition.evidence.extension",
-        "short": "Additional Content defined by implementations",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "Element.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.modifierExtension",
-        "path": "Condition.evidence.modifierExtension",
-        "short": "Extensions that cannot be ignored",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content",
-          "modifiers"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "BackboneElement.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "isModifier": true,
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.code",
-        "path": "Condition.evidence.code",
-        "short": "Manifestation/symptom",
-        "definition": "A manifestation or symptom that led to the recording of this condition.",
-        "min": 1,
-        "max": "*",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "condition": [
-          "con-2"
-        ],
-        "isSummary": true,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/ManifestationVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "sct-concept",
-            "map": "< 404684003 |Clinical finding|"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"
           },
           {
-            "identity": "rim",
-            "map": "[code=\"diagnosis\"].value"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory"
           },
           {
-            "identity": "w5",
-            "map": "why"
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Immunization"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Procedure"
           }
-        ]
+        ],
+        "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.detail",
-        "path": "Condition.evidence.detail",
-        "short": "Supporting information found elsewhere",
-        "definition": "Links to other relevant information, including pathology reports.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.referenceDocument",
+        "path": "AdverseEvent.referenceDocument",
+        "short": "AdverseEvent.referenceDocument",
+        "definition": "AdverseEvent.referenceDocument.",
         "min": 0,
         "max": "*",
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Resource"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/DocumentReference"
           }
         ],
-        "condition": [
-          "con-2"
-        ],
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": ".self"
-          },
-          {
-            "identity": "w5",
-            "map": "why"
-          }
-        ]
+        "isSummary": true
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.note",
-        "path": "Condition.note",
-        "short": "Additional information about the Condition",
-        "definition": "Additional information about the Condition. This is a general notes/comments entry  for description of the Condition, its diagnosis and prognosis.",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.study",
+        "path": "AdverseEvent.study",
+        "short": "AdverseEvent.study",
+        "definition": "AdverseEvent.study.",
         "min": 0,
-        "max": "*",
+        "max": "1",
         "type": [
           {
-            "code": "Annotation"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Study"
           }
         ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "NTE child of PRB"
-          },
-          {
-            "identity": "rim",
-            "map": ".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"annotation\"].value"
-          }
-        ]
+        "isSummary": true
       }
     ]
   },
   "differential": {
     "element": [
       {
-        "id": "Condition:shr-adverse-AdverseReaction",
-        "path": "Condition",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction",
+        "path": "AdverseEvent",
         "short": "SHR AdverseReaction Profile",
-        "definition": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction."
+        "definition": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes."
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:generalizedlikelihood",
-        "path": "Condition.extension",
-        "sliceName": "generalizedlikelihood",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeneralizedLikelihood-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:supportingevidencequality",
-        "path": "Condition.extension",
-        "sliceName": "supportingevidencequality",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-SupportingEvidenceQuality-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:includeonproblemlist",
-        "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-IncludeOnProblemList-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:whenclinicallyrecognized",
-        "path": "Condition.extension",
-        "sliceName": "whenclinicallyrecognized",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-WhenClinicallyRecognized-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:preexisting",
-        "path": "Condition.extension",
-        "sliceName": "preexisting",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Preexisting-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:criticality",
-        "path": "Condition.extension",
-        "sliceName": "criticality",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Criticality-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.extension:adversereactionattribution",
-        "path": "Condition.extension",
-        "sliceName": "adversereactionattribution",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseReactionAttribution-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.modifierExtension:nonoccurrencemodifier",
-        "path": "Condition.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.clinicalStatus",
-        "path": "Condition.clinicalStatus",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.category",
-        "path": "Condition.category",
-        "slicing": {
-          "id": "35",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "coding"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "min": 1,
-        "max": "*",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/problem/vs/ProblemCategoryVS"
-          }
-        }
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.category:adverse_reaction",
-        "path": "Condition.category",
-        "sliceName": "adverse_reaction",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.extension:adverseeventgrade",
+        "path": "AdverseEvent.extension",
+        "sliceName": "adverseeventgrade",
         "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseEventGrade-extension"
           }
         ],
-        "fixedCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://standardhealthrecord.org/shr/problem/cs/ProblemCategoryCS",
-              "code": "adverse_reaction"
-            }
-          ]
-        }
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.severity",
-        "path": "Condition.severity",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.code",
-        "path": "Condition.code",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.type",
+        "path": "AdverseEvent.type",
         "min": 1,
         "max": "1",
         "type": [
@@ -1828,8 +1026,8 @@
         }
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.bodySite",
-        "path": "Condition.bodySite",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.seriousness",
+        "path": "AdverseEvent.seriousness",
         "type": [
           {
             "code": "CodeableConcept",
@@ -1839,75 +1037,45 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"
           }
         }
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.onset[x]",
-        "path": "Condition.onset[x]",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.outcome",
+        "path": "AdverseEvent.outcome",
         "type": [
           {
-            "code": "dateTime"
-          },
-          {
-            "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
-          },
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.abatement[x]",
-        "path": "Condition.abatement[x]",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity",
+        "path": "AdverseEvent.suspectEntity"
+      },
+      {
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.instance",
+        "path": "AdverseEvent.suspectEntity.instance",
         "type": [
           {
-            "code": "dateTime"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"
           },
           {
-            "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationUse"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"
           }
         ]
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.assertedDate",
-        "path": "Condition.assertedDate",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.asserter",
-        "path": "Condition.asserter",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.stage",
-        "path": "Condition.stage"
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.stage.summary",
-        "path": "Condition.stage.summary",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.suspectEntity.causalityAssessment",
+        "path": "AdverseEvent.suspectEntity.causalityAssessment",
         "type": [
           {
             "code": "CodeableConcept",
@@ -1917,33 +1085,21 @@
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/problem/vs/GradeOrStageVS"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/QualitativeValueScaleVS"
           }
         }
       },
       {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence",
-        "path": "Condition.evidence",
-        "min": 1,
-        "max": "*"
-      },
-      {
-        "id": "Condition:shr-adverse-AdverseReaction.evidence.code",
-        "path": "Condition.evidence.code",
-        "min": 1,
-        "max": "*",
+        "id": "AdverseEvent:shr-adverse-AdverseReaction.study",
+        "path": "AdverseEvent.study",
+        "min": 0,
+        "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Study"
           }
-        ],
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/ManifestationVS"
-          }
-        }
+        ]
       }
     ]
   }

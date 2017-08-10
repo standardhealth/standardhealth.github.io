@@ -3,7 +3,7 @@
   "id": "shr-procedure-Procedure",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  ProcedureStatus maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  ProcedureParticipant maps to performer\n  ProcedureParticipant.PersonOfRecord maps to performer.actor\n  ProcedureParticipant.Practitioner maps to performer.actor\n  ProcedureParticipant.RelatedPerson maps to performer.actor\n  ProcedureParticipant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Procedure Profile</b></p>\n  <p>An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.procedure.Procedure maps to Procedure:\n  SpecificType maps to code\n  Status maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  Participant maps to performer\n  Participant.PersonOfRecord maps to performer.actor\n  Participant.Practitioner maps to performer.actor\n  Participant.RelatedPerson maps to performer.actor\n  Participant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-Procedure",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Procedure Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.167Z",
+  "date": "2017-08-08T15:56:31.145Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "rim",
@@ -286,7 +286,7 @@
         "id": "Procedure:shr-procedure-Procedure.extension",
         "path": "Procedure.extension",
         "slicing": {
-          "id": "194",
+          "id": "238",
           "discriminator": [
             {
               "type": "value",
@@ -323,17 +323,17 @@
         ]
       },
       {
-        "id": "Procedure:shr-procedure-Procedure.extension:codeableconcept",
+        "id": "Procedure:shr-procedure-Procedure.extension:category",
         "path": "Procedure.extension",
-        "sliceName": "codeableconcept",
-        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "sliceName": "category",
+        "definition": "A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
         "alias": [
           "extensions",
           "user content"
         ],
-        "min": 1,
-        "max": "1",
+        "min": 0,
+        "max": "*",
         "base": {
           "path": "DomainResource.extension",
           "min": 0,
@@ -342,7 +342,7 @@
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
           }
         ],
         "mustSupport": false,
@@ -657,21 +657,15 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ProcedureCode"
-            }
-          ],
-          "strength": "example",
-          "description": "A code to identify a specific procedure .",
+          "strength": "preferred",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/procedure-code"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
           }
         },
         "mapping": [
@@ -810,7 +804,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1313,7 +1307,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1539,15 +1533,15 @@
         "definition": "An action that is or was performed on a patient. This can be a physical intervention like an operation, or less invasive like counseling or hypnotherapy."
       },
       {
-        "id": "Procedure:shr-procedure-Procedure.extension:codeableconcept",
+        "id": "Procedure:shr-procedure-Procedure.extension:category",
         "path": "Procedure.extension",
-        "sliceName": "codeableconcept",
-        "min": 1,
-        "max": "1",
+        "sliceName": "category",
+        "min": 0,
+        "max": "*",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
           }
         ],
         "mustSupport": false,
@@ -1563,6 +1557,22 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ]
+      },
+      {
+        "id": "Procedure:shr-procedure-Procedure.code",
+        "path": "Procedure.code",
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "preferred",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+          }
+        }
       },
       {
         "id": "Procedure:shr-procedure-Procedure.performed[x]",

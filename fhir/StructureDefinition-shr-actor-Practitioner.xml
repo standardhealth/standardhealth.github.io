@@ -26,7 +26,7 @@
   <version value="0.0.1"/>
   <name value="SHR Practitioner Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:13.124Z"/>
+  <date value="2017-08-08T15:56:20.439Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -36,7 +36,7 @@
   </contact>
   <description value="A person who practices a healing art."/>
   <purpose value="Need to track doctors, staff, locums etc. for both healthcare practitioners, funders, etc."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -258,7 +258,7 @@
     </element>
     <element id="Practitioner:shr-actor-Practitioner.extension">
       <path value="Practitioner.extension"/>
-      <slicing id="9">
+      <slicing id="8">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -448,7 +448,7 @@
       <max value="1"/>
       <type>
         <code value="Identifier"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -496,8 +496,8 @@
       <definition value="The name(s) associated with the practitioner."/>
       <comment value="The selection of the use property should ensure that there is a single usual name specified, and others use the nickname (alias), old, or other values as appropriate.&#xD;&#xD;In general select the value to be used in the ResourceReference.display based on this:&#xD;&#xD;1. There is more than 1 name&#xD;2. Use = usual&#xD;3. Period is current to the date of the usage&#xD;4. Use = official&#xD;5. Other order as decided by internal business rules."/>
       <requirements value="The name(s) that a Practitioner is known by. Where there are multiple, the name that the practitioner is usually known as should be used in the display."/>
-      <min value="1"/>
-      <max value="1"/>
+      <min value="0"/>
+      <max value="*"/>
       <type>
         <code value="HumanName"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-HumanName"/>
@@ -661,7 +661,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -846,7 +846,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
           <valueBoolean value="true"/>
         </extension>
-        <strength value="extensible"/>
+        <strength value="required"/>
         <description value="A human language."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -943,13 +943,11 @@
       <max value="1"/>
       <type>
         <code value="Identifier"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Identifier"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"/>
       </type>
     </element>
     <element id="Practitioner:shr-actor-Practitioner.name">
       <path value="Practitioner.name"/>
-      <min value="1"/>
-      <max value="1"/>
       <type>
         <code value="HumanName"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-HumanName"/>
@@ -975,6 +973,24 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A human language."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

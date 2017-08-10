@@ -11,14 +11,29 @@
   Entry.FocalSubject maps to subject
   Entry.AssociatedEncounter maps to context
   Entry.OriginalCreationDate maps to issued
-  ObservationCode maps to code
-  ObservationCategory maps to category
-  ObservationStatus maps to status
-  ObservationMethod maps to method
+  Quantity maps to value[x]
+  CodeableConcept maps to value[x]
+  string maps to value[x]
+  boolean maps to value[x]
+  Range maps to value[x]
+  Ratio maps to value[x]
+  time maps to value[x]
+  dateTime maps to value[x]
+  TimePeriod maps to value[x]
+  SpecificType maps to code
+  Category maps to category
+  BodySite maps to bodySite
+  Status maps to status
+  Method maps to method
+  Participant maps to performer 	// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.
+  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
+  DataAbsentReason maps to dataAbsentReason
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
-  Participant maps to performer
-  boolean maps to value[x].boolean
+  Interpretation maps to interpretation
+  Comment maps to comment
+  constrain component to 0..0
+  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
 </pre></p>
 </div>
   </text>
@@ -30,7 +45,7 @@
   <version value="0.0.1"/>
   <name value="SHR CurrentPregnancyStatus Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:18.291Z"/>
+  <date value="2017-08-08T15:56:38.008Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -40,7 +55,7 @@
   </contact>
   <description value="Whether or not the subject is currently pregnant."/>
   <purpose value="Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -125,7 +140,7 @@
         <severity value="error"/>
         <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
         <expression value="value.empty() or code!=component.code"/>
-        <xpath value="not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
+        <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
       </constraint>
       <constraint>
         <key value="obs-6"/>
@@ -294,7 +309,7 @@
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.extension">
       <path value="Observation.extension"/>
-      <slicing id="329">
+      <slicing id="415">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -322,10 +337,10 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:observationreason">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:reason">
       <path value="Observation.extension"/>
-      <sliceName value="observationreason"/>
-      <definition value="The reason for making the observation."/>
+      <sliceName value="reason"/>
+      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -338,7 +353,59 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:occurrencetime">
+      <path value="Observation.extension"/>
+      <sliceName value="occurrencetime"/>
+      <definition value="The point in time or span of time in which something happens."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:associatedstudy">
+      <path value="Observation.extension"/>
+      <sliceName value="associatedstudy"/>
+      <definition value="The clinical trial or other formal study related to this finding."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -374,10 +441,10 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:setting">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:referencerange">
       <path value="Observation.extension"/>
-      <sliceName value="setting"/>
-      <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
+      <sliceName value="referencerange"/>
+      <definition value="The usual or acceptable range for a test result."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -390,33 +457,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:location">
-      <path value="Observation.extension"/>
-      <sliceName value="location"/>
-      <definition value="A position, site, or point in space where something can be found."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -428,7 +469,7 @@
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension">
       <path value="Observation.modifierExtension"/>
-      <slicing id="330">
+      <slicing id="416">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -457,10 +498,10 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:observationnonoccurrencemodifier">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier">
       <path value="Observation.modifierExtension"/>
-      <sliceName value="observationnonoccurrencemodifier"/>
-      <definition value="True if the observation did not occcur, e.g., if a test was not performed or the assessment was not done, when it might otherwise be expected."/>
+      <sliceName value="nonoccurrencemodifier"/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -473,7 +514,359 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.id">
+      <path value="Observation.modifierExtension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension">
+      <path value="Observation.modifierExtension.extension"/>
+      <slicing id="9">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:boolean">
+      <path value="Observation.modifierExtension.extension"/>
+      <sliceName value="boolean"/>
+      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.extension"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"/>
+      </type>
+      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:reason">
+      <path value="Observation.modifierExtension.extension"/>
+      <sliceName value="reason"/>
+      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.extension"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:reason.id">
+      <path value="Observation.modifierExtension.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension">
+      <path value="Observation.modifierExtension.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:reason.url">
+      <path value="Observation.modifierExtension.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.extension:reason.value[x]">
+      <path value="Observation.modifierExtension.extension.value[x]"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.url">
+      <path value="Observation.modifierExtension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier.value[x]">
+      <path value="Observation.modifierExtension.value[x]"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="base64Binary"/>
+      </type>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="code"/>
+      </type>
+      <type>
+        <code value="date"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <type>
+        <code value="id"/>
+      </type>
+      <type>
+        <code value="instant"/>
+      </type>
+      <type>
+        <code value="integer"/>
+      </type>
+      <type>
+        <code value="markdown"/>
+      </type>
+      <type>
+        <code value="oid"/>
+      </type>
+      <type>
+        <code value="positiveInt"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="unsignedInt"/>
+      </type>
+      <type>
+        <code value="uri"/>
+      </type>
+      <type>
+        <code value="Address"/>
+      </type>
+      <type>
+        <code value="Age"/>
+      </type>
+      <type>
+        <code value="Annotation"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <type>
+        <code value="ContactPoint"/>
+      </type>
+      <type>
+        <code value="Count"/>
+      </type>
+      <type>
+        <code value="Distance"/>
+      </type>
+      <type>
+        <code value="Duration"/>
+      </type>
+      <type>
+        <code value="HumanName"/>
+      </type>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <type>
+        <code value="Money"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Signature"/>
+      </type>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <type>
+        <code value="Meta"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:assertionnegationmodifier">
+      <path value="Observation.modifierExtension"/>
+      <sliceName value="assertionnegationmodifier"/>
+      <definition value="When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is &#39;allergy to peanuts&#39; and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="true"/>
@@ -621,13 +1014,9 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationCategory"/>
-        </extension>
-        <strength value="preferred"/>
-        <description value="Codes for high level observation categories."/>
+        <strength value="extensible"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -659,13 +1048,9 @@
       </patternCodeableConcept>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationCode"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Codes identifying names of simple observations."/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -850,6 +1235,14 @@
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.value[x]">
       <path value="Observation.value[x]"/>
+      <slicing id="414">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
@@ -857,7 +1250,8 @@
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="boolean"/>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-7"/>
       <isSummary value="true"/>
@@ -882,6 +1276,25 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.valueCodeableConcept:shr-core-CodeableConcept">
+      <path value="Observation.valueCodeableConcept"/>
+      <sliceName value="shr-core-CodeableConcept"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.dataAbsentReason">
       <path value="Observation.dataAbsentReason"/>
       <short value="Why the result is missing"/>
@@ -892,6 +1305,7 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-6"/>
       <binding>
@@ -927,12 +1341,13 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
         </extension>
-        <strength value="extensible"/>
+        <strength value="required"/>
         <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
@@ -987,15 +1402,12 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="BodySite"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Codes describing anatomical locations. May include laterality."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/body-site"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1121,7 +1533,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1364,7 +1776,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1483,15 +1895,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
       </type>
       <mapping>
         <identity value="rim"/>
@@ -1505,7 +1909,7 @@
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1513,7 +1917,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1783,14 +2187,40 @@
       <short value="SHR CurrentPregnancyStatus Profile"/>
       <definition value="Whether or not the subject is currently pregnant."/>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:observationreason">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:reason">
       <path value="Observation.extension"/>
-      <sliceName value="observationreason"/>
+      <sliceName value="reason"/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationReason-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:occurrencetime">
+      <path value="Observation.extension"/>
+      <sliceName value="occurrencetime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:associatedstudy">
+      <path value="Observation.extension"/>
+      <sliceName value="associatedstudy"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1809,40 +2239,46 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:setting">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:referencerange">
       <path value="Observation.extension"/>
-      <sliceName value="setting"/>
+      <sliceName value="referencerange"/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.extension:location">
-      <path value="Observation.extension"/>
-      <sliceName value="location"/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:observationnonoccurrencemodifier">
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:nonoccurrencemodifier">
       <path value="Observation.modifierExtension"/>
-      <sliceName value="observationnonoccurrencemodifier"/>
+      <sliceName value="nonoccurrencemodifier"/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationNonOccurrenceModifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+      </type>
+      <mustSupport value="true"/>
+      <isModifier value="true"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.modifierExtension:assertionnegationmodifier">
+      <path value="Observation.modifierExtension"/>
+      <sliceName value="assertionnegationmodifier"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="true"/>
@@ -1854,6 +2290,12 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.code">
       <path value="Observation.code"/>
@@ -1867,6 +2309,12 @@
           <code value="82810-3"/>
         </coding>
       </patternCodeableConcept>
+      <binding>
+        <strength value="preferred"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.subject">
       <path value="Observation.subject"/>
@@ -1916,11 +2364,70 @@
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.value[x]">
       <path value="Observation.value[x]"/>
+      <slicing id="414">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="boolean"/>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.valueCodeableConcept:shr-core-CodeableConcept">
+      <path value="Observation.valueCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.dataAbsentReason">
+      <path value="Observation.dataAbsentReason"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.interpretation">
+      <path value="Observation.interpretation"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.bodySite">
+      <path value="Observation.bodySite"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Observation:shr-sex-CurrentPregnancyStatus.method">
       <path value="Observation.method"/>
@@ -1928,6 +2435,21 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.related">
+      <path value="Observation.related"/>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.related.target">
+      <path value="Observation.related.target"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-CurrentPregnancyStatus.component">
+      <path value="Observation.component"/>
+      <min value="0"/>
+      <max value="0"/>
     </element>
   </differential>
 </StructureDefinition>

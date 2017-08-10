@@ -28,7 +28,7 @@
   <version value="0.0.1"/>
   <name value="SHR Entry Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:13.199Z"/>
+  <date value="2017-08-08T15:56:20.628Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -37,7 +37,7 @@
     </telecom>
   </contact>
   <description value="An item inserted in an electronic record."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -299,7 +299,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
           <valueBoolean value="true"/>
         </extension>
-        <strength value="extensible"/>
+        <strength value="required"/>
         <description value="A human language."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -419,6 +419,35 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag">
+      <path value="DomainResource.extension"/>
+      <sliceName value="subjectisthirdpartyflag"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <definition value="If true, the subject of this entry is someone other than the Person of Record, for example, a family member."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -570,35 +599,6 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="DomainResource:shr-base-Entry.modifierExtension:subjectisthirdpartymodifier">
-      <path value="DomainResource.modifierExtension"/>
-      <sliceName value="subjectisthirdpartymodifier"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <definition value="If true, the subject of this entry is someone other than the Person of Record, for example, a family member."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
   </snapshot>
   <differential>
     <element id="DomainResource:shr-base-Entry">
@@ -625,6 +625,27 @@
       <path value="DomainResource.meta.profile"/>
       <min value="1"/>
       <max value="*"/>
+    </element>
+    <element id="DomainResource:shr-base-Entry.language">
+      <path value="DomainResource.language"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Language"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A human language."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="DomainResource:shr-base-Entry.text">
       <path value="DomainResource.text"/>
@@ -654,6 +675,19 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag">
+      <path value="DomainResource.extension"/>
+      <sliceName value="subjectisthirdpartyflag"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -709,19 +743,6 @@
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="DomainResource:shr-base-Entry.modifierExtension:subjectisthirdpartymodifier">
-      <path value="DomainResource.modifierExtension"/>
-      <sliceName value="subjectisthirdpartymodifier"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
   </differential>

@@ -5,7 +5,7 @@
   <text>
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
   <p><b>SHR MedicationUse Profile</b></p>
-  <p>Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>
+  <p>Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.medication.MedicationUse maps to MedicationStatement:
   Medication maps to medication[x].Reference
@@ -33,7 +33,7 @@
   <version value="0.0.1"/>
   <name value="SHR MedicationUse Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.005Z"/>
+  <date value="2017-08-08T15:56:30.680Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -41,8 +41,8 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <description value="Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
-  <fhirVersion value="3.0.0"/>
+  <description value="Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -72,7 +72,7 @@
     <element id="MedicationStatement:shr-medication-MedicationUse">
       <path value="MedicationStatement"/>
       <short value="SHR MedicationUse Profile"/>
-      <definition value="Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
+      <definition value="Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
       <comment value="When interpreting a medicationStatement, the value of the status and NotTaken needed to be considered:&#xD;MedicationStatement.status + MedicationStatement.wasNotTaken&#xD;Status=Active + NotTaken=T = Not currently taking&#xD;Status=Completed + NotTaken=T = Not taken in the past&#xD;Status=Intended + NotTaken=T = No intention of taking&#xD;Status=Active + NotTaken=F = Taking, but not as prescribed&#xD;Status=Active + NotTaken=F = Taking&#xD;Status=Intended +NotTaken= F = Will be taking (not started)&#xD;Status=Completed + NotTaken=F = Taken in past&#xD;Status=In Error + NotTaken=N/A = In Error."/>
       <min value="0"/>
       <max value="*"/>
@@ -267,7 +267,7 @@
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.extension">
       <path value="MedicationStatement.extension"/>
-      <slicing id="186">
+      <slicing id="228">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -527,11 +527,23 @@
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.medication[x]">
       <path value="MedicationStatement.medication[x]"/>
+      <slicing id="226">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="What medication was taken"/>
       <definition value="Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications."/>
       <comment value="If only a code is specified, then it needs to be a code for a specific product. If more information is required, then the use of the medication resource is recommended.&#xA0; For example if&#xA0;you require&#xA0;form or&#xA0;lot number, then you must&#xA0;reference the Medication resource.&#xA0;."/>
       <min value="1"/>
       <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
@@ -559,6 +571,25 @@
         <identity value="w5"/>
         <map value="what"/>
       </mapping>
+    </element>
+    <element id="MedicationStatement:shr-medication-MedicationUse.medicationCodeableConcept:shr-core-CodeableConcept">
+      <path value="MedicationStatement.medicationCodeableConcept"/>
+      <sliceName value="shr-core-CodeableConcept"/>
+      <short value="What medication was taken"/>
+      <definition value="Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.effective[x]">
       <path value="MedicationStatement.effective[x]"/>
@@ -1037,7 +1068,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="RouteOfAdministration"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/route-codes"/>
@@ -1065,7 +1096,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="MedicationAdministrationMethod"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="A coded concept describing the technique by which the medicine is administered."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/administration-method-codes"/>
@@ -1176,7 +1207,7 @@
     <element id="MedicationStatement:shr-medication-MedicationUse">
       <path value="MedicationStatement"/>
       <short value="SHR MedicationUse Profile"/>
-      <definition value="Report of a medication used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
+      <definition value="Report of a medication actually being used (or not used). Medication use is either reported, directly observed, or inferred from clinical events associated with orders, prescriptions written, pharmacy dispensings, procedural administrations, and other patient-reported information."/>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.extension:adherence">
       <path value="MedicationStatement.extension"/>
@@ -1193,10 +1224,35 @@
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.medication[x]">
       <path value="MedicationStatement.medication[x]"/>
+      <slicing id="226">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-Medication"/>
       </type>
+    </element>
+    <element id="MedicationStatement:shr-medication-MedicationUse.medicationCodeableConcept:shr-core-CodeableConcept">
+      <path value="MedicationStatement.medicationCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/medication/vs/MedicationVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.effective[x]">
       <path value="MedicationStatement.effective[x]"/>
@@ -1259,6 +1315,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="RouteOfAdministration"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/route-codes"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.dosage.method">
       <path value="MedicationStatement.dosage.method"/>
@@ -1266,6 +1332,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationAdministrationMethod"/>
+        </extension>
+        <strength value="required"/>
+        <description value="A coded concept describing the technique by which the medicine is administered."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/administration-method-codes"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="MedicationStatement:shr-medication-MedicationUse.dosage.dose[x]">
       <path value="MedicationStatement.dosage.dose[x]"/>

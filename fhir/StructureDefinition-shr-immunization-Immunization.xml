@@ -8,11 +8,11 @@
   <p>A statement relating to a vaccination that was or was not administered to the subject.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.immunization.Immunization maps to Immunization:
-  Vaccine.CodeableConcept maps to vaccineCode
+  Vaccine.SpecificType maps to vaccineCode
   Vaccine.VaccineManufacturer maps to manufacturer
-  ImmunizationNotGivenModifier maps to notGiven
+  NonOccurrenceModifier maps to notGiven
   constrain explanation to 0..1
-  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven
+  NonOccurrenceModifier.Reason maps to explanation.reasonNotGiven
   BodySite maps to site
   RouteIntoBody maps to route
   AmountOfMedication maps to doseQuantity
@@ -28,7 +28,7 @@
   <version value="0.0.1"/>
   <name value="SHR Immunization Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:16.268Z"/>
+  <date value="2017-08-08T15:56:32.068Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -37,7 +37,7 @@
     </telecom>
   </contact>
   <description value="A statement relating to a vaccination that was or was not administered to the subject."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
@@ -273,6 +273,14 @@
     </element>
     <element id="Immunization:shr-immunization-Immunization.extension">
       <path value="Immunization.extension"/>
+      <slicing id="265">
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -288,6 +296,162 @@
       <type>
         <code value="Extension"/>
       </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:specifictype">
+      <path value="Immunization.extension"/>
+      <sliceName value="specifictype"/>
+      <definition value="A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:status">
+      <path value="Immunization.extension"/>
+      <sliceName value="status"/>
+      <definition value="The position of affairs at a particular time"/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Status-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:category">
+      <path value="Immunization.extension"/>
+      <sliceName value="category"/>
+      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:reason">
+      <path value="Immunization.extension"/>
+      <sliceName value="reason"/>
+      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:occurrencetime">
+      <path value="Immunization.extension"/>
+      <sliceName value="occurrencetime"/>
+      <definition value="The point in time or span of time in which something happens."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:participant">
+      <path value="Immunization.extension"/>
+      <sliceName value="participant"/>
+      <definition value="A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -416,7 +580,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="VaccineCode"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="The code for vaccine product administered"/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/vaccine-code"/>
@@ -760,7 +924,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -930,7 +1094,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1048,7 +1212,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="NoImmunizationReason"/>
         </extension>
-        <strength value="example"/>
+        <strength value="required"/>
         <description value="The reason why a vaccine was not administered"/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/no-immunization-reason"/>
@@ -1081,7 +1245,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1229,7 +1393,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1460,12 +1624,100 @@
       <short value="SHR Immunization Profile"/>
       <definition value="A statement relating to a vaccination that was or was not administered to the subject."/>
     </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:specifictype">
+      <path value="Immunization.extension"/>
+      <sliceName value="specifictype"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:status">
+      <path value="Immunization.extension"/>
+      <sliceName value="status"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Status-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:category">
+      <path value="Immunization.extension"/>
+      <sliceName value="category"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:reason">
+      <path value="Immunization.extension"/>
+      <sliceName value="reason"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:occurrencetime">
+      <path value="Immunization.extension"/>
+      <sliceName value="occurrencetime"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Immunization:shr-immunization-Immunization.extension:participant">
+      <path value="Immunization.extension"/>
+      <sliceName value="participant"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"/>
+      </type>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="Immunization:shr-immunization-Immunization.vaccineCode">
       <path value="Immunization.vaccineCode"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="VaccineCode"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The code for vaccine product administered"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/vaccine-code"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Immunization:shr-immunization-Immunization.manufacturer">
       <path value="Immunization.manufacturer"/>
@@ -1518,6 +1770,16 @@
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="NoImmunizationReason"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The reason why a vaccine was not administered"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/no-immunization-reason"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

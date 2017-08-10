@@ -29,7 +29,7 @@
   <version value="0.0.1"/>
   <name value="SHR FoodAllergy Profile"/>
   <status value="draft"/>
-  <date value="2017-05-10T18:00:13.551Z"/>
+  <date value="2017-08-08T15:56:21.077Z"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -39,7 +39,7 @@
   </contact>
   <description value="An immune or biochemical adverse reaction to a food substance."/>
   <purpose value="To record a clinical assessment of a propensity, or potential risk to an individual, of an adverse reaction upon future exposure to the specified substance, or class of substance."/>
-  <fhirVersion value="3.0.0"/>
+  <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -265,7 +265,7 @@
     </element>
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.extension">
       <path value="AllergyIntolerance.extension"/>
-      <slicing id="44">
+      <slicing id="28">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -296,7 +296,7 @@
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.extension:manifestation">
       <path value="AllergyIntolerance.extension"/>
       <sliceName value="manifestation"/>
-      <definition value="A complaint or observed (subjective) indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain."/>
+      <definition value="A complaint or observed indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -309,7 +309,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Manifestation-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Manifestation-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -335,7 +335,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Abatement-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -348,7 +348,7 @@
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.extension:adversereaction">
       <path value="AllergyIntolerance.extension"/>
       <sliceName value="adversereaction"/>
-      <definition value="Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. It is not necessarily associated with a previously-recorded SubstanceRisk. This entry could be used to record the occurrence or non-occurrence of an adverse reaction."/>
+      <definition value="Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -373,7 +373,7 @@
     </element>
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.modifierExtension">
       <path value="AllergyIntolerance.modifierExtension"/>
-      <slicing id="45">
+      <slicing id="29">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -402,10 +402,10 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="AllergyIntolerance:shr-allergy-FoodAllergy.modifierExtension:nonoccurrencemodifier">
+    <element id="AllergyIntolerance:shr-allergy-FoodAllergy.modifierExtension:assertionnegationmodifier">
       <path value="AllergyIntolerance.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur, or the the thing documented is absent or does not exist."/>
+      <sliceName value="assertionnegationmodifier"/>
+      <definition value="When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is &#39;allergy to peanuts&#39; and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -418,7 +418,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="true"/>
@@ -633,7 +633,7 @@
       <definition value="Code for an allergy or intolerance statement (either a positive or a negated/excluded statement).  This may be a code for a substance or pharmaceutical product that is considered to be responsible for the adverse reaction risk (e.g., &quot;Latex&quot;), an allergy or intolerance condition (e.g., &quot;Latex allergy&quot;), or a negated/excluded code for a specific substance or class (e.g., &quot;No latex allergy&quot;) or a general or categorical negated statement (e.g.,  &quot;No known allergy&quot;, &quot;No known drug allergies&quot;)."/>
       <comment value="It is strongly recommended that this element be populated using a terminology, where possible. For example, some terminologies used include RxNorm, SNOMED CT, DM+D, NDFRT, ICD-9, IDC-10, UNI, ATC and CPT. Plain text should only be used if there is no appropriate terminology available. Additional details can be specified in the text.&#xD;&#xD;When a substance or product code is specified for the &#39;code&#39; element, the &quot;default&quot; semantic context is that this is a positive statement of an allergy or intolerance (depending on the value of the &#39;type&#39; element, if present) condition to the specified substance/product.  In the corresponding SNOMED CT allergy model, the specified substance/product is the target (destination) of the &quot;Causative agent&quot; relationship.&#xD;&#xD;The &#39;substanceExposureRisk&#39; extension is available as a structured and more flexible alternative to the &#39;code&#39; element for making positive or negative allergy or intolerance statements.  This extension provides the capability to make &quot;no known allergy&quot; (or &quot;no risk of adverse reaction&quot;) statements regarding any coded substance/product (including cases when a pre-coordinated &quot;no allergy to x&quot; concept for that substance/product does not exist).  If the &#39;substanceExposureRisk&#39; extension is present, the AllergyIntolerance.code element SHALL be omitted."/>
       <alias value="Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
@@ -643,7 +643,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/allergy/vs/FoodSubstanceVS"/>
+          <reference value="http://standardhealthrecord.org/shr/allergy/vs/AllergenIrritantVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -700,6 +700,10 @@
       <type>
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
       <mapping>
         <identity value="rim"/>
@@ -834,7 +838,7 @@
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
-        <expression value="children().count() &gt; id.count()"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="Element"/>
       </constraint>
@@ -1080,7 +1084,7 @@
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Manifestation-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Manifestation-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1093,7 +1097,7 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-problem-Abatement-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1112,14 +1116,14 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
-    <element id="AllergyIntolerance:shr-allergy-FoodAllergy.modifierExtension:nonoccurrencemodifier">
+    <element id="AllergyIntolerance:shr-allergy-FoodAllergy.modifierExtension:assertionnegationmodifier">
       <path value="AllergyIntolerance.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
+      <sliceName value="assertionnegationmodifier"/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="true"/>
@@ -1146,8 +1150,6 @@
     </element>
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.code">
       <path value="AllergyIntolerance.code"/>
-      <min value="1"/>
-      <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
@@ -1155,7 +1157,7 @@
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/allergy/vs/FoodSubstanceVS"/>
+          <reference value="http://standardhealthrecord.org/shr/allergy/vs/AllergenIrritantVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -1171,6 +1173,10 @@
       <type>
         <code value="Period"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
     </element>
     <element id="AllergyIntolerance:shr-allergy-FoodAllergy.assertedDate">

@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-encounter-Encounter"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Encounter Profile</b></p>\n  <p>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.encounter.Encounter maps to Encounter:\n  Entry.FocalSubject maps to subject\n  OccurrenceTime maps to period\n  EncounterType maps to class\n  Participant maps to participant\n  Participant.Practitioner maps to participant.individual\n  Participant.RelatedPerson maps to participant.individual\n  Participant.OccurrenceTime maps to participant.period\n  Participant.ParticipationType maps to participant.type\n  ProviderOrganization maps to serviceProvider\n  &lt;TBD &quot;HealthConcern&quot;&gt; maps to indication\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Encounter Profile</b></p>\n  <p>A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.encounter.Encounter maps to Encounter:\n  Entry.FocalSubject maps to subject\n  Status maps to status\n  OccurrenceTime maps to period\n  EncounterClass maps to class\n  ServiceGiven maps to type\n  Participant maps to participant.individual\n  Participant.OccurrenceTime maps to participant.period\n  Participant.ParticipationType maps to participant.type\n  ProviderOrganization maps to serviceProvider\n  &lt;TBD &quot;HealthConcern&quot;&gt; maps to indication\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"];
   fhir:StructureDefinition.identifier [
@@ -21,7 +21,7 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Encounter Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-05-10T18:00:16.241Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:32.018Z"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -32,7 +32,7 @@
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient."];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.0"];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -290,7 +290,7 @@
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.extension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "206" ];
+         fhir:Element.id [ fhir:value "263" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -500,7 +500,7 @@
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.modifierExtension" ];
        fhir:ElementDefinition.slicing [
-         fhir:Element.id [ fhir:value "207" ];
+         fhir:Element.id [ fhir:value "264" ];
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
            fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
@@ -660,7 +660,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -822,10 +822,16 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "EncounterClass" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Classification of the encounter" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS" ]
+           fhir:link <http://hl7.org/fhir/ValueSet/v3-ActEncounterCode>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/v3-ActEncounterCode" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -863,7 +869,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -1021,7 +1027,8 @@
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
@@ -1182,7 +1189,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -1303,16 +1310,10 @@
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "ParticipantType" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Role of participant in encounter" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/encounter-participant-type>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/encounter-participant-type" ]
+           fhir:link <http://hl7.org/fhir/ValueSet/v3-ParticipationType>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/v3-ParticipationType" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -1518,7 +1519,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -1748,7 +1749,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -2133,7 +2134,7 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "children().count() > id.count()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
@@ -2455,16 +2456,18 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Coding" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding" ]
-       ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/encounter/vs/EncounterTypeVS" ]
-         ]
        ]
      ], [
        fhir:index 8;
+       fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.type" ];
+       fhir:ElementDefinition.path [ fhir:value "Encounter.type" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ]
+     ], [
+       fhir:index 9;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.subject" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.subject" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
@@ -2475,20 +2478,27 @@
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord" ]
        ]
      ], [
-       fhir:index 9;
+       fhir:index 10;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.participant" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.participant" ]
      ], [
-       fhir:index 10;
+       fhir:index 11;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.participant.type" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.participant.type" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.binding [
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/v3-ParticipationType>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/v3-ParticipationType" ]
+         ]
        ]
      ], [
-       fhir:index 11;
+       fhir:index 12;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.participant.period" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.participant.period" ];
        fhir:ElementDefinition.type [
@@ -2497,7 +2507,7 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
        ]
      ], [
-       fhir:index 12;
+       fhir:index 13;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.participant.individual" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.participant.individual" ];
        fhir:ElementDefinition.type [
@@ -2510,7 +2520,7 @@
          fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
        ]
      ], [
-       fhir:index 13;
+       fhir:index 14;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.period" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.period" ];
        fhir:ElementDefinition.type [
@@ -2519,7 +2529,7 @@
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
        ]
      ], [
-       fhir:index 14;
+       fhir:index 15;
        fhir:Element.id [ fhir:value "Encounter:shr-encounter-Encounter.serviceProvider" ];
        fhir:ElementDefinition.path [ fhir:value "Encounter.serviceProvider" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
@@ -2544,7 +2554,7 @@
 
 <http://hl7.org/fhir/ValueSet/v3-ActPriority> a fhir:ValueSet .
 
-<http://hl7.org/fhir/ValueSet/encounter-participant-type> a fhir:ValueSet .
+<http://hl7.org/fhir/ValueSet/v3-ParticipationType> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/encounter-reason> a fhir:ValueSet .
 

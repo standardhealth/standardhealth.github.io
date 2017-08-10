@@ -3,7 +3,7 @@
   "id": "shr-immunization-Immunization",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Immunization Profile</b></p>\n  <p>A statement relating to a vaccination that was or was not administered to the subject.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.Immunization maps to Immunization:\n  Vaccine.CodeableConcept maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  ImmunizationNotGivenModifier maps to notGiven\n  constrain explanation to 0..1\n  ImmunizationNotGivenModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  &lt;TBD &quot;DoseSequenceNumber&quot;&gt; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Immunization Profile</b></p>\n  <p>A statement relating to a vaccination that was or was not administered to the subject.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.immunization.Immunization maps to Immunization:\n  Vaccine.SpecificType maps to vaccineCode\n  Vaccine.VaccineManufacturer maps to manufacturer\n  NonOccurrenceModifier maps to notGiven\n  constrain explanation to 0..1\n  NonOccurrenceModifier.Reason maps to explanation.reasonNotGiven\n  BodySite maps to site\n  RouteIntoBody maps to route\n  AmountOfMedication maps to doseQuantity\n  &lt;TBD &quot;DoseSequenceNumber&quot;&gt; maps to vaccinationProtocol.doseSequence\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-immunization-Immunization",
   "identifier": [
@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Immunization Profile",
   "status": "draft",
-  "date": "2017-05-10T18:00:16.268Z",
+  "date": "2017-08-08T15:56:32.068Z",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -28,7 +28,7 @@
     }
   ],
   "description": "A statement relating to a vaccination that was or was not administered to the subject.",
-  "fhirVersion": "3.0.0",
+  "fhirVersion": "3.0.1",
   "mapping": [
     {
       "identity": "v2",
@@ -306,6 +306,17 @@
       {
         "id": "Immunization:shr-immunization-Immunization.extension",
         "path": "Immunization.extension",
+        "slicing": {
+          "id": "265",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -325,6 +336,204 @@
             "code": "Extension"
           }
         ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:specifictype",
+        "path": "Immunization.extension",
+        "sliceName": "specifictype",
+        "definition": "A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:status",
+        "path": "Immunization.extension",
+        "sliceName": "status",
+        "definition": "The position of affairs at a particular time",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Status-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:category",
+        "path": "Immunization.extension",
+        "sliceName": "category",
+        "definition": "A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:reason",
+        "path": "Immunization.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:occurrencetime",
+        "path": "Immunization.extension",
+        "sliceName": "occurrencetime",
+        "definition": "The point in time or span of time in which something happens.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:participant",
+        "path": "Immunization.extension",
+        "sliceName": "participant",
+        "definition": "A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "DomainResource.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -486,7 +695,7 @@
               "valueString": "VaccineCode"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "The code for vaccine product administered",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/vaccine-code"
@@ -899,7 +1108,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1115,7 +1324,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1271,7 +1480,7 @@
               "valueString": "NoImmunizationReason"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "The reason why a vaccine was not administered",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/no-immunization-reason"
@@ -1310,7 +1519,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1501,7 +1710,7 @@
             "key": "ele-1",
             "severity": "error",
             "human": "All FHIR elements must have a @value or children",
-            "expression": "children().count() > id.count()",
+            "expression": "hasValue() | (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
             "source": "Element"
           }
@@ -1809,6 +2018,102 @@
         "definition": "A statement relating to a vaccination that was or was not administered to the subject."
       },
       {
+        "id": "Immunization:shr-immunization-Immunization.extension:specifictype",
+        "path": "Immunization.extension",
+        "sliceName": "specifictype",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SpecificType-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:status",
+        "path": "Immunization.extension",
+        "sliceName": "status",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Status-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:category",
+        "path": "Immunization.extension",
+        "sliceName": "category",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:reason",
+        "path": "Immunization.extension",
+        "sliceName": "reason",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:occurrencetime",
+        "path": "Immunization.extension",
+        "sliceName": "occurrencetime",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
+        "id": "Immunization:shr-immunization-Immunization.extension:participant",
+        "path": "Immunization.extension",
+        "sliceName": "participant",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
+          }
+        ],
+        "mustSupport": false,
+        "isModifier": false,
+        "isSummary": false
+      },
+      {
         "id": "Immunization:shr-immunization-Immunization.vaccineCode",
         "path": "Immunization.vaccineCode",
         "type": [
@@ -1816,7 +2121,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "VaccineCode"
+            }
+          ],
+          "strength": "required",
+          "description": "The code for vaccine product administered",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/vaccine-code"
+          }
+        }
       },
       {
         "id": "Immunization:shr-immunization-Immunization.manufacturer",
@@ -1884,7 +2202,20 @@
             "code": "CodeableConcept",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        ]
+        ],
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "NoImmunizationReason"
+            }
+          ],
+          "strength": "required",
+          "description": "The reason why a vaccine was not administered",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/no-immunization-reason"
+          }
+        }
       }
     ]
   }
