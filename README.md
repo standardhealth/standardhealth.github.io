@@ -9,7 +9,7 @@ To make contributions to Standardhealthrecord.org, individuals can:
 
 
 ## Downloading Project:
-Before getting started on any development, one will need to have the following installed:
+Before getting started on any development, ensure the following are installed:
 
 - [Git](https://git-scm.com/), our version controlling tool.
 	- If you have never used git or github before, you should check out [this tutorial](https://try.github.io/levels/1/challenges/1) and/or [this reference sheet](http://gitref.org/index.html).
