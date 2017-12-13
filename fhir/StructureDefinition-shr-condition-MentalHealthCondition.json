@@ -3,7 +3,7 @@
   "id": "shr-condition-MentalHealthCondition",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MentalHealthCondition Profile</b></p>\n  <p>A condition relating to a person’s psychological and emotional well-being.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.condition.MentalHealthCondition maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  SpecificType maps to code\n  Category maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  Stage maps to stage\n  Stage.CodeableConcept maps to stage.summary\n  Observation maps to evidence\n  Observation.SpecificType maps to evidence.code\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR MentalHealthCondition Profile</b></p>\n  <p>A condition relating to a person’s psychological and emotional well-being.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.condition.MentalHealthCondition maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition:\n  RelatedEncounter maps to context\n  Informant maps to asserter\n  Subject maps to subject\n  Entry.CreationTime maps to assertedDate\n  CodeableConcept maps to code\n  Category maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySiteOrCode.CodeableConcept maps to bodySite   \n  BodySiteOrCode.BodySite maps to http://hl7.org/fhir/StructureDefinition/body-structure\n  Severity maps to severity\n  Stage maps to stage\n  Stage.CodeableConcept maps to stage.summary\n  Evidence maps to evidence\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-MentalHealthCondition",
   "identifier": [
@@ -15,21 +15,37 @@
   "version": "0.0.1",
   "name": "SHR MentalHealthCondition Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:31.835Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
   "description": "A condition relating to a person’s psychological and emotional well-being.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US",
+          "display": "United States Minor Outlying Islands (the)"
+        }
+      ]
+    }
+  ],
   "fhirVersion": "3.0.1",
   "mapping": [
+    {
+      "identity": "argonaut-dq-dstu2",
+      "uri": "http://unknown.org/Argonaut DQ DSTU2",
+      "name": "Argonaut DQ DSTU2"
+    },
     {
       "identity": "sct-concept",
       "uri": "http://snomed.info/conceptdomain",
@@ -59,7 +75,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Condition",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -70,6 +86,11 @@
         "definition": "A condition relating to a person’s psychological and emotional well-being.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition",
+          "min": 0,
+          "max": "*"
+        },
         "constraint": [
           {
             "key": "dom-2",
@@ -108,16 +129,32 @@
             "severity": "error",
             "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
             "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))",
+            "source": "Condition"
           },
           {
             "key": "con-3",
             "severity": "error",
             "human": "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
             "expression": "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)",
+            "source": "Condition"
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice",
+                "valueBoolean": true
+              }
+            ],
+            "key": "us-core-1",
+            "severity": "warning",
+            "human": "A code in Condition.category SHOULD be from US Core Condition Category Codes value set.",
+            "expression": "where(category in 'http://hl7.org/fhir/us/core/ValueSet/us-core-condition-category').exists()",
+            "xpath": "(no xpath equivalent)"
           }
         ],
+        "mustSupport": false,
         "mapping": [
           {
             "identity": "rim",
@@ -138,6 +175,10 @@
           {
             "identity": "w5",
             "map": "clinical.general"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition"
           }
         ]
       },
@@ -311,7 +352,7 @@
         "id": "Condition:shr-condition-MentalHealthCondition.extension",
         "path": "Condition.extension",
         "slicing": {
-          "id": "250",
+          "id": "93",
           "discriminator": [
             {
               "type": "value",
@@ -348,74 +389,72 @@
         ]
       },
       {
-        "id": "Condition:shr-condition-MentalHealthCondition.extension:codeableconcept",
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:bodysite",
         "path": "Condition.extension",
-        "sliceName": "codeableconcept",
-        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
+        "sliceName": "bodysite",
+        "definition": "A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.",
+        "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/condition/vs/DSMVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://hl7.org/fhir/StructureDefinition/body-structure"
           }
         ]
       },
       {
-        "id": "Condition:shr-condition-MentalHealthCondition.extension:includeonproblemlist",
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:author",
         "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
-        "definition": "Whether or not to include this condition on the subject's current problem list.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:focalsubject",
+        "path": "Condition.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
           {
-            "identity": "rim",
-            "map": "N/A"
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:findingmethod",
+        "path": "Condition.extension",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:findingstatus",
+        "path": "Condition.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
           }
         ]
       },
@@ -424,31 +463,12 @@
         "path": "Condition.extension",
         "sliceName": "whenclinicallyrecognized",
         "definition": "The time at which a condition or condition was first identified in a healthcare context.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -457,31 +477,12 @@
         "path": "Condition.extension",
         "sliceName": "preexisting",
         "definition": "If the problem or condition existed before the current episode of care.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -490,27 +491,113 @@
         "path": "Condition.extension",
         "sliceName": "criticality",
         "definition": "The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"
           }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality.id",
+        "path": "Condition.extension.id",
+        "representation": [
+          "xmlAttr"
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality.extension:extension",
+        "path": "Condition.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality.url",
+        "path": "Condition.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality.valueCode",
+        "path": "Condition.extension.valueCode",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"
+          }
+        },
         "mapping": [
           {
             "identity": "rim",
@@ -556,6 +643,11 @@
         "requirements": "Need to allow connection to a wider workflow.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.identifier",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Identifier"
@@ -581,6 +673,11 @@
         "comment": "This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.clinicalStatus",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -590,17 +687,11 @@
           "con-3",
           "con-4"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionClinicalStatus"
-            }
-          ],
           "strength": "required",
-          "description": "The clinical status of the condition or diagnosis.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/condition-clinical"
           }
@@ -621,6 +712,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.clinicalStatus"
           }
         ]
       },
@@ -630,8 +725,13 @@
         "short": "provisional | differential | confirmed | refuted | entered-in-error | unknown",
         "definition": "The verification status to support the clinical status of the condition.",
         "comment": "verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.\n\nThis element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid.",
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.verificationStatus",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -641,17 +741,11 @@
         "condition": [
           "con-3"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionVerificationStatus"
-            }
-          ],
           "strength": "required",
-          "description": "The verification status to support or decline the clinical status of the condition or diagnosis.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/condition-ver-status"
           }
@@ -676,6 +770,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.verificationStatus"
           }
         ]
       },
@@ -685,14 +783,19 @@
         "short": "problem-list-item | encounter-diagnosis",
         "definition": "A category assigned to the condition.",
         "comment": "The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts.",
-        "min": 0,
+        "min": 1,
         "max": "*",
+        "base": {
+          "path": "Condition.category",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "binding": {
           "strength": "required",
           "valueSetReference": {
@@ -715,6 +818,10 @@
           {
             "identity": "w5",
             "map": "class"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.category"
           }
         ]
       },
@@ -726,10 +833,14 @@
         "comment": "Coding of the severity with a terminology is preferred, where possible.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.severity",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "binding": {
@@ -779,17 +890,22 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.code",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/condition/vs/DSMVS"
           }
         },
         "mapping": [
@@ -812,6 +928,10 @@
           {
             "identity": "w5",
             "map": "what"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.code"
           }
         ]
       },
@@ -823,10 +943,14 @@
         "comment": "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [body-site-instance](extension-body-site-instance.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.bodySite",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "isSummary": true,
@@ -862,16 +986,18 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.subject",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -885,6 +1011,10 @@
           {
             "identity": "w5",
             "map": "who.focus"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.patient"
           }
         ]
       },
@@ -899,14 +1029,15 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.context",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
           }
         ],
         "isSummary": true,
@@ -933,21 +1064,21 @@
         "comment": "Age is generally used when the patient reports an age at which the Condition began to occur.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.onset[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ],
         "isSummary": true,
@@ -974,21 +1105,21 @@
         "comment": "There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.abatement[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ],
         "condition": [
@@ -1013,6 +1144,11 @@
         "comment": "The assertedDate represents the date when this particular Condition record was created in the EHR, not the date of the most recent update in terms of when severity, abatement, etc. were specified.  The date of the last record modification can be retrieved from the resource metadata.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.assertedDate",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -1041,18 +1177,19 @@
         "definition": "Individual who is making the condition statement.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.asserter",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ],
         "isSummary": true,
@@ -1078,6 +1215,11 @@
         "definition": "Clinical stage or grade of a condition. May include formal severity assessments.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.stage",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1202,10 +1344,14 @@
         "definition": "A simple summary of the stage such as \"Stage 3\". The determination of the stage is disease-specific.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.stage.summary",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -1246,6 +1392,11 @@
         "definition": "Reference to a formal record of the evidence on which the staging assessment is based.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.stage.assessment",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1278,6 +1429,11 @@
         "comment": "The evidence may be a simple list of coded symptoms/manifestations, or references to observations or formal assessments, or both.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1402,10 +1558,14 @@
         "definition": "A manifestation or symptom that led to the recording of this condition.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence.code",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -1413,9 +1573,16 @@
         ],
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ManifestationOrSymptom"
+            }
+          ],
+          "strength": "example",
+          "description": "Codes that describe the manifestation or symptoms of a condition.",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://hl7.org/fhir/ValueSet/manifestation-or-symptom"
           }
         },
         "mapping": [
@@ -1440,6 +1607,11 @@
         "definition": "Links to other relevant information, including pathology reports.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence.detail",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1468,6 +1640,11 @@
         "definition": "Additional information about the Condition. This is a general notes/comments entry  for description of the Condition, its diagnosis and prognosis.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Annotation"
@@ -1492,50 +1669,84 @@
         "id": "Condition:shr-condition-MentalHealthCondition",
         "path": "Condition",
         "short": "SHR MentalHealthCondition Profile",
-        "definition": "A condition relating to a person’s psychological and emotional well-being."
+        "definition": "A condition relating to a person’s psychological and emotional well-being.",
+        "mustSupport": false
       },
       {
-        "id": "Condition:shr-condition-MentalHealthCondition.extension:codeableconcept",
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:bodysite",
         "path": "Condition.extension",
-        "sliceName": "codeableconcept",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/condition/vs/DSMVS"
-          }
-        }
-      },
-      {
-        "id": "Condition:shr-condition-MentalHealthCondition.extension:includeonproblemlist",
-        "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
+        "sliceName": "bodysite",
+        "definition": "A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"
+            "profile": "http://hl7.org/fhir/StructureDefinition/body-structure"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:author",
+        "path": "Condition.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:focalsubject",
+        "path": "Condition.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:findingmethod",
+        "path": "Condition.extension",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:findingstatus",
+        "path": "Condition.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
+          }
+        ]
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.extension:whenclinicallyrecognized",
         "path": "Condition.extension",
         "sliceName": "whenclinicallyrecognized",
+        "definition": "The time at which a condition or condition was first identified in a healthcare context.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1543,15 +1754,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.extension:preexisting",
         "path": "Condition.extension",
         "sliceName": "preexisting",
+        "definition": "If the problem or condition existed before the current episode of care.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1559,15 +1768,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality",
         "path": "Condition.extension",
         "sliceName": "criticality",
+        "definition": "The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1575,26 +1782,26 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.extension:criticality.valueCode",
+        "path": "Condition.extension.valueCode",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"
+          }
+        }
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.clinicalStatus",
         "path": "Condition.clinicalStatus",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.category",
         "path": "Condition.category",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
@@ -1605,12 +1812,6 @@
       {
         "id": "Condition:shr-condition-MentalHealthCondition.severity",
         "path": "Condition.severity",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "extension": [
             {
@@ -1628,36 +1829,42 @@
       {
         "id": "Condition:shr-condition-MentalHealthCondition.code",
         "path": "Condition.code",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
-          "strength": "preferred",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/condition/vs/DSMVS"
           }
         }
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.bodySite",
         "path": "Condition.bodySite",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         }
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.subject",
+        "path": "Condition.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-condition-MentalHealthCondition.context",
+        "path": "Condition.context",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
+          }
+        ]
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.onset[x]",
@@ -1668,15 +1875,10 @@
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ]
       },
@@ -1689,23 +1891,17 @@
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ]
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.assertedDate",
         "path": "Condition.assertedDate",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "Condition:shr-condition-MentalHealthCondition.asserter",
@@ -1713,51 +1909,13 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ]
-      },
-      {
-        "id": "Condition:shr-condition-MentalHealthCondition.stage",
-        "path": "Condition.stage"
-      },
-      {
-        "id": "Condition:shr-condition-MentalHealthCondition.stage.summary",
-        "path": "Condition.stage.summary",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ]
-      },
-      {
-        "id": "Condition:shr-condition-MentalHealthCondition.evidence",
-        "path": "Condition.evidence"
-      },
-      {
-        "id": "Condition:shr-condition-MentalHealthCondition.evidence.code",
-        "path": "Condition.evidence.code",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
-          }
-        }
       }
     ]
   }

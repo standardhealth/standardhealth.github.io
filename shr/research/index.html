@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="The Standard Health Record Collaborative is working to create a single, high-quality health record for every individual in the United States.">
+      <meta name="keywords" content="HealthIT,medical errors,semantic interoperability,healthcare interoperability,interoperability,Electronic Health Record,Electronic Medical Record,EMR,EHR,synthetic patient,SyntheticMass,MITRE,Personal Health Record,Universal Health Record,National Health Record">
+  
+      <!-- Favicons -->
+      <link rel="icon" href="/../../../assets/img/favicon.ico" type="image/x-icon">
+      
+      <!-- Material Design fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap.min.css" type="text/css">
+      <!-- Bootstrap Material Design -->
+      <link rel="stylesheet" href="/../../../assets/css/bootstrap-material-design.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/ripples.min.css" type="text/css">
+      <link rel="stylesheet" href="/../../../assets/css/snackbar.css">
+      <!-- Font Awesome for Icons  -->
+      <link rel="stylesheet" href="/../../../assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/../../../assets/css/ssve.css">
+      <link rel="stylesheet" href="/../../../assets/css/styles.css">
+      <link rel="stylesheet" href="/../../../assets/css/shr-github-markdown.css">
+      <script src="https://use.fontawesome.com/b7720aa37b.js"></script>
+  
+      <!-- JS -->
+      <!-- Jquery 2.2.4-->
+      <script src="/../../../assets/js/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/../../../assets/js/bootstrap.min.js"></script>
+      <!-- Lodash -->
+      <script src="/../../../assets/js/lodash.min.js"></script>
+      <script src="/../../../assets/js/typeahead.jquery.js"></script>
+      <!-- D3.js -->
+      <script src="/../../../assets/js/d3.min.js"></script>
+      <!--[if lt IE 9]>
+        <script src="../../../assets/js/ie8-responsive-file-warning.js"></script>
+      <![endif]-->
+  
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+  
+      <title>
+        Standard Health Record Specification
+      </title>
+  </head>
+  <body>
+    <a class="sr-only" href="#content">Skip to main content</a>
+    <div class="wrapper">
+      <header>
+        <nav class="navbar navbar-fixed-top" data-spy="affix" data-offset-top="20">
+          <div class="container navbar-container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
+                <span style="font-size: 0; line-height: 0;"> Navigation </span>
+                <span class="icon fa fa-2x fa-bars"></span>
+              </button>
+              <div class="logo-banner">
+                <a href="/#sitehomepage">
+                  <img src='/assets/img/shr_brand_logo.png' alt='Standard Helath Record Collaborative logo'> 
+                </a>
+              </div>
+            </div>
+            <div id="site-menu" class="navbar-collapse collapse" role="navigation">
+              <ul class="nav navbar-nav">
+                <!-- Search for the mobile layout -->
+                <li class="visible-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton-mobile">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input-mobile" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+                <li class="scroll active">
+                  <a href="/#sitehomepage">HOME</a>
+                </li>
+                <li class="aboutNav">
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_about" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ABOUT<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class="scroll visible-xs-block"><a class="dropdown-elem" data-toggle="collapse" data-target=".navbar-collapse" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li class="scroll hidden-xs"><a class="dropdown-elem" href="/#about-landing">SHR COLLABORATIVE</a></li>
+                    <li><a class="dropdown-elem" href="/collaborative.html">INITIATIVES</a></li>
+                    <li><a class="dropdown-elem" href="/evidence.html">EVIDENCE</a></li>
+                  </ul>
+                </li> 
+                <li>
+                  <a href="javascript:void(0)" class="dropdown-toggle" id="drop_spec" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SPEC<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-elem hidden-xs" href="/shr/graphic.html">SPEC VISUALIZATION</a></li>
+                    <li><a class="dropdown-elem" href="/shr/">SHR SPEC</a></li>
+                    <li><a class="dropdown-elem" href="/spec_terminology.html">SPEC TERMINOLOGY</a></li>
+                    <li><a class="dropdown-elem" href="/fhir/">SHR FHIR&reg; IG</a></li>
+                    <li class="divider"></li>
+                    <li><a class="dropdown-elem" href="/shr/index_all_elements.html">DATA ELEMENT INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/vs/">VALUE SET INDEX</a></li>
+                    <li><a class="dropdown-elem" href="/shr/cs/">CODE SYSTEM INDEX</a></li>
+                  </ul>
+                </li>
+      
+                <li class="">
+                  <a href="/faq.html">FAQ</a>
+                </li>
+                <li class="scroll">
+                  <a href="/#contact-landing">CONTACT</a>
+                </li>
+                <li class="hidden-xs">
+                  <form class="search-form form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" aria-label="Click to Search SHR" id="searchSubmitButton">
+                          <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                      </span>
+                      <div class="search">
+                        <input id="search-input" class="typeahead form-control" type="text" placeholder="Search SHR Elements">
+                      </div>
+                    </div>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <section id="spec-viewer">
+            <div class="container markdown-body">
+                <div class="row">
+                  <h1>Research</h1> 
+                  <h2 style="border: none;">The SHR research domain contains definitions related to the clinical trials and research studies.</h2>
+                  <div class="spec-data-elements">
+                        <h3>
+                            <a class='paddedId' id="Enrollment"></a>Enrollment
+                        </h3>
+                        <p>
+                                Description of the group or groups enrolled or qualified to be enrolled in the study.
+                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C4041024;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C4041024">C4041024</a>
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/entity#Group"> <code>Group</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of entities (personnel, material, or places) to be considered together. May be a pool of like-type resources, a team, or combination of personnel, material and places.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Jurisdiction"></a>Jurisdiction
+                        </h3>
+                        <p>
+                                The country, state or other region taking legal responsibility for the conduct of the study.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    								from <a href="http://hl7.org/fhir/ValueSet/jurisdiction"><code>http://hl7.org/fhir/ValueSet/jurisdiction</code></a>
+                                    							(if covered)
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="PrincipalInvestigator"></a>PrincipalInvestigator
+                        </h3>
+                        <p>
+                                Indicates the individual who has primary oversite of the execution of the study.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/entity#Practitioner"> <code>Practitioner</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A person who practices a healing art.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="ResearchSubject"></a>ResearchSubject
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                Record of a subject&#x27;s enrollment and participation in a research study.
+                        </p>
+                        		<p>Based On 			<a href="/shr/entity#Role"> <code>Role</code></a>
+                         <!-- namespace=namespace label=label -->
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    				<a><code>Value</code></a>
+                                                <a data-toggle="tooltip" data-placement="right" title="Found in Role" data-original-title="Found in Role" href="/shr/entity#Role" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                    </td>
+                                    <td>
+                                    								must be a 			<a href="/shr/entity#Patient"> <code>Patient</code></a>
+                                    			
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	
+                                    </td>
+                        
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#Study"> <code>Study</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A clinical trial or similar research study. List of FDA data elements describing a research study: prsinfo.clinicaltrials.gov/definitions.html 
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/action#Status"> <code>Status</code></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/research-subject-status"><code>http://hl7.org/fhir/ValueSet/research-subject-status</code></a>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Position in workflow.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/action#ParticipationPeriod"> <code>ParticipationPeriod</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	The point in time or span of time the participant is involved.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#TerminationReason"> <code>TerminationReason</code></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      									from <a href="/shr/research/vs/#ResearchSubjectTerminationReasonVS"><code>ResearchSubjectTerminationReasonVS</code></a>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	A description and/or code explaining the premature termination of the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/entity#Type"> <code>Type</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Entity" data-original-title="Found in Entity" href="/shr/entity#Entity" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The most specific code (lowest level term) describing the kind or sort of thing being represented.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#RelatedEncounter"> <code>RelatedEncounter</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	If content was generated during a patient encounter, related encounter is the encounter where the information was gained.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Author"> <code>Author</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or organization who created the entry and is responsible for (and may certify) the content.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Informant"> <code>Informant</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Sponsor"></a>Sponsor
+                        </h3>
+                        <p>
+                                The organization responsible for the execution of the study.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/entity#Organization"> <code>Organization</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A social or legal structure formed by human beings.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="Study"></a>Study
+                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                        </h3>
+                        <p>
+                                A clinical trial or similar research study. List of FDA data elements describing a research study: prsinfo.clinicaltrials.gov/definitions.html 
+                        </p>
+                        		<p>Based On 			<a href="/shr/entity#Entity"> <code>Entity</code></a>
+                         <!-- namespace=namespace label=label -->
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Title"> <code>Title</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A distinguishing word or group of words naming an item.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Identifier"> <code>Identifier</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A unique string that identifies a specific person or thing.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Details"> <code>Details</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	An text note containing additional details, explanation, description, comment, or summarization. Details can discuss, support, explain changes to, or dispute information.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/entity#PartOf"> <code>PartOf</code></a>
+                        		      </td>
+                        		      <td>
+                        		      								must be a 			<a href="/shr/research#Study"> <code>Study</code></a>
+                        		      			
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	The larger entity that this is a portion of.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/action#Status"> <code>Status</code></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      								from <a href="http://hl7.org/fhir/ValueSet/research-study-status"><code>http://hl7.org/fhir/ValueSet/research-study-status</code></a>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	Position in workflow.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#Enrollment"> <code>Enrollment</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Description of the group or groups enrolled or qualified to be enrolled in the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#EffectiveTimePeriod"> <code>EffectiveTimePeriod</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The date and time span for which something is active, valid, or in force.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#Sponsor"> <code>Sponsor</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The organization responsible for the execution of the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#Jurisdiction"> <code>Jurisdiction</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The country, state or other region taking legal responsibility for the conduct of the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#ContactDetail"> <code>ContactDetail</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Describes an individual and how to reach them.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#PrincipalInvestigator"> <code>PrincipalInvestigator</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	Indicates the individual who has primary oversite of the execution of the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/entity#Facility"> <code>Facility</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#TerminationReason"> <code>TerminationReason</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	A description and/or code explaining the premature termination of the study.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Annotation"> <code>Annotation</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/research#StudyArm"> <code>StudyArm</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>		0 or more
+                        		      </td>
+                        		      <td>
+                        		      	Arm refers to pre-specified group or subgroup of participant(s) in a clinical trial assigned to receive specific intervention(s) (or no intervention) according to a protocol.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/entity#Type"> <code>Type</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Entity" data-original-title="Found in Entity" href="/shr/entity#Entity" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The most specific code (lowest level term) describing the kind or sort of thing being represented.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#RelatedEncounter"> <code>RelatedEncounter</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	If content was generated during a patient encounter, related encounter is the encounter where the information was gained.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Author"> <code>Author</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or organization who created the entry and is responsible for (and may certify) the content.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Informant"> <code>Informant</code></a>
+                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Content" data-original-title="Found in Content" href="/shr/base#Content" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="StudyArm"></a>StudyArm
+                        </h3>
+                        <p>
+                                Arm refers to pre-specified group or subgroup of participant(s) in a clinical trial assigned to receive specific intervention(s) (or no intervention) according to a protocol.
+                        </p>
+                        <table>
+                          <tbody>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Title"> <code>Title</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>				required
+                        		      </td>
+                        		      <td>
+                        		      	A distinguishing word or group of words naming an item.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/entity#Type"> <code>Type</code></a>
+                        		      </td>
+                        		      <td>
+                        		      							must be 
+                        		      									from <a href="/shr/research/vs/#StudyArmTypeVS"><code>StudyArmTypeVS</code></a>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The most specific code (lowest level term) describing the kind or sort of thing being represented.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/core#Details"> <code>Details</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	An text note containing additional details, explanation, description, comment, or summarization. Details can discuss, support, explain changes to, or dispute information.
+                        		      </td>
+                        		    </tr>
+                          </tbody>
+                        </table>
+                        <h3>
+                            <a class='paddedId' id="TerminationReason"></a>TerminationReason
+                        </h3>
+                        <p>
+                                A description and/or code explaining the premature termination of the study.
+                        </p>
+                        <table>
+                          <tbody>
+                                    <td>
+                                    
+                                    Value:&nbsp;
+                                    
+                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    </td>
+                        
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
+            </div>
+
+        </section>
+      </div>
+      <div class="wrapper-padding">
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 links">
+            <div class="row">
+              <div class="col-md-push-1 col-xs-4 landing-links ">
+                <ul class="list-unstyled">
+                  <li class="scroll ">
+                    <a href="/#sitehomepage">HOME</a>
+                  </li>
+                  <li>
+                    <a href="/#about-landing">SHR COLLABORATIVE</a>
+                  </li>
+    
+                  <li>
+                    <a href="/collaborative.html">INITIATIVES</a>
+                  </li> 
+                  <li>
+                    <a href="/evidence.html">EVIDENCE</a>
+                  </li>
+                  <!--                <li>
+                    <a href="/evidence.html">INTEROPERABILITY</a>
+                  </li> --> 
+    <!--               <li class="">
+                    <a href="/spec.html">SPECIFICATION</a>
+                  </li> -->
+                </ul>
+              </div>
+              <div class="col-xs-offset-1 col-xs-5 sister-links ">
+                <ul class="list-unstyled">
+                  <li class="">
+                    <a href="/shr/graphic.html" class="hidden-xs">SPEC VISUALIZATION</a>
+                  </li>
+                  <li class="">
+                    <a href="/shr/">SHR SPEC</a>
+                  </li>
+                  <li class="">
+                    <a href="/faq.html">FAQ</a>
+                  </li>
+                  <li class="scroll">
+                    <a href="/#contact-landing">CONTACT</a>
+                  </li>
+                </ul>
+              </div>
+            </div>  
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-12"> 
+                <p class="logo">
+                  <a href="https://www.mitre.org/">
+                    <img src="/assets/img/MITRE.png" alt="MITRE Logo"> <span class="sr-only">MITRE Home Page</span>
+                  </a>
+                </p>
+                <p class="copyright">Copyright © 2016 The MITRE Corporation | Approved for Public Release; Distribution Unlimited. Case Number 16&#8209;1988</p>
+                <p class="copyright">FHIR® is the registered trademark of HL7 and is used with the permission of HL7</p>
+              </div>  
+            </div> 
+          </div>
+        </div>
+      </div>
+      <!-- Scripts for rendering -->
+      <script src="/assets/js/material.min.js"></script>
+      <script src="/assets/js/ripples.min.js"></script>
+      <script src="/assets/js/snackbar.min.js"></script>
+    
+      <script> 
+        $(document).ready(function(){
+          $.material.init()
+          $('[data-toggle="tooltip"]').tooltip(); 
+        });
+      </script>
+    
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/typeahead.jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/main.js"></script>  
+    <script type="text/javascript" src="/assets/js/search.js"></script>
+    <script type="text/javascript" src="/assets/js/parse.js"></script> 
+  </body>
+</html>
+

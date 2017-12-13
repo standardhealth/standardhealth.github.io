@@ -16,14 +16,14 @@
   "name": "SHR Reason Extension",
   "title": "SHR Reason Extension",
   "status": "draft",
-  "date": "2017-08-08T15:56:20.491Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
@@ -72,6 +72,12 @@
             "expression": "extension.exists() != value.exists()",
             "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])",
             "source": "Extension"
+          },
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-core-Reason-extension SHALL have either extension('string') or extension('codeableconcept') or extension('content')",
+            "expression": "( extension('string').url | extension('codeableconcept').url | extension('content').url ).distinct().count() == 1"
           }
         ]
       },
@@ -103,13 +109,23 @@
         ]
       },
       {
-        "id": "Extension:reason.extension:extension",
+        "id": "Extension:reason.extension",
         "path": "Extension.extension",
-        "sliceName": "extension",
+        "slicing": {
+          "id": "15",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Extension",
         "definition": "An Extension",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "Element.extension",
           "min": 0,
@@ -122,6 +138,84 @@
         ]
       },
       {
+        "id": "Extension:reason.extension:string",
+        "path": "Extension.extension",
+        "sliceName": "string",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-string-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:reason.extension:codeableconcept",
+        "path": "Extension.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:reason.extension:content",
+        "path": "Extension.extension",
+        "sliceName": "content",
+        "definition": "A item that can constitute the payload of an Entry, aka an EntryElement.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Content-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
         "id": "Extension:reason.url",
         "path": "Extension.url",
         "representation": [
@@ -129,6 +223,7 @@
         ],
         "short": "identifies the meaning of the extension",
         "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
         "min": 1,
         "max": "1",
         "base": {
@@ -154,8 +249,8 @@
         "path": "Extension.value[x]",
         "short": "Value of extension",
         "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
-        "min": 1,
-        "max": "1",
+        "min": 0,
+        "max": "0",
         "base": {
           "path": "Extension.value[x]",
           "min": 0,
@@ -163,15 +258,118 @@
         },
         "type": [
           {
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
             "code": "string"
           },
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "time"
           },
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
           }
         ],
         "mapping": [
@@ -191,13 +389,57 @@
         "short": "SHR Reason Extension",
         "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
         "min": 0,
-        "max": "*"
+        "max": "*",
+        "constraint": [
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-core-Reason-extension SHALL have either extension('string') or extension('codeableconcept') or extension('content')",
+            "expression": "( extension('string').url | extension('codeableconcept').url | extension('content').url ).distinct().count() == 1"
+          }
+        ]
       },
       {
-        "id": "Extension:reason.extension:extension",
+        "id": "Extension:reason.extension:string",
         "path": "Extension.extension",
-        "sliceName": "extension",
-        "max": "0"
+        "sliceName": "string",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-string-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:reason.extension:codeableconcept",
+        "path": "Extension.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:reason.extension:content",
+        "path": "Extension.extension",
+        "sliceName": "content",
+        "definition": "A item that can constitute the payload of an Entry, aka an EntryElement.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Content-extension"
+          }
+        ]
       },
       {
         "id": "Extension:reason.url",
@@ -212,20 +454,8 @@
       {
         "id": "Extension:reason.value[x]",
         "path": "Extension.value[x]",
-        "min": 1,
-        "type": [
-          {
-            "code": "string"
-          },
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
-          }
-        ]
+        "min": 0,
+        "max": "0"
       }
     ]
   }
