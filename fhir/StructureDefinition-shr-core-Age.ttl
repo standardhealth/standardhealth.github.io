@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-Age"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Age Profile</b></p>\n  <p>How long something has existed (quantitative).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Age maps to Age:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Age Profile</b></p>\n  <p>How long something has existed in time.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Age maps to Age:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"];
   fhir:StructureDefinition.identifier [
@@ -21,17 +21,17 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Age Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.577Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-12"^^xsd:date];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.description [ fhir:value "How long something has existed (quantitative)."];
+  fhir:StructureDefinition.description [ fhir:value "How long something has existed in time."];
   fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
@@ -55,7 +55,7 @@
        fhir:Element.id [ fhir:value "Age:shr-core-Age" ];
        fhir:ElementDefinition.path [ fhir:value "Age" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Age Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "How long something has existed (quantitative)." ];
+       fhir:ElementDefinition.definition [ fhir:value "How long something has existed in time." ];
        fhir:ElementDefinition.comment [ fhir:value "The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
@@ -155,6 +155,28 @@
        ]
      ], [
        fhir:index 3;
+       fhir:Element.id [ fhir:value "Age:shr-core-Age.extension:comparator" ];
+       fhir:ElementDefinition.path [ fhir:value "Age.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "comparator" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "SHR Comparator Extension" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension" ]
+       ]
+     ], [
+       fhir:index 4;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.value" ];
        fhir:ElementDefinition.path [ fhir:value "Age.value" ];
        fhir:ElementDefinition.short [ fhir:value "Numerical value (with implicit precision)" ];
@@ -183,7 +205,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value" ]
        ]
      ], [
-       fhir:index 4;
+       fhir:index 5;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.comparator" ];
        fhir:ElementDefinition.path [ fhir:value "Age.comparator" ];
        fhir:ElementDefinition.short [ fhir:value "< | <= | >= | > - how to understand the value" ];
@@ -227,7 +249,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IVL properties" ]
        ]
      ], [
-       fhir:index 5;
+       fhir:index 6;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.unit" ];
        fhir:Element.extension [
          fhir:index 0;
@@ -260,7 +282,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "PQ.unit" ]
        ]
      ], [
-       fhir:index 6;
+       fhir:index 7;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.system" ];
        fhir:ElementDefinition.path [ fhir:value "Age.system" ];
        fhir:ElementDefinition.short [ fhir:value "System that defines coded unit form" ];
@@ -292,7 +314,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "CO.codeSystem, PQ.translation.codeSystem" ]
        ]
      ], [
-       fhir:index 7;
+       fhir:index 8;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.code" ];
        fhir:ElementDefinition.path [ fhir:value "Age.code" ];
        fhir:ElementDefinition.short [ fhir:value "Coded form of the unit" ];
@@ -328,13 +350,34 @@
        fhir:Element.id [ fhir:value "Age:shr-core-Age" ];
        fhir:ElementDefinition.path [ fhir:value "Age" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Age Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "How long something has existed (quantitative)." ]
+       fhir:ElementDefinition.definition [ fhir:value "How long something has existed in time." ]
      ], [
        fhir:index 1;
+       fhir:Element.id [ fhir:value "Age:shr-core-Age.extension:comparator" ];
+       fhir:ElementDefinition.path [ fhir:value "Age.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "comparator" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "SHR Comparator Extension" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension" ]
+       ]
+     ], [
+       fhir:index 2;
        fhir:Element.id [ fhir:value "Age:shr-core-Age.value" ];
        fhir:ElementDefinition.path [ fhir:value "Age.value" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ]
   ] .
 

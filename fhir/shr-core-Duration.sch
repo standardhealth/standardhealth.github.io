@@ -12,6 +12,7 @@
   <sch:pattern>
     <sch:title>f:Duration</sch:title>
     <sch:rule context="f:Duration">
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:value) &gt;= 1">value: minimum cardinality of 'value' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>

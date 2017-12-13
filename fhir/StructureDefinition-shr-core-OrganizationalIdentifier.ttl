@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-OrganizationalIdentifier"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR OrganizationalIdentifier Profile</b></p>\n  <p>Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.OrganizationalIdentifier maps to Identifier:\n  string maps to value\n  TimePeriod maps to period\n  Organization maps to assigner\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR OrganizationalIdentifier Profile</b></p>\n  <p>A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.OrganizationalIdentifier maps to Identifier:\n  string maps to value\n  Purpose maps to use\n  Type maps to type\n  CodeSystem maps to system \n  EffectiveTimePeriod maps to period\n  Issuer maps to assigner\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier"];
   fhir:StructureDefinition.identifier [
@@ -21,17 +21,17 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR OrganizationalIdentifier Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.625Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-12"^^xsd:date];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.description [ fhir:value "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period."];
+  fhir:StructureDefinition.description [ fhir:value "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided."];
   fhir:StructureDefinition.purpose [ fhir:value "Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation."];
   fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
@@ -61,7 +61,7 @@
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier" ];
        fhir:ElementDefinition.short [ fhir:value "SHR OrganizationalIdentifier Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period." ];
+       fhir:ElementDefinition.definition [ fhir:value "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.condition [
@@ -161,6 +161,50 @@
        ]
      ], [
        fhir:index 3;
+       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.extension:timeperiod" ];
+       fhir:ElementDefinition.path [ fhir:value "Identifier.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "timeperiod" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension" ]
+       ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.extension:organization" ];
+       fhir:ElementDefinition.path [ fhir:value "Identifier.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "organization" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "A social or legal structure formed by human beings." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension" ]
+       ]
+     ], [
+       fhir:index 5;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.use" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.use" ];
        fhir:ElementDefinition.short [ fhir:value "usual | official | temp | secondary (If known)" ];
@@ -198,7 +242,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.code or implied by context" ]
        ]
      ], [
-       fhir:index 4;
+       fhir:index 6;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.type" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.type" ];
        fhir:ElementDefinition.short [ fhir:value "Description of identifier" ];
@@ -239,7 +283,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.code or implied by context" ]
        ]
      ], [
-       fhir:index 5;
+       fhir:index 7;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.system" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.system" ];
        fhir:ElementDefinition.short [ fhir:value "The namespace for the identifier value" ];
@@ -271,7 +315,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "./IdentifierType" ]
        ]
      ], [
-       fhir:index 6;
+       fhir:index 8;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.value" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.value" ];
        fhir:ElementDefinition.short [ fhir:value "The value that is unique" ];
@@ -303,7 +347,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "./Value" ]
        ]
      ], [
-       fhir:index 7;
+       fhir:index 9;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.period" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.period" ];
        fhir:ElementDefinition.short [ fhir:value "Time period when id is/was valid for use" ];
@@ -312,8 +356,7 @@
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -330,7 +373,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "./StartDate and ./EndDate" ]
        ]
      ], [
-       fhir:index 8;
+       fhir:index 10;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.assigner" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.assigner" ];
        fhir:ElementDefinition.short [ fhir:value "Organization that issued id (may be just text)" ];
@@ -341,7 +384,7 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -365,30 +408,64 @@
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier" ];
        fhir:ElementDefinition.short [ fhir:value "SHR OrganizationalIdentifier Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period." ]
+       fhir:ElementDefinition.definition [ fhir:value "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided." ]
      ], [
        fhir:index 1;
-       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.value" ];
-       fhir:ElementDefinition.path [ fhir:value "Identifier.value" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.period" ];
-       fhir:ElementDefinition.path [ fhir:value "Identifier.period" ];
+       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.extension:timeperiod" ];
+       fhir:ElementDefinition.path [ fhir:value "Identifier.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "timeperiod" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.extension:organization" ];
+       fhir:ElementDefinition.path [ fhir:value "Identifier.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "organization" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "A social or legal structure formed by human beings." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension" ]
        ]
      ], [
        fhir:index 3;
+       fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.value" ];
+       fhir:ElementDefinition.path [ fhir:value "Identifier.value" ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
+     ], [
+       fhir:index 4;
        fhir:Element.id [ fhir:value "Identifier:shr-core-OrganizationalIdentifier.assigner" ];
        fhir:ElementDefinition.path [ fhir:value "Identifier.assigner" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization" ]
        ]
      ]
   ] .

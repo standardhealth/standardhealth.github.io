@@ -3,7 +3,7 @@
   "id": "shr-oncology-BreastCancer",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR BreastCancer Profile</b></p>\n  <p>A cancer originating in the tissues of the breast, and potentially spread to other organs of the body.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.BreastCancer maps to Condition:\n  Entry.Informant maps to asserter\n  Entry.OriginalCreationDate maps to assertedDate\n  SpecificType maps to code\n  Category maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource\n  Severity maps to severity\n  Stage maps to stage\n  Stage.CodeableConcept maps to stage.summary\n  Observation maps to evidence\n  Observation.SpecificType maps to evidence.code\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR BreastCancer Profile</b></p>\n  <p>Finding or diagnosis of cancer originating in the tissues of the breast, and potentially spread to other organs of the body.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.oncology.BreastCancer maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition:\n  RelatedEncounter maps to context\n  Informant maps to asserter\n  Subject maps to subject\n  Entry.CreationTime maps to assertedDate\n  CodeableConcept maps to code\n  Category maps to category\n  ClinicalStatus maps to clinicalStatus\n  Onset maps to onset[x]\n  Abatement maps to abatement[x]\n  BodySiteOrCode.CodeableConcept maps to bodySite   \n  BodySiteOrCode.BodySite maps to http://hl7.org/fhir/StructureDefinition/body-structure\n  Severity maps to severity\n  Stage maps to stage\n  Stage.CodeableConcept maps to stage.summary\n  Evidence maps to evidence\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-BreastCancer",
   "identifier": [
@@ -15,21 +15,37 @@
   "version": "0.0.1",
   "name": "SHR BreastCancer Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:34.036Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "A cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
+  "description": "Finding or diagnosis of cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US",
+          "display": "United States Minor Outlying Islands (the)"
+        }
+      ]
+    }
+  ],
   "fhirVersion": "3.0.1",
   "mapping": [
+    {
+      "identity": "argonaut-dq-dstu2",
+      "uri": "http://unknown.org/Argonaut DQ DSTU2",
+      "name": "Argonaut DQ DSTU2"
+    },
     {
       "identity": "sct-concept",
       "uri": "http://snomed.info/conceptdomain",
@@ -59,7 +75,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Condition",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -67,9 +83,14 @@
         "id": "Condition:shr-oncology-BreastCancer",
         "path": "Condition",
         "short": "SHR BreastCancer Profile",
-        "definition": "A cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
+        "definition": "Finding or diagnosis of cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition",
+          "min": 0,
+          "max": "*"
+        },
         "constraint": [
           {
             "key": "dom-2",
@@ -108,16 +129,32 @@
             "severity": "error",
             "human": "If condition is abated, then clinicalStatus must be either inactive, resolved, or remission",
             "expression": "abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive'",
-            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))"
+            "xpath": "not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), 'abatement')])) or f:clinicalStatus/@value=('resolved', 'remission', 'inactive'))",
+            "source": "Condition"
           },
           {
             "key": "con-3",
             "severity": "error",
             "human": "Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error",
             "expression": "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)",
+            "source": "Condition"
+          },
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice",
+                "valueBoolean": true
+              }
+            ],
+            "key": "us-core-1",
+            "severity": "warning",
+            "human": "A code in Condition.category SHOULD be from US Core Condition Category Codes value set.",
+            "expression": "where(category in 'http://hl7.org/fhir/us/core/ValueSet/us-core-condition-category').exists()",
+            "xpath": "(no xpath equivalent)"
           }
         ],
+        "mustSupport": false,
         "mapping": [
           {
             "identity": "rim",
@@ -138,6 +175,10 @@
           {
             "identity": "w5",
             "map": "clinical.general"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition"
           }
         ]
       },
@@ -311,7 +352,7 @@
         "id": "Condition:shr-oncology-BreastCancer.extension",
         "path": "Condition.extension",
         "slicing": {
-          "id": "308",
+          "id": "423",
           "discriminator": [
             {
               "type": "value",
@@ -348,74 +389,72 @@
         ]
       },
       {
-        "id": "Condition:shr-oncology-BreastCancer.extension:codeableconcept",
+        "id": "Condition:shr-oncology-BreastCancer.extension:bodysite",
         "path": "Condition.extension",
-        "sliceName": "codeableconcept",
-        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
+        "sliceName": "bodysite",
+        "definition": "A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.",
+        "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/oncology/vs/BreastCancerTypeVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://hl7.org/fhir/StructureDefinition/body-structure"
           }
         ]
       },
       {
-        "id": "Condition:shr-oncology-BreastCancer.extension:includeonproblemlist",
+        "id": "Condition:shr-oncology-BreastCancer.extension:author",
         "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
-        "definition": "Whether or not to include this condition on the subject's current problem list.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:focalsubject",
+        "path": "Condition.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
           {
-            "identity": "rim",
-            "map": "N/A"
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:findingmethod",
+        "path": "Condition.extension",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:findingstatus",
+        "path": "Condition.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
           }
         ]
       },
@@ -424,31 +463,12 @@
         "path": "Condition.extension",
         "sliceName": "whenclinicallyrecognized",
         "definition": "The time at which a condition or condition was first identified in a healthcare context.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -457,31 +477,12 @@
         "path": "Condition.extension",
         "sliceName": "preexisting",
         "definition": "If the problem or condition existed before the current episode of care.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -490,27 +491,113 @@
         "path": "Condition.extension",
         "sliceName": "criticality",
         "definition": "The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"
           }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:criticality.id",
+        "path": "Condition.extension.id",
+        "representation": [
+          "xmlAttr"
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:criticality.extension:extension",
+        "path": "Condition.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:criticality.url",
+        "path": "Condition.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:criticality.valueCode",
+        "path": "Condition.extension.valueCode",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"
+          }
+        },
         "mapping": [
           {
             "identity": "rim",
@@ -556,6 +643,11 @@
         "requirements": "Need to allow connection to a wider workflow.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.identifier",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Identifier"
@@ -581,6 +673,11 @@
         "comment": "This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.clinicalStatus",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -590,17 +687,11 @@
           "con-3",
           "con-4"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionClinicalStatus"
-            }
-          ],
           "strength": "required",
-          "description": "The clinical status of the condition or diagnosis.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/condition-clinical"
           }
@@ -621,6 +712,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.clinicalStatus"
           }
         ]
       },
@@ -630,8 +725,13 @@
         "short": "provisional | differential | confirmed | refuted | entered-in-error | unknown",
         "definition": "The verification status to support the clinical status of the condition.",
         "comment": "verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.\n\nThis element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid.",
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.verificationStatus",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -641,17 +741,11 @@
         "condition": [
           "con-3"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ConditionVerificationStatus"
-            }
-          ],
           "strength": "required",
-          "description": "The verification status to support or decline the clinical status of the condition or diagnosis.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/condition-ver-status"
           }
@@ -676,6 +770,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.verificationStatus"
           }
         ]
       },
@@ -683,7 +781,7 @@
         "id": "Condition:shr-oncology-BreastCancer.category",
         "path": "Condition.category",
         "slicing": {
-          "id": "307",
+          "id": "422",
           "discriminator": [
             {
               "type": "value",
@@ -696,14 +794,19 @@
         "short": "problem-list-item | encounter-diagnosis",
         "definition": "A category assigned to the condition.",
         "comment": "The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts.",
-        "min": 0,
+        "min": 1,
         "max": "*",
+        "base": {
+          "path": "Condition.category",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "binding": {
           "strength": "required",
           "valueSetReference": {
@@ -726,29 +829,403 @@
           {
             "identity": "w5",
             "map": "class"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.category"
           }
         ]
       },
       {
-        "id": "Condition:shr-oncology-BreastCancer.category:disease",
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease",
         "path": "Condition.category",
-        "sliceName": "disease",
+        "sliceName": "Includes_disease",
+        "definition": "A category assigned to the condition.",
         "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.id",
+        "path": "Condition.category.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
           }
         ],
-        "fixedCodeableConcept": {
-          "coding": [
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.extension",
+        "path": "Condition.category.extension",
+        "slicing": {
+          "discriminator": [
             {
-              "system": "http://standardhealthrecord.org/shr/condition/cs/ConditionCategoryCS",
-              "code": "disease"
+              "type": "value",
+              "path": "url"
             }
-          ]
-        }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding",
+        "path": "Condition.category.coding",
+        "slicing": {
+          "id": "421",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "path"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Code defined by a terminology system",
+        "definition": "A reference to a code defined by a terminology system.",
+        "comment": "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.",
+        "requirements": "Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.1-8, C*E.10-22"
+          },
+          {
+            "identity": "rim",
+            "map": "union(., ./translation)"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease",
+        "path": "Condition.category.coding",
+        "sliceName": "Fixed_disease",
+        "definition": "A reference to a code defined by a terminology system.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.id",
+        "path": "Condition.category.coding.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.extension",
+        "path": "Condition.category.coding.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.system",
+        "path": "Condition.category.coding.system",
+        "short": "Identity of the terminology system",
+        "definition": "The identification of the code system that defines the meaning of the symbol in the code.",
+        "comment": "The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously.",
+        "requirements": "Need to be unambiguous about the source of the definition of the symbol.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/shr/condition/cs/ConditionCategoryCS",
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.3"
+          },
+          {
+            "identity": "rim",
+            "map": "./codeSystem"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.version",
+        "path": "Condition.category.coding.version",
+        "short": "Version of the system - if relevant",
+        "definition": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+        "comment": "Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.7"
+          },
+          {
+            "identity": "rim",
+            "map": "./codeSystemVersion"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.code",
+        "path": "Condition.category.coding.code",
+        "short": "Symbol in syntax defined by the system",
+        "definition": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+        "requirements": "Need to refer to a particular code in the system.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "fixedCode": "disease",
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.1"
+          },
+          {
+            "identity": "rim",
+            "map": "./code"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.category.coding.display",
+        "short": "Representation defined by the system",
+        "definition": "A representation of the meaning of the code in the system, following the rules of the system.",
+        "requirements": "Need to be able to carry a human-readable meaning of the code for readers that do not know  the system.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.2 - but note this is not well followed"
+          },
+          {
+            "identity": "rim",
+            "map": "CV.displayName"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.userSelected",
+        "path": "Condition.category.coding.userSelected",
+        "short": "If this coding was chosen directly by the user",
+        "definition": "Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays).",
+        "comment": "Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely.",
+        "requirements": "This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "Sometimes implied by being first"
+          },
+          {
+            "identity": "rim",
+            "map": "CD.codingRationale"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\\#true a [     fhir:source \"true\";     fhir:target dt:CDCoding.codingRationale\\#O   ]"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.text",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Condition.category.text",
+        "short": "Plain text representation of the concept",
+        "definition": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user.",
+        "comment": "Very often the text is the same as a displayName of one of the codings.",
+        "requirements": "The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.9. But note many systems use C*E.2 for this"
+          },
+          {
+            "identity": "rim",
+            "map": "./originalText[mediaType/code=\"text/plain\"]/data"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"
+          }
+        ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.severity",
@@ -758,10 +1235,14 @@
         "comment": "Coding of the severity with a terminology is preferred, where possible.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.severity",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "binding": {
@@ -811,17 +1292,22 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.code",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/oncology/vs/BreastCancerTypeVS"
           }
         },
         "mapping": [
@@ -844,6 +1330,10 @@
           {
             "identity": "w5",
             "map": "what"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.code"
           }
         ]
       },
@@ -854,11 +1344,15 @@
         "definition": "The anatomical location where this condition manifests itself.",
         "comment": "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [body-site-instance](extension-body-site-instance.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
         "min": 0,
-        "max": "1",
+        "max": "*",
+        "base": {
+          "path": "Condition.bodySite",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "isSummary": true,
@@ -894,16 +1388,18 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.subject",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -917,6 +1413,10 @@
           {
             "identity": "w5",
             "map": "who.focus"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Condition.patient"
           }
         ]
       },
@@ -931,14 +1431,15 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.context",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
           }
         ],
         "isSummary": true,
@@ -965,21 +1466,21 @@
         "comment": "Age is generally used when the patient reports an age at which the Condition began to occur.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.onset[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ],
         "isSummary": true,
@@ -1006,21 +1507,21 @@
         "comment": "There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.abatement[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ],
         "condition": [
@@ -1045,6 +1546,11 @@
         "comment": "The assertedDate represents the date when this particular Condition record was created in the EHR, not the date of the most recent update in terms of when severity, abatement, etc. were specified.  The date of the last record modification can be retrieved from the resource metadata.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Condition.assertedDate",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -1073,18 +1579,19 @@
         "definition": "Individual who is making the condition statement.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.asserter",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ],
         "isSummary": true,
@@ -1110,6 +1617,11 @@
         "definition": "Clinical stage or grade of a condition. May include formal severity assessments.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.stage",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1234,10 +1746,14 @@
         "definition": "A simple summary of the stage such as \"Stage 3\". The determination of the stage is disease-specific.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Condition.stage.summary",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -1271,6 +1787,11 @@
         "definition": "Reference to a formal record of the evidence on which the staging assessment is based.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.stage.assessment",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1303,6 +1824,11 @@
         "comment": "The evidence may be a simple list of coded symptoms/manifestations, or references to observations or formal assessments, or both.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1427,10 +1953,14 @@
         "definition": "A manifestation or symptom that led to the recording of this condition.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence.code",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -1438,9 +1968,16 @@
         ],
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ManifestationOrSymptom"
+            }
+          ],
+          "strength": "example",
+          "description": "Codes that describe the manifestation or symptoms of a condition.",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://hl7.org/fhir/ValueSet/manifestation-or-symptom"
           }
         },
         "mapping": [
@@ -1465,6 +2002,11 @@
         "definition": "Links to other relevant information, including pathology reports.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.evidence.detail",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1493,6 +2035,11 @@
         "definition": "Additional information about the Condition. This is a general notes/comments entry  for description of the Condition, its diagnosis and prognosis.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Condition.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Annotation"
@@ -1517,50 +2064,84 @@
         "id": "Condition:shr-oncology-BreastCancer",
         "path": "Condition",
         "short": "SHR BreastCancer Profile",
-        "definition": "A cancer originating in the tissues of the breast, and potentially spread to other organs of the body."
+        "definition": "Finding or diagnosis of cancer originating in the tissues of the breast, and potentially spread to other organs of the body.",
+        "mustSupport": false
       },
       {
-        "id": "Condition:shr-oncology-BreastCancer.extension:codeableconcept",
+        "id": "Condition:shr-oncology-BreastCancer.extension:bodysite",
         "path": "Condition.extension",
-        "sliceName": "codeableconcept",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/oncology/vs/BreastCancerTypeVS"
-          }
-        }
-      },
-      {
-        "id": "Condition:shr-oncology-BreastCancer.extension:includeonproblemlist",
-        "path": "Condition.extension",
-        "sliceName": "includeonproblemlist",
+        "sliceName": "bodysite",
+        "definition": "A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"
+            "profile": "http://hl7.org/fhir/StructureDefinition/body-structure"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:author",
+        "path": "Condition.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:focalsubject",
+        "path": "Condition.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:findingmethod",
+        "path": "Condition.extension",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:findingstatus",
+        "path": "Condition.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
+          }
+        ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.extension:whenclinicallyrecognized",
         "path": "Condition.extension",
         "sliceName": "whenclinicallyrecognized",
+        "definition": "The time at which a condition or condition was first identified in a healthcare context.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1568,15 +2149,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.extension:preexisting",
         "path": "Condition.extension",
         "sliceName": "preexisting",
+        "definition": "If the problem or condition existed before the current episode of care.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1584,15 +2163,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.extension:criticality",
         "path": "Condition.extension",
         "sliceName": "criticality",
+        "definition": "The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1600,22 +2177,28 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.extension:criticality.valueCode",
+        "path": "Condition.extension.valueCode",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"
+          }
+        }
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.clinicalStatus",
         "path": "Condition.clinicalStatus",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.category",
         "path": "Condition.category",
         "slicing": {
-          "id": "307",
+          "id": "422",
           "discriminator": [
             {
               "type": "value",
@@ -1625,12 +2208,6 @@
           "ordered": false,
           "rules": "open"
         },
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
@@ -1639,35 +2216,60 @@
         }
       },
       {
-        "id": "Condition:shr-oncology-BreastCancer.category:disease",
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease",
         "path": "Condition.category",
-        "sliceName": "disease",
+        "sliceName": "Includes_disease",
+        "definition": "A category assigned to the condition.",
         "min": 1,
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding",
+        "path": "Condition.category.coding",
+        "slicing": {
+          "id": "421",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "path"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease",
+        "path": "Condition.category.coding",
+        "sliceName": "Fixed_disease",
+        "definition": "A reference to a code defined by a terminology system.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
           }
         ],
-        "fixedCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://standardhealthrecord.org/shr/condition/cs/ConditionCategoryCS",
-              "code": "disease"
-            }
-          ]
-        }
+        "isSummary": true
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.system",
+        "path": "Condition.category.coding.system",
+        "fixedUri": "http://standardhealthrecord.org/shr/condition/cs/ConditionCategoryCS"
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.category:Includes_disease.coding:Fixed_disease.code",
+        "path": "Condition.category.coding.code",
+        "fixedCode": "disease"
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.severity",
         "path": "Condition.severity",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "extension": [
             {
@@ -1685,38 +2287,42 @@
       {
         "id": "Condition:shr-oncology-BreastCancer.code",
         "path": "Condition.code",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
-          "strength": "preferred",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/oncology/vs/BreastCancerTypeVS"
           }
         }
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.bodySite",
         "path": "Condition.bodySite",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         }
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.subject",
+        "path": "Condition.subject",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
+          }
+        ]
+      },
+      {
+        "id": "Condition:shr-oncology-BreastCancer.context",
+        "path": "Condition.context",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
+          }
+        ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.onset[x]",
@@ -1727,15 +2333,10 @@
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ]
       },
@@ -1748,23 +2349,17 @@
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ]
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.assertedDate",
         "path": "Condition.assertedDate",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "Condition:shr-oncology-BreastCancer.asserter",
@@ -1772,15 +2367,11 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ]
       },
@@ -1791,36 +2382,10 @@
       {
         "id": "Condition:shr-oncology-BreastCancer.stage.summary",
         "path": "Condition.stage.summary",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
             "reference": "urn:oid:2.16.840.1.113883.11.20.11.12"
-          }
-        }
-      },
-      {
-        "id": "Condition:shr-oncology-BreastCancer.evidence",
-        "path": "Condition.evidence"
-      },
-      {
-        "id": "Condition:shr-oncology-BreastCancer.evidence.code",
-        "path": "Condition.evidence.code",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
           }
         }
       }

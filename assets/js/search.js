@@ -463,7 +463,7 @@ var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var VERSION = '4.0.10';
+var VERSION = '4.0.11';
 exports.VERSION = VERSION;
 var COMPILER_REVISION = 7;
 

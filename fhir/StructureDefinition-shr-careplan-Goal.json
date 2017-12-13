@@ -3,7 +3,7 @@
   "id": "shr-careplan-Goal",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Goal Profile</b></p>\n  <p>A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.careplan.Goal maps to Goal:\n  Entry.FocalSubject maps to subject\n  Entry.Informant maps to expressedBy\n  SpecificType maps to description\n  Status maps to status\n  Category maps to category\n  Reason.Condition maps to addresses\n  OccurrenceTime.date maps to start[x].date\n  OccurrenceTime.TimePeriod.TimePeriodStart.date maps to start[x].date\n  RequestedPerformanceTime.TimePeriod.TimePeriodEnd.date maps to target.due[x].date\n  ResultAchieved.CodeableConcept maps to outcomeCode\n  Annotation maps to note\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Goal Profile</b></p>\n  <p>A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.careplan.Goal maps to Basic:\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-Goal",
   "identifier": [
@@ -15,26 +15,22 @@
   "version": "0.0.1",
   "name": "SHR Goal Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:31.204Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
+  "description": "A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
+  "purpose": "Need some way to safely (without breaking interoperability) allow implementers to exchange content not supported by the initial set of declared resources.",
   "fhirVersion": "3.0.1",
   "mapping": [
-    {
-      "identity": "v2",
-      "uri": "http://hl7.org/v2",
-      "name": "HL7 v2 Mapping"
-    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -48,17 +44,21 @@
   ],
   "kind": "resource",
   "abstract": false,
-  "type": "Goal",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Goal",
+  "type": "Basic",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Basic",
   "derivation": "constraint",
   "snapshot": {
     "element": [
       {
-        "id": "Goal:shr-careplan-Goal",
-        "path": "Goal",
+        "id": "Basic:shr-careplan-Goal",
+        "path": "Basic",
         "short": "SHR Goal Profile",
-        "definition": "A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
-        "comment": "Goal can be achieving a particular change or merely maintaining a current state or even slowing a decline.",
+        "definition": "A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
+        "alias": [
+          "Z-resource",
+          "Extension-resource",
+          "Custom-resource"
+        ],
         "min": 0,
         "max": "*",
         "constraint": [
@@ -101,22 +101,18 @@
             "map": "Entity. Role, or Act"
           },
           {
-            "identity": "v2",
-            "map": "GOL.1"
-          },
-          {
             "identity": "rim",
-            "map": ".outboundRelationship[typeCode<=OBJ]."
+            "map": "Act, Entity or Role"
           },
           {
             "identity": "w5",
-            "map": "clinical.careprovision"
+            "map": "infrastructure.structure"
           }
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.id",
-        "path": "Goal.id",
+        "id": "Basic:shr-careplan-Goal.id",
+        "path": "Basic.id",
         "short": "Logical id of this artifact",
         "definition": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.",
         "comment": "The only time that a resource does not have an id is when it is being submitted to the server using a create operation.",
@@ -135,8 +131,8 @@
         "isSummary": true
       },
       {
-        "id": "Goal:shr-careplan-Goal.meta",
-        "path": "Goal.meta",
+        "id": "Basic:shr-careplan-Goal.meta",
+        "path": "Basic.meta",
         "short": "Metadata about the resource",
         "definition": "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource.",
         "min": 0,
@@ -154,8 +150,8 @@
         "isSummary": true
       },
       {
-        "id": "Goal:shr-careplan-Goal.implicitRules",
-        "path": "Goal.implicitRules",
+        "id": "Basic:shr-careplan-Goal.implicitRules",
+        "path": "Basic.implicitRules",
         "short": "A set of rules under which this content was created",
         "definition": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content.",
         "comment": "Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. \n\nThis element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation.",
@@ -175,8 +171,8 @@
         "isSummary": true
       },
       {
-        "id": "Goal:shr-careplan-Goal.language",
-        "path": "Goal.language",
+        "id": "Basic:shr-careplan-Goal.language",
+        "path": "Basic.language",
         "short": "Language of the resource content",
         "definition": "The base language in which the resource is written.",
         "comment": "Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).",
@@ -217,8 +213,8 @@
         }
       },
       {
-        "id": "Goal:shr-careplan-Goal.text",
-        "path": "Goal.text",
+        "id": "Basic:shr-careplan-Goal.text",
+        "path": "Basic.text",
         "short": "Text summary of the resource, for human interpretation",
         "definition": "A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.",
         "comment": "Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a \"text blob\" or where text is additionally entered raw or narrated and encoded in formation is added later.",
@@ -251,8 +247,8 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.contained",
-        "path": "Goal.contained",
+        "id": "Basic:shr-careplan-Goal.contained",
+        "path": "Basic.contained",
         "short": "Contained, inline Resources",
         "definition": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.",
         "comment": "This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again.",
@@ -281,10 +277,10 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension",
-        "path": "Goal.extension",
+        "id": "Basic:shr-careplan-Goal.extension",
+        "path": "Basic.extension",
         "slicing": {
-          "id": "239",
+          "id": "361",
           "discriminator": [
             {
               "type": "value",
@@ -321,64 +317,151 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:participant",
-        "path": "Goal.extension",
-        "sliceName": "participant",
-        "definition": "A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "id": "Basic:shr-careplan-Goal.extension:relatedencounter",
+        "path": "Basic.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
         "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
+        "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
           }
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:title",
-        "path": "Goal.extension",
-        "sliceName": "title",
-        "definition": "A distinguishing word or group of words naming an item.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "id": "Basic:shr-careplan-Goal.extension:author",
+        "path": "Basic.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:informant",
+        "path": "Basic.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:type",
+        "path": "Basic.extension",
+        "sliceName": "type",
+        "definition": "The most specific code (lowest level term) describing the kind or sort of thing being represented.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Type-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:subject",
+        "path": "Basic.extension",
+        "sliceName": "subject",
+        "definition": "The person or thing that this entry relates to, usually the Person of Record. However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, finding, condition, or intervention.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Subject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:title",
+        "path": "Basic.extension",
+        "sliceName": "title",
+        "definition": "A distinguishing word or group of words naming an item.",
+        "min": 0,
+        "max": "1",
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Title-extension"
           }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:details",
+        "path": "Basic.extension",
+        "sliceName": "details",
+        "definition": "An text note containing additional details, explanation, description, comment, or summarization. Details can discuss, support, explain changes to, or dispute information.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Details-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:reason",
+        "path": "Basic.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:category",
+        "path": "Basic.extension",
+        "sliceName": "category",
+        "definition": "A class or division of people or things having particular shared characteristics",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Category-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:category.id",
+        "path": "Basic.extension.id",
+        "representation": [
+          "xmlAttr"
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
         "mapping": [
           {
             "identity": "rim",
@@ -387,31 +470,46 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:objective",
-        "path": "Goal.extension",
-        "sliceName": "objective",
-        "definition": "Describes the  of an expected or desired achievement that is well-defined, specific, measurable, and derived from one or more goals. There are similarities with Observation, since an objective can sometimes be interpreted as a yet-to-be-made, future observation with a certain target result. ",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "id": "Basic:shr-careplan-Goal.extension:category.extension:extension",
+        "path": "Basic.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
         "min": 0,
-        "max": "*",
+        "max": "0",
         "base": {
-          "path": "DomainResource.extension",
+          "path": "Element.extension",
           "min": 0,
           "max": "*"
         },
         "type": [
           {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-Objective-extension"
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:category.url",
+        "path": "Basic.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
           }
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Category-extension",
         "mapping": [
           {
             "identity": "rim",
@@ -420,19 +518,247 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.modifierExtension",
-        "path": "Goal.modifierExtension",
-        "slicing": {
-          "id": "240",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
+        "id": "Basic:shr-careplan-Goal.extension:category.valueCodeableConcept",
+        "path": "Basic.extension.valueCodeableConcept",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
         },
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "extensible",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/goal-category"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:expectedperformancetime",
+        "path": "Basic.extension",
+        "sliceName": "expectedperformancetime",
+        "definition": "When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-ExpectedPerformanceTime-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:occurrencetimeorperiod",
+        "path": "Basic.extension",
+        "sliceName": "occurrencetimeorperiod",
+        "definition": "The point in time or span of time in which something happens.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTimeOrPeriod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status",
+        "path": "Basic.extension",
+        "sliceName": "status",
+        "definition": "Position in workflow.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-Status-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status.id",
+        "path": "Basic.extension.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status.extension:extension",
+        "path": "Basic.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status.url",
+        "path": "Basic.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-Status-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status.value[x]",
+        "path": "Basic.extension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "code"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/goal-status"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:annotation",
+        "path": "Basic.extension",
+        "sliceName": "annotation",
+        "definition": "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:plannedactivities",
+        "path": "Basic.extension",
+        "sliceName": "plannedactivities",
+        "definition": "Activites planned for this goal",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-PlannedActivities-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:actualactivities",
+        "path": "Basic.extension",
+        "sliceName": "actualactivities",
+        "definition": "Activites carried out for this goal",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-ActualActivities-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:goal",
+        "path": "Basic.extension",
+        "sliceName": "goal",
+        "definition": "A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-Goal-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.modifierExtension",
+        "path": "Basic.modifierExtension",
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -461,44 +787,10 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.modifierExtension:nonoccurrencemodifier",
-        "path": "Goal.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
-        "definition": "When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.\nWhen applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.identifier",
-        "path": "Goal.identifier",
-        "short": "External Ids for this goal",
-        "definition": "This records identifiers associated with this care plan that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).",
-        "requirements": "Need to allow connection to a wider workflow.",
+        "id": "Basic:shr-careplan-Goal.identifier",
+        "path": "Basic.identifier",
+        "short": "Business identifier",
+        "definition": "Identifier assigned to the resource for business purposes, outside the context of FHIR.",
         "min": 0,
         "max": "*",
         "type": [
@@ -506,10 +798,11 @@
             "code": "Identifier"
           }
         ],
+        "isSummary": true,
         "mapping": [
           {
             "identity": "rim",
-            "map": ".id"
+            "map": "./identifier"
           },
           {
             "identity": "w5",
@@ -518,153 +811,46 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.status",
-        "path": "Goal.status",
-        "short": "proposed | accepted | planned | in-progress | on-target | ahead-of-target | behind-target | sustaining | achieved | on-hold | cancelled | entered-in-error | rejected",
-        "definition": "Indicates whether the goal has been reached and is still considered relevant.",
-        "comment": "This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.",
-        "requirements": "Allows measuring outcome and whether goal needs to be further tracked.",
+        "id": "Basic:shr-careplan-Goal.code",
+        "path": "Basic.code",
+        "short": "Kind of Resource",
+        "definition": "Identifies the 'type' of resource - equivalent to the resource name for other resources.",
+        "comment": "Because resource references will only be able to indicate 'Basic', the type of reference will need to be specified in a Profile identified as part of the resource.  Refer to the resource notes section for information on appropriate terminologies for this code.\n\nThis element is labeled as a modifier because the it defines the meaning of the resource and cannot be ignored.",
+        "requirements": "Must be able to distinguish different types of Basic resources.",
         "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "code"
-          }
-        ],
-        "isModifier": true,
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalStatus"
-            }
-          ],
-          "strength": "required",
-          "description": "Indicates whether the goal has been met and is still being targeted",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/goal-status"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "GOL-18-goal life cycle status"
-          },
-          {
-            "identity": "rim",
-            "map": ".statusCode in-progress = active (classCode = OBJ) achieved = complete sustaining = active (classCode=OBJC) cancelled = aborted"
-          },
-          {
-            "identity": "w5",
-            "map": "status"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.category",
-        "path": "Goal.category",
-        "short": "E.g. Treatment, dietary, behavioral, etc.",
-        "definition": "Indicates a category the goal falls within.",
-        "requirements": "Allows goals to be filtered and sorted.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalCategory"
-            }
-          ],
-          "strength": "extensible",
-          "description": "Codes for grouping and sorting goals",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/goal-category"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "w5",
-            "map": "class"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.priority",
-        "path": "Goal.priority",
-        "short": "high-priority | medium-priority | low-priority",
-        "definition": "Identifies the mutually agreed level of importance associated with reaching/sustaining the goal.",
-        "comment": "Extensions are available to track priorities as established by each participant (i.e. Priority from the patient's perspective, different practitioners' perspectives, family member's perspectives)\r\rThe ordinal extension on Coding can be used to convey a numerically comparable ranking to priority.  (Keep in mind that different coding systems may use a \"low value=important\".",
-        "requirements": "Used for sorting and presenting goals.",
-        "min": 0,
         "max": "1",
         "type": [
           {
             "code": "CodeableConcept"
           }
         ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://standardhealthrecord.org/fhir/basic-resource-type",
+              "code": "shr-careplan-Goal"
+            }
+          ]
+        },
+        "isModifier": true,
         "isSummary": true,
         "binding": {
           "extension": [
             {
               "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalPriority"
+              "valueString": "BasicResourceType"
             }
           ],
-          "strength": "preferred",
-          "description": "The level of importance associated with a goal",
+          "strength": "example",
+          "description": "Codes for identifying types of resources not yet defined by FHIR",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/goal-priority"
+            "reference": "http://hl7.org/fhir/ValueSet/basic-resource-type"
           }
         },
         "mapping": [
           {
             "identity": "rim",
-            "map": ".priorityCode"
-          },
-          {
-            "identity": "w5",
-            "map": "grade"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.description",
-        "path": "Goal.description",
-        "short": "Code or text describing goal",
-        "definition": "Human-readable and/or coded description of a specific desired objective of care, such as \"control blood pressure\" or \"negotiate an obstacle course\" or \"dance with child at wedding\".",
-        "comment": "If no code is available, use CodeableConcept.text.",
-        "requirements": "Without a description of what's trying to be achieved, element has no purpose.",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "isSummary": true,
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "GOL-3.2-goal ID.text"
-          },
-          {
-            "identity": "rim",
-            "map": ".text"
+            "map": "./code"
           },
           {
             "identity": "w5",
@@ -673,28 +859,25 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.subject",
-        "path": "Goal.subject",
-        "short": "Who this goal is intended for",
-        "definition": "Identifies the patient, group or organization for whom the goal is being established.",
-        "requirements": "Subject is optional to support annonymized reporting.",
-        "min": 1,
+        "id": "Basic:shr-careplan-Goal.subject",
+        "path": "Basic.subject",
+        "short": "Identifies the focus of this resource",
+        "definition": "Identifies the patient, practitioner, device or any other resource that is the \"focus\" of this resource.",
+        "comment": "Optional as not all potential resources will have subjects.  Resources associated with multiple subjects can handle this via extension.",
+        "requirements": "Needed for partitioning the resource by Patient.",
+        "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Resource"
           }
         ],
         "isSummary": true,
         "mapping": [
           {
-            "identity": "v2",
-            "map": "PID-3-patient ID list"
-          },
-          {
             "identity": "rim",
-            "map": ".participation[typeCode=PAT].role[classCode=PAT]"
+            "map": "./participation[typeCode='SBJ'] (possibly through a ControlAct and Role)"
           },
           {
             "identity": "w5",
@@ -703,230 +886,11 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.start[x]",
-        "path": "Goal.start[x]",
-        "short": "When goal pursuit begins",
-        "definition": "The date or event after which the goal should begin being pursued.",
-        "requirements": "Goals can be established prior to there being an intention to start pursuing them; e.g. Goals for post-surgical recovery established prior to surgery.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "date"
-          }
-        ],
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalStartEvent"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes describing events that can trigger the initiation of a goal",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/goal-start-event"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "w5",
-            "map": "when.planned"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target",
-        "path": "Goal.target",
-        "short": "Target outcome for the goal",
-        "definition": "Indicates what should be done by when.",
-        "requirements": "Allows the progress of the goal to be monitored against an observation or due date.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "BackboneElement"
-          }
-        ],
-        "condition": [
-          "gol-1"
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() | (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "Element"
-          },
-          {
-            "key": "gol-1",
-            "severity": "error",
-            "human": "Goal.target.measure is required if Goal.target.detail is populated",
-            "expression": "(detail.exists() and measure.exists()) or detail.exists().not()",
-            "xpath": "(exists(f:*[starts-with(local-name(.), 'detail')]) and exists(f:measure)) or not(exists(f:*[starts-with(local-name(.), 'detail')]))"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.id",
-        "path": "Goal.target.id",
-        "representation": [
-          "xmlAttr"
-        ],
-        "short": "xml:id (or equivalent in JSON)",
-        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
-        "min": 0,
-        "max": "1",
-        "base": {
-          "path": "Element.id",
-          "min": 0,
-          "max": "1"
-        },
-        "type": [
-          {
-            "code": "string"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.extension",
-        "path": "Goal.target.extension",
-        "short": "Additional Content defined by implementations",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "Element.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.modifierExtension",
-        "path": "Goal.target.modifierExtension",
-        "short": "Extensions that cannot be ignored",
-        "definition": "May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content",
-          "modifiers"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "BackboneElement.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension"
-          }
-        ],
-        "isModifier": true,
-        "isSummary": true,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.measure",
-        "path": "Goal.target.measure",
-        "short": "The parameter whose value is being tracked",
-        "definition": "The parameter whose value is being tracked, e.g. body weight, blood pressure, or hemoglobin A1c level.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept"
-          }
-        ],
-        "condition": [
-          "gol-1"
-        ],
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalTargetMeasure"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes to identify the value being tracked, e.g. body weight, blood pressure, or hemoglobin A1c level.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/observation-codes"
-          }
-        }
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.detail[x]",
-        "path": "Goal.target.detail[x]",
-        "short": "The target value to be achieved",
-        "definition": "The target value of the focus to be achieved to signify the fulfillment of the goal, e.g. 150 pounds, 7.0%. Either the high or low or both values of the range can be specified. When a low value is missing, it indicates that the goal is achieved at any focus value at or below the high value. Similarly, if the high value is missing, it indicates that the goal is achieved at any focus value at or above the low value.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Quantity"
-          },
-          {
-            "code": "Range"
-          },
-          {
-            "code": "CodeableConcept"
-          }
-        ],
-        "condition": [
-          "gol-1"
-        ],
-        "isSummary": true,
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalTargetDetail"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes to identify the target value of the focus to be achieved to signify the fulfillment of the goal."
-        }
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.due[x]",
-        "path": "Goal.target.due[x]",
-        "short": "Reach goal on or before",
-        "definition": "Indicates either the date or the duration after start by which the goal should be met.",
-        "requirements": "Identifies when the goal should be evaluated.",
+        "id": "Basic:shr-careplan-Goal.created",
+        "path": "Basic.created",
+        "short": "When created",
+        "definition": "Identifies when the resource was first created.",
+        "requirements": "Allows ordering resource instances by time.",
         "min": 0,
         "max": "1",
         "type": [
@@ -937,26 +901,9 @@
         "isSummary": true,
         "mapping": [
           {
-            "identity": "w5",
-            "map": "when.done"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.statusDate",
-        "path": "Goal.statusDate",
-        "short": "When goal status took effect",
-        "definition": "Identifies when the current status.  I.e. When initially created, when achieved, when cancelled, etc.",
-        "comment": "To see the date for past statuses, query history.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "date"
-          }
-        ],
-        "isSummary": true,
-        "mapping": [
+            "identity": "rim",
+            "map": "./participation[typeCode='AUT']/time (possibly through a ControlAct and Role)"
+          },
           {
             "identity": "w5",
             "map": "when.recorded"
@@ -964,142 +911,36 @@
         ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.statusReason",
-        "path": "Goal.statusReason",
-        "short": "Reason for current status",
-        "definition": "Captures the reason for the current status.",
-        "comment": "This will typically be captured for statuses such as rejected, on-hold or cancelled, but could be present for others.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "string"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.expressedBy",
-        "path": "Goal.expressedBy",
-        "short": "Who's responsible for creating Goal?",
-        "definition": "Indicates whose goal this is - patient goal, practitioner goal, etc.",
-        "comment": "This is the individual reponsible for establishing the goal, not necessarily who recorded it.  (For that, use the Provenance resource.).",
+        "id": "Basic:shr-careplan-Goal.author",
+        "path": "Basic.author",
+        "short": "Who created",
+        "definition": "Indicates who was responsible for creating the resource instance.",
+        "requirements": "Needed for partitioning the resource.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
           }
         ],
         "isSummary": true,
         "mapping": [
           {
-            "identity": "w5",
-            "map": "who.source"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.addresses",
-        "path": "Goal.addresses",
-        "short": "Issues addressed by this goal",
-        "definition": "The identified conditions and other health record elements that are intended to be addressed by the goal.",
-        "requirements": "Allows specific goals to explicitly linked to the concerns they're dealing with - makes the goal more understandable.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
-          }
-        ],
-        "mapping": [
-          {
             "identity": "rim",
-            "map": ".outboundRelationship[typeCode=SUBJ].target[classCode=CONC]"
+            "map": "./participation[typeCode='SUB'] (possibly through a ControlAct and Role)"
           },
           {
             "identity": "w5",
-            "map": "why"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.note",
-        "path": "Goal.note",
-        "short": "Comments about the goal",
-        "definition": "Any comments related to the goal.",
-        "comment": "May be used for progress notes, concerns or other related information that doesn't actually describe the goal itself.",
-        "requirements": "There's a need to capture information about the goal that doesn't actually describe the goal.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Annotation",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"
-          }
-        ],
-        "mapping": [
-          {
-            "identity": "v2",
-            "map": "GOL-16-goal evaluation + NTE?"
-          },
-          {
-            "identity": "rim",
-            "map": ".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=\"annotation\"].value"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.outcomeCode",
-        "path": "Goal.outcomeCode",
-        "short": "What result was achieved regarding the goal?",
-        "definition": "Identifies the change (or lack of change) at the point when the status of the goal is assessed.",
-        "comment": "Note that this should not duplicate the goal status.",
-        "requirements": "Outcome tracking is a key aspect of care planning.",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalOutcome"
-            }
-          ],
-          "strength": "example",
-          "description": "The result of the goal; e.g. \"25% increase in shoulder mobility\", \"Anxiety reduced to moderate levels\".  \"15 kg weight loss sustained over 6 months\"",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/clinical-findings"
-          }
-        }
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.outcomeReference",
-        "path": "Goal.outcomeReference",
-        "short": "Observation that resulted from goal",
-        "definition": "Details of what's changed (or not changed).",
-        "comment": "The goal outcome is independent of the outcome of the related activities.  For example, if the Goal is to achieve a target body weight of 150 lb and a care plan activity is defined to diet, then the care plan’s activity outcome could be calories consumed whereas goal outcome is an observation for the actual body weight measured.",
-        "requirements": "Outcome tracking is a key aspect of care planning.",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
+            "map": "who.author"
           }
         ]
       }
@@ -1108,31 +949,86 @@
   "differential": {
     "element": [
       {
-        "id": "Goal:shr-careplan-Goal",
-        "path": "Goal",
+        "id": "Basic:shr-careplan-Goal",
+        "path": "Basic",
         "short": "SHR Goal Profile",
-        "definition": "A broad statement about what should be accomplished and the progress towards that goal. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities."
+        "definition": "A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities."
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:participant",
-        "path": "Goal.extension",
-        "sliceName": "participant",
+        "id": "Basic:shr-careplan-Goal.extension:relatedencounter",
+        "path": "Basic.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
         "min": 0,
-        "max": "*",
+        "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Participant-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:title",
-        "path": "Goal.extension",
+        "id": "Basic:shr-careplan-Goal.extension:author",
+        "path": "Basic.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:informant",
+        "path": "Basic.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:type",
+        "path": "Basic.extension",
+        "sliceName": "type",
+        "definition": "The most specific code (lowest level term) describing the kind or sort of thing being represented.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Type-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:subject",
+        "path": "Basic.extension",
+        "sliceName": "subject",
+        "definition": "The person or thing that this entry relates to, usually the Person of Record. However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, finding, condition, or intervention.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Subject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:title",
+        "path": "Basic.extension",
         "sliceName": "title",
+        "definition": "A distinguishing word or group of words naming an item.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1140,165 +1036,179 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Title-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.extension:objective",
-        "path": "Goal.extension",
-        "sliceName": "objective",
+        "id": "Basic:shr-careplan-Goal.extension:details",
+        "path": "Basic.extension",
+        "sliceName": "details",
+        "definition": "An text note containing additional details, explanation, description, comment, or summarization. Details can discuss, support, explain changes to, or dispute information.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Details-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:reason",
+        "path": "Basic.extension",
+        "sliceName": "reason",
+        "definition": "The justification for an action or non-action, conclusion, opinion, etc.",
         "min": 0,
         "max": "*",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-Objective-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.modifierExtension:nonoccurrencemodifier",
-        "path": "Goal.modifierExtension",
-        "sliceName": "nonoccurrencemodifier",
+        "id": "Basic:shr-careplan-Goal.extension:category",
+        "path": "Basic.extension",
+        "sliceName": "category",
+        "definition": "A class or division of people or things having particular shared characteristics",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Category-extension"
           }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false
+        ]
       },
       {
-        "id": "Goal:shr-careplan-Goal.category",
-        "path": "Goal.category",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
+        "id": "Basic:shr-careplan-Goal.extension:category.valueCodeableConcept",
+        "path": "Basic.extension.valueCodeableConcept",
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "GoalCategory"
-            }
-          ],
           "strength": "extensible",
-          "description": "Codes for grouping and sorting goals",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/goal-category"
           }
         }
       },
       {
-        "id": "Goal:shr-careplan-Goal.description",
-        "path": "Goal.description",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
-          }
-        }
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.subject",
-        "path": "Goal.subject",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.start[x]",
-        "path": "Goal.start[x]",
-        "type": [
-          {
-            "code": "date"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target",
-        "path": "Goal.target"
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.target.due[x]",
-        "path": "Goal.target.due[x]",
-        "type": [
-          {
-            "code": "date"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.expressedBy",
-        "path": "Goal.expressedBy",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.addresses",
-        "path": "Goal.addresses",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.note",
-        "path": "Goal.note",
-        "type": [
-          {
-            "code": "Annotation",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"
-          }
-        ]
-      },
-      {
-        "id": "Goal:shr-careplan-Goal.outcomeCode",
-        "path": "Goal.outcomeCode",
+        "id": "Basic:shr-careplan-Goal.extension:expectedperformancetime",
+        "path": "Basic.extension",
+        "sliceName": "expectedperformancetime",
+        "definition": "When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.",
         "min": 0,
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-ExpectedPerformanceTime-extension"
           }
         ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:occurrencetimeorperiod",
+        "path": "Basic.extension",
+        "sliceName": "occurrencetimeorperiod",
+        "definition": "The point in time or span of time in which something happens.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTimeOrPeriod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status",
+        "path": "Basic.extension",
+        "sliceName": "status",
+        "definition": "Position in workflow.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-Status-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:status.value[x]",
+        "path": "Basic.extension.value[x]",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/goal-status"
+          }
+        }
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:annotation",
+        "path": "Basic.extension",
+        "sliceName": "annotation",
+        "definition": "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:plannedactivities",
+        "path": "Basic.extension",
+        "sliceName": "plannedactivities",
+        "definition": "Activites planned for this goal",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-PlannedActivities-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:actualactivities",
+        "path": "Basic.extension",
+        "sliceName": "actualactivities",
+        "definition": "Activites carried out for this goal",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-ActualActivities-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.extension:goal",
+        "path": "Basic.extension",
+        "sliceName": "goal",
+        "definition": "A broad statement about what should be accomplished for or by a patient or other subject. It represents the intended long-term outcome toward which an individual or a group aspires, and toward which, effort is directed, in the form of activities.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-careplan-Goal-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-careplan-Goal.code",
+        "path": "Basic.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://standardhealthrecord.org/fhir/basic-resource-type",
+              "code": "shr-careplan-Goal"
+            }
+          ]
+        }
       }
     ]
   }

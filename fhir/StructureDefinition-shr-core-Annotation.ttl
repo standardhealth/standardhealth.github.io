@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-Annotation"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Annotation Profile</b></p>\n  <p>A text note which also contains information about who made the statement and when.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Annotation maps to Annotation:\n  string maps to text\n  Author maps to author[x].Reference\n  OccurrenceTime maps to time\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Annotation Profile</b></p>\n  <p>An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Annotation maps to Annotation:\n  string maps to text\n  Author maps to author[x]\n  OccurrenceTime maps to time\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"];
   fhir:StructureDefinition.identifier [
@@ -21,17 +21,17 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Annotation Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.603Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-12"^^xsd:date];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.description [ fhir:value "A text note which also contains information about who made the statement and when."];
+  fhir:StructureDefinition.description [ fhir:value "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when."];
   fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
@@ -55,7 +55,7 @@
        fhir:Element.id [ fhir:value "Annotation:shr-core-Annotation" ];
        fhir:ElementDefinition.path [ fhir:value "Annotation" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Annotation Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "A text note which also contains information about who made the statement and when." ];
+       fhir:ElementDefinition.definition [ fhir:value "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when." ];
        fhir:ElementDefinition.comment [ fhir:value "For systems that do not have structured annotations, they can simply communicate a single annotation with no author or time.  This element may need to be included in narrative because of the potential for modifying information.  *Annotations SHOULD NOT* be used to communicate \"modifying\" information that could be computable. (This is a SHOULD because enforcing user behavior is nearly impossible)." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
@@ -161,17 +161,13 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson" ]
        ], [
          fhir:index 2;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
-       ], [
-         fhir:index 3;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -235,35 +231,29 @@
        fhir:Element.id [ fhir:value "Annotation:shr-core-Annotation" ];
        fhir:ElementDefinition.path [ fhir:value "Annotation" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Annotation Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "A text note which also contains information about who made the statement and when." ]
+       fhir:ElementDefinition.definition [ fhir:value "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when." ]
      ], [
        fhir:index 1;
        fhir:Element.id [ fhir:value "Annotation:shr-core-Annotation.author[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Annotation.author[x]" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson" ]
        ], [
          fhir:index 2;
-         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson" ]
-       ], [
-         fhir:index 3;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ]
      ], [
        fhir:index 2;
        fhir:Element.id [ fhir:value "Annotation:shr-core-Annotation.time" ];
        fhir:ElementDefinition.path [ fhir:value "Annotation.time" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ]
   ] .
 

@@ -1,0 +1,942 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "shr-finding-ObservationComponent-extension",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR ObservationComponent Extension</b></p>\n  <p>A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.</p>\n</div>"
+  },
+  "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationComponent-extension",
+  "identifier": [
+    {
+      "system": "http://standardhealthrecord.org",
+      "value": "shr.finding.ObservationComponent"
+    }
+  ],
+  "version": "0.0.1",
+  "name": "SHR ObservationComponent Extension",
+  "title": "SHR ObservationComponent Extension",
+  "status": "draft",
+  "date": "2017-12-12",
+  "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://standardhealthrecord.org"
+        }
+      ]
+    }
+  ],
+  "description": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+  "fhirVersion": "3.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "contextType": "resource",
+  "context": [
+    "*"
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "snapshot": {
+    "element": [
+      {
+        "id": "Extension:observationcomponent",
+        "path": "Extension",
+        "short": "SHR ObservationComponent Extension",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Extension",
+          "min": 0,
+          "max": "1"
+        },
+        "condition": [
+          "ele-1"
+        ],
+        "constraint": [
+          {
+            "key": "ele-1",
+            "severity": "error",
+            "human": "All FHIR elements must have a @value or children",
+            "expression": "children().count() > id.count()",
+            "xpath": "@value|f:*|h:div",
+            "source": "Element"
+          },
+          {
+            "key": "ext-1",
+            "severity": "error",
+            "human": "Must have either extensions or value[x], not both",
+            "expression": "extension.exists() != value.exists()",
+            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])",
+            "source": "Extension"
+          },
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-finding-ObservationComponent-extension SHALL have either extension('quantity') or extension('codeableconcept') or extension('string') or extension('range') or extension('ratio') or extension('attachment') or extension('time') or extension('datetime') or extension('timeperiod') or extension('integerquantity')",
+            "expression": "( extension('quantity').url | extension('codeableconcept').url | extension('string').url | extension('range').url | extension('ratio').url | extension('attachment').url | extension('time').url | extension('datetime').url | extension('timeperiod').url | extension('integerquantity').url ).distinct().count() <= 1"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.id",
+        "path": "Extension.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension",
+        "path": "Extension.extension",
+        "slicing": {
+          "id": "31",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:quantity",
+        "path": "Extension.extension",
+        "sliceName": "quantity",
+        "definition": "A quantity with units, whose value may be bounded from above or below, as defined in FHIR",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:codeableconcept",
+        "path": "Extension.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:string",
+        "path": "Extension.extension",
+        "sliceName": "string",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-string-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:range",
+        "path": "Extension.extension",
+        "sliceName": "range",
+        "definition": "An interval defined by a quantitative upper and/or lower bound. One of the two bounds must be specified, and the lower bound must be less than the upper bound. When Quantities are specified, the units of measure must be the same.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:ratio",
+        "path": "Extension.extension",
+        "sliceName": "ratio",
+        "definition": "A unit of measurement for the quotient of the amount of one entity to another.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:attachment",
+        "path": "Extension.extension",
+        "sliceName": "attachment",
+        "definition": "A file that contains audio, video, image, or similar content.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Attachment-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:time",
+        "path": "Extension.extension",
+        "sliceName": "time",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-time-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:datetime",
+        "path": "Extension.extension",
+        "sliceName": "datetime",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-dateTime-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:timeperiod",
+        "path": "Extension.extension",
+        "sliceName": "timeperiod",
+        "definition": "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:integerquantity",
+        "path": "Extension.extension",
+        "sliceName": "integerquantity",
+        "definition": "A Quantity that is an integer.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:valueabsentreason",
+        "path": "Extension.extension",
+        "sliceName": "valueabsentreason",
+        "definition": "Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ValueAbsentReason-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:observationcode",
+        "path": "Extension.extension",
+        "sliceName": "observationcode",
+        "definition": "A code that represents what the finding concerns, for example, the subject's height, blood pressure, disease status, wound dimensions, diabetes risk, etc. Although named ObservationCode, in different contexts the same attribute might be more naturally referred to as a property, observable, or test code. In assertions (observations without an explicit question), the observation code is defaulted to a value representing 'assertion'.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationCode-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:interpretation",
+        "path": "Extension.extension",
+        "sliceName": "interpretation",
+        "definition": "A clinical interpretation of a finding.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Interpretation-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:referencerange",
+        "path": "Extension.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ReferenceRange-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:components",
+        "path": "Extension.extension",
+        "sliceName": "components",
+        "definition": "Components are parts of the parent observation. Component observations share the same attributes (such as Specimen) as the primary observation and are not separable. However, the reference range may be different for each component observation.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Components-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.url",
+        "path": "Extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationComponent-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.value[x]",
+        "path": "Extension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      }
+    ]
+  },
+  "differential": {
+    "element": [
+      {
+        "id": "Extension:observationcomponent",
+        "path": "Extension",
+        "short": "SHR ObservationComponent Extension",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "*",
+        "constraint": [
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-finding-ObservationComponent-extension SHALL have either extension('quantity') or extension('codeableconcept') or extension('string') or extension('range') or extension('ratio') or extension('attachment') or extension('time') or extension('datetime') or extension('timeperiod') or extension('integerquantity')",
+            "expression": "( extension('quantity').url | extension('codeableconcept').url | extension('string').url | extension('range').url | extension('ratio').url | extension('attachment').url | extension('time').url | extension('datetime').url | extension('timeperiod').url | extension('integerquantity').url ).distinct().count() <= 1"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:quantity",
+        "path": "Extension.extension",
+        "sliceName": "quantity",
+        "definition": "A quantity with units, whose value may be bounded from above or below, as defined in FHIR",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:codeableconcept",
+        "path": "Extension.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:string",
+        "path": "Extension.extension",
+        "sliceName": "string",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-string-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:range",
+        "path": "Extension.extension",
+        "sliceName": "range",
+        "definition": "An interval defined by a quantitative upper and/or lower bound. One of the two bounds must be specified, and the lower bound must be less than the upper bound. When Quantities are specified, the units of measure must be the same.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:ratio",
+        "path": "Extension.extension",
+        "sliceName": "ratio",
+        "definition": "A unit of measurement for the quotient of the amount of one entity to another.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:attachment",
+        "path": "Extension.extension",
+        "sliceName": "attachment",
+        "definition": "A file that contains audio, video, image, or similar content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Attachment-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:time",
+        "path": "Extension.extension",
+        "sliceName": "time",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-time-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:datetime",
+        "path": "Extension.extension",
+        "sliceName": "datetime",
+        "definition": "A simplified, non-separable observation consisting of a observation code, value (or value absent reason), reference range, and interpretation. The subject of the observation component is the same as in the parent observation.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-dateTime-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:timeperiod",
+        "path": "Extension.extension",
+        "sliceName": "timeperiod",
+        "definition": "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:integerquantity",
+        "path": "Extension.extension",
+        "sliceName": "integerquantity",
+        "definition": "A Quantity that is an integer.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:valueabsentreason",
+        "path": "Extension.extension",
+        "sliceName": "valueabsentreason",
+        "definition": "Provides a reason why the value of the observation is missing, if it is expected (some observations are not expected to have a value).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ValueAbsentReason-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:observationcode",
+        "path": "Extension.extension",
+        "sliceName": "observationcode",
+        "definition": "A code that represents what the finding concerns, for example, the subject's height, blood pressure, disease status, wound dimensions, diabetes risk, etc. Although named ObservationCode, in different contexts the same attribute might be more naturally referred to as a property, observable, or test code. In assertions (observations without an explicit question), the observation code is defaulted to a value representing 'assertion'.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationCode-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:interpretation",
+        "path": "Extension.extension",
+        "sliceName": "interpretation",
+        "definition": "A clinical interpretation of a finding.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Interpretation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:referencerange",
+        "path": "Extension.extension",
+        "sliceName": "referencerange",
+        "definition": "The usual or acceptable range for a test result.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ReferenceRange-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.extension:components",
+        "path": "Extension.extension",
+        "sliceName": "components",
+        "definition": "Components are parts of the parent observation. Component observations share the same attributes (such as Specimen) as the primary observation and are not separable. However, the reference range may be different for each component observation.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Components-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:observationcomponent.url",
+        "path": "Extension.url",
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationComponent-extension"
+      },
+      {
+        "id": "Extension:observationcomponent.value[x]",
+        "path": "Extension.value[x]",
+        "min": 0,
+        "max": "0"
+      }
+    ]
+  }
+}

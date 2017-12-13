@@ -3,7 +3,7 @@
   "id": "shr-base-Entry",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Entry Profile</b></p>\n  <p>An item inserted in an electronic record.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.base.Entry maps to DomainResource:\n  Narrative maps to text\n  EntryId maps to id\n  constrain meta to 1..1\n  Version maps to meta.versionId\n  EntryType maps to meta.profile\n  LastUpdateDate maps to meta.lastUpdated\n  Language maps to language\n  &lt;TBD &quot;SecurityLabel&quot;&gt; maps to meta.security\n  &lt;TBD &quot;Tag&quot;&gt; maps to meta.tag\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Entry Profile</b></p>\n  <p>Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.base.Entry maps to DomainResource:\n  EntryId maps to id\n  constrain meta to 1..1\n  Version maps to meta.versionId\n  EntryType maps to meta.profile\n  LastUpdated maps to meta.lastUpdated\n  Language maps to language\n  Narrative maps to text\n  SecurityLabel maps to meta.security\n  Tag maps to meta.tag\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Entry",
   "identifier": [
@@ -15,19 +15,19 @@
   "version": "0.0.1",
   "name": "SHR Entry Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:20.628Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "An item inserted in an electronic record.",
+  "description": "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded.",
   "fhirVersion": "3.0.1",
   "mapping": [
     {
@@ -47,7 +47,7 @@
         "id": "DomainResource:shr-base-Entry",
         "path": "DomainResource",
         "short": "SHR Entry Profile",
-        "definition": "An item inserted in an electronic record.",
+        "definition": "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded.",
         "min": 0,
         "max": "*",
         "constraint": [
@@ -353,7 +353,7 @@
               "valueBoolean": true
             }
           ],
-          "strength": "required",
+          "strength": "extensible",
           "description": "A human language.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/languages"
@@ -376,8 +376,7 @@
         "max": "1",
         "type": [
           {
-            "code": "Narrative",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Narrative"
+            "code": "Narrative"
           }
         ],
         "condition": [
@@ -463,12 +462,7 @@
           "description": "Extensions are always sliced by (at least) url",
           "rules": "open"
         },
-        "definition": "A unique, persistent identifier for the Standard Health Record to which this entry belongs.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "definition": "A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord.",
         "min": 1,
         "max": "1",
         "type": [
@@ -476,21 +470,12 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ShrId-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
         ]
       },
       {
-        "id": "DomainResource:shr-base-Entry.extension:focalsubject",
+        "id": "DomainResource:shr-base-Entry.extension:personofrecord",
         "path": "DomainResource.extension",
-        "sliceName": "focalsubject",
+        "sliceName": "personofrecord",
         "slicing": {
           "discriminator": [
             {
@@ -501,186 +486,20 @@
           "description": "Extensions are always sliced by (at least) url",
           "rules": "open"
         },
-        "definition": "The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead).",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag",
-        "path": "DomainResource.extension",
-        "sliceName": "subjectisthirdpartyflag",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "If true, the subject of this entry is someone other than the Person of Record, for example, a family member.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "definition": "The person this record belongs to.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PersonOfRecord-extension"
           }
         ]
       },
       {
-        "id": "DomainResource:shr-base-Entry.extension:informant",
+        "id": "DomainResource:shr-base-Entry.extension:creationtime",
         "path": "DomainResource.extension",
-        "sliceName": "informant",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:author",
-        "path": "DomainResource.extension",
-        "sliceName": "author",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "The person or organization who created the entry and is responsible for (and may certify) its content.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:associatedencounter",
-        "path": "DomainResource.extension",
-        "sliceName": "associatedencounter",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "description": "Extensions are always sliced by (at least) url",
-          "rules": "open"
-        },
-        "definition": "The encounter or episode of care that led to creation of this entry.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssociatedEncounter-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:originalcreationdate",
-        "path": "DomainResource.extension",
-        "sliceName": "originalcreationdate",
+        "sliceName": "creationtime",
         "slicing": {
           "discriminator": [
             {
@@ -692,26 +511,12 @@
           "rules": "open"
         },
         "definition": "The point in time when the information was recorded in the system of record.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-OriginalCreationDate-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension"
           }
         ]
       },
@@ -758,73 +563,43 @@
         "id": "DomainResource:shr-base-Entry",
         "path": "DomainResource",
         "short": "SHR Entry Profile",
-        "definition": "An item inserted in an electronic record."
+        "definition": "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded."
       },
       {
         "id": "DomainResource:shr-base-Entry.id",
         "path": "DomainResource.id",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "DomainResource:shr-base-Entry.meta",
         "path": "DomainResource.meta",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "DomainResource:shr-base-Entry.meta.lastUpdated",
         "path": "DomainResource.meta.lastUpdated",
-        "min": 1,
-        "max": "1"
+        "min": 1
       },
       {
         "id": "DomainResource:shr-base-Entry.meta.profile",
         "path": "DomainResource.meta.profile",
-        "min": 1,
-        "max": "*"
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.language",
-        "path": "DomainResource.language",
-        "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet",
-              "valueReference": {
-                "reference": "http://hl7.org/fhir/ValueSet/all-languages"
-              }
-            },
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "Language"
-            },
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
-              "valueBoolean": true
-            }
-          ],
-          "strength": "required",
-          "description": "A human language.",
-          "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/languages"
-          }
-        }
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.text",
-        "path": "DomainResource.text",
-        "type": [
-          {
-            "code": "Narrative",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Narrative"
-          }
-        ]
+        "min": 1
       },
       {
         "id": "DomainResource:shr-base-Entry.extension:shrid",
         "path": "DomainResource.extension",
         "sliceName": "shrid",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord.",
         "min": 1,
         "max": "1",
         "type": [
@@ -832,106 +607,55 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ShrId-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "DomainResource:shr-base-Entry.extension:focalsubject",
+        "id": "DomainResource:shr-base-Entry.extension:personofrecord",
         "path": "DomainResource.extension",
-        "sliceName": "focalsubject",
+        "sliceName": "personofrecord",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "The person this record belongs to.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PersonOfRecord-extension"
+          }
+        ]
+      },
+      {
+        "id": "DomainResource:shr-base-Entry.extension:creationtime",
+        "path": "DomainResource.extension",
+        "sliceName": "creationtime",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "The point in time when the information was recorded in the system of record.",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag",
-        "path": "DomainResource.extension",
-        "sliceName": "subjectisthirdpartyflag",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:informant",
-        "path": "DomainResource.extension",
-        "sliceName": "informant",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:author",
-        "path": "DomainResource.extension",
-        "sliceName": "author",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:associatedencounter",
-        "path": "DomainResource.extension",
-        "sliceName": "associatedencounter",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssociatedEncounter-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "DomainResource:shr-base-Entry.extension:originalcreationdate",
-        "path": "DomainResource.extension",
-        "sliceName": "originalcreationdate",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-OriginalCreationDate-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       }
     ]
   }

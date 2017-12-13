@@ -7,20 +7,53 @@
   <p><b>SHR AcademicProblem Profile</b></p>
   <p>A problem with learning or behavior in a learning environment.</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.condition.AcademicProblem maps to Condition:
-  Entry.Informant maps to asserter
-  Entry.OriginalCreationDate maps to assertedDate
-  SpecificType maps to code
+  <p><pre>shr.condition.AcademicProblem maps to Observation:
+  Entry.CreationTime maps to issued
+  RelatedEncounter maps to context	
+  Subject maps to subject
   Category maps to category
-  ClinicalStatus maps to clinicalStatus
-  Onset maps to onset[x]
-  Abatement maps to abatement[x]
-  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource
-  Severity maps to severity
-  Stage maps to stage
-  Stage.CodeableConcept maps to stage.summary
-  Observation maps to evidence
-  Observation.SpecificType maps to evidence.code
+  ClinicallyRelevantTime maps to effective[x]
+  FindingMethod maps to method
+  FindingStatus maps to status
+  Quantity maps to value[x]
+  CodeableConcept maps to value[x]
+  string maps to value[x]
+  boolean maps to value[x]
+  Range maps to value[x]
+  Ratio maps to value[x]
+  Attachment maps to value[x]
+  time maps to value[x]
+  dateTime maps to value[x]
+  TimePeriod maps to value[x]
+  IntegerQuantity maps to value[x]
+  ValueAbsentReason maps to dataAbsentReason
+  ObservationCode maps to code
+  BodySite maps to bodySite
+  Specimen maps to specimen
+  Device maps to device
+  Interpretation maps to interpretation
+  Details maps to comment
+  ReferenceRange maps to referenceRange
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  Components.ObservationComponent maps to component (slice on = coding.code)
+  Components.ObservationComponent.ObservationCode maps to component.code
+  Components.ObservationComponent.Quantity maps to component.value[x]
+  Components.ObservationComponent.CodeableConcept maps to component.value[x]
+  Components.ObservationComponent.string maps to component.value[x]
+  Components.ObservationComponent.Range maps to component.value[x]
+  Components.ObservationComponent.Ratio maps to component.value[x]
+  Components.ObservationComponent.Attachment maps to component.value[x]
+  Components.ObservationComponent.time maps to component.value[x]
+  Components.ObservationComponent.dateTime maps to component.value[x]
+  Components.ObservationComponent.TimePeriod maps to component.value[x]
+  Components.ObservationComponent.IntegerQuantity maps to component.value[x]
+  Components.ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  Components.ObservationComponent.Interpretation maps to component.interpretation
+  Components.ObservationComponent.ReferenceRange maps to component.referenceRange
 </pre></p>
 </div>
   </text>
@@ -32,16 +65,22 @@
   <version value="0.0.1"/>
   <name value="SHR AcademicProblem Profile"/>
   <status value="draft"/>
-  <date value="2017-08-08T15:56:31.724Z"/>
+  <date value="2017-12-12"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="A problem with learning or behavior in a learning environment."/>
+  <purpose value="Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms."/>
   <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="workflow"/>
+    <uri value="http://hl7.org/fhir/workflow"/>
+    <name value="Workflow Mapping"/>
+  </mapping>
   <mapping>
     <identity value="sct-concept"/>
     <uri value="http://snomed.info/conceptdomain"/>
@@ -69,14 +108,19 @@
   </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
-  <type value="Condition"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
   <derivation value="constraint"/>
   <snapshot>
-    <element id="Condition:shr-condition-AcademicProblem">
-      <path value="Condition"/>
+    <element id="Observation:shr-condition-AcademicProblem">
+      <path value="Observation"/>
       <short value="SHR AcademicProblem Profile"/>
       <definition value="A problem with learning or behavior in a learning environment."/>
+      <comment value="Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc."/>
+      <alias value="Vital Signs"/>
+      <alias value="Measurement"/>
+      <alias value="Results"/>
+      <alias value="Tests"/>
       <min value="0"/>
       <max value="*"/>
       <constraint>
@@ -112,42 +156,46 @@
         <source value="DomainResource"/>
       </constraint>
       <constraint>
-        <key value="con-4"/>
+        <key value="obs-7"/>
         <severity value="error"/>
-        <human value="If condition is abated, then clinicalStatus must be either inactive, resolved, or remission"/>
-        <expression value="abatement.empty() or (abatement as boolean).not()  or clinicalStatus=&#39;resolved&#39; or clinicalStatus=&#39;remission&#39; or clinicalStatus=&#39;inactive&#39;"/>
-        <xpath value="not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), &#39;abatement&#39;)])) or f:clinicalStatus/@value=(&#39;resolved&#39;, &#39;remission&#39;, &#39;inactive&#39;))"/>
+        <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
+        <expression value="value.empty() or code!=component.code"/>
+        <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
       </constraint>
       <constraint>
-        <key value="con-3"/>
+        <key value="obs-6"/>
         <severity value="error"/>
-        <human value="Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error"/>
-        <expression value="verificationStatus=&#39;entered-in-error&#39; or clinicalStatus.exists()"/>
-        <xpath value="f:verificationStatus/@value=&#39;entered-in-error&#39; or exists(f:clinicalStatus)"/>
+        <human value="dataAbsentReason SHALL only be present if Observation.value[x] is not present"/>
+        <expression value="dataAbsentReason.empty() or value.empty()"/>
+        <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
       </constraint>
       <mapping>
         <identity value="rim"/>
         <map value="Entity. Role, or Act"/>
       </mapping>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event"/>
+      </mapping>
+      <mapping>
         <identity value="sct-concept"/>
-        <map value="&lt; 243796009 |Situation with explicit context|:&#xA;246090004 |Associated finding| =&#xA;((&lt; 404684003 |Clinical finding| MINUS&#xA;&lt;&lt; 420134006 |Propensity to adverse reactions| MINUS &#xA;&lt;&lt; 473010000 |Hypersensitivity condition| MINUS &#xA;&lt;&lt; 79899007 |Drug interaction| MINUS&#xA;&lt;&lt; 69449002 |Drug action| MINUS &#xA;&lt;&lt; 441742003 |Evaluation finding| MINUS &#xA;&lt;&lt; 307824009 |Administrative status| MINUS &#xA;&lt;&lt; 385356007 |Tumor stage finding|) OR&#xA;&lt; 272379006 |Event|)"/>
+        <map value="&lt; 363787002 |Observable entity|"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PPR message"/>
+        <map value="OBX"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="Observation[classCode=OBS, moodCode=EVN, code=ASSERTION, value&lt;Diagnosis]"/>
+        <map value="Observation[classCode=OBS, moodCode=EVN]"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="clinical.general"/>
+        <map value="clinical.diagnostics"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.id">
-      <path value="Condition.id"/>
+    <element id="Observation:shr-condition-AcademicProblem.id">
+      <path value="Observation.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
       <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
@@ -163,8 +211,8 @@
       </type>
       <isSummary value="true"/>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.meta">
-      <path value="Condition.meta"/>
+    <element id="Observation:shr-condition-AcademicProblem.meta">
+      <path value="Observation.meta"/>
       <short value="Metadata about the resource"/>
       <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource."/>
       <min value="0"/>
@@ -179,8 +227,8 @@
       </type>
       <isSummary value="true"/>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.implicitRules">
-      <path value="Condition.implicitRules"/>
+    <element id="Observation:shr-condition-AcademicProblem.implicitRules">
+      <path value="Observation.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content."/>
       <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. &#xA;&#xA;This element is labelled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation."/>
@@ -197,8 +245,8 @@
       <isModifier value="true"/>
       <isSummary value="true"/>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.language">
-      <path value="Condition.language"/>
+    <element id="Observation:shr-condition-AcademicProblem.language">
+      <path value="Observation.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
       <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
@@ -231,8 +279,8 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.text">
-      <path value="Condition.text"/>
+    <element id="Observation:shr-condition-AcademicProblem.text">
+      <path value="Observation.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
       <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded in formation is added later."/>
@@ -256,8 +304,8 @@
         <map value="Act.text?"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.contained">
-      <path value="Condition.contained"/>
+    <element id="Observation:shr-condition-AcademicProblem.contained">
+      <path value="Observation.contained"/>
       <short value="Contained, inline Resources"/>
       <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
       <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again."/>
@@ -279,9 +327,9 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension">
-      <path value="Condition.extension"/>
-      <slicing id="248">
+    <element id="Observation:shr-condition-AcademicProblem.extension">
+      <path value="Observation.extension"/>
+      <slicing id="91">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -309,138 +357,85 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:codeableconcept">
-      <path value="Condition.extension"/>
-      <sliceName value="codeableconcept"/>
-      <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:includeonproblemlist">
-      <path value="Condition.extension"/>
-      <sliceName value="includeonproblemlist"/>
-      <definition value="Whether or not to include this condition on the subject&#39;s current problem list."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+    <element id="Observation:shr-condition-AcademicProblem.extension:author">
+      <path value="Observation.extension"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:whenclinicallyrecognized">
-      <path value="Condition.extension"/>
-      <sliceName value="whenclinicallyrecognized"/>
-      <definition value="The time at which a condition or condition was first identified in a healthcare context."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+    <element id="Observation:shr-condition-AcademicProblem.extension:informant">
+      <path value="Observation.extension"/>
+      <sliceName value="informant"/>
+      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:preexisting">
-      <path value="Condition.extension"/>
-      <sliceName value="preexisting"/>
-      <definition value="If the problem or condition existed before the current episode of care."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+    <element id="Observation:shr-condition-AcademicProblem.extension:focalsubject">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubject"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:criticality">
-      <path value="Condition.extension"/>
-      <sliceName value="criticality"/>
-      <definition value="The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+    <element id="Observation:shr-condition-AcademicProblem.extension:evidence">
+      <path value="Observation.extension"/>
+      <sliceName value="evidence"/>
+      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:changeflag">
+      <path value="Observation.extension"/>
+      <sliceName value="changeflag"/>
+      <definition value="Indicator of significant change (delta) from the last or previous measurement."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.modifierExtension">
-      <path value="Condition.modifierExtension"/>
+    <element id="Observation:shr-condition-AcademicProblem.extension:observationqualifier">
+      <path value="Observation.extension"/>
+      <sliceName value="observationqualifier"/>
+      <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationQualifier-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:negationflag">
+      <path value="Observation.extension"/>
+      <sliceName value="negationflag"/>
+      <definition value="A flag that indicates the meaning to be conveyed is the logical opposite of the current assertion. The assertion is negated only when the NegationIndicator is true. If absent or false, the assertion is not negated."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-NegationFlag-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.modifierExtension">
+      <path value="Observation.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -462,11 +457,11 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.identifier">
-      <path value="Condition.identifier"/>
-      <short value="External Ids for this condition"/>
-      <definition value="This records identifiers associated with this condition that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)."/>
-      <requirements value="Need to allow connection to a wider workflow."/>
+    <element id="Observation:shr-condition-AcademicProblem.identifier">
+      <path value="Observation.identifier"/>
+      <short value="Business Identifier for observation"/>
+      <definition value="A unique identifier assigned to this observation."/>
+      <requirements value="Allows observations to be distinguished and referenced."/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -474,881 +469,820 @@
       </type>
       <isSummary value="true"/>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 2) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."/>
+      </mapping>
+      <mapping>
         <identity value="rim"/>
-        <map value=".id"/>
+        <map value="id"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="id"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.clinicalStatus">
-      <path value="Condition.clinicalStatus"/>
-      <short value="active | recurrence | inactive | remission | resolved"/>
-      <definition value="The clinical status of the condition."/>
-      <comment value="This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern."/>
+    <element id="Observation:shr-condition-AcademicProblem.basedOn">
+      <path value="Observation.basedOn"/>
+      <short value="Fulfills plan, proposal or order"/>
+      <definition value="A plan, proposal or order that is fulfilled in whole or in part by this event."/>
+      <requirements value="Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon."/>
+      <alias value="Fulfills"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/NutritionOrder"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ProcedureRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ReferralRequest"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.basedOn"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=FLFS].target"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.status">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint">
+        <valueString value="default: final"/>
+      </extension>
+      <path value="Observation.status"/>
+      <short value="registered | preliminary | final | amended +"/>
+      <definition value="The status of the result value."/>
+      <comment value="This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
+      <requirements value="Need to track the status of individual results. Some results are finalized before the whole report is finalized."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="code"/>
       </type>
-      <condition value="con-3"/>
-      <condition value="con-4"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionClinicalStatus"/>
+          <valueString value="ObservationStatus"/>
         </extension>
         <strength value="required"/>
-        <description value="The clinical status of the condition or diagnosis."/>
+        <description value="Codes providing the status of an observation."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-clinical"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-status"/>
         </valueSetReference>
       </binding>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event.status"/>
+      </mapping>
+      <mapping>
         <identity value="sct-concept"/>
-        <map value="&lt; 303105007 |Disease phases|"/>
+        <map value="&lt; 445584004 |Report by finality status|"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PRB-14 / DG1-6"/>
+        <map value="OBX-11"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="Observation ACT&#xA;.inboundRelationship[typeCode=COMP].source[classCode=OBS, code=&quot;clinicalStatus&quot;, moodCode=EVN].value"/>
+        <map value="status  Amended &amp; Final are differentiated by whether it is the subject of a ControlAct event with a type of &quot;revise&quot;"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="status"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.verificationStatus">
-      <path value="Condition.verificationStatus"/>
-      <short value="provisional | differential | confirmed | refuted | entered-in-error | unknown"/>
-      <definition value="The verification status to support the clinical status of the condition."/>
-      <comment value="verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.&#xA;&#xA;This element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="code"/>
-      </type>
-      <defaultValueCode value="unknown"/>
-      <condition value="con-3"/>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionVerificationStatus"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The verification status to support or decline the clinical status of the condition or diagnosis."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-ver-status"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 410514004 |Finding context value|"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="PRB-13"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="Observation ACT&#xA;.inboundRelationship[typeCode=COMP].source[classCode=OBS, code=&quot;verificationStatus&quot;, moodCode=EVN].value"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-attr"/>
-        <map value="408729009"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="status"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.category">
-      <path value="Condition.category"/>
-      <short value="problem-list-item | encounter-diagnosis"/>
-      <definition value="A category assigned to the condition."/>
-      <comment value="The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts."/>
+    <element id="Observation:shr-condition-AcademicProblem.category">
+      <path value="Observation.category"/>
+      <short value="Classification of  type of observation"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what observations are retrieved and displayed."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCategory"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes for high level observation categories."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
         </valueSetReference>
       </binding>
       <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 404684003 |Clinical finding|"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="&#39;problem&#39; if from PRB-3. &#39;diagnosis&#39; if from DG1 segment in PV1 message"/>
-      </mapping>
-      <mapping>
         <identity value="rim"/>
-        <map value=".code"/>
+        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;EVN&quot;].code"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="class"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.severity">
-      <path value="Condition.severity"/>
-      <short value="Subjective severity of condition"/>
-      <definition value="A subjective assessment of the severity of the condition as evaluated by the clinician."/>
-      <comment value="Coding of the severity with a terminology is preferred, where possible."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionSeverity"/>
-        </extension>
-        <strength value="required"/>
-        <description value="A subjective assessment of the severity of the condition as evaluated by the clinician."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-severity"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 272141005 |Severities|"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="PRB-26 / ABS-3"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="Can be pre/post-coordinated into value.  Or ./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;severity&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-attr"/>
-        <map value="246112005"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="grade"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.code">
-      <path value="Condition.code"/>
-      <short value="Identification of the condition, problem or diagnosis"/>
-      <definition value="Identification of the condition, problem or diagnosis."/>
-      <requirements value="0..1 to account for primarily narrative only resources."/>
-      <alias value="type"/>
+    <element id="Observation:shr-condition-AcademicProblem.code">
+      <path value="Observation.code"/>
+      <short value="Type of observation (code / type)"/>
+      <definition value="Describes what was observed. Sometimes this is called the observation &quot;name&quot;."/>
+      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
+      <alias value="Name"/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="preferred"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCode"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying names of simple observations."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
         </valueSetReference>
       </binding>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event.code"/>
+      </mapping>
+      <mapping>
         <identity value="sct-concept"/>
-        <map value="code 246090004 |Associated finding| (&lt; 404684003 |Clinical finding| MINUS&#xA;&lt;&lt; 420134006 |Propensity to adverse reactions| MINUS &#xA;&lt;&lt; 473010000 |Hypersensitivity condition| MINUS &#xA;&lt;&lt; 79899007 |Drug interaction| MINUS&#xA;&lt;&lt; 69449002 |Drug action| MINUS &#xA;&lt;&lt; 441742003 |Evaluation finding| MINUS &#xA;&lt;&lt; 307824009 |Administrative status| MINUS &#xA;&lt;&lt; 385356007 |Tumor stage finding|) &#xA;OR &lt; 413350009 |Finding with explicit context|&#xA;OR &lt; 272379006 |Event|"/>
+        <map value="&lt; 363787002 |Observable entity| OR &lt; 386053000 |Evaluation procedure|"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PRB-3"/>
+        <map value="OBX-3"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".value"/>
+        <map value="code"/>
       </mapping>
       <mapping>
         <identity value="sct-attr"/>
-        <map value="246090004"/>
+        <map value="116680003 |Is a|"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="what"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.bodySite">
-      <path value="Condition.bodySite"/>
-      <short value="Anatomical location, if relevant"/>
-      <definition value="The anatomical location where this condition manifests itself."/>
-      <comment value="Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [body-site-instance](extension-body-site-instance.html).  May be a summary code, or a reference to a very precise definition of the location, or both."/>
+    <element id="Observation:shr-condition-AcademicProblem.code.id">
+      <path value="Observation.code.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
-      <max value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.extension">
+      <path value="Observation.code.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing id="88">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
       </type>
       <isSummary value="true"/>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
-        </valueSetReference>
-      </binding>
       <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 442083009  |Anatomical or acquired body structure|"/>
+        <identity value="v2"/>
+        <map value="C*E.1-8, C*E.10-22"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".targetBodySiteCode"/>
+        <map value="union(., ./translation)"/>
       </mapping>
       <mapping>
-        <identity value="sct-attr"/>
-        <map value="363698007"/>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.subject">
-      <path value="Condition.subject"/>
-      <short value="Who has the condition?"/>
-      <definition value="Indicates the patient or group who the condition record is associated with."/>
-      <requirements value="Group is typically used for veterinary or public health use cases."/>
-      <alias value="patient"/>
-      <min value="1"/>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009">
+      <path value="Observation.code.coding"/>
+      <sliceName value="Fixed_385432009"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.id">
+      <path value="Observation.code.coding.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.extension">
+      <path value="Observation.code.coding.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.system">
+      <path value="Observation.code.coding.system"/>
+      <short value="Identity of the terminology system"/>
+      <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously."/>
+      <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://snomed.info/sct"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystem"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.version">
+      <path value="Observation.code.coding.version"/>
+      <short value="Version of the system - if relevant"/>
+      <definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."/>
+      <comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystemVersion"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.code">
+      <path value="Observation.code.coding.code"/>
+      <short value="Symbol in syntax defined by the system"/>
+      <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
+      <requirements value="Need to refer to a particular code in the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="385432009"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./code"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.code.coding.display"/>
+      <short value="Representation defined by the system"/>
+      <definition value="A representation of the meaning of the code in the system, following the rules of the system."/>
+      <requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.2 - but note this is not well followed"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CV.displayName"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.userSelected">
+      <path value="Observation.code.coding.userSelected"/>
+      <short value="If this coding was chosen directly by the user"/>
+      <definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)."/>
+      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
+      <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Sometimes implied by being first"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CD.codingRationale"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\#true a [     fhir:source &quot;true&quot;;     fhir:target dt:CDCoding.codingRationale\#O   ]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.code.text"/>
+      <short value="Plain text representation of the concept"/>
+      <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
+      <comment value="Very often the text is the same as a displayName of one of the codings."/>
+      <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.9. But note many systems use C*E.2 for this"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./originalText[mediaType/code=&quot;text/plain&quot;]/data"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.subject">
+      <path value="Observation.subject"/>
+      <short value="Who and/or what this is about"/>
+      <definition value="The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject."/>
+      <comment value="One would expect this element to be a cardinality  of 1..1.  The only circumstance in which the subject can be missing is when the observation is made by a device that does not know the patient. In this case, the observation SHALL be matched to a patient through some context/channel matching technique, and at this point, the observation should be updated.&#xD;&#xD;If the target of the observation is different than the subject, the general extension [observation-focal-subject](extension-observation-focal-subject.html).  may be used.  However, the distinction between the patient&#39;s own value for an observation versus that of the fetus, or the donor or blood product unit, etc., are often specified in the observation code."/>
+      <requirements value="Observations have no value if you don&#39;t know who or what they&#39;re about."/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"/>
       </type>
       <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.subject"/>
+      </mapping>
       <mapping>
         <identity value="v2"/>
         <map value="PID-3"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".participation[typeCode=SBJ].role[classCode=PAT]"/>
+        <map value="participation[typeCode=SBJ]"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="who.focus"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.context">
-      <path value="Condition.context"/>
-      <short value="Encounter or episode when condition first asserted"/>
-      <definition value="Encounter during which the condition was first asserted."/>
-      <comment value="This record indicates the encounter this particular record is associated with.  In the case of a &quot;new&quot; diagnosis reflecting ongoing/revised information about the condition, this might be distinct from the first encounter in which the underlying condition was first &quot;known&quot;."/>
-      <alias value="encounter"/>
+    <element id="Observation:shr-condition-AcademicProblem.context">
+      <path value="Observation.context"/>
+      <short value="Healthcare event during which this observation is made"/>
+      <definition value="The healthcare event  (e.g. a patient and healthcare provider interaction) during which this observation is made."/>
+      <comment value="This will typically be the encounter the event occurred within, but some events may be initiated prior to or after the official completion of an encounter or episode but still be tied to the context of the encounter or episode (e.g. pre-admission lab tests)."/>
+      <requirements value="For some observations it may be important to know the link between an observation and a particular encounter."/>
+      <alias value="Encounter"/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
-      </type>
-      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.context"/>
+      </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PV1-19 (+PV1-54)"/>
+        <map value="PV1"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]"/>
+        <map value="inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN]"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="context"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.onset[x]">
-      <path value="Condition.onset[x]"/>
-      <short value="Estimated or actual date,  date-time, or age"/>
-      <definition value="Estimated or actual date or date-time  the condition began, in the opinion of the clinician."/>
-      <comment value="Age is generally used when the patient reports an age at which the Condition began to occur."/>
+    <element id="Observation:shr-condition-AcademicProblem.effective[x]">
+      <path value="Observation.effective[x]"/>
+      <short value="Clinically relevant time/time-period for observation"/>
+      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
+      <comment value="At least a date should be present unless this observation is a historical report."/>
+      <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
+      <alias value="Occurrence"/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="dateTime"/>
       </type>
       <type>
-        <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
-      </type>
-      <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
       <isSummary value="true"/>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event.occurrence[x]"/>
+      </mapping>
+      <mapping>
         <identity value="v2"/>
-        <map value="PRB-16"/>
+        <map value="OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".effectiveTime.low or .inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;age at onset&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="when.init"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.abatement[x]">
-      <path value="Condition.abatement[x]"/>
-      <short value="If/when in resolution/remission"/>
-      <definition value="The date or estimated date that the condition resolved or went into remission. This is called &quot;abatement&quot; because of the many overloaded connotations associated with &quot;remission&quot; or &quot;resolution&quot; - Conditions are never really resolved, but they can abate."/>
-      <comment value="There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
-      </type>
-      <condition value="con-4"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".effectiveTime.high or .inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;age at remission&quot;].value or .inboundRelationship[typeCode=SUBJ]source[classCode=CONC, moodCode=EVN].status=completed"/>
+        <map value="effectiveTime"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="when.done"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.assertedDate">
-      <path value="Condition.assertedDate"/>
-      <short value="Date record was believed accurate"/>
-      <definition value="The date on which the existance of the Condition was first asserted or acknowledged."/>
-      <comment value="The assertedDate represents the date when this particular Condition record was created in the EHR, not the date of the most recent update in terms of when severity, abatement, etc. were specified. &#xA0;The date of the last record modification can be retrieved from the resource metadata."/>
+    <element id="Observation:shr-condition-AcademicProblem.issued">
+      <path value="Observation.issued"/>
+      <short value="Date/Time this was made available"/>
+      <definition value="The date and time this observation was made available to providers, typically after the results have been reviewed and verified."/>
+      <comment value="Updated when the result is updated."/>
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="dateTime"/>
+        <code value="instant"/>
       </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
-        <map value="REL-11"/>
+        <map value="OBR.22 (or MSH.7), or perhaps OBX-19 (depends on who observation made)"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".participation[typeCode=AUT].time"/>
+        <map value="participation[typeCode=AUT].time"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
         <map value="when.recorded"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.asserter">
-      <path value="Condition.asserter"/>
-      <short value="Person who asserts this condition"/>
-      <definition value="Individual who is making the condition statement."/>
+    <element id="Observation:shr-condition-AcademicProblem.performer">
+      <path value="Observation.performer"/>
+      <short value="Who is responsible for the observation"/>
+      <definition value="Who was responsible for asserting the observed value as &quot;true&quot;."/>
+      <requirements value="May give a degree of confidence in the observation and also indicates where follow-up questions should be directed."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
+        <identity value="workflow"/>
+        <map value="Event.performer"/>
+      </mapping>
+      <mapping>
         <identity value="v2"/>
-        <map value="REL-7.1 identifier + REL-7.12 type code"/>
+        <map value="OBX.15 / (Practitioner)  OBX-16,  PRT-5:PRT-4=&#39;RO&#39; /  (Device)  OBX-18 , PRT-10:PRT-4=&#39;EQUIP&#39; / (Organization)  OBX-23,  PRT-8:PRT-4=&#39;PO&#39;"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".participation[typeCode=AUT].role"/>
+        <map value="participation[typeCode=PRF]"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="who.author"/>
+        <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage">
-      <path value="Condition.stage"/>
-      <short value="Stage/grade, usually assessed formally"/>
-      <definition value="Clinical stage or grade of a condition. May include formal severity assessments."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="BackboneElement"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <constraint>
-        <key value="con-1"/>
-        <severity value="error"/>
-        <human value="Stage SHALL have summary or assessment"/>
-        <expression value="summary.exists() or assessment.exists()"/>
-        <xpath value="exists(f:summary) or exists(f:assessment)"/>
-      </constraint>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;stage/grade&quot;]"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.id">
-      <path value="Condition.stage.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.extension">
-      <path value="Condition.stage.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.modifierExtension">
-      <path value="Condition.stage.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.summary">
-      <path value="Condition.stage.summary"/>
-      <short value="Simple summary (disease specific)"/>
-      <definition value="A simple summary of the stage such as &quot;Stage 3&quot;. The determination of the stage is disease-specific."/>
-      <min value="0"/>
+    <element id="Observation:shr-condition-AcademicProblem.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="90">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="1"/>
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <condition value="con-1"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionStage"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Codes describing condition stages (e.g. Cancer stages)."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-stage"/>
-        </valueSetReference>
-      </binding>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
       <mapping>
         <identity value="sct-concept"/>
-        <map value="&lt; 254291000 |Staging and scales|"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PRB-14"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".value"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.assessment">
-      <path value="Condition.stage.assessment"/>
-      <short value="Formal record of assessment"/>
-      <definition value="Reference to a formal record of the evidence on which the staging assessment is based."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ClinicalImpression"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
-      </type>
-      <condition value="con-1"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".self"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence">
-      <path value="Condition.evidence"/>
-      <short value="Supporting evidence"/>
-      <definition value="Supporting Evidence / manifestations that are the basis on which this condition is suspected or confirmed."/>
-      <comment value="The evidence may be a simple list of coded symptoms/manifestations, or references to observations or formal assessments, or both."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="BackboneElement"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
-      <constraint>
-        <key value="con-2"/>
-        <severity value="error"/>
-        <human value="evidence SHALL have code or details"/>
-        <expression value="code.exists() or detail.exists()"/>
-        <xpath value="exists(f:code) or exists(f:detail)"/>
-      </constraint>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outboundRelationship[typeCode=SPRT].target[classCode=OBS, moodCode=EVN]"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.id">
-      <path value="Condition.evidence.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.extension">
-      <path value="Condition.evidence.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.modifierExtension">
-      <path value="Condition.evidence.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.code">
-      <path value="Condition.evidence.code"/>
-      <short value="Manifestation/symptom"/>
-      <definition value="A manifestation or symptom that led to the recording of this condition."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <condition value="con-2"/>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 404684003 |Clinical finding|"/>
+        <map value="value"/>
       </mapping>
       <mapping>
-        <identity value="rim"/>
-        <map value="[code=&quot;diagnosis&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="why"/>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.detail">
-      <path value="Condition.evidence.detail"/>
-      <short value="Supporting information found elsewhere"/>
-      <definition value="Links to other relevant information, including pathology reports."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
-      </type>
-      <condition value="con-2"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".self"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="why"/>
-      </mapping>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.note">
-      <path value="Condition.note"/>
-      <short value="Additional information about the Condition"/>
-      <definition value="Additional information about the Condition. This is a general notes/comments entry  for description of the Condition, its diagnosis and prognosis."/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Annotation"/>
-      </type>
-      <mapping>
-        <identity value="v2"/>
-        <map value="NTE child of PRB"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value"/>
-      </mapping>
-    </element>
-  </snapshot>
-  <differential>
-    <element id="Condition:shr-condition-AcademicProblem">
-      <path value="Condition"/>
-      <short value="SHR AcademicProblem Profile"/>
-      <definition value="A problem with learning or behavior in a learning environment."/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:codeableconcept">
-      <path value="Condition.extension"/>
-      <sliceName value="codeableconcept"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:includeonproblemlist">
-      <path value="Condition.extension"/>
-      <sliceName value="includeonproblemlist"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:whenclinicallyrecognized">
-      <path value="Condition.extension"/>
-      <sliceName value="whenclinicallyrecognized"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:preexisting">
-      <path value="Condition.extension"/>
-      <sliceName value="preexisting"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.extension:criticality">
-      <path value="Condition.extension"/>
-      <sliceName value="criticality"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.clinicalStatus">
-      <path value="Condition.clinicalStatus"/>
-      <min value="1"/>
-      <max value="1"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.category">
-      <path value="Condition.category"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/condition/vs/ConditionCategoryVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.severity">
-      <path value="Condition.severity"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionSeverity"/>
-        </extension>
-        <strength value="required"/>
-        <description value="A subjective assessment of the severity of the condition as evaluated by the clinician."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/condition-severity"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.code">
-      <path value="Condition.code"/>
+    <element id="Observation:shr-condition-AcademicProblem.valueCodeableConcept:CodeableConcept">
+      <path value="Observation.valueCodeableConcept"/>
+      <sliceName value="CodeableConcept"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
+      <isSummary value="true"/>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.bodySite">
-      <path value="Condition.bodySite"/>
+    <element id="Observation:shr-condition-AcademicProblem.dataAbsentReason">
+      <path value="Observation.dataAbsentReason"/>
+      <short value="Why the result is missing"/>
+      <definition value="Provides a reason why the expected value in the element Observation.value[x] is missing."/>
+      <comment value="Null or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  &quot;detected&quot;, &quot;not detected&quot;, &quot;inconclusive&quot;, or  &quot;specimen unsatisfactory&quot;.   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code &quot;error&quot; could be used when the measurement was not completed. Note that an observation may only be reported if there are values to report. For example differential cell counts values may be reported only when &gt; 0.  Because of these options, use-case agreements are required to interpret general observations for null or exceptional values."/>
+      <requirements value="For many results it is necessary to handle exceptional values in measurements."/>
       <min value="0"/>
       <max value="0"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <condition value="obs-6"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value.nullFlavor"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.interpretation">
+      <path value="Observation.interpretation"/>
+      <short value="High, low, normal, etc."/>
+      <definition value="The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag."/>
+      <requirements value="For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result."/>
+      <alias value="Abnormal Flag"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-8"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363713009 |Has interpretation|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.comment">
+      <path value="Observation.comment"/>
+      <short value="Comments about result"/>
+      <definition value="May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result."/>
+      <requirements value="Need to be able to provide free text additional information."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.note"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="NTE.3 (partner NTE to OBX, or sometimes another (child?) OBX)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="subjectOf.observationEvent[code=&quot;annotation&quot;].value"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.bodySite">
+      <path value="Observation.bodySite"/>
+      <short value="Observed body part"/>
+      <definition value="Indicates the site on the subject&#39;s body where the observation was made (i.e. the target site)."/>
+      <comment value="Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   If the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ body-site-instance](extension-body-site-instance.html)."/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="CodeableConcept"/>
       </type>
       <binding>
         <strength value="required"/>
@@ -1356,86 +1290,1608 @@
           <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 123037004 |Body structure|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-20"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="targetSiteCode"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="718497002 |Inherent location|"/>
+      </mapping>
     </element>
-    <element id="Condition:shr-condition-AcademicProblem.onset[x]">
-      <path value="Condition.onset[x]"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.abatement[x]">
-      <path value="Condition.abatement[x]"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.assertedDate">
-      <path value="Condition.assertedDate"/>
-      <min value="1"/>
+    <element id="Observation:shr-condition-AcademicProblem.method">
+      <path value="Observation.method"/>
+      <short value="How it was done"/>
+      <definition value="Indicates the mechanism used to perform the observation."/>
+      <comment value="Only used if not implicit in code for Observation.code."/>
+      <requirements value="In some cases, method can impact results and is thus used for determining whether results can be compared or determining significance of results."/>
+      <min value="0"/>
       <max value="1"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.asserter">
-      <path value="Condition.asserter"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage">
-      <path value="Condition.stage"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.stage.summary">
-      <path value="Condition.stage.summary"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence">
-      <path value="Condition.evidence"/>
-    </element>
-    <element id="Condition:shr-condition-AcademicProblem.evidence.code">
-      <path value="Condition.evidence.code"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="preferred"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationMethod"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Methods for simple observations."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-methods"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-17"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="methodCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.specimen">
+      <path value="Observation.specimen"/>
+      <short value="Specimen used for this observation"/>
+      <definition value="The specimen that was used when this observation was made."/>
+      <comment value="Should only be used if not implicit in code found in `Observation.code`.  Observations are not made on specimens themselves; they are made on a subject, but in many cases by the means of a specimen. Note that although specimens are often involved, they are not always tracked and reported explicitly. Also note that observation resources may be used in contexts that track the specimen explicitly (e.g. Diagnostic Report)."/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Specimen"/>
+      </type>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 123038009 |Specimen|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SPM segment"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="participation[typeCode=SPC].specimen"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="704319004 |Inherent in|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.device">
+      <path value="Observation.device"/>
+      <short value="(Measurement) Device"/>
+      <definition value="The device used to generate the observation data."/>
+      <comment value="An extension should be used if further typing of the device is needed.  Devices used to support obtaining an observation can be represented using either an extension or through the Observation.related element."/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 49062001 |Device|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-17 / PRT -10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="participation[typeCode=DEV]"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="424226004 |Using device|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange">
+      <path value="Observation.referenceRange"/>
+      <short value="Provides guide for interpretation"/>
+      <definition value="Guidance on how to interpret the value by comparison to a normal or recommended range."/>
+      <comment value="Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient&#39;s age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties."/>
+      <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <constraint>
+        <key value="obs-3"/>
+        <severity value="error"/>
+        <human value="Must have at least a low or a high or text"/>
+        <expression value="low.exists() or high.exists() or text.exists()"/>
+        <xpath value="(exists(f:low) or exists(f:high)or exists(f:text))"/>
+      </constraint>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.id">
+      <path value="Observation.referenceRange.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.extension">
+      <path value="Observation.referenceRange.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.modifierExtension">
+      <path value="Observation.referenceRange.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.low">
+      <path value="Observation.referenceRange.low"/>
+      <short value="Low Range, if relevant"/>
+      <definition value="The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is &lt;=2.3)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
+      </type>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.low"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.high">
+      <path value="Observation.referenceRange.high"/>
+      <short value="High Range, if relevant"/>
+      <definition value="The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
+      </type>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.high"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.type">
+      <path value="Observation.referenceRange.type"/>
+      <short value="Reference range qualifier"/>
+      <definition value="Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal range is assumed."/>
+      <requirements value="Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeMeaning"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Code for the meaning of a reference range."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-meaning"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.appliesTo">
+      <path value="Observation.referenceRange.appliesTo"/>
+      <short value="Reference range population"/>
+      <definition value="Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal population is assumed."/>
+      <requirements value="Need to be able to identify the target population for proper interpretation."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeType"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes identifying the population the reference range applies to."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-appliesto"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.age">
+      <path value="Observation.referenceRange.age"/>
+      <short value="Applicable age range, if relevant"/>
+      <definition value="The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so."/>
+      <requirements value="Some analytes vary greatly over age."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=PRCN].targetObservationCriterion[code=&quot;age&quot;].value"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.text">
+      <path value="Observation.referenceRange.text"/>
+      <short value="Text based reference range in an observation"/>
+      <definition value="Text based reference range in an observation which may be used when a quantitative range is not appropriate for an observation.  An example would be a reference value of &quot;Negative&quot; or a list or table of &#39;normals&#39;."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:ST"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related">
+      <path value="Observation.related"/>
+      <short value="Resource related to this observation"/>
+      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
+      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
+      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Relationships established by OBX-4 usage"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outBoundRelationship"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related.id">
+      <path value="Observation.related.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related.extension">
+      <path value="Observation.related.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related.modifierExtension">
+      <path value="Observation.related.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related.type">
+      <path value="Observation.related.type"/>
+      <short value="has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by"/>
+      <definition value="A code specifying the kind of relationship that exists with the target resource."/>
+      <comment value="The &quot;derived-from&quot; type is the only logical choice when referencing the QuestionnaireAnswer resource."/>
+      <requirements value="A relationship type SHOULD be provided."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRelationshipType"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes specifying how two observations are related."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".typeCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.related.target">
+      <path value="Observation.related.target"/>
+      <short value="Resource that is related to this one"/>
+      <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".targetObservation"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component">
+      <path value="Observation.component"/>
+      <slicing id="89">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding.code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Component results"/>
+      <definition value="Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations."/>
+      <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
+      <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="containment by OBX-4?"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outBoundRelationship[typeCode=COMP]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.id">
+      <path value="Observation.component.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.extension">
+      <path value="Observation.component.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.modifierExtension">
+      <path value="Observation.component.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.code">
+      <path value="Observation.component.code"/>
+      <short value="Type of component observation (code / type)"/>
+      <definition value="Describes what was observed. Sometimes this is called the observation &quot;code&quot;."/>
+      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCode"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying names of simple observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 363787002 |Observable entity| OR &#xD;&lt; 386053000 |Evaluation procedure|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="code"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="what"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <short value="Actual component result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from &lt;http://hl7.org/fhir/ValueSet/v2-0136&gt; (these &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed&quot;).  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type)."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="363714003 |Interprets| &lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.dataAbsentReason">
+      <path value="Observation.component.dataAbsentReason"/>
+      <short value="Why the component result is missing"/>
+      <definition value="Provides a reason why the expected value in the element Observation.value[x] is missing."/>
+      <comment value="&quot;Null&quot; or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  &quot;detected&quot;, &quot;not detected&quot;, &quot;inconclusive&quot;, or  &quot;test not done&quot;.   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code &quot;error&quot; could be used when the measurement was not completed.  Because of these options, use-case agreements are required to interpret general observations for exceptional values."/>
+      <requirements value="For many results it is necessary to handle exceptional values in measurements."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <condition value="obs-6"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationValueAbsentReason"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes specifying why the result (Observation.value[x]) is missing."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value.nullFlavor"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.interpretation">
+      <path value="Observation.component.interpretation"/>
+      <short value="High, low, normal, etc."/>
+      <definition value="The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag."/>
+      <comment value="The component interpretation applies only to the individual component value.  For an overall interpretation all components together use thes Observation.interpretation element."/>
+      <requirements value="For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result."/>
+      <alias value="Abnormal Flag"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-8"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363713009 |Has interpretation|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component.referenceRange">
+      <path value="Observation.component.referenceRange"/>
+      <short value="Provides guide for interpretation of component result"/>
+      <definition value="Guidance on how to interpret the value by comparison to a normal or recommended range."/>
+      <comment value="Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient&#39;s age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties."/>
+      <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
+      <min value="0"/>
+      <max value="*"/>
+      <contentReference value="#Observation.referenceRange"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent">
+      <path value="Observation.component"/>
+      <sliceName value="shr-finding-ObservationComponent"/>
+      <short value="Component results"/>
+      <definition value="Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations."/>
+      <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
+      <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="containment by OBX-4?"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outBoundRelationship[typeCode=COMP]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.id">
+      <path value="Observation.component.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.extension">
+      <path value="Observation.component.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.modifierExtension">
+      <path value="Observation.component.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.code">
+      <path value="Observation.component.code"/>
+      <short value="Type of component observation (code / type)"/>
+      <definition value="Describes what was observed. Sometimes this is called the observation &quot;code&quot;."/>
+      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCode"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying names of simple observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 363787002 |Observable entity| OR &#xD;&lt; 386053000 |Evaluation procedure|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="code"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="what"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <short value="Actual component result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.   For boolean values use valueCodeableConcept and select codes from &lt;http://hl7.org/fhir/ValueSet/v2-0136&gt; (these &quot;yes/no&quot; concepts can be mapped to the display name &quot;true/false&quot; or other mutually exclusive terms that may be needed&quot;).  The element, Observation.value[x], has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueRatio, valueChoice, valuePeriod, valueSampleData, or valueString (the name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type)."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="363714003 |Interprets| &lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.dataAbsentReason">
+      <path value="Observation.component.dataAbsentReason"/>
+      <short value="Why the component result is missing"/>
+      <definition value="Provides a reason why the expected value in the element Observation.value[x] is missing."/>
+      <comment value="&quot;Null&quot; or exceptional values can be represented two ways in FHIR Observations.  One way is to simply include them in the value set and represent the exceptions in the value.  For example, measurement values for a serology test could be  &quot;detected&quot;, &quot;not detected&quot;, &quot;inconclusive&quot;, or  &quot;test not done&quot;.   The alternate way is to use the value element for actual observations and use the explicit dataAbsentReason element to record exceptional values.  For example, the dataAbsentReason code &quot;error&quot; could be used when the measurement was not completed.  Because of these options, use-case agreements are required to interpret general observations for exceptional values."/>
+      <requirements value="For many results it is necessary to handle exceptional values in measurements."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <condition value="obs-6"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value.nullFlavor"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.interpretation">
+      <path value="Observation.component.interpretation"/>
+      <short value="High, low, normal, etc."/>
+      <definition value="The assessment made based on the result of the observation.  Intended as a simple compact code often placed adjacent to the result value in reports and flow sheets to signal the meaning/normalcy status of the result. Otherwise known as abnormal flag."/>
+      <comment value="The component interpretation applies only to the individual component value.  For an overall interpretation all components together use thes Observation.interpretation element."/>
+      <requirements value="For some results, particularly numeric results, an interpretation is necessary to fully understand the significance of a result."/>
+      <alias value="Abnormal Flag"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-8"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363713009 |Has interpretation|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange">
+      <path value="Observation.component.referenceRange"/>
+      <short value="Provides guide for interpretation of component result"/>
+      <definition value="Guidance on how to interpret the value by comparison to a normal or recommended range."/>
+      <comment value="Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient&#39;s age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties."/>
+      <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.id">
+      <path value="Observation.component.referenceRange.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.extension">
+      <path value="Observation.component.referenceRange.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.modifierExtension">
+      <path value="Observation.component.referenceRange.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.low">
+      <path value="Observation.component.referenceRange.low"/>
+      <short value="Low Range, if relevant"/>
+      <definition value="The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is &lt;=2.3)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
+      </type>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.low"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.high">
+      <path value="Observation.component.referenceRange.high"/>
+      <short value="High Range, if relevant"/>
+      <definition value="The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
+      </type>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.high"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.type">
+      <path value="Observation.component.referenceRange.type"/>
+      <short value="Reference range qualifier"/>
+      <definition value="Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal range is assumed."/>
+      <requirements value="Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeMeaning"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Code for the meaning of a reference range."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-meaning"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.appliesTo">
+      <path value="Observation.component.referenceRange.appliesTo"/>
+      <short value="Reference range population"/>
+      <definition value="Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal population is assumed."/>
+      <requirements value="Need to be able to identify the target population for proper interpretation."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeType"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying the population the reference range applies to."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-appliesto"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.age">
+      <path value="Observation.component.referenceRange.age"/>
+      <short value="Applicable age range, if relevant"/>
+      <definition value="The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so."/>
+      <requirements value="Some analytes vary greatly over age."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Range"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=PRCN].targetObservationCriterion[code=&quot;age&quot;].value"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.referenceRange.text">
+      <path value="Observation.component.referenceRange.text"/>
+      <short value="Text based reference range in an observation"/>
+      <definition value="Text based reference range in an observation which may be used when a quantitative range is not appropriate for an observation.  An example would be a reference value of &quot;Negative&quot; or a list or table of &#39;normals&#39;."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:ST"/>
+      </mapping>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="Observation:shr-condition-AcademicProblem">
+      <path value="Observation"/>
+      <short value="SHR AcademicProblem Profile"/>
+      <definition value="A problem with learning or behavior in a learning environment."/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:author">
+      <path value="Observation.extension"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:informant">
+      <path value="Observation.extension"/>
+      <sliceName value="informant"/>
+      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:focalsubject">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubject"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:evidence">
+      <path value="Observation.extension"/>
+      <sliceName value="evidence"/>
+      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:changeflag">
+      <path value="Observation.extension"/>
+      <sliceName value="changeflag"/>
+      <definition value="Indicator of significant change (delta) from the last or previous measurement."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:observationqualifier">
+      <path value="Observation.extension"/>
+      <sliceName value="observationqualifier"/>
+      <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationQualifier-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.extension:negationflag">
+      <path value="Observation.extension"/>
+      <sliceName value="negationflag"/>
+      <definition value="A flag that indicates the meaning to be conveyed is the logical opposite of the current assertion. The assertion is negated only when the NegationIndicator is true. If absent or false, the assertion is not negated."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-NegationFlag-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.category">
+      <path value="Observation.category"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCategory"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes for high level observation categories."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code">
+      <path value="Observation.code"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing id="88">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009">
+      <path value="Observation.code.coding"/>
+      <sliceName value="Fixed_385432009"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.system">
+      <path value="Observation.code.coding.system"/>
+      <fixedUri value="http://snomed.info/sct"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.code.coding:Fixed_385432009.code">
+      <path value="Observation.code.coding.code"/>
+      <fixedCode value="385432009"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.subject">
+      <path value="Observation.subject"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.context">
+      <path value="Observation.context"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.issued">
+      <path value="Observation.issued"/>
+      <min value="1"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="90">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.valueCodeableConcept:CodeableConcept">
+      <path value="Observation.valueCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.dataAbsentReason">
+      <path value="Observation.dataAbsentReason"/>
+      <max value="0"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.interpretation">
+      <path value="Observation.interpretation"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.bodySite">
+      <path value="Observation.bodySite"/>
+      <max value="0"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.specimen">
+      <path value="Observation.specimen"/>
+      <max value="0"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Specimen"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.device">
+      <path value="Observation.device"/>
+      <max value="0"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange">
+      <path value="Observation.referenceRange"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.low">
+      <path value="Observation.referenceRange.low"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.high">
+      <path value="Observation.referenceRange.high"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.appliesTo">
+      <path value="Observation.referenceRange.appliesTo"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeType"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes identifying the population the reference range applies to."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-appliesto"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.referenceRange.age">
+      <path value="Observation.referenceRange.age"/>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component">
+      <path value="Observation.component"/>
+      <slicing id="89">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding.code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent">
+      <path value="Observation.component"/>
+      <sliceName value="shr-finding-ObservationComponent"/>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
+      </type>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.dataAbsentReason">
+      <path value="Observation.component.dataAbsentReason"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-condition-AcademicProblem.component:shr-finding-ObservationComponent.interpretation">
+      <path value="Observation.component.interpretation"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
         </valueSetReference>
       </binding>
     </element>

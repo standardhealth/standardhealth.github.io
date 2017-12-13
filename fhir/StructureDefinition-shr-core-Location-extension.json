@@ -16,14 +16,14 @@
   "name": "SHR Location Extension",
   "title": "SHR Location Extension",
   "status": "draft",
-  "date": "2017-08-08T15:56:31.825Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
@@ -72,6 +72,12 @@
             "expression": "extension.exists() != value.exists()",
             "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])",
             "source": "Extension"
+          },
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-core-Location-extension SHALL have either extension('address') or extension('geoposition') or extension('geopoliticallocation')",
+            "expression": "( extension('address').url | extension('geoposition').url | extension('geopoliticallocation').url ).distinct().count() == 1"
           }
         ]
       },
@@ -103,13 +109,23 @@
         ]
       },
       {
-        "id": "Extension:location.extension:extension",
+        "id": "Extension:location.extension",
         "path": "Extension.extension",
-        "sliceName": "extension",
+        "slicing": {
+          "id": "25",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Extension",
         "definition": "An Extension",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "Element.extension",
           "min": 0,
@@ -122,6 +138,188 @@
         ]
       },
       {
+        "id": "Extension:location.extension:address",
+        "path": "Extension.extension",
+        "sliceName": "address",
+        "definition": "An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Address-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:geoposition",
+        "path": "Extension.extension",
+        "sliceName": "geoposition",
+        "definition": "The location on the surface of the Earth, described by a latitude and longitude (and optional altitude).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:geopoliticallocation",
+        "path": "Extension.extension",
+        "sliceName": "geopoliticallocation",
+        "definition": "The countries of the world and major geopolitical subregions, such as US states.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:relatedencounter",
+        "path": "Extension.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:author",
+        "path": "Extension.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:informant",
+        "path": "Extension.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:type",
+        "path": "Extension.extension",
+        "sliceName": "type",
+        "definition": "The most specific code (lowest level term) describing the kind or sort of thing being represented.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Type-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
         "id": "Extension:location.url",
         "path": "Extension.url",
         "representation": [
@@ -129,6 +327,7 @@
         ],
         "short": "identifies the meaning of the extension",
         "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
         "min": 1,
         "max": "1",
         "base": {
@@ -154,8 +353,8 @@
         "path": "Extension.value[x]",
         "short": "Value of extension",
         "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
-        "min": 1,
-        "max": "1",
+        "min": 0,
+        "max": "0",
         "base": {
           "path": "Extension.value[x]",
           "min": 0,
@@ -163,16 +362,118 @@
         },
         "type": [
           {
-            "code": "Address",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Address"
+            "code": "base64Binary"
           },
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"
+            "code": "boolean"
           },
           {
-            "code": "Address",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation"
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
           }
         ],
         "mapping": [
@@ -192,13 +493,113 @@
         "short": "SHR Location Extension",
         "definition": "A position, site, or point in space where something can be found.",
         "min": 0,
-        "max": "*"
+        "max": "*",
+        "constraint": [
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-core-Location-extension SHALL have either extension('address') or extension('geoposition') or extension('geopoliticallocation')",
+            "expression": "( extension('address').url | extension('geoposition').url | extension('geopoliticallocation').url ).distinct().count() == 1"
+          }
+        ]
       },
       {
-        "id": "Extension:location.extension:extension",
+        "id": "Extension:location.extension:address",
         "path": "Extension.extension",
-        "sliceName": "extension",
-        "max": "0"
+        "sliceName": "address",
+        "definition": "An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Address-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:geoposition",
+        "path": "Extension.extension",
+        "sliceName": "geoposition",
+        "definition": "The location on the surface of the Earth, described by a latitude and longitude (and optional altitude).",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:geopoliticallocation",
+        "path": "Extension.extension",
+        "sliceName": "geopoliticallocation",
+        "definition": "The countries of the world and major geopolitical subregions, such as US states.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:relatedencounter",
+        "path": "Extension.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:author",
+        "path": "Extension.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:informant",
+        "path": "Extension.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:location.extension:type",
+        "path": "Extension.extension",
+        "sliceName": "type",
+        "definition": "The most specific code (lowest level term) describing the kind or sort of thing being represented.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Type-extension"
+          }
+        ]
       },
       {
         "id": "Extension:location.url",
@@ -213,21 +614,8 @@
       {
         "id": "Extension:location.value[x]",
         "path": "Extension.value[x]",
-        "min": 1,
-        "type": [
-          {
-            "code": "Address",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Address"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"
-          },
-          {
-            "code": "Address",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GeopoliticalLocation"
-          }
-        ]
+        "min": 0,
+        "max": "0"
       }
     ]
   }

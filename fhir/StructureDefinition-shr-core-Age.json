@@ -3,7 +3,7 @@
   "id": "shr-core-Age",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Age Profile</b></p>\n  <p>How long something has existed (quantitative).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Age maps to Age:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Age Profile</b></p>\n  <p>How long something has existed in time.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Age maps to Age:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age",
   "identifier": [
@@ -15,19 +15,19 @@
   "version": "0.0.1",
   "name": "SHR Age Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:20.577Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "How long something has existed (quantitative).",
+  "description": "How long something has existed in time.",
   "fhirVersion": "3.0.1",
   "mapping": [
     {
@@ -52,7 +52,7 @@
         "id": "Age:shr-core-Age",
         "path": "Age",
         "short": "SHR Age Profile",
-        "definition": "How long something has existed (quantitative).",
+        "definition": "How long something has existed in time.",
         "comment": "The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator.",
         "min": 0,
         "max": "*",
@@ -151,6 +151,30 @@
           {
             "identity": "rim",
             "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Age:shr-core-Age.extension:comparator",
+        "path": "Age.extension",
+        "sliceName": "comparator",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "SHR Comparator Extension",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension"
           }
         ]
       },
@@ -339,13 +363,36 @@
         "id": "Age:shr-core-Age",
         "path": "Age",
         "short": "SHR Age Profile",
-        "definition": "How long something has existed (quantitative)."
+        "definition": "How long something has existed in time."
+      },
+      {
+        "id": "Age:shr-core-Age.extension:comparator",
+        "path": "Age.extension",
+        "sliceName": "comparator",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "SHR Comparator Extension",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Comparator-extension"
+          }
+        ]
       },
       {
         "id": "Age:shr-core-Age.value",
         "path": "Age.value",
-        "min": 1,
-        "max": "1"
+        "min": 1
       }
     ]
   }

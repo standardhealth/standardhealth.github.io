@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-core-Address"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Address Profile</b></p>\n  <p>An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Address maps to Address:\n  AddressLine maps to line\n  City maps to city\n  County maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  constrain use to 0..0\n  constrain type to 0..0\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Address Profile</b></p>\n  <p>An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Address maps to Address:\n  Purpose maps to use\n  Type maps to type\n  DisplayText maps to text\n  AddressLine maps to line\n  City maps to city\n  District maps to district\n  State maps to state\n  PostalCode maps to postalCode\n  Country maps to country\n  EffectiveTimePeriod maps to period\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Address"];
   fhir:StructureDefinition.identifier [
@@ -21,14 +21,14 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Address Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.586Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-12"^^xsd:date];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR)."];
@@ -174,7 +174,7 @@
        fhir:ElementDefinition.comment [ fhir:value "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old." ];
        fhir:ElementDefinition.requirements [ fhir:value "Allows an appropriate address to be chosen from a list of many." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "0" ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
@@ -219,7 +219,7 @@
        fhir:ElementDefinition.short [ fhir:value "postal | physical | both" ];
        fhir:ElementDefinition.definition [ fhir:value "Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "0" ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
@@ -550,28 +550,14 @@
        fhir:ElementDefinition.definition [ fhir:value "An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR)." ]
      ], [
        fhir:index 1;
-       fhir:Element.id [ fhir:value "Address:shr-core-Address.use" ];
-       fhir:ElementDefinition.path [ fhir:value "Address.use" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "0" ]
-     ], [
-       fhir:index 2;
-       fhir:Element.id [ fhir:value "Address:shr-core-Address.type" ];
-       fhir:ElementDefinition.path [ fhir:value "Address.type" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "0" ]
-     ], [
-       fhir:index 3;
        fhir:Element.id [ fhir:value "Address:shr-core-Address.line" ];
        fhir:ElementDefinition.path [ fhir:value "Address.line" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "2" ]
      ], [
-       fhir:index 4;
+       fhir:index 2;
        fhir:Element.id [ fhir:value "Address:shr-core-Address.country" ];
        fhir:ElementDefinition.path [ fhir:value "Address.country" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ]
   ] .
 

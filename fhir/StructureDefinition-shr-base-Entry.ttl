@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-base-Entry"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Entry Profile</b></p>\n  <p>An item inserted in an electronic record.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.base.Entry maps to DomainResource:\n  Narrative maps to text\n  EntryId maps to id\n  constrain meta to 1..1\n  Version maps to meta.versionId\n  EntryType maps to meta.profile\n  LastUpdateDate maps to meta.lastUpdated\n  Language maps to language\n  &lt;TBD &quot;SecurityLabel&quot;&gt; maps to meta.security\n  &lt;TBD &quot;Tag&quot;&gt; maps to meta.tag\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Entry Profile</b></p>\n  <p>Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.base.Entry maps to DomainResource:\n  EntryId maps to id\n  constrain meta to 1..1\n  Version maps to meta.versionId\n  EntryType maps to meta.profile\n  LastUpdated maps to meta.lastUpdated\n  Language maps to language\n  Narrative maps to text\n  SecurityLabel maps to meta.security\n  Tag maps to meta.tag\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Entry"];
   fhir:StructureDefinition.identifier [
@@ -21,17 +21,17 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Entry Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:20.628Z"^^xsd:dateTime];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-12"^^xsd:date];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
-  fhir:StructureDefinition.description [ fhir:value "An item inserted in an electronic record."];
+  fhir:StructureDefinition.description [ fhir:value "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded."];
   fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
@@ -50,7 +50,7 @@
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Entry Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "An item inserted in an electronic record." ];
+       fhir:ElementDefinition.definition [ fhir:value "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.constraint [
@@ -344,7 +344,7 @@
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" ];
            fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
          ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
          fhir:ElementDefinition.binding.description [ fhir:value "A human language." ];
          fhir:ElementDefinition.binding.valueSetReference [
            fhir:link <http://hl7.org/fhir/ValueSet/languages>;
@@ -375,8 +375,7 @@
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Narrative" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Narrative" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Narrative" ]
        ];
        fhir:ElementDefinition.condition [
          fhir:value "dom-1";
@@ -463,35 +462,19 @@
          fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
          fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
        ];
-       fhir:ElementDefinition.definition [ fhir:value "A unique, persistent identifier for the Standard Health Record to which this entry belongs." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
+       fhir:ElementDefinition.definition [ fhir:value "A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord." ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ShrId-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
        fhir:index 16;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:focalsubject" ];
+       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:personofrecord" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "focalsubject" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "personofrecord" ];
        fhir:ElementDefinition.slicing [
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
@@ -501,187 +484,19 @@
          fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
          fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
        ];
-       fhir:ElementDefinition.definition [ fhir:value "The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead)." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.definition [ fhir:value "The person this record belongs to." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PersonOfRecord-extension" ]
        ]
      ], [
        fhir:index 17;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag" ];
+       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:creationtime" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "subjectisthirdpartyflag" ];
-       fhir:ElementDefinition.slicing [
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
-       fhir:ElementDefinition.definition [ fhir:value "If true, the subject of this entry is someone other than the Person of Record, for example, a family member." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 18;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:informant" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "informant" ];
-       fhir:ElementDefinition.slicing [
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
-       fhir:ElementDefinition.definition [ fhir:value "The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 19;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:author" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "author" ];
-       fhir:ElementDefinition.slicing [
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
-       fhir:ElementDefinition.definition [ fhir:value "The person or organization who created the entry and is responsible for (and may certify) its content." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 20;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:associatedencounter" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "associatedencounter" ];
-       fhir:ElementDefinition.slicing [
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
-       fhir:ElementDefinition.definition [ fhir:value "The encounter or episode of care that led to creation of this entry." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssociatedEncounter-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
-       ]
-     ], [
-       fhir:index 21;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:originalcreationdate" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "originalcreationdate" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "creationtime" ];
        fhir:ElementDefinition.slicing [
          fhir:ElementDefinition.slicing.discriminator [
            fhir:index 0;
@@ -692,31 +507,15 @@
          fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
        ];
        fhir:ElementDefinition.definition [ fhir:value "The point in time when the information was recorded in the system of record." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-OriginalCreationDate-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.modifierExtension" ];
        fhir:ElementDefinition.slicing [
@@ -758,173 +557,93 @@
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Entry Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "An item inserted in an electronic record." ]
+       fhir:ElementDefinition.definition [ fhir:value "Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person's health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person's record, then the identity of the person of record must be recorded." ]
      ], [
        fhir:index 1;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.id" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.id" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 2;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.meta" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.meta" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 3;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.meta.lastUpdated" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.meta.lastUpdated" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 4;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.meta.profile" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.meta.profile" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "*" ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 5;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.language" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.language" ];
-       fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet" ];
-           fhir:Extension.valueReference [
-             fhir:link <http://hl7.org/fhir/ValueSet/all-languages>;
-             fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/all-languages" ]
-           ]
-         ], [
-           fhir:index 1;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "Language" ]
-         ], [
-           fhir:index 2;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" ];
-           fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "A human language." ];
-         fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/languages>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/languages" ]
-         ]
-       ]
-     ], [
-       fhir:index 6;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.text" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.text" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Narrative" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Narrative" ]
-       ]
-     ], [
-       fhir:index 7;
        fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:shrid" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
        fhir:ElementDefinition.sliceName [ fhir:value "shrid" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord." ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
          fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-ShrId-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
+       ]
      ], [
-       fhir:index 8;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:focalsubject" ];
+       fhir:index 6;
+       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:personofrecord" ];
        fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "focalsubject" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "personofrecord" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "The person this record belongs to." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-PersonOfRecord-extension" ]
+       ]
+     ], [
+       fhir:index 7;
+       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:creationtime" ];
+       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "creationtime" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "The point in time when the information was recorded in the system of record." ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-FocalSubject-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 9;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:subjectisthirdpartyflag" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "subjectisthirdpartyflag" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-SubjectIsThirdPartyFlag-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 10;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:informant" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "informant" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 11;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:author" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "author" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 12;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:associatedencounter" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "associatedencounter" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssociatedEncounter-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
-     ], [
-       fhir:index 13;
-       fhir:Element.id [ fhir:value "DomainResource:shr-base-Entry.extension:originalcreationdate" ];
-       fhir:ElementDefinition.path [ fhir:value "DomainResource.extension" ];
-       fhir:ElementDefinition.sliceName [ fhir:value "originalcreationdate" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-OriginalCreationDate-extension" ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ]
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension" ]
+       ]
      ]
   ] .
 

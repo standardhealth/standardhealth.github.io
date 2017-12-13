@@ -3,7 +3,7 @@
   "id": "shr-core-OrganizationalIdentifier",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR OrganizationalIdentifier Profile</b></p>\n  <p>Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.OrganizationalIdentifier maps to Identifier:\n  string maps to value\n  TimePeriod maps to period\n  Organization maps to assigner\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR OrganizationalIdentifier Profile</b></p>\n  <p>A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.OrganizationalIdentifier maps to Identifier:\n  string maps to value\n  Purpose maps to use\n  Type maps to type\n  CodeSystem maps to system \n  EffectiveTimePeriod maps to period\n  Issuer maps to assigner\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OrganizationalIdentifier",
   "identifier": [
@@ -15,19 +15,19 @@
   "version": "0.0.1",
   "name": "SHR OrganizationalIdentifier Profile",
   "status": "draft",
-  "date": "2017-08-08T15:56:20.625Z",
+  "date": "2017-12-12",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.",
+  "description": "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided.",
   "purpose": "Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation.",
   "fhirVersion": "3.0.1",
   "mapping": [
@@ -58,7 +58,7 @@
         "id": "Identifier:shr-core-OrganizationalIdentifier",
         "path": "Identifier",
         "short": "SHR OrganizationalIdentifier Profile",
-        "definition": "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.",
+        "definition": "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided.",
         "min": 0,
         "max": "*",
         "condition": [
@@ -156,6 +156,54 @@
           {
             "identity": "rim",
             "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Identifier:shr-core-OrganizationalIdentifier.extension:timeperiod",
+        "path": "Identifier.extension",
+        "sliceName": "timeperiod",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Identifier:shr-core-OrganizationalIdentifier.extension:organization",
+        "path": "Identifier.extension",
+        "sliceName": "organization",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "A social or legal structure formed by human beings.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension"
           }
         ]
       },
@@ -321,8 +369,7 @@
         "max": "1",
         "type": [
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Period"
           }
         ],
         "isSummary": true,
@@ -352,7 +399,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization"
           }
         ],
         "isSummary": true,
@@ -379,23 +426,60 @@
         "id": "Identifier:shr-core-OrganizationalIdentifier",
         "path": "Identifier",
         "short": "SHR OrganizationalIdentifier Profile",
-        "definition": "Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period."
+        "definition": "A code identifying a specific organization. The NPI should be provided, if available. Other business identifiers, such employer tax ID, or MVX code for vaccine manufacturers, should also be provided."
+      },
+      {
+        "id": "Identifier:shr-core-OrganizationalIdentifier.extension:timeperiod",
+        "path": "Identifier.extension",
+        "sliceName": "timeperiod",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "A period of time defined by a start and end time, date, or year. If the start element is missing, the start of the period is not known. If the end element is missing, it means that the period is ongoing, or the start may be in the past, and the end date in the future, which means that period is expected/planned to end at the specified time. The end value includes any matching date/time. For example, the period 2011-05-23 to 2011-05-27 includes all the times from the start of the 23rd May through to the end of the 27th of May.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension"
+          }
+        ]
+      },
+      {
+        "id": "Identifier:shr-core-OrganizationalIdentifier.extension:organization",
+        "path": "Identifier.extension",
+        "sliceName": "organization",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "A social or legal structure formed by human beings.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension"
+          }
+        ]
       },
       {
         "id": "Identifier:shr-core-OrganizationalIdentifier.value",
         "path": "Identifier.value",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Identifier:shr-core-OrganizationalIdentifier.period",
-        "path": "Identifier.period",
-        "type": [
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          }
-        ]
+        "min": 1
       },
       {
         "id": "Identifier:shr-core-OrganizationalIdentifier.assigner",
@@ -403,7 +487,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Organization"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization"
           }
         ]
       }
