@@ -5,7 +5,7 @@
   <text>
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
   <p><b>SHR ONCSmokingStatus Profile</b></p>
-  <p>Records the subject's use of tobacco.</p>
+  <p>Records the extent of the subject's use of tobacco.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.behavior.ONCSmokingStatus maps to Observation:
   Entry.FocalSubject maps to subject
@@ -31,9 +31,36 @@
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
   Interpretation maps to interpretation
+<<<<<<< HEAD
   Comment maps to comment
   constrain component to 0..0
   PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
+=======
+  Details maps to comment
+  ReferenceRange maps to referenceRange
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  fix related.type to #has-member
+  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  ObservationComponent.ObservationCode maps to component.code
+  ObservationComponent.Quantity maps to component.value[x]
+  ObservationComponent.CodeableConcept maps to component.value[x]
+  ObservationComponent.string maps to component.value[x]
+  ObservationComponent.Range maps to component.value[x]
+  ObservationComponent.Ratio maps to component.value[x]
+  ObservationComponent.Attachment maps to component.value[x]
+  ObservationComponent.time maps to component.value[x]
+  ObservationComponent.dateTime maps to component.value[x]
+  ObservationComponent.TimePeriod maps to component.value[x]
+  ObservationComponent.IntegerQuantity maps to component.value[x]
+  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  ObservationComponent.Interpretation maps to component.interpretation
+  ObservationComponent.ReferenceRange maps to component.referenceRange
+  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+>>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -45,7 +72,11 @@
   <version value="0.0.1"/>
   <name value="SHR ONCSmokingStatus Profile"/>
   <status value="draft"/>
+<<<<<<< HEAD
   <date value="2017-08-08T15:56:23.016Z"/>
+=======
+  <date value="2017-12-19"/>
+>>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -53,8 +84,19 @@
       <value value="http://www.standardhealthrecord.org"/>
     </telecom>
   </contact>
+<<<<<<< HEAD
   <description value="Records the subject&#39;s use of tobacco."/>
   <purpose value="Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms."/>
+=======
+  <description value="Records the extent of the subject&#39;s use of tobacco."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States Minor Outlying Islands (the)"/>
+    </coding>
+  </jurisdiction>
+>>>>>>> 92b20c342... 12/19/17 updates
   <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="workflow"/>
@@ -95,7 +137,7 @@
     <element id="Observation:shr-behavior-ONCSmokingStatus">
       <path value="Observation"/>
       <short value="SHR ONCSmokingStatus Profile"/>
-      <definition value="Records the subject&#39;s use of tobacco."/>
+      <definition value="Records the extent of the subject&#39;s use of tobacco."/>
       <comment value="Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc."/>
       <alias value="Vital Signs"/>
       <alias value="Measurement"/>
@@ -309,7 +351,11 @@
     </element>
     <element id="Observation:shr-behavior-ONCSmokingStatus.extension">
       <path value="Observation.extension"/>
+<<<<<<< HEAD
       <slicing id="71">
+=======
+      <slicing id="138">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -379,7 +425,33 @@
       </base>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.extension:evidence">
+      <path value="Observation.extension"/>
+      <sliceName value="evidence"/>
+      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -629,11 +701,28 @@
         <map value="N/A"/>
       </mapping>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-behavior-ONCSmokingStatus.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension">
       <path value="Observation.modifierExtension.extension.extension"/>
       <sliceName value="extension"/>
       <short value="Extension"/>
       <definition value="An Extension"/>
+=======
+    <element id="Observation:shr-behavior-ONCSmokingStatus.category">
+      <path value="Observation.category"/>
+      <slicing id="137">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Classification of  type of observation"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what observations are retrieved and displayed."/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="0"/>
       <base>
@@ -699,6 +788,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-behavior-ONCSmokingStatus.modifierExtension:nonoccurrencemodifier.url">
       <path value="Observation.modifierExtension.url"/>
       <representation value="xmlAttr"/>
@@ -711,6 +801,24 @@
         <min value="1"/>
         <max value="1"/>
       </base>
+=======
+    <element id="Observation:shr-behavior-ONCSmokingStatus.category:Includes_54511-1.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="136">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="uri"/>
       </type>
@@ -1868,6 +1976,7 @@
       <type>
         <code value="code"/>
       </type>
+      <fixedCode value="has-member"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRelationshipType"/>
@@ -1893,9 +2002,20 @@
       <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
       <min value="1"/>
       <max value="1"/>
+<<<<<<< HEAD
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+=======
+      <base>
+        <path value="Observation.related.target"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2185,7 +2305,23 @@
     <element id="Observation:shr-behavior-ONCSmokingStatus">
       <path value="Observation"/>
       <short value="SHR ONCSmokingStatus Profile"/>
+<<<<<<< HEAD
       <definition value="Records the subject&#39;s use of tobacco."/>
+=======
+      <definition value="Records the extent of the subject&#39;s use of tobacco."/>
+      <mustSupport value="false"/>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.extension:author">
+      <path value="Observation.extension"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+      </type>
+>>>>>>> 92b20c342... 12/19/17 updates
     </element>
     <element id="Observation:shr-behavior-ONCSmokingStatus.extension:reason">
       <path value="Observation.extension"/>
@@ -2207,7 +2343,33 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.extension:evidence">
+      <path value="Observation.extension"/>
+      <sliceName value="evidence"/>
+      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2286,10 +2448,21 @@
     </element>
     <element id="Observation:shr-behavior-ONCSmokingStatus.category">
       <path value="Observation.category"/>
+<<<<<<< HEAD
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+=======
+      <slicing id="137">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
       <binding>
         <strength value="extensible"/>
         <valueSetReference>
@@ -2316,6 +2489,7 @@
         </valueSetReference>
       </binding>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-behavior-ONCSmokingStatus.subject">
       <path value="Observation.subject"/>
       <min value="1"/>
@@ -2324,6 +2498,18 @@
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
       </type>
+=======
+    <element id="Observation:shr-behavior-ONCSmokingStatus.category:Includes_54511-1.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="136">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
     </element>
     <element id="Observation:shr-behavior-ONCSmokingStatus.context">
       <path value="Observation.context"/>
@@ -2444,6 +2630,20 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.related">
+      <path value="Observation.related"/>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.related.type">
+      <path value="Observation.related.type"/>
+      <fixedCode value="has-member"/>
+    </element>
+    <element id="Observation:shr-behavior-ONCSmokingStatus.related.target">
+      <path value="Observation.related.target"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
       </type>
     </element>
     <element id="Observation:shr-behavior-ONCSmokingStatus.component">

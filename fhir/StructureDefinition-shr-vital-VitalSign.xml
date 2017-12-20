@@ -37,8 +37,33 @@
   BodyPosition maps to http://hl7.org/fhir/StructureDefinition/observation-bodyPosition
   Device maps to device
   ReferenceRange maps to referenceRange
+<<<<<<< HEAD
   ChangeFlag maps to http://hl7.org/fhir/StructureDefinition/observation-delta
   TestRequest maps to basedOn
+=======
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  fix related.type to #has-member
+  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  ObservationComponent.ObservationCode maps to component.code
+  ObservationComponent.Quantity maps to component.value[x]
+  ObservationComponent.CodeableConcept maps to component.value[x]
+  ObservationComponent.string maps to component.value[x]
+  ObservationComponent.Range maps to component.value[x]
+  ObservationComponent.Ratio maps to component.value[x]
+  ObservationComponent.Attachment maps to component.value[x]
+  ObservationComponent.time maps to component.value[x]
+  ObservationComponent.dateTime maps to component.value[x]
+  ObservationComponent.TimePeriod maps to component.value[x]
+  ObservationComponent.IntegerQuantity maps to component.value[x]
+  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  ObservationComponent.Interpretation maps to component.interpretation
+  ObservationComponent.ReferenceRange maps to component.referenceRange
+  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+>>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -50,7 +75,11 @@
   <version value="0.0.1"/>
   <name value="SHR VitalSign Profile"/>
   <status value="draft"/>
+<<<<<<< HEAD
   <date value="2017-08-08T15:56:38.661Z"/>
+=======
+  <date value="2017-12-19"/>
+>>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -313,7 +342,11 @@
     </element>
     <element id="Observation:shr-vital-VitalSign.extension">
       <path value="Observation.extension"/>
+<<<<<<< HEAD
       <slicing id="437">
+=======
+      <slicing id="581">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -409,7 +442,22 @@
       </base>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -548,7 +596,71 @@
       </type>
       <mustSupport value="true"/>
       <isModifier value="true"/>
+<<<<<<< HEAD
       <isSummary value="false"/>
+=======
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationStatus"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes providing the status of an observation."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-status"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.status"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 445584004 |Report by finality status|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-11"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="status  Amended &amp; Final are differentiated by whether it is the subject of a ControlAct event with a type of &quot;revise&quot;"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="status"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.category">
+      <path value="Observation.category"/>
+      <slicing id="579">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Classification of  type of observation"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what observations are retrieved and displayed."/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCategory"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes for high level observation categories."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+        </valueSetReference>
+      </binding>
+>>>>>>> 92b20c342... 12/19/17 updates
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -597,6 +709,7 @@
         <code value="Extension"/>
       </type>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-VitalSign.modifierExtension:nonoccurrencemodifier.extension:boolean">
       <path value="Observation.modifierExtension.extension"/>
       <sliceName value="boolean"/>
@@ -608,6 +721,24 @@
         <min value="0"/>
         <max value="1"/>
       </base>
+=======
+    <element id="Observation:shr-vital-VitalSign.category:Includes_vital-signs.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="578">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"/>
@@ -1244,6 +1375,17 @@
     </element>
     <element id="Observation:shr-vital-VitalSign.value[x]">
       <path value="Observation.value[x]"/>
+<<<<<<< HEAD
+=======
+      <slicing id="580">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
@@ -1846,6 +1988,7 @@
       <type>
         <code value="code"/>
       </type>
+      <fixedCode value="has-member"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRelationshipType"/>
@@ -1873,7 +2016,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
+<<<<<<< HEAD
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+=======
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2198,7 +2345,22 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2243,6 +2405,7 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-VitalSign.modifierExtension:nonoccurrencemodifier">
       <path value="Observation.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
@@ -2255,6 +2418,20 @@
       <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="false"/>
+=======
+    <element id="Observation:shr-vital-VitalSign.category">
+      <path value="Observation.category"/>
+      <slicing id="579">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -2275,8 +2452,26 @@
       <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-VitalSign.basedOn">
       <path value="Observation.basedOn"/>
+=======
+    <element id="Observation:shr-vital-VitalSign.category:Includes_vital-signs.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="578">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.category:Includes_vital-signs.coding:Fixed_vital-signs">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_vital-signs"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2350,8 +2545,21 @@
       <min value="1"/>
       <max value="1"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-VitalSign.performer">
       <path value="Observation.performer"/>
+=======
+    <element id="Observation:shr-vital-VitalSign.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="580">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
@@ -2438,6 +2646,20 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.related">
+      <path value="Observation.related"/>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.related.type">
+      <path value="Observation.related.type"/>
+      <fixedCode value="has-member"/>
+    </element>
+    <element id="Observation:shr-vital-VitalSign.related.target">
+      <path value="Observation.related.target"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
       </type>
     </element>
     <element id="Observation:shr-vital-VitalSign.component">
