@@ -7,20 +7,22 @@
   <p><b>SHR Injury Profile</b></p>
   <p>Damage inflicted on the body by an external force.</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.condition.Injury maps to Condition:
-  Entry.Informant maps to asserter
-  Entry.OriginalCreationDate maps to assertedDate
-  SpecificType maps to code
+  <p><pre>shr.condition.Injury maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition:
+  RelatedEncounter maps to context
+  Informant maps to asserter
+  Subject maps to subject
+  Entry.CreationTime maps to assertedDate
+  CodeableConcept maps to code
   Category maps to category
   ClinicalStatus maps to clinicalStatus
   Onset maps to onset[x]
   Abatement maps to abatement[x]
-  BodySite.CodeableConcept maps to bodySite   // Condition only uses a CodeableConcept, not a full BodySite resource
+  BodySiteOrCode.CodeableConcept maps to bodySite   
+  BodySiteOrCode.BodySite maps to http://hl7.org/fhir/StructureDefinition/body-structure
   Severity maps to severity
   Stage maps to stage
   Stage.CodeableConcept maps to stage.summary
-  Observation maps to evidence
-  Observation.SpecificType maps to evidence.code
+  Evidence maps to evidence
 </pre></p>
 </div>
   </text>
@@ -32,20 +34,28 @@
   <version value="0.0.1"/>
   <name value="SHR Injury Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:31.783Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="Damage inflicted on the body by an external force."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States Minor Outlying Islands (the)"/>
+    </coding>
+  </jurisdiction>
   <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="argonaut-dq-dstu2"/>
+    <uri value="http://unknown.org/Argonaut DQ DSTU2"/>
+    <name value="Argonaut DQ DSTU2"/>
+  </mapping>
   <mapping>
     <identity value="sct-concept"/>
     <uri value="http://snomed.info/conceptdomain"/>
@@ -74,7 +84,7 @@
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Condition"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+  <baseDefinition value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"/>
   <derivation value="constraint"/>
   <snapshot>
     <element id="Condition:shr-condition-Injury">
@@ -83,6 +93,11 @@
       <definition value="Damage inflicted on the body by an external force."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <constraint>
         <key value="dom-2"/>
         <severity value="error"/>
@@ -121,6 +136,7 @@
         <human value="If condition is abated, then clinicalStatus must be either inactive, resolved, or remission"/>
         <expression value="abatement.empty() or (abatement as boolean).not()  or clinicalStatus=&#39;resolved&#39; or clinicalStatus=&#39;remission&#39; or clinicalStatus=&#39;inactive&#39;"/>
         <xpath value="not(f:abatementBoolean/@value=true() or (not(exists(f:abatementBoolean)) and exists(*[starts-with(local-name(.), &#39;abatement&#39;)])) or f:clinicalStatus/@value=(&#39;resolved&#39;, &#39;remission&#39;, &#39;inactive&#39;))"/>
+        <source value="Condition"/>
       </constraint>
       <constraint>
         <key value="con-3"/>
@@ -128,7 +144,19 @@
         <human value="Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error"/>
         <expression value="verificationStatus=&#39;entered-in-error&#39; or clinicalStatus.exists()"/>
         <xpath value="f:verificationStatus/@value=&#39;entered-in-error&#39; or exists(f:clinicalStatus)"/>
+        <source value="Condition"/>
       </constraint>
+      <constraint>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice">
+          <valueBoolean value="true"/>
+        </extension>
+        <key value="us-core-1"/>
+        <severity value="warning"/>
+        <human value="A code in Condition.category SHOULD be from US Core Condition Category Codes value set."/>
+        <expression value="where(category in &#39;http://hl7.org/fhir/us/core/ValueSet/us-core-condition-category&#39;).exists()"/>
+        <xpath value="(no xpath equivalent)"/>
+      </constraint>
+      <mustSupport value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="Entity. Role, or Act"/>
@@ -148,6 +176,10 @@
       <mapping>
         <identity value="w5"/>
         <map value="clinical.general"/>
+      </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition"/>
       </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.id">
@@ -285,11 +317,7 @@
     </element>
     <element id="Condition:shr-condition-Injury.extension">
       <path value="Condition.extension"/>
-<<<<<<< HEAD
-      <slicing id="249">
-=======
       <slicing id="92">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -317,15 +345,8 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Condition:shr-condition-Injury.extension:includeonproblemlist">
+    <element id="Condition:shr-condition-Injury.extension:bodysite">
       <path value="Condition.extension"/>
-<<<<<<< HEAD
-      <sliceName value="includeonproblemlist"/>
-      <definition value="Whether or not to include this condition on the subject&#39;s current problem list."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-=======
       <sliceName value="bodysite"/>
       <definition value="A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart."/>
       <min value="0"/>
@@ -383,99 +404,124 @@
       <path value="Condition.extension"/>
       <sliceName value="findingstatus"/>
       <definition value="Indicates whether the finding is preliminary, amended, final, etc.."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.extension:whenclinicallyrecognized">
       <path value="Condition.extension"/>
       <sliceName value="whenclinicallyrecognized"/>
       <definition value="The time at which a condition or condition was first identified in a healthcare context."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.extension:preexisting">
       <path value="Condition.extension"/>
       <sliceName value="preexisting"/>
       <definition value="If the problem or condition existed before the current episode of care."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.extension:criticality">
       <path value="Condition.extension"/>
       <sliceName value="criticality"/>
       <definition value="The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
+      </type>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:criticality.id">
+      <path value="Condition.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="DomainResource.extension"/>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:criticality.extension:extension">
+      <path value="Condition.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:criticality.url">
+      <path value="Condition.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:criticality.valueCode">
+      <path value="Condition.extension.valueCode"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"/>
+        </valueSetReference>
+      </binding>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -485,53 +531,23 @@
       <path value="Condition.extension"/>
       <sliceName value="setting"/>
       <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.extension:location">
       <path value="Condition.extension"/>
       <sliceName value="location"/>
       <definition value="A position, site, or point in space where something can be found."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.modifierExtension">
       <path value="Condition.modifierExtension"/>
@@ -563,6 +579,11 @@
       <requirements value="Need to allow connection to a wider workflow."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Identifier"/>
       </type>
@@ -583,19 +604,21 @@
       <comment value="This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.clinicalStatus"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
       <condition value="con-3"/>
       <condition value="con-4"/>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionClinicalStatus"/>
-        </extension>
         <strength value="required"/>
-        <description value="The clinical status of the condition or diagnosis."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/condition-clinical"/>
         </valueSetReference>
@@ -616,27 +639,33 @@
         <identity value="w5"/>
         <map value="status"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition.clinicalStatus"/>
+      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.verificationStatus">
       <path value="Condition.verificationStatus"/>
       <short value="provisional | differential | confirmed | refuted | entered-in-error | unknown"/>
       <definition value="The verification status to support the clinical status of the condition."/>
       <comment value="verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.&#xA;&#xA;This element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.verificationStatus"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
       <defaultValueCode value="unknown"/>
       <condition value="con-3"/>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ConditionVerificationStatus"/>
-        </extension>
         <strength value="required"/>
-        <description value="The verification status to support or decline the clinical status of the condition or diagnosis."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/condition-ver-status"/>
         </valueSetReference>
@@ -661,18 +690,27 @@
         <identity value="w5"/>
         <map value="status"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition.verificationStatus"/>
+      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.category">
       <path value="Condition.category"/>
       <short value="problem-list-item | encounter-diagnosis"/>
       <definition value="A category assigned to the condition."/>
       <comment value="The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.category"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <mustSupport value="true"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -695,6 +733,10 @@
         <identity value="w5"/>
         <map value="class"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition.category"/>
+      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.severity">
       <path value="Condition.severity"/>
@@ -703,9 +745,13 @@
       <comment value="Coding of the severity with a terminology is preferred, where possible."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.severity"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -746,15 +792,21 @@
       <alias value="type"/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.code"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <binding>
-        <strength value="preferred"/>
+        <strength value="extensible"/>
+        <description value="Valueset to describe the actual problem experienced by the patient"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://hl7.org/fhir/us/core/ValueSet/us-core-problem"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -777,6 +829,10 @@
         <identity value="w5"/>
         <map value="what"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition.code"/>
+      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.bodySite">
       <path value="Condition.bodySite"/>
@@ -785,9 +841,13 @@
       <comment value="Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [body-site-instance](extension-body-site-instance.html).  May be a summary code, or a reference to a very precise definition of the location, or both."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.bodySite"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -817,14 +877,16 @@
       <alias value="patient"/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.subject"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -838,6 +900,10 @@
         <identity value="w5"/>
         <map value="who.focus"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Condition.patient"/>
+      </mapping>
     </element>
     <element id="Condition:shr-condition-Injury.context">
       <path value="Condition.context"/>
@@ -847,13 +913,14 @@
       <alias value="encounter"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.context"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -876,20 +943,20 @@
       <comment value="Age is generally used when the patient reports an age at which the Condition began to occur."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.onset[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="dateTime"/>
       </type>
       <type>
         <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"/>
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -912,20 +979,20 @@
       <comment value="There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.abatement[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="dateTime"/>
       </type>
       <type>
         <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"/>
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
       <condition value="con-4"/>
       <mapping>
@@ -944,6 +1011,11 @@
       <comment value="The assertedDate represents the date when this particular Condition record was created in the EHR, not the date of the most recent update in terms of when severity, abatement, etc. were specified. &#xA0;The date of the last record modification can be retrieved from the resource metadata."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.assertedDate"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="dateTime"/>
       </type>
@@ -967,17 +1039,18 @@
       <definition value="Individual who is making the condition statement."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.asserter"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -999,6 +1072,11 @@
       <definition value="Clinical stage or grade of a condition. May include formal severity assessments."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.stage"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1095,9 +1173,13 @@
       <definition value="A simple summary of the stage such as &quot;Stage 3&quot;. The determination of the stage is disease-specific."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Condition.stage.summary"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="con-1"/>
       <binding>
@@ -1129,6 +1211,11 @@
       <definition value="Reference to a formal record of the evidence on which the staging assessment is based."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.stage.assessment"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/ClinicalImpression"/>
@@ -1154,6 +1241,11 @@
       <comment value="The evidence may be a simple list of coded symptoms/manifestations, or references to observations or formal assessments, or both."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.evidence"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1250,16 +1342,24 @@
       <definition value="A manifestation or symptom that led to the recording of this condition."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.evidence.code"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="con-2"/>
       <isSummary value="true"/>
       <binding>
-        <strength value="preferred"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ManifestationOrSymptom"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes that describe the manifestation or symptoms of a condition."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/manifestation-or-symptom"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1281,6 +1381,11 @@
       <definition value="Links to other relevant information, including pathology reports."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.evidence.detail"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
@@ -1302,6 +1407,11 @@
       <definition value="Additional information about the Condition. This is a general notes/comments entry  for description of the Condition, its diagnosis and prognosis."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Condition.note"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Annotation"/>
       </type>
@@ -1320,17 +1430,38 @@
       <path value="Condition"/>
       <short value="SHR Injury Profile"/>
       <definition value="Damage inflicted on the body by an external force."/>
+      <mustSupport value="false"/>
     </element>
-    <element id="Condition:shr-condition-Injury.extension:includeonproblemlist">
+    <element id="Condition:shr-condition-Injury.extension:bodysite">
       <path value="Condition.extension"/>
-      <sliceName value="includeonproblemlist"/>
+      <sliceName value="bodysite"/>
+      <definition value="A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-<<<<<<< HEAD
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension"/>
-=======
+        <profile value="http://hl7.org/fhir/StructureDefinition/body-structure"/>
+      </type>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:author">
+      <path value="Condition.extension"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+      </type>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:focalsubject">
+      <path value="Condition.extension"/>
+      <sliceName value="focalsubject"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
       </type>
     </element>
@@ -1365,76 +1496,71 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"/>
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Condition:shr-condition-Injury.extension:whenclinicallyrecognized">
       <path value="Condition.extension"/>
       <sliceName value="whenclinicallyrecognized"/>
+      <definition value="The time at which a condition or condition was first identified in a healthcare context."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Condition:shr-condition-Injury.extension:preexisting">
       <path value="Condition.extension"/>
       <sliceName value="preexisting"/>
+      <definition value="If the problem or condition existed before the current episode of care."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Preexisting-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Condition:shr-condition-Injury.extension:criticality">
       <path value="Condition.extension"/>
       <sliceName value="criticality"/>
+      <definition value="The potential clinical harm associated with a condition. When the worst case result is assessed to have a life-threatening or organ system threatening potential, it is considered to be of high criticality."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+    </element>
+    <element id="Condition:shr-condition-Injury.extension:criticality.valueCode">
+      <path value="Condition.extension.valueCode"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="Condition:shr-condition-Injury.extension:setting">
       <path value="Condition.extension"/>
       <sliceName value="setting"/>
+      <definition value="Description of the place or type of surroundings where something is positioned or where an event takes place."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Setting-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Condition:shr-condition-Injury.extension:location">
       <path value="Condition.extension"/>
       <sliceName value="location"/>
+      <definition value="A position, site, or point in space where something can be found."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Location-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Condition:shr-condition-Injury.clinicalStatus">
       <path value="Condition.clinicalStatus"/>
@@ -1443,10 +1569,6 @@
     </element>
     <element id="Condition:shr-condition-Injury.category">
       <path value="Condition.category"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -1456,10 +1578,6 @@
     </element>
     <element id="Condition:shr-condition-Injury.severity">
       <path value="Condition.severity"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ConditionSeverity"/>
@@ -1471,33 +1589,28 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="Condition:shr-condition-Injury.code">
-      <path value="Condition.code"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
     <element id="Condition:shr-condition-Injury.bodySite">
       <path value="Condition.bodySite"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
           <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
+    </element>
+    <element id="Condition:shr-condition-Injury.subject">
+      <path value="Condition.subject"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+      </type>
+    </element>
+    <element id="Condition:shr-condition-Injury.context">
+      <path value="Condition.context"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
+      </type>
     </element>
     <element id="Condition:shr-condition-Injury.onset[x]">
       <path value="Condition.onset[x]"/>
@@ -1506,15 +1619,10 @@
       </type>
       <type>
         <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"/>
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
     </element>
     <element id="Condition:shr-condition-Injury.abatement[x]">
@@ -1524,15 +1632,10 @@
       </type>
       <type>
         <code value="Age"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"/>
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-      <type>
-        <code value="Range"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"/>
       </type>
     </element>
     <element id="Condition:shr-condition-Injury.assertedDate">
@@ -1544,42 +1647,12 @@
       <path value="Condition.asserter"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-Injury.stage">
-      <path value="Condition.stage"/>
-    </element>
-    <element id="Condition:shr-condition-Injury.stage.summary">
-      <path value="Condition.stage.summary"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Condition:shr-condition-Injury.evidence">
-      <path value="Condition.evidence"/>
-    </element>
-    <element id="Condition:shr-condition-Injury.evidence.code">
-      <path value="Condition.evidence.code"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
     </element>
   </differential>
 </StructureDefinition>

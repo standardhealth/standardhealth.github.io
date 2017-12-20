@@ -7,20 +7,27 @@
   <p><b>SHR SubstanceAbuseTreatment Profile</b></p>
   <p>The treatment program used to address a substance abuse problem.</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.behavior.SubstanceAbuseTreatment maps to Procedure:
-  SpecificType maps to code
-  Status maps to status
-  NonOccurrenceModifier maps to notDone
-  NonOccurrenceModifier.Reason maps to notDoneReason
-  OccurrenceTime.dateTime maps to performed[x].dateTime
-  OccurrenceTime.TimePeriod maps to performed[x].Period
-  Participant maps to performer
-  Participant.PersonOfRecord maps to performer.actor
-  Participant.Practitioner maps to performer.actor
-  Participant.RelatedPerson maps to performer.actor
-  Participant.ParticipationType maps to performer.role
-  Facility maps to location
-  Reason maps to reasonCode
+  <p><pre>shr.behavior.SubstanceAbuseTreatment maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure:
+  RelatedEncounter maps to context
+  Type maps to code
+  Subject maps to subject
+  Category maps to category
+  PerformedContext.Reason maps to reasonCode
+  constrain notDone to 0..0
+  constrain notDoneReason to 0..0
+  BodySite maps to bodySite
+  PartOf maps to partOf
+  Annotation maps to note
+  PerformedContext.OccurrenceTimeOrPeriod.dateTime maps to performed[x].dateTime
+  PerformedContext.OccurrenceTimeOrPeriod.TimePeriod maps to performed[x].Period
+  PerformedContext.Participant maps to performer.actor
+  PerformedContext.Participant.ParticipationType maps to performer.role
+  PerformedContext.Participant.OnBehalfOf maps to performer.onBehalfOf
+  PerformedContext.Status maps to status
+  PerformedContext.RelatedRequest maps to basedOn
+  PerformedContext.RelatedPlan maps to definition
+  PerformedContext.Outcome maps to outcome
+  PerformedContext.Facility maps to location
 </pre></p>
 </div>
   </text>
@@ -32,20 +39,28 @@
   <version value="0.0.1"/>
   <name value="SHR SubstanceAbuseTreatment Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:26.183Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="The treatment program used to address a substance abuse problem."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States Minor Outlying Islands (the)"/>
+    </coding>
+  </jurisdiction>
   <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="argonaut-dq-dstu2"/>
+    <uri value="http://unknown.org/Argonaut DQ DSTU2"/>
+    <name value="Argonaut DQ DSTU2"/>
+  </mapping>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -64,7 +79,7 @@
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Procedure"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+  <baseDefinition value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"/>
   <derivation value="constraint"/>
   <snapshot>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment">
@@ -73,6 +88,11 @@
       <definition value="The treatment program used to address a substance abuse problem."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <constraint>
         <key value="dom-2"/>
         <severity value="error"/>
@@ -111,7 +131,9 @@
         <human value="Reason not done is only permitted if notDone indicator is true"/>
         <expression value="notDoneReason.empty() or notDone = true"/>
         <xpath value="not(exists(f:notDoneReason)) or f:notDone/@value=true()"/>
+        <source value="Procedure"/>
       </constraint>
+      <mustSupport value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="Entity. Role, or Act"/>
@@ -123,6 +145,10 @@
       <mapping>
         <identity value="w5"/>
         <map value="clinical.general"/>
+      </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Procedure"/>
       </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.id">
@@ -260,11 +286,7 @@
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension">
       <path value="Procedure.extension"/>
-<<<<<<< HEAD
-      <slicing id="134">
-=======
       <slicing id="152">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -292,63 +314,49 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:codeableconcept">
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:author">
       <path value="Procedure.extension"/>
-      <sliceName value="codeableconcept"/>
-      <definition value="A set of codes drawn from different coding systems, representing the same concept."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:informant">
+      <path value="Procedure.extension"/>
+      <sliceName value="informant"/>
+      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:performedcontext">
+      <path value="Procedure.extension"/>
+      <sliceName value="performedcontext"/>
+      <definition value="ActionContext indicating actual performance or execution of a healthcare-related action, e.g., 3rd dose of Hepatitis B vaccine administered on Dec 4th 2012, appendectomy performed today."/>
       <min value="1"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category">
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:associatedstudy">
       <path value="Procedure.extension"/>
-      <sliceName value="category"/>
-      <definition value="A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="associatedstudy"/>
+      <definition value="The clinical trial or other formal study related to this procedure."/>
       <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
+      <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-AssociatedStudy-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.modifierExtension">
       <path value="Procedure.modifierExtension"/>
@@ -380,6 +388,11 @@
       <requirements value="Need to allow connection to a wider workflow."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Identifier"/>
       </type>
@@ -403,6 +416,11 @@
       <definition value="A protocol, guideline, orderset or other definition that was adhered to in whole or in part by this procedure."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.definition"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
@@ -428,6 +446,11 @@
       <alias value="fulfills"/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.basedOn"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
@@ -453,18 +476,15 @@
       <comment value="The MedicationAdministration has a partOf reference to Procedure, but this is not a circular reference.  For a surgical procedure, the anesthesia related medicationAdministration is part of the procedure.  For an IV medication administration,  the procedure to insert the IV port is part of the medication administration."/>
       <alias value="container"/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="1"/>
+      <base>
+        <path value="Procedure.partOf"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationAdministration"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-ProcedurePerformed"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -479,17 +499,19 @@
       <comment value="The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn&#39;t know the current state of the procedure.&#xA;&#xA;This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.status"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ProcedureStatus"/>
-        </extension>
         <strength value="required"/>
-        <description value="A code specifying the state of the procedure."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/event-status"/>
         </valueSetReference>
@@ -502,6 +524,10 @@
         <identity value="w5"/>
         <map value="status"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Procedure.status"/>
+      </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.notDone">
       <path value="Procedure.notDone"/>
@@ -509,7 +535,12 @@
       <definition value="Set this to true if the record is saying that the procedure was NOT performed."/>
       <comment value="If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it&#39;s not that useful to say &quot;There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome&quot; as it implies that there *could* have been an appendectomy done at any other time, by any other clinician or with any other outcome.&#xA;&#xA;This element is labeled as a modifier because it indicates that a procedure didn&#39;t happen."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="0"/>
+      <base>
+        <path value="Procedure.notDone"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="boolean"/>
       </type>
@@ -526,10 +557,14 @@
       <short value="Reason procedure was not performed"/>
       <definition value="A code indicating why the procedure was not performed."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="0"/>
+      <base>
+        <path value="Procedure.notDoneReason"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="pro-1"/>
       <isSummary value="true"/>
@@ -554,6 +589,11 @@
       <definition value="A code that classifies the procedure for searching, sorting and display purposes (e.g. &quot;Surgical Procedure&quot;)."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.category"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -579,21 +619,26 @@
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.code">
       <path value="Procedure.code"/>
-      <short value="Identification of the procedure"/>
+      <short value="SNOMED-CT | ICD-10 | CPT-4"/>
       <definition value="The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. &quot;Laparoscopic Appendectomy&quot;)."/>
       <requirements value="0..1 to account for primarily narrative only resources."/>
       <alias value="type"/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.code"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <binding>
-        <strength value="preferred"/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
+          <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -608,6 +653,10 @@
         <identity value="w5"/>
         <map value="what"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Procedure.code"/>
+      </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.subject">
       <path value="Procedure.subject"/>
@@ -616,14 +665,16 @@
       <alias value="patient"/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.subject"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
-      </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -637,6 +688,10 @@
         <identity value="w5"/>
         <map value="who.focus"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Procedure.subject"/>
+      </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.context">
       <path value="Procedure.context"/>
@@ -645,13 +700,14 @@
       <alias value="encounter"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.context"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -671,15 +727,20 @@
       <path value="Procedure.performed[x]"/>
       <short value="Date/Period the procedure was performed"/>
       <definition value="The date(time)/period over which the procedure was performed. Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.performed[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="dateTime"/>
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -693,6 +754,10 @@
         <identity value="w5"/>
         <map value="when.done"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Procedure.performed[x]"/>
+      </mapping>
     </element>
     <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performer">
       <path value="Procedure.performer"/>
@@ -700,6 +765,11 @@
       <definition value="Limited to &#39;real&#39; people rather than equipment."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.performer"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -790,15 +860,23 @@
       <definition value="For example: surgeon, anaethetist, endoscopist."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.performer.role"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ProcedurePerformerRole"/>
+        </extension>
+        <strength value="example"/>
+        <description value="A code that identifies the role of a performer of the procedure."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ParticipationType"/>
+          <reference value="http://hl7.org/fhir/ValueSet/performer-role"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -817,17 +895,30 @@
       <requirements value="A reference to Device supports use cases, such as pacemakers."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.performer.actor"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -850,6 +941,11 @@
       <requirements value="Practitioners and Devices can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of when performing the action."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.performer.onBehalfOf"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
@@ -866,9 +962,14 @@
       <requirements value="Ties a procedure to where the records are likely kept."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.location"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -886,9 +987,13 @@
       <definition value="The coded reason why the procedure was performed. This may be coded entity of some type, or may simply be present as text."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.reasonCode"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -917,6 +1022,11 @@
       <comment value="e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.reasonReference"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
@@ -941,18 +1051,19 @@
       <definition value="Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.bodySite"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="BodySite"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Codes describing anatomical locations. May include laterality."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/body-site"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -971,6 +1082,11 @@
       <comment value="If outcome contains narrative text only, it can be captured using the CodeableConcept.text."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.outcome"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -997,6 +1113,11 @@
       <comment value="There could potentially be multiple reports - e.g. if this was a procedure which took multiple biopsies resulting in a number of anatomical pathology reports."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.report"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport"/>
@@ -1013,6 +1134,11 @@
       <comment value="If complications are only expressed by the narrative text, they can be captured using the CodeableConcept.text."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.complication"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -1038,6 +1164,11 @@
       <requirements value="This is used to document a condition that&#xA0;is a result of the procedure, not the condition that&#xA0;was the reason for the&#xA0;procedure."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.complicationDetail"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
@@ -1053,6 +1184,11 @@
       <definition value="If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or could potentially be more complex in which case the CarePlan resource can be used."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.followUp"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -1077,8 +1213,14 @@
       <definition value="Any other notes about the procedure.  E.g. the operative notes."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.note"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Annotation"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"/>
       </type>
       <mapping>
         <identity value="v2"/>
@@ -1095,6 +1237,11 @@
       <definition value="A device that is implanted, removed or otherwise manipulated (calibration, battery replacement, fitting a prosthesis, attaching a wound-vac, etc.) as a focal portion of the Procedure."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.focalDevice"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1184,6 +1331,11 @@
       <definition value="The kind of change that happened to the device during the procedure."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.focalDevice.action"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -1208,6 +1360,11 @@
       <definition value="The device that was manipulated (changed) during the procedure."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Procedure.focalDevice.manipulated"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
@@ -1225,6 +1382,11 @@
       <requirements value="Used for tracking contamination, etc."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.usedReference"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
@@ -1249,6 +1411,11 @@
       <comment value="For devices actually implanted or removed, use Procedure.device."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Procedure.usedCode"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -1273,19 +1440,73 @@
       <path value="Procedure"/>
       <short value="SHR SubstanceAbuseTreatment Profile"/>
       <definition value="The treatment program used to address a substance abuse problem."/>
+      <mustSupport value="false"/>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:codeableconcept">
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:author">
       <path value="Procedure.extension"/>
-      <sliceName value="codeableconcept"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:informant">
+      <path value="Procedure.extension"/>
+      <sliceName value="informant"/>
+      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:performedcontext">
+      <path value="Procedure.extension"/>
+      <sliceName value="performedcontext"/>
+      <definition value="ActionContext indicating actual performance or execution of a healthcare-related action, e.g., 3rd dose of Hepatitis B vaccine administered on Dec 4th 2012, appendectomy performed today."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:associatedstudy">
+      <path value="Procedure.extension"/>
+      <sliceName value="associatedstudy"/>
+      <definition value="The clinical trial or other formal study related to this procedure."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-AssociatedStudy-extension"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.partOf">
+      <path value="Procedure.partOf"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-ProcedurePerformed"/>
+      </type>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.notDone">
+      <path value="Procedure.notDone"/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason">
+      <path value="Procedure.notDoneReason"/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.code">
+      <path value="Procedure.code"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -1293,92 +1514,34 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category">
-      <path value="Procedure.extension"/>
-      <sliceName value="category"/>
-      <min value="0"/>
-      <max value="*"/>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.subject">
+      <path value="Procedure.subject"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason">
-      <path value="Procedure.notDoneReason"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.code">
-      <path value="Procedure.code"/>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.context">
+      <path value="Procedure.context"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performed[x]">
-      <path value="Procedure.performed[x]"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
       </type>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performer">
-      <path value="Procedure.performer"/>
-    </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.role">
-      <path value="Procedure.performer.role"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.bodySite">
+      <path value="Procedure.bodySite"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/v3-ParticipationType"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
         </valueSetReference>
       </binding>
     </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.performer.actor">
-      <path value="Procedure.performer.actor"/>
+    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.note">
+      <path value="Procedure.note"/>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
-      </type>
-    </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.location">
-      <path value="Procedure.location"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility"/>
-      </type>
-    </element>
-    <element id="Procedure:shr-behavior-SubstanceAbuseTreatment.reasonCode">
-      <path value="Procedure.reasonCode"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Annotation"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"/>
       </type>
     </element>
   </differential>

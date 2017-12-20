@@ -12,6 +12,8 @@
   <sch:pattern>
     <sch:title>f:Identifier</sch:title>
     <sch:rule context="f:Identifier">
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension': maximum cardinality of 'extension' is 1</sch:assert>
       <sch:assert test="count(f:value) &gt;= 1">value: minimum cardinality of 'value' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>

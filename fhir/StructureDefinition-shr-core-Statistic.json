@@ -3,7 +3,7 @@
   "id": "shr-core-Statistic",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Statistic Profile</b></p>\n  <p>A quantity that represents a statistic, e.g. maximum, minimum, mean, median, etc.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Statistic maps to Quantity:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Statistic Profile</b></p>\n  <p>A quantity that represents a statistic, e.g. maximum, minimum, mean, median, etc.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Statistic maps to Quantity:\n  decimal maps to value\n  Units.Coding.code maps to code\n  Units.Coding.CodeSystem maps to system\n  Units.Coding.DisplayText maps to unit\n  Comparator maps to comparator\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Statistic",
   "identifier": [
@@ -15,18 +15,14 @@
   "version": "0.0.1",
   "name": "SHR Statistic Profile",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:20.568Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
@@ -177,31 +173,12 @@
           "rules": "open"
         },
         "definition": "The type of statistic that is represented by the value.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 1,
         "max": "1",
-        "base": {
-          "path": "Element.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-StatisticType-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "n/a"
           }
         ]
       },
@@ -371,6 +348,17 @@
         "id": "Quantity:shr-core-Statistic.extension:statistictype",
         "path": "Quantity.extension",
         "sliceName": "statistictype",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "The type of statistic that is represented by the value.",
         "min": 1,
         "max": "1",
         "type": [
@@ -378,10 +366,7 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-StatisticType-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Quantity:shr-core-Statistic.value",

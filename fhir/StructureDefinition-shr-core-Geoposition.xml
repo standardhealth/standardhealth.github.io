@@ -7,7 +7,7 @@
   <p><b>SHR Geoposition Profile</b></p>
   <p>The location on the surface of the Earth, described by a latitude and longitude (and optional altitude).</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.core.Geoposition maps to Location:
+  <p><pre>shr.core.Geoposition maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-location:
   constrain position to 1..1
   Latitude maps to position.latitude
   Longitude maps to position.longitude
@@ -23,20 +23,28 @@
   <version value="0.0.1"/>
   <name value="SHR Geoposition Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:20.584Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="The location on the surface of the Earth, described by a latitude and longitude (and optional altitude)."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States Minor Outlying Islands (the)"/>
+    </coding>
+  </jurisdiction>
   <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="servd"/>
+    <uri value="http://www.omg.org/spec/ServD/1.0/"/>
+    <name value="ServD"/>
+  </mapping>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -50,7 +58,7 @@
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Location"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Location"/>
+  <baseDefinition value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-location"/>
   <derivation value="constraint"/>
   <snapshot>
     <element id="Location:shr-core-Geoposition">
@@ -59,6 +67,11 @@
       <definition value="The location on the surface of the Earth, described by a latitude and longitude (and optional altitude)."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Location"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <constraint>
         <key value="dom-2"/>
         <severity value="error"/>
@@ -91,6 +104,7 @@
         <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
         <source value="DomainResource"/>
       </constraint>
+      <mustSupport value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="Entity. Role, or Act"/>
@@ -102,6 +116,10 @@
       <mapping>
         <identity value="w5"/>
         <map value="administrative.entity"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="Organization"/>
       </mapping>
     </element>
     <element id="Location:shr-core-Geoposition.id">
@@ -289,6 +307,11 @@
       <requirements value="Organization label locations in registries, need to keep track of those."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Location.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Identifier"/>
       </type>
@@ -309,9 +332,15 @@
       <comment value="This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.status"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
@@ -339,6 +368,11 @@
       <definition value="The Operational status covers operation values most relevant to beds (but can also apply to rooms/units/chair/etc such as an isolation unit/dialisys chair). This typically covers concepts such as contamination, housekeeping and other activities&#xA0;like maintenance."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.operationalStatus"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Coding"/>
       </type>
@@ -367,15 +401,25 @@
       <short value="Name of the location as used by humans"/>
       <definition value="Name of the location as used by humans. Does not need to be unique."/>
       <comment value="If the name of an location changes, consider putting the old name in the alias column so that it can still be located through searches."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Location.name"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value=".name"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./PrimaryAddress and ./OtherAddresses"/>
       </mapping>
     </element>
     <element id="Location:shr-core-Geoposition.alias">
@@ -386,6 +430,11 @@
       <requirements value="Over time locations and organizations go through many changes and can be known by different names.&#xA;&#xA;For searching knowing previous names that the location was known by can be very useful."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Location.alias"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
@@ -401,6 +450,11 @@
       <requirements value="Humans need additional information to verify a correct location has been identified."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.description"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
@@ -418,6 +472,11 @@
       <requirements value="When using a Location resource for scheduling or orders, we need to be able to refer to a class of Locations instead of a specific Location."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.mode"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
@@ -448,6 +507,11 @@
       <definition value="Indicates the type of function performed at the location."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.type"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -477,9 +541,15 @@
       <definition value="The contact details of communication devices available at the location. This can include phone numbers, fax numbers, mobile numbers, email addresses and web sites."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Location.telecom"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="ContactPoint"/>
       </type>
+      <mustSupport value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value=".telecom"/>
@@ -493,12 +563,453 @@
       <requirements value="If locations can be visited, we need to keep track of their address."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.address"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Address"/>
       </type>
+      <mustSupport value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value=".addr"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.id">
+      <path value="Location.address.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.extension">
+      <path value="Location.address.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.use">
+      <path value="Location.address.use"/>
+      <short value="home | work | temp | old - purpose of this address"/>
+      <definition value="The purpose of this address."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one. Applications can assume that an address is current unless it explicitly says that it is temporary or old."/>
+      <requirements value="Allows an appropriate address to be chosen from a list of many."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.use"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueCode value="home"/>
+      </example>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AddressUse"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The use of an address"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/address-use"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="unique(./use)"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./AddressPurpose"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.type">
+      <path value="Location.address.type"/>
+      <short value="postal | physical | both"/>
+      <definition value="Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.type"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="code"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueCode value="both"/>
+      </example>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AddressType"/>
+        </extension>
+        <strength value="required"/>
+        <description value="The type of an address (physical / postal)"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/address-type"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.18"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="unique(./use)"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="address type parameter"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.text">
+      <path value="Location.address.text"/>
+      <short value="Text representation of the address"/>
+      <definition value="A full text representation of the address."/>
+      <comment value="Can provide both a text representation and parts."/>
+      <requirements value="A renderable, unencoded form."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.text"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueString value="137 Nowhere Street, Erewhon 9132"/>
+      </example>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.1 + XAD.2 + XAD.3 + XAD.4 + XAD.5 + XAD.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./formatted"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="address label parameter"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.line">
+      <path value="Location.address.line"/>
+      <short value="Street name, number, direction &amp; P.O. Box etc."/>
+      <definition value="This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information."/>
+      <requirements value="home | work | temp | old - purpose of this address."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Address.line"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <orderMeaning value="The order in which lines should appear in an address label"/>
+      <example>
+        <label value="General"/>
+        <valueString value="137 Nowhere Street"/>
+      </example>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.1 + XAD.2 (note: XAD.1 and XAD.2 have different meanings for a company address than for a person address)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = AL]"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="street"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./StreetAddress (newline delimitted)"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.city">
+      <path value="Location.address.city"/>
+      <short value="Name of city, town etc."/>
+      <definition value="The name of the city, town, village or other community or delivery center."/>
+      <alias value="Municpality"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.city"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueString value="Erewhon"/>
+      </example>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = CTY]"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="locality"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./Jurisdiction"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.district">
+      <path value="Location.address.district"/>
+      <short value="District name (aka county)"/>
+      <definition value="The name of the administrative area (county)."/>
+      <comment value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
+      <alias value="County"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.district"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueString value="Madison"/>
+      </example>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.9"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = CNT | CPA]"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.state">
+      <path value="Location.address.state"/>
+      <short value="Sub-unit of country (abbreviations ok)"/>
+      <definition value="Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes)."/>
+      <alias value="Province"/>
+      <alias value="Territory"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.state"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="extensible"/>
+        <description value="Two letter USPS alphabetic codes."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/usps-state"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.4"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = STA]"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="region"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./Region"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./Sites"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.postalCode">
+      <path value="Location.address.postalCode"/>
+      <short value="US Zip Codes"/>
+      <definition value="A postal code designating a region defined by the postal service."/>
+      <alias value="Zip"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.postalCode"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valueString value="9132"/>
+      </example>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.5"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = ZIP]"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="code"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./PostalIdentificationCode"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.country">
+      <path value="Location.address.country"/>
+      <short value="Country (e.g. can be ISO 3166 2 or 3 letter code)"/>
+      <definition value="Country - a nation as commonly understood or generally accepted."/>
+      <comment value="ISO 3166 3 letter codes can be used in place of a full country name."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.country"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="AD.part[parttype = CNT]"/>
+      </mapping>
+      <mapping>
+        <identity value="vcard"/>
+        <map value="country"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./Country"/>
+      </mapping>
+    </element>
+    <element id="Location:shr-core-Geoposition.address.period">
+      <path value="Location.address.period"/>
+      <short value="Time period when address was/is in use"/>
+      <definition value="Time period when address was/is in use."/>
+      <requirements value="Allows addresses to be placed in historical context."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Address.period"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Period"/>
+      </type>
+      <example>
+        <label value="General"/>
+        <valuePeriod>
+          <start value="2010-03-23T00:00:00+11:00"/>
+          <end value="2010-07-01T00:00:00+10:00"/>
+        </valuePeriod>
+      </example>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="XAD.12 / XAD.13 + XAD.14"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./usablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]"/>
+      </mapping>
+      <mapping>
+        <identity value="servd"/>
+        <map value="./StartDate and ./EndDate"/>
       </mapping>
     </element>
     <element id="Location:shr-core-Geoposition.physicalType">
@@ -508,6 +1019,11 @@
       <requirements value="For purposes of showing relevant locations in queries, we need to categorize locations."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.physicalType"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -538,6 +1054,11 @@
       <requirements value="For mobile applications and automated route-finding knowing the exact location of the Location is required."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Location.position"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -627,6 +1148,11 @@
       <definition value="Longitude. The value domain and the interpretation are the same as for the text of the longitude element in KML (see notes below)."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Location.position.longitude"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="decimal"/>
       </type>
@@ -641,6 +1167,11 @@
       <definition value="Latitude. The value domain and the interpretation are the same as for the text of the latitude element in KML (see notes below)."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Location.position.latitude"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="decimal"/>
       </type>
@@ -655,6 +1186,11 @@
       <definition value="Altitude. The value domain and the interpretation are the same as for the text of the altitude element in KML (see notes below)."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.position.altitude"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="decimal"/>
       </type>
@@ -671,10 +1207,16 @@
       <requirements value="Need to know who manages the location."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.managingOrganization"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+        <targetProfile value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization"/>
       </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
@@ -688,6 +1230,11 @@
       <requirements value="For purposes of location, display and identification, knowing which locations are located within other locations is important."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Location.partOf"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
@@ -704,6 +1251,11 @@
       <requirements value="Organizations may have different systems at different locations that provide various services and need to be able to define the technical connection details for how to connect to them, and for what purpose."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Location.endpoint"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Endpoint"/>
@@ -719,6 +1271,7 @@
       <path value="Location"/>
       <short value="SHR Geoposition Profile"/>
       <definition value="The location on the surface of the Earth, described by a latitude and longitude (and optional altitude)."/>
+      <mustSupport value="false"/>
     </element>
     <element id="Location:shr-core-Geoposition.position">
       <path value="Location.position"/>

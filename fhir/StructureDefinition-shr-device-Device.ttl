@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-device-Device"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Device Profile</b></p>\n  <p>A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.device.Device maps to Device:\n  CodeableConcept maps to type\n  DeviceUdi maps to udi.carrierHRF\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Device Profile</b></p>\n  <p>A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.device.Device maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-device:\n  Type maps to type\n  DeviceUdi maps to udi.carrierHRF\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"];
   fhir:StructureDefinition.identifier [
@@ -21,35 +21,44 @@
   fhir:StructureDefinition.version [ fhir:value "0.0.1"];
   fhir:StructureDefinition.name [ fhir:value "SHR Device Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-<<<<<<< HEAD
-  fhir:StructureDefinition.date [ fhir:value "2017-08-08T15:56:31.966Z"^^xsd:dateTime];
-=======
   fhir:StructureDefinition.date [ fhir:value "2017-12-19"^^xsd:date];
->>>>>>> 92b20c342... 12/19/17 updates
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
      fhir:ContactDetail.telecom [
        fhir:index 0;
        fhir:ContactPoint.system [ fhir:value "url" ];
-       fhir:ContactPoint.value [ fhir:value "http://www.standardhealthrecord.org" ]
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
      ]
   ];
   fhir:StructureDefinition.description [ fhir:value "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients."];
-  fhir:StructureDefinition.purpose [ fhir:value "Allows institutions to track their devices."];
+  fhir:StructureDefinition.jurisdiction [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "urn:iso:std:iso:3166" ];
+       fhir:Coding.code [ fhir:value "US" ];
+       fhir:Coding.display [ fhir:value "United States Minor Outlying Islands (the)" ]
+     ]
+  ];
   fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://unknown.org/Argonaut DQ DSTU2" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "Argonaut DQ DSTU2" ]
+  ], [
+     fhir:index 1;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v3" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "RIM Mapping" ]
   ], [
-     fhir:index 1;
+     fhir:index 2;
      fhir:StructureDefinition.mapping.identity [ fhir:value "w5" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/fhir/w5" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "W5 Mapping" ]
   ], [
-     fhir:index 2;
+     fhir:index 3;
      fhir:StructureDefinition.mapping.identity [ fhir:value "udi" ];
      fhir:StructureDefinition.mapping.uri [ fhir:value "http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm" ];
      fhir:StructureDefinition.mapping.name [ fhir:value "UDI Mapping" ]
@@ -57,7 +66,7 @@
   fhir:StructureDefinition.kind [ fhir:value "resource"];
   fhir:StructureDefinition.abstract [ fhir:value "false"^^xsd:boolean];
   fhir:StructureDefinition.type [ fhir:value "Device"];
-  fhir:StructureDefinition.baseDefinition [ fhir:value "http://hl7.org/fhir/StructureDefinition/Device"];
+  fhir:StructureDefinition.baseDefinition [ fhir:value "http://hl7.org/fhir/us/core/StructureDefinition/us-core-device"];
   fhir:StructureDefinition.derivation [ fhir:value "constraint"];
   fhir:StructureDefinition.snapshot [
      fhir:StructureDefinition.snapshot.element [
@@ -68,6 +77,11 @@
        fhir:ElementDefinition.definition [ fhir:value "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
        fhir:ElementDefinition.constraint [
          fhir:index 0;
          fhir:ElementDefinition.constraint.key [ fhir:value "dom-2" ];
@@ -101,6 +115,7 @@
          fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
@@ -113,6 +128,10 @@
          fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "administrative.device" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Device" ]
        ]
      ], [
        fhir:index 1;
@@ -290,6 +309,16 @@
        fhir:index 7;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:Element.id [ fhir:value "3" ];
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.ordered [ fhir:value "false"^^xsd:boolean ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
@@ -318,6 +347,45 @@
        ]
      ], [
        fhir:index 8;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:relatedencounter" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "relatedencounter" ];
+       fhir:ElementDefinition.definition [ fhir:value "If content was generated during a patient encounter, related encounter is the encounter where the information was gained." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension" ]
+       ]
+     ], [
+       fhir:index 9;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:author" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "author" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or organization who created the entry and is responsible for (and may certify) the content." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension" ]
+       ]
+     ], [
+       fhir:index 10;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:informant" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "informant" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension" ]
+       ]
+     ], [
+       fhir:index 11;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Device.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -348,7 +416,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 9;
+       fhir:index 12;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.identifier" ];
        fhir:ElementDefinition.path [ fhir:value "Device.identifier" ];
        fhir:ElementDefinition.short [ fhir:value "Instance identifier" ];
@@ -360,6 +428,11 @@
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.identifier" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Identifier" ]
@@ -378,14 +451,19 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ]
      ], [
-       fhir:index 10;
+       fhir:index 13;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi" ];
        fhir:ElementDefinition.short [ fhir:value "Unique Device Identifier (UDI) Barcode string" ];
        fhir:ElementDefinition.definition [ fhir:value "[Unique device identifier (UDI)](device.html#5.11.3.2.2) assigned to device label or package." ];
        fhir:ElementDefinition.comment [ fhir:value "UDI may identify an unique instance of a device, or it may only identify the type of the device.  See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "BackboneElement" ]
@@ -399,6 +477,7 @@
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -408,9 +487,13 @@
          fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Device.udi" ]
        ]
      ], [
-       fhir:index 11;
+       fhir:index 14;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.id" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.id" ];
        fhir:ElementDefinition.representation [
@@ -436,7 +519,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 12;
+       fhir:index 15;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
@@ -466,7 +549,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 13;
+       fhir:index 16;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -501,7 +584,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 14;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.deviceIdentifier" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.deviceIdentifier" ];
        fhir:ElementDefinition.short [ fhir:value "Mandatory fixed portion of UDI" ];
@@ -512,6 +595,11 @@
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.deviceIdentifier" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -531,7 +619,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 15;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.name" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.name" ];
        fhir:ElementDefinition.short [ fhir:value "Device Name as appears on UDI label" ];
@@ -543,6 +631,11 @@
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.name" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -562,7 +655,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 16;
+       fhir:index 19;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.jurisdiction" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.jurisdiction" ];
        fhir:ElementDefinition.short [ fhir:value "Regional UDI authority" ];
@@ -570,6 +663,11 @@
        fhir:ElementDefinition.requirements [ fhir:value "Allows a recipient of a UDI to know which database will contain the UDI-associated metadata." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.jurisdiction" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "uri" ]
@@ -580,7 +678,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.scoper" ]
        ]
      ], [
-       fhir:index 17;
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.carrierHRF" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.carrierHRF" ];
        fhir:ElementDefinition.short [ fhir:value "UDI Human Readable Barcode String" ];
@@ -589,13 +687,25 @@
        fhir:ElementDefinition.alias [
          fhir:value "Human Readable Form";
          fhir:index 0
+       ], [
+         fhir:value "UDI";
+         fhir:index 1
+       ], [
+         fhir:value "Barcode String";
+         fhir:index 2
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.carrierHRF" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -605,9 +715,13 @@
          fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.id.extension" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Device.udi" ]
        ]
      ], [
-       fhir:index 18;
+       fhir:index 21;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.carrierAIDC" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.carrierAIDC" ];
        fhir:ElementDefinition.short [ fhir:value "UDI Machine Readable Barcode String" ];
@@ -616,13 +730,25 @@
        fhir:ElementDefinition.alias [
          fhir:value "Automatic Identification and Data Capture";
          fhir:index 0
+       ], [
+         fhir:value "UDI";
+         fhir:index 1
+       ], [
+         fhir:value "Barcode String";
+         fhir:index 2
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.carrierAIDC" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "base64Binary" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -632,9 +758,13 @@
          fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.id.extension" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "NA (not Supoorted)" ]
        ]
      ], [
-       fhir:index 19;
+       fhir:index 22;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.issuer" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.issuer" ];
        fhir:ElementDefinition.short [ fhir:value "UDI Issuing Organization" ];
@@ -645,6 +775,11 @@
        ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.issuer" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "uri" ]
@@ -659,7 +794,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "Role.id.root" ]
        ]
      ], [
-       fhir:index 20;
+       fhir:index 23;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.udi.entryType" ];
        fhir:ElementDefinition.path [ fhir:value "Device.udi.entryType" ];
        fhir:ElementDefinition.short [ fhir:value "barcode | rfid | manual +" ];
@@ -667,6 +802,11 @@
        fhir:ElementDefinition.requirements [ fhir:value "Supports a way to distinguish hand entered from machine read data." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.udi.entryType" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
@@ -690,7 +830,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "NA" ]
        ]
      ], [
-       fhir:index 21;
+       fhir:index 24;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.status" ];
        fhir:ElementDefinition.path [ fhir:value "Device.status" ];
        fhir:ElementDefinition.short [ fhir:value "active | inactive | entered-in-error | unknown" ];
@@ -698,6 +838,11 @@
        fhir:ElementDefinition.comment [ fhir:value "This element is labeled as a modifier because the status contains the codes inactive and entered-in-error that mark the device (record)as not currently valid." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.status" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
@@ -727,29 +872,28 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 25;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.type" ];
        fhir:ElementDefinition.path [ fhir:value "Device.type" ];
        fhir:ElementDefinition.short [ fhir:value "What kind of device this is" ];
        fhir:ElementDefinition.definition [ fhir:value "Code or identifier to identify a kind of device." ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.type" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "DeviceKind" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "example" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Codes to identify medical devices" ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://hl7.org/fhir/ValueSet/device-kind>;
-           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/device-kind" ]
+           fhir:link <http://standardhealthrecord.org/shr/device/vs/DeviceVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/device/vs/DeviceVS" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -764,15 +908,24 @@
          fhir:index 2;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Device.type" ]
        ]
      ], [
-       fhir:index 23;
+       fhir:index 26;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.lotNumber" ];
        fhir:ElementDefinition.path [ fhir:value "Device.lotNumber" ];
        fhir:ElementDefinition.short [ fhir:value "Lot number of manufacture" ];
        fhir:ElementDefinition.definition [ fhir:value "Lot number assigned by the manufacturer." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.lotNumber" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -791,13 +944,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 24;
+       fhir:index 27;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.manufacturer" ];
        fhir:ElementDefinition.path [ fhir:value "Device.manufacturer" ];
        fhir:ElementDefinition.short [ fhir:value "Name of device manufacturer" ];
        fhir:ElementDefinition.definition [ fhir:value "A name of the manufacturer." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.manufacturer" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -816,13 +974,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 25;
+       fhir:index 28;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.manufactureDate" ];
        fhir:ElementDefinition.path [ fhir:value "Device.manufactureDate" ];
        fhir:ElementDefinition.short [ fhir:value "Date when the device was made" ];
        fhir:ElementDefinition.definition [ fhir:value "The date and time when the device was manufactured." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.manufactureDate" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
@@ -841,13 +1004,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 26;
+       fhir:index 29;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.expirationDate" ];
        fhir:ElementDefinition.path [ fhir:value "Device.expirationDate" ];
        fhir:ElementDefinition.short [ fhir:value "Date and time of expiry of this device (if applicable)" ];
        fhir:ElementDefinition.definition [ fhir:value "The date and time beyond which this device is no longer valid or should not be used (if applicable)." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.expirationDate" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
@@ -866,13 +1034,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 27;
+       fhir:index 30;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.model" ];
        fhir:ElementDefinition.path [ fhir:value "Device.model" ];
        fhir:ElementDefinition.short [ fhir:value "Model id assigned by the manufacturer" ];
        fhir:ElementDefinition.definition [ fhir:value "The \"model\" is an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.model" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -887,13 +1060,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 28;
+       fhir:index 31;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.version" ];
        fhir:ElementDefinition.path [ fhir:value "Device.version" ];
        fhir:ElementDefinition.short [ fhir:value "Version number (i.e. software)" ];
        fhir:ElementDefinition.definition [ fhir:value "The version of the device, if the device has multiple releases under the same model, or if the device is software or carries firmware." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.version" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
@@ -908,19 +1086,25 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "what" ]
        ]
      ], [
-       fhir:index 29;
+       fhir:index 32;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.patient" ];
        fhir:ElementDefinition.path [ fhir:value "Device.patient" ];
        fhir:ElementDefinition.short [ fhir:value "Patient to whom Device is affixed" ];
        fhir:ElementDefinition.definition [ fhir:value "Patient information, If the device is affixed to a person." ];
        fhir:ElementDefinition.requirements [ fhir:value "If the device is implanted in a patient, then need to associate the device to the patient." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.patient" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Patient" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]
        ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
          fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
@@ -929,15 +1113,24 @@
          fhir:index 1;
          fhir:ElementDefinition.mapping.identity [ fhir:value "w5" ];
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "argonaut-dq-dstu2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Device.patient" ]
        ]
      ], [
-       fhir:index 30;
+       fhir:index 33;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.owner" ];
        fhir:ElementDefinition.path [ fhir:value "Device.owner" ];
        fhir:ElementDefinition.short [ fhir:value "Organization responsible for device" ];
        fhir:ElementDefinition.definition [ fhir:value "An organization that is responsible for the provision and ongoing maintenance of the device." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.owner" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
@@ -953,7 +1146,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.source" ]
        ]
      ], [
-       fhir:index 31;
+       fhir:index 34;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.contact" ];
        fhir:ElementDefinition.path [ fhir:value "Device.contact" ];
        fhir:ElementDefinition.short [ fhir:value "Details for human/organization for support" ];
@@ -961,6 +1154,11 @@
        fhir:ElementDefinition.comment [ fhir:value "used for troubleshooting etc." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.contact" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "ContactPoint" ]
@@ -975,7 +1173,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.source" ]
        ]
      ], [
-       fhir:index 32;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.location" ];
        fhir:ElementDefinition.path [ fhir:value "Device.location" ];
        fhir:ElementDefinition.short [ fhir:value "Where the resource is found" ];
@@ -983,6 +1181,11 @@
        fhir:ElementDefinition.requirements [ fhir:value "Device.location can be used to track device location." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.location" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
@@ -998,7 +1201,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "where" ]
        ]
      ], [
-       fhir:index 33;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.url" ];
        fhir:ElementDefinition.path [ fhir:value "Device.url" ];
        fhir:ElementDefinition.short [ fhir:value "Network address to contact device" ];
@@ -1006,6 +1209,11 @@
        fhir:ElementDefinition.comment [ fhir:value "If the device is running a FHIR server, the network address should  be the Base URL from which a conformance statement may be retrieved." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.url" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "uri" ]
@@ -1020,13 +1228,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "where" ]
        ]
      ], [
-       fhir:index 34;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.note" ];
        fhir:ElementDefinition.path [ fhir:value "Device.note" ];
        fhir:ElementDefinition.short [ fhir:value "Device notes and comments" ];
        fhir:ElementDefinition.definition [ fhir:value "Descriptive information, usage information or implantation information that is not captured in an existing element." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.note" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Annotation" ]
@@ -1037,13 +1250,18 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".text" ]
        ]
      ], [
-       fhir:index 35;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "Device:shr-device-Device.safety" ];
        fhir:ElementDefinition.path [ fhir:value "Device.safety" ];
        fhir:ElementDefinition.short [ fhir:value "Safety Characteristics of Device" ];
        fhir:ElementDefinition.definition [ fhir:value "Provides additional safety characteristics about a medical device.  For example devices containing latex." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Device.safety" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
@@ -1075,17 +1293,57 @@
        fhir:Element.id [ fhir:value "Device:shr-device-Device" ];
        fhir:ElementDefinition.path [ fhir:value "Device" ];
        fhir:ElementDefinition.short [ fhir:value "SHR Device Profile" ];
-       fhir:ElementDefinition.definition [ fhir:value "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients." ]
+       fhir:ElementDefinition.definition [ fhir:value "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients." ];
+       fhir:ElementDefinition.mustSupport [ fhir:value "false"^^xsd:boolean ]
      ], [
        fhir:index 1;
-       fhir:Element.id [ fhir:value "Device:shr-device-Device.type" ];
-       fhir:ElementDefinition.path [ fhir:value "Device.type" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:relatedencounter" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "relatedencounter" ];
+       fhir:ElementDefinition.definition [ fhir:value "If content was generated during a patient encounter, related encounter is the encounter where the information was gained." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
-         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:author" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "author" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or organization who created the entry and is responsible for (and may certify) the content." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension" ]
+       ]
+     ], [
+       fhir:index 3;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.extension:informant" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "informant" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension" ]
+       ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "Device:shr-device-Device.type" ];
+       fhir:ElementDefinition.path [ fhir:value "Device.type" ];
+       fhir:ElementDefinition.binding [
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://standardhealthrecord.org/shr/device/vs/DeviceVS>;
+           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/device/vs/DeviceVS" ]
+         ]
        ]
      ]
   ] .
@@ -1097,8 +1355,6 @@
 <http://hl7.org/fhir/ValueSet/udi-entry-type> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/device-status> a fhir:ValueSet .
-
-<http://hl7.org/fhir/ValueSet/device-kind> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/device-safety> a fhir:ValueSet .
 

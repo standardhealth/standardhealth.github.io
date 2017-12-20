@@ -137,7 +137,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
-<b title="Formal Invariant Identifier">con-3</b>: Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error (: verificationStatus='entered-in-error' or clinicalStatus.exists())<br/><b title="Formal Invariant Identifier">con-4</b>: If condition is abated, then clinicalStatus must be either inactive, resolved, or remission (: abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive')<br/><b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())</td></tr>
+<b title="Formal Invariant Identifier">con-3</b>: Condition.clinicalStatus SHALL be present if verificationStatus is not entered-in-error (: verificationStatus='entered-in-error' or clinicalStatus.exists())<br/><b title="Formal Invariant Identifier">con-4</b>: If condition is abated, then clinicalStatus must be either inactive, resolved, or remission (: abatement.empty() or (abatement as boolean).not()  or clinicalStatus='resolved' or clinicalStatus='remission' or clinicalStatus='inactive')<br/><b title="Formal Invariant Identifier">dom-1</b>: If the resource is contained in another resource, it SHALL NOT contain any narrative (: contained.text.empty())<br/><b title="Formal Invariant Identifier">dom-2</b>: If the resource is contained in another resource, it SHALL NOT contain nested Resources (: contained.contained.empty())<br/><b title="Formal Invariant Identifier">dom-3</b>: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource (: contained.where(('#'+id in %resource.descendants().reference).not()).empty())<br/><b title="Formal Invariant Identifier">dom-4</b>: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (: contained.meta.versionId.empty() and contained.meta.lastUpdated.empty())<br/><b title="Formal Invariant Identifier">us-core-1</b>: A code in Condition.category SHOULD be from US Core Condition Category Codes value set. (: where(category in 'http://hl7.org/fhir/us/core/ValueSet/us-core-condition-category').exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.id"> </a><a name="Condition.id"> </a><b>Condition.id</b></td></tr>
   <tr><td>Definition</td><td><p>The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
 </td></tr>
@@ -191,10 +191,6 @@ redirect_from:
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>extensions, user content</td></tr>
   <tr><td>Comments</td><td><p>There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
 </td></tr>
-<<<<<<< HEAD
-  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:codeableconcept"> </a><b>Condition.extension (<a href="StructureDefinition-shr-core-CodeableConcept-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension</a>)</b></td></tr>
-  <tr><td>Definition</td><td><p>A set of codes drawn from different coding systems, representing the same concept.</p>
-=======
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:bodysite"> </a><b>Condition.extension (http://hl7.org/fhir/StructureDefinition/body-structure)</b></td></tr>
   <tr><td>Definition</td><td><p>A location or structure in the body, including tissues, regions, cavities, and spaces, for example, right elbow, or left ventricle of the heart.</p>
 </td></tr>
@@ -209,16 +205,11 @@ redirect_from:
 <b title="Formal Invariant Identifier">choice-1</b>: shr-base-Author-extension SHALL have either extension('string') or extension('patient') or extension('group') or extension('device') or extension('participant') or extension('relatedperson') or extension('organization') (: ( extension('string').url | extension('patient').url | extension('group').url | extension('device').url | extension('participant').url | extension('relatedperson').url | extension('organization').url ).distinct().count() == 1)<br/><b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:focalsubject"> </a><b>Condition.extension (<a href="StructureDefinition-shr-finding-FocalSubject-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.</p>
->>>>>>> 92b20c342... 12/19/17 updates
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>))</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
 <b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
-<<<<<<< HEAD
-  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:includeonproblemlist"> </a><b>Condition.extension (<a href="StructureDefinition-shr-condition-IncludeOnProblemList-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-IncludeOnProblemList-extension</a>)</b></td></tr>
-  <tr><td>Definition</td><td><p>Whether or not to include this condition on the subject's current problem list.</p>
-=======
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:focalsubjectreference"> </a><b>Condition.extension (<a href="StructureDefinition-shr-finding-FocalSubjectReference-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.</p>
 </td></tr>
@@ -228,10 +219,16 @@ redirect_from:
 <b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:findingmethod"> </a><b>Condition.extension (<a href="StructureDefinition-shr-finding-FindingMethod-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension</a>)</b></td></tr>
   <tr><td>Definition</td><td><p>The technique used to create the finding, for example, the specific imaging technical, lab test code, or assessment vehicle.</p>
->>>>>>> 92b20c342... 12/19/17 updates
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#boolean">boolean</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
+  <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
+<b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:findingstatus"> </a><b>Condition.extension (<a href="StructureDefinition-shr-finding-FindingStatus-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension</a>)</b></td></tr>
+  <tr><td>Definition</td><td><p>Indicates whether the finding is preliminary, amended, final, etc..</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
 <b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:whenclinicallyrecognized"> </a><b>Condition.extension (<a href="StructureDefinition-shr-condition-WhenClinicallyRecognized-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-WhenClinicallyRecognized-extension</a>)</b></td></tr>
@@ -245,7 +242,7 @@ redirect_from:
   <tr><td>Definition</td><td><p>If the problem or condition existed before the current episode of care.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: ele-1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#boolean">boolean</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
 <b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality"> </a><b>Condition.extension (<a href="StructureDefinition-shr-condition-Criticality-extension.html">http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension</a>)</b></td></tr>
@@ -255,6 +252,30 @@ redirect_from:
   <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>  (Extension Type: <a href="http://hl7.org/fhir/STU3/datatypes.html#code">code</a>)</td></tr>
   <tr><td>Invariants</td><td><b>Defined on this element</b><br/>
 <b title="Formal Invariant Identifier">ele-1</b>: All FHIR elements must have a @value or children (: children().count() &gt; id.count())<br/><b title="Formal Invariant Identifier">ext-1</b>: Must have either extensions or value[x], not both (: extension.exists() != value.exists())</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.id"> </a><a name="Condition.extension.id"> </a><b>Condition.extension.id</b></td></tr>
+  <tr><td>Definition</td><td><p>unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#string">string</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.extension:extension"> </a><a name="Condition.extension.extension"> </a><b>Condition.extension.extension(extension)</b></td></tr>
+  <tr><td>Definition</td><td><p>An Extension</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..0</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#Extension">Extension</a></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.url"> </a><a name="Condition.extension.url"> </a><b>Condition.extension.url</b></td></tr>
+  <tr><td>Definition</td><td><p>Source of the definition for the extension code - a logical name or a URL.</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#uri">uri</a></td></tr>
+  <tr><td>Comments</td><td><p>The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.</p>
+</td></tr>
+  <tr><td>Fixed Value</td><td>http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Criticality-extension</td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.valueCode"> </a><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.value[x]"> </a><a name="Condition:shr-condition-MentalHealthCondition.extension:criticality.value[x]"> </a><b>Condition.extension.valueCode</b></td></tr>
+  <tr><td>Definition</td><td><p>Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).</p>
+</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-allergy-intolerance-criticality.html">AllergyIntoleranceCriticality</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#code">code</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.modifierExtension"> </a><a name="Condition.modifierExtension"> </a><b>Condition.modifierExtension</b></td></tr>
   <tr><td>Definition</td><td><p>May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
 </td></tr>
@@ -276,18 +297,20 @@ redirect_from:
   <tr><td>Definition</td><td><p>The clinical status of the condition.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1 This element is affected by the following invariants: con-3, con-4</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>The clinical status of the condition or diagnosis.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-condition-clinical.html">Condition Clinical Status Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-condition-clinical.html">Condition Clinical Status Codes</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#mustSupport">Must Support</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>This element is labeled as a modifier because the status contains codes that mark the condition as not currently valid or of concern.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.verificationStatus"> </a><a name="Condition.verificationStatus"> </a><b>Condition.verificationStatus</b></td></tr>
   <tr><td>Definition</td><td><p>The verification status to support the clinical status of the condition.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: con-3</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>The verification status to support or decline the clinical status of the condition or diagnosis.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-condition-ver-status.html">ConditionVerificationStatus</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1 This element is affected by the following invariants: con-3</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-condition-ver-status.html">ConditionVerificationStatus</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#code">code</a></td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#ismodifier">Is Modifier</a></td><td>true</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#mustSupport">Must Support</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>verificationStatus is not required.  For example, when a patient has abdominal pain in the ED, there is not likely going to be a verification status.</p>
 <p>This element is labeled as a modifier because the status contains the code refuted and entered-in-error that mark the Condition as not currently valid.</p>
 </td></tr>
@@ -295,9 +318,10 @@ redirect_from:
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.category"> </a><a name="Condition.category"> </a><b>Condition.category</b></td></tr>
   <tr><td>Definition</td><td><p>A category assigned to the condition.</p>
 </td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-condition-ConditionCategoryVS.html">SHR ConditionCategoryVS ValueSet</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#mustSupport">Must Support</a></td><td>true</td></tr>
   <tr><td>Comments</td><td><p>The categorization is often highly contextual and may appear poorly differentiated or not very useful in other contexts.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.severity"> </a><a name="Condition.severity"> </a><b>Condition.severity</b></td></tr>
@@ -305,15 +329,16 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>A subjective assessment of the severity of the condition as evaluated by the clinician.<br/>The codes SHALL be taken from <a href="http://hl7.org/fhir/STU3/valueset-condition-severity.html">Condition/Diagnosis Severity</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Comments</td><td><p>Coding of the severity with a terminology is preferred, where possible.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.code"> </a><a name="Condition.code"> </a><b>Condition.code</b></td></tr>
   <tr><td>Definition</td><td><p>Identification of the condition, problem or diagnosis.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHOULD be taken from <a href="ValueSet-shr-core-SpecificTypeVS.html">SHR SpecificTypeVS ValueSet</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-condition-DSMVS.html">SHR DSMVS ValueSet</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#mustSupport">Must Support</a></td><td>true</td></tr>
   <tr><td>Requirements</td><td><p>0..1 to account for primarily narrative only resources.</p>
 </td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>type</td></tr>
@@ -322,14 +347,15 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..*</td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHALL be taken from <a href="ValueSet-shr-core-BodySiteVS.html">SHR BodySiteVS ValueSet</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td>Comments</td><td><p>Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension <a href="http://hl7.org/fhir/STU3/extension-body-site-instance.html">body-site-instance</a>.  May be a summary code, or a reference to a very precise definition of the location, or both.</p>
 </td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.subject"> </a><a name="Condition.subject"> </a><b>Condition.subject</b></td></tr>
   <tr><td>Definition</td><td><p>Indicates the patient or group who the condition record is associated with.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>1..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/STU3/patient.html" title="http://hl7.org/fhir/StructureDefinition/Patient">Patient</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/STU3/group.html" title="http://hl7.org/fhir/StructureDefinition/Group">Group</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-entity-Patient.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient">SHR Patient Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#mustSupport">Must Support</a></td><td>true</td></tr>
   <tr><td>Requirements</td><td><p>Group is typically used for veterinary or public health use cases.</p>
 </td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>patient</td></tr>
@@ -337,23 +363,23 @@ redirect_from:
   <tr><td>Definition</td><td><p>Encounter during which the condition was first asserted.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/STU3/encounter.html" title="http://hl7.org/fhir/StructureDefinition/Encounter">Encounter</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="http://hl7.org/fhir/STU3/episodeofcare.html" title="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare">EpisodeOfCare</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-encounter-EncounterPerformed.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed">SHR EncounterPerformed Profile</a>)</td></tr>
   <tr><td title="Other names by which this resource/element may be known">Alternate Names</td><td>encounter</td></tr>
   <tr><td>Comments</td><td><p>This record indicates the encounter this particular record is associated with.  In the case of a &quot;new&quot; diagnosis reflecting ongoing/revised information about the condition, this might be distinct from the first encounter in which the underlying condition was first &quot;known&quot;.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.onset[x]"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetRange"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetRange"> </a><b>Condition.onset[x]</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.onset[x]"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.onsetPeriod"> </a><b>Condition.onset[x]</b></td></tr>
   <tr><td>Definition</td><td><p>Estimated or actual date or date-time  the condition began, in the opinion of the clinician.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/STU3/datatypes.html#Age">Age</a>(<a href="StructureDefinition-shr-core-Age.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age">SHR Age Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Period">Period</a>(<a href="StructureDefinition-shr-core-TimePeriod.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod">SHR TimePeriod Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Range">Range</a>(<a href="StructureDefinition-shr-core-AgeRange.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange">SHR AgeRange Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/STU3/datatypes.html#Age">Age</a>(<a href="StructureDefinition-shr-core-GestationalAge.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge">SHR GestationalAge Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Period">Period</a></td></tr>
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/STU3/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
   <tr><td>Comments</td><td><p>Age is generally used when the patient reports an age at which the Condition began to occur.</p>
 </td></tr>
-  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.abatement[x]"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementRange"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementRange"> </a><b>Condition.abatement[x]</b></td></tr>
+  <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.abatement[x]"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementPeriod"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementDateTime"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementAge"> </a><a name="Condition:shr-condition-MentalHealthCondition.abatementPeriod"> </a><b>Condition.abatement[x]</b></td></tr>
   <tr><td>Definition</td><td><p>The date or estimated date that the condition resolved or went into remission. This is called &quot;abatement&quot; because of the many overloaded connotations associated with &quot;remission&quot; or &quot;resolution&quot; - Conditions are never really resolved, but they can abate.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: con-4</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/STU3/datatypes.html#Age">Age</a>(<a href="StructureDefinition-shr-core-Age.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age">SHR Age Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Period">Period</a>(<a href="StructureDefinition-shr-core-TimePeriod.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod">SHR TimePeriod Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Range">Range</a>(<a href="StructureDefinition-shr-core-AgeRange.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange">SHR AgeRange Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#dateTime">dateTime</a>, <a href="http://hl7.org/fhir/STU3/datatypes.html#Age">Age</a>(<a href="StructureDefinition-shr-core-GestationalAge.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge">SHR GestationalAge Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Period">Period</a></td></tr>
   <tr><td>[x] Note</td><td>See <a href="http://hl7.org/fhir/STU3/formats.html#choice">Choice of Data Types</a> for further information about how to use [x]</td></tr>
   <tr><td>Comments</td><td><p>There is no explicit distinction between resolution and remission because in many cases the distinction is not clear. Age is generally used when the patient reports an age at which the Condition abated.  If there is no abatement element, it is unknown whether the condition has resolved or entered remission; applications and users should generally assume that the condition is still valid.  When abatementString exists, it implies the condition is abated.</p>
 </td></tr>
@@ -368,7 +394,7 @@ redirect_from:
   <tr><td>Definition</td><td><p>Individual who is making the condition statement.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-Practitioner.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner">SHR Practitioner Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-demographics-PersonOfRecord.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord">SHR PersonOfRecord Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-actor-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson">SHR RelatedPerson Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td>Choice of: <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-entity-Patient.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient">SHR Patient Profile</a>), <a href="http://hl7.org/fhir/STU3/datatypes.html#Reference">Reference</a>(<a href="StructureDefinition-shr-entity-RelatedPerson.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson">SHR RelatedPerson Profile</a>)</td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.stage"> </a><a name="Condition.stage"> </a><b>Condition.stage</b></td></tr>
   <tr><td>Definition</td><td><p>Clinical stage or grade of a condition. May include formal severity assessments.</p>
 </td></tr>
@@ -403,7 +429,7 @@ redirect_from:
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..1 This element is affected by the following invariants: con-1</td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>Codes describing condition stages (e.g. Cancer stages).<br/>For example codes, see <a href="http://hl7.org/fhir/STU3/valueset-condition-stage.html">Condition Stage</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.stage.assessment"> </a><a name="Condition.stage.assessment"> </a><b>Condition.stage.assessment</b></td></tr>
   <tr><td>Definition</td><td><p>Reference to a formal record of the evidence on which the staging assessment is based.</p>
 </td></tr>
@@ -444,8 +470,8 @@ redirect_from:
   <tr><td>Definition</td><td><p>A manifestation or symptom that led to the recording of this condition.</p>
 </td></tr>
   <tr><td><a href="http://hl7.org/fhir/STU3/conformance-rules.html#conformance">Control</a></td><td>0..* This element is affected by the following invariants: con-2</td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>null<br/>The codes SHOULD be taken from <a href="ValueSet-shr-core-SpecificTypeVS.html">SHR SpecificTypeVS ValueSet</a></td></tr>
-  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a>(<a href="StructureDefinition-shr-core-CodeableConcept.html" title="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept">SHR CodeableConcept Profile</a>)</td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/terminologies.html">Binding</a></td><td>Codes that describe the manifestation or symptoms of a condition.<br/>For example codes, see <a href="http://hl7.org/fhir/STU3/valueset-manifestation-or-symptom.html">Manifestation and Symptom Codes</a></td></tr>
+  <tr><td><a href="http://hl7.org/fhir/STU3/datatypes.html">Type</a></td><td><a href="http://hl7.org/fhir/STU3/datatypes.html#CodeableConcept">CodeableConcept</a></td></tr>
   <tr><td colspan="2" class="structure"><a name="Condition:shr-condition-MentalHealthCondition.evidence.detail"> </a><a name="Condition.evidence.detail"> </a><b>Condition.evidence.detail</b></td></tr>
   <tr><td>Definition</td><td><p>Links to other relevant information, including pathology reports.</p>
 </td></tr>
@@ -480,13 +506,8 @@ redirect_from:
 <div id="segment-footer" class="segment">  <!-- segment-footer -->
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
-<<<<<<< HEAD
-    <p>Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.1-11916) generated
-        on Tue, Aug 8, 2017 11:57-0400.</p>
-=======
     <p>Implementation guide generated by the Standard Health Record Collaborative &copy; FHIR STU3 (IG Publisher v3.0.1-11916) generated
         on Tue, Dec 19, 2017 18:27-0500.</p>
->>>>>>> 92b20c342... 12/19/17 updates
    </div>  <!-- /inner-wrapper -->
   </div>  <!-- /container -->
 </div>  <!-- /segment-footer -->
