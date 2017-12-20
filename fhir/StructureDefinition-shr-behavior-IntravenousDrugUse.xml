@@ -8,34 +8,30 @@
   <p>Records whether the subject injects recreational drugs.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.behavior.IntravenousDrugUse maps to Observation:
-  Entry.FocalSubject maps to subject
-  Entry.AssociatedEncounter maps to context
-  Entry.OriginalCreationDate maps to issued
+  Entry.CreationTime maps to issued
+  RelatedEncounter maps to context	
+  Subject maps to subject
+  Category maps to category
+  ClinicallyRelevantTime maps to effective[x]
+  FindingMethod maps to method
+  FindingStatus maps to status
   Quantity maps to value[x]
   CodeableConcept maps to value[x]
   string maps to value[x]
   boolean maps to value[x]
   Range maps to value[x]
   Ratio maps to value[x]
+  Attachment maps to value[x]
   time maps to value[x]
   dateTime maps to value[x]
   TimePeriod maps to value[x]
-  SpecificType maps to code
-  Category maps to category
+  IntegerQuantity maps to value[x]
+  ValueAbsentReason maps to dataAbsentReason
+  ObservationCode maps to code
   BodySite maps to bodySite
-  Status maps to status
-  Method maps to method
-  Participant maps to performer 	// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.
-  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen
-  DataAbsentReason maps to dataAbsentReason
-  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
-  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
+  Specimen maps to specimen
+  Device maps to device
   Interpretation maps to interpretation
-<<<<<<< HEAD
-  Comment maps to comment
-  constrain component to 0..0
-  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
-=======
   Details maps to comment
   ReferenceRange maps to referenceRange
   ReferenceRange.Range.LowerBound maps to referenceRange.low
@@ -60,7 +56,6 @@
   ObservationComponent.Interpretation maps to component.interpretation
   ObservationComponent.ReferenceRange maps to component.referenceRange
   Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
->>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -72,16 +67,12 @@
   <version value="0.0.1"/>
   <name value="SHR IntravenousDrugUse Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:22.806Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="Records whether the subject injects recreational drugs."/>
@@ -340,11 +331,7 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.extension">
       <path value="Observation.extension"/>
-<<<<<<< HEAD
-      <slicing id="68">
-=======
       <slicing id="125">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -372,321 +359,74 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:reason">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:author">
       <path value="Observation.extension"/>
-      <sliceName value="reason"/>
-      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="author"/>
+      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:occurrencetime">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:informant">
       <path value="Observation.extension"/>
-      <sliceName value="occurrencetime"/>
-      <definition value="The point in time or span of time in which something happens."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="informant"/>
+      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:associatedstudy">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:focalsubject">
       <path value="Observation.extension"/>
-      <sliceName value="associatedstudy"/>
-      <definition value="The clinical trial or other formal study related to this finding."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="focalsubject"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:observationqualifier">
-      <path value="Observation.extension"/>
-      <sliceName value="observationqualifier"/>
-      <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:referencerange">
-      <path value="Observation.extension"/>
-      <sliceName value="referencerange"/>
-      <definition value="The usual or acceptable range for a test result."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance">
-      <path value="Observation.extension"/>
-      <sliceName value="substance"/>
-      <definition value="Any matter of defined composition that has discrete existence, whose origin may be biological, mineral or chemical."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-<<<<<<< HEAD
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Substance-extension"/>
-=======
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance.id">
-      <path value="Observation.extension.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance.extension:extension">
-      <path value="Observation.extension.extension"/>
-      <sliceName value="extension"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="0"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.extension:focalsubjectreference">
       <path value="Observation.extension"/>
       <sliceName value="focalsubjectreference"/>
       <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
       <min value="0"/>
       <max value="1"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
       </type>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance.url">
-      <path value="Observation.extension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="uri"/>
-      </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Substance-extension"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance.valueCodeableConcept">
-      <path value="Observation.extension.valueCodeableConcept"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.value[x]"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceOfAbuseVS"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuresourceorvector">
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.extension:evidence">
->>>>>>> 92b20c342... 12/19/17 updates
       <path value="Observation.extension"/>
-      <sliceName value="exposuresourceorvector"/>
-      <definition value="Where the substance originated. Vectors include animals (e.g., tick, mosquito, cats, livestock) capable of transmitting an infectious agent among vertebrates. Sources could include food, contaminated drinking water, air, radon gas in the home, etc."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="evidence"/>
+      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
       <min value="0"/>
       <max value="*"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureSourceOrVector-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposurereason">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:changeflag">
       <path value="Observation.extension"/>
-      <sliceName value="exposurereason"/>
-      <definition value="Why the exposure occurred."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <sliceName value="changeflag"/>
+      <definition value="Indicator of significant change (delta) from the last or previous measurement."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureReason-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:observationqualifier">
       <path value="Observation.extension"/>
-<<<<<<< HEAD
-      <sliceName value="exposuremethod"/>
-      <definition value="How the exposure occurred, e.g. cutaneous contact, injection, ingestion, sexual contact, inhalation."/>
-=======
       <sliceName value="observationqualifier"/>
       <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
       <min value="0"/>
@@ -733,99 +473,114 @@
       <path value="Observation.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureMethod-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod.id">
-      <path value="Observation.extension.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod.extension:extension">
-      <path value="Observation.extension.extension"/>
-      <sliceName value="extension"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="0"/>
-      <base>
-        <path value="Element.extension"/>
+        <path value="DomainResource.modifierExtension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
       </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod.url">
-      <path value="Observation.extension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="uri"/>
-      </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureMethod-extension"/>
+      <isModifier value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod.valueCodeableConcept">
-      <path value="Observation.extension.valueCodeableConcept"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.identifier">
+      <path value="Observation.identifier"/>
+      <short value="Business Identifier for observation"/>
+      <definition value="A unique identifier assigned to this observation."/>
+      <requirements value="Allows observations to be distinguished and referenced."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.identifier"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 2) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="id"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="id"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.basedOn">
+      <path value="Observation.basedOn"/>
+      <short value="Fulfills plan, proposal or order"/>
+      <definition value="A plan, proposal or order that is fulfilled in whole or in part by this event."/>
+      <requirements value="Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon."/>
+      <alias value="Fulfills"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/NutritionOrder"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ProcedureRequest"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ReferralRequest"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.basedOn"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="ORC"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=FLFS].target"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.status">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint">
+        <valueString value="default: final"/>
+      </extension>
+      <path value="Observation.status"/>
+      <short value="registered | preliminary | final | amended +"/>
+      <definition value="The status of the result value."/>
+      <comment value="This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
+      <requirements value="Need to track the status of individual results. Some results are finalized before the whole report is finalized."/>
       <min value="1"/>
       <max value="1"/>
-<<<<<<< HEAD
-      <base>
-        <path value="Extension.value[x]"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-=======
       <type>
         <code value="code"/>
       </type>
@@ -878,228 +633,134 @@
       <requirements value="Used for filtering what observations are retrieved and displayed."/>
       <min value="0"/>
       <max value="*"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0021494"/>
-        </coding>
-      </patternCodeableConcept>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody">
-      <path value="Observation.extension"/>
-      <sliceName value="routeintobody"/>
-      <definition value="The way a substance enters an organism after contact, particularly, the route of drug administration."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-RouteIntoBody-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody.id">
-      <path value="Observation.extension.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody.extension:extension">
-      <path value="Observation.extension.extension"/>
-      <sliceName value="extension"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="0"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody.url">
-      <path value="Observation.extension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="uri"/>
-      </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-RouteIntoBody-extension"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody.valueCodeableConcept">
-      <path value="Observation.extension.valueCodeableConcept"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.value[x]"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C1522726"/>
-        </coding>
-      </patternCodeableConcept>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCategory"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes for high level observation categories."/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/route-codes"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
         </valueSetReference>
       </binding>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;EVN&quot;].code"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:test">
-      <path value="Observation.extension"/>
-      <sliceName value="test"/>
-      <definition value="A laboratory, radiologic, or other clinical test or measurement used to determine the presence, absence, or degree of a condition, or assess the function or health of an individual. This includes patient-generated data, such as pedometer readings."/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251">
+      <path value="Observation.category"/>
+      <sliceName value="Includes_C024251"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.id">
+      <path value="Observation.category.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.extension">
+      <path value="Observation.category.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="DomainResource.extension"/>
+        <path value="Element.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-Test-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="n/a"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension">
-      <path value="Observation.modifierExtension"/>
-      <slicing id="69">
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding">
       <path value="Observation.category.coding"/>
       <slicing id="118">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
-          <path value="url"/>
+          <path value="path"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
       <min value="0"/>
       <max value="*"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
-        <code value="Extension"/>
+        <code value="Coding"/>
       </type>
-      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1-8, C*E.10-22"/>
+      </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="union(., ./translation)"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier">
-      <path value="Observation.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_C024251"/>
+      <definition value="A reference to a code defined by a terminology system."/>
       <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="DomainResource.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
+      <max value="*"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
+        <code value="Coding"/>
       </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
+      <isSummary value="true"/>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.id">
-      <path value="Observation.modifierExtension.id"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.id">
+      <path value="Observation.category.coding.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
@@ -1115,21 +776,24 @@
       </type>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension">
-      <path value="Observation.modifierExtension.extension"/>
-      <slicing id="9">
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.extension">
+      <path value="Observation.category.coding.extension"/>
+      <slicing>
         <discriminator>
           <type value="value"/>
           <path value="url"/>
         </discriminator>
-        <ordered value="false"/>
+        <description value="Extensions are always sliced by (at least) url"/>
         <rules value="open"/>
       </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1140,122 +804,152 @@
       <type>
         <code value="Extension"/>
       </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:boolean">
-      <path value="Observation.modifierExtension.extension"/>
-      <sliceName value="boolean"/>
-      <definition value="When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.&#xA;When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.extension"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/primitive-boolean-extension"/>
-      </type>
-      <isModifier value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:reason">
-      <path value="Observation.modifierExtension.extension"/>
-      <sliceName value="reason"/>
-      <definition value="The justification for an action or non-action, conclusion, opinion, etc."/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.system">
+      <path value="Observation.category.coding.system"/>
+      <short value="Identity of the terminology system"/>
+      <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously."/>
+      <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
       <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="Extension.extension"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:reason.id">
-      <path value="Observation.modifierExtension.extension.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:reason.extension:extension">
-      <path value="Observation.modifierExtension.extension.extension"/>
-      <sliceName value="extension"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="0"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:reason.url">
-      <path value="Observation.modifierExtension.extension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
-      </base>
       <type>
         <code value="uri"/>
       </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+      <fixedUri value="http://ncimeta.nci.nih.gov"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.3"/>
+      </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="./codeSystem"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"/>
       </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.extension:reason.value[x]">
-      <path value="Observation.modifierExtension.extension.value[x]"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-      <min value="1"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.version">
+      <path value="Observation.category.coding.version"/>
+      <short value="Version of the system - if relevant"/>
+      <definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."/>
+      <comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date."/>
+      <min value="0"/>
       <max value="1"/>
-      <base>
-        <path value="Extension.value[x]"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
       <type>
         <code value="string"/>
       </type>
-<<<<<<< HEAD
-=======
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystemVersion"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.code">
+      <path value="Observation.category.coding.code"/>
+      <short value="Symbol in syntax defined by the system"/>
+      <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
+      <requirements value="Need to refer to a particular code in the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="C024251"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./code"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.category.coding.display"/>
+      <short value="Representation defined by the system"/>
+      <definition value="A representation of the meaning of the code in the system, following the rules of the system."/>
+      <requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.2 - but note this is not well followed"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CV.displayName"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.coding:Fixed_C024251.userSelected">
+      <path value="Observation.category.coding.userSelected"/>
+      <short value="If this coding was chosen directly by the user"/>
+      <definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)."/>
+      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
+      <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Sometimes implied by being first"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CD.codingRationale"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\#true a [     fhir:source &quot;true&quot;;     fhir:target dt:CDCoding.codingRationale\#O   ]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_C024251.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.category.text"/>
+      <short value="Plain text representation of the concept"/>
+      <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
+      <comment value="Very often the text is the same as a displayName of one of the codings."/>
+      <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="v2"/>
@@ -1276,192 +970,30 @@
       <definition value="A code that classifies the general type of observation being made."/>
       <min value="1"/>
       <max value="1"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Condition"/>
-      </type>
-<<<<<<< HEAD
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.url">
-      <path value="Observation.modifierExtension.url"/>
-      <representation value="xmlAttr"/>
-      <short value="identifies the meaning of the extension"/>
-      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Extension.url"/>
-        <min value="1"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="uri"/>
-      </type>
-      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier.value[x]">
-      <path value="Observation.modifierExtension.value[x]"/>
-      <short value="Value of extension"/>
-      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
-=======
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.id">
       <path value="Observation.category.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
-      <max value="0"/>
+      <max value="1"/>
       <base>
-        <path value="Extension.value[x]"/>
+        <path value="Element.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="base64Binary"/>
-      </type>
-      <type>
-        <code value="boolean"/>
-      </type>
-      <type>
-        <code value="code"/>
-      </type>
-      <type>
-        <code value="date"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="decimal"/>
-      </type>
-      <type>
-        <code value="id"/>
-      </type>
-      <type>
-        <code value="instant"/>
-      </type>
-      <type>
-        <code value="integer"/>
-      </type>
-      <type>
-        <code value="markdown"/>
-      </type>
-      <type>
-        <code value="oid"/>
-      </type>
-      <type>
-        <code value="positiveInt"/>
-      </type>
-      <type>
         <code value="string"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="unsignedInt"/>
-      </type>
-      <type>
-        <code value="uri"/>
-      </type>
-      <type>
-        <code value="Address"/>
-      </type>
-      <type>
-        <code value="Age"/>
-      </type>
-      <type>
-        <code value="Annotation"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="Coding"/>
-      </type>
-      <type>
-        <code value="ContactPoint"/>
-      </type>
-      <type>
-        <code value="Count"/>
-      </type>
-      <type>
-        <code value="Distance"/>
-      </type>
-      <type>
-        <code value="Duration"/>
-      </type>
-      <type>
-        <code value="HumanName"/>
-      </type>
-      <type>
-        <code value="Identifier"/>
-      </type>
-      <type>
-        <code value="Money"/>
-      </type>
-      <type>
-        <code value="Period"/>
-      </type>
-      <type>
-        <code value="Quantity"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Signature"/>
-      </type>
-      <type>
-        <code value="Timing"/>
-      </type>
-      <type>
-        <code value="Meta"/>
       </type>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="n/a"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:assertionnegationmodifier">
-      <path value="Observation.modifierExtension"/>
-      <sliceName value="assertionnegationmodifier"/>
-      <definition value="When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is &#39;allergy to peanuts&#39; and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts."/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.extension">
       <path value="Observation.category.extension"/>
       <slicing>
@@ -1474,36 +1006,24 @@
       </slicing>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
-        <path value="DomainResource.modifierExtension"/>
+        <path value="Element.extension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
       </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="N/A"/>
+        <map value="n/a"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.identifier">
-      <path value="Observation.identifier"/>
-      <short value="Business Identifier for observation"/>
-      <definition value="A unique identifier assigned to this observation."/>
-      <requirements value="Allows observations to be distinguished and referenced."/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding">
       <path value="Observation.category.coding"/>
       <slicing id="117">
@@ -1518,51 +1038,34 @@
       <definition value="A reference to a code defined by a terminology system."/>
       <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
       <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="Identifier"/>
+        <code value="Coding"/>
       </type>
       <isSummary value="true"/>
       <mapping>
-        <identity value="workflow"/>
-        <map value="Event.identifier"/>
-      </mapping>
-      <mapping>
         <identity value="v2"/>
-        <map value="OBX.21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 2) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."/>
+        <map value="C*E.1-8, C*E.10-22"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="id"/>
+        <map value="union(., ./translation)"/>
       </mapping>
       <mapping>
-        <identity value="w5"/>
-        <map value="id"/>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.basedOn">
-      <path value="Observation.basedOn"/>
-      <short value="Fulfills plan, proposal or order"/>
-      <definition value="A plan, proposal or order that is fulfilled in whole or in part by this event."/>
-      <requirements value="Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon."/>
-      <alias value="Fulfills"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1">
       <path value="Observation.category.coding"/>
       <sliceName value="Fixed_54511-1"/>
       <definition value="A reference to a code defined by a terminology system."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+        <code value="Coding"/>
       </type>
-<<<<<<< HEAD
-=======
       <isSummary value="true"/>
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1.id">
@@ -1577,13 +1080,9 @@
         <min value="0"/>
         <max value="1"/>
       </base>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceRequest"/>
+        <code value="string"/>
       </type>
-<<<<<<< HEAD
-=======
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
@@ -1611,13 +1110,9 @@
         <min value="0"/>
         <max value="*"/>
       </base>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"/>
+        <code value="Extension"/>
       </type>
-<<<<<<< HEAD
-=======
       <mapping>
         <identity value="rim"/>
         <map value="n/a"/>
@@ -1631,86 +1126,47 @@
       <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
       <min value="0"/>
       <max value="1"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+        <code value="uri"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/NutritionOrder"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ProcedureRequest"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ReferralRequest"/>
-      </type>
-<<<<<<< HEAD
-=======
       <fixedUri value="http://loinc.org"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <isSummary value="true"/>
       <mapping>
-        <identity value="workflow"/>
-        <map value="Event.basedOn"/>
-      </mapping>
-      <mapping>
         <identity value="v2"/>
-        <map value="ORC"/>
+        <map value="C*E.3"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".outboundRelationship[typeCode=FLFS].target"/>
+        <map value="./codeSystem"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.status">
-      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint">
-        <valueString value="default: final"/>
-      </extension>
-      <path value="Observation.status"/>
-      <short value="registered | preliminary | final | amended +"/>
-      <definition value="The status of the result value."/>
-      <comment value="This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
-      <requirements value="Need to track the status of individual results. Some results are finalized before the whole report is finalized."/>
-      <min value="1"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1.version">
       <path value="Observation.category.coding.version"/>
       <short value="Version of the system - if relevant"/>
       <definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."/>
       <comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date."/>
       <min value="0"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <max value="1"/>
       <type>
-        <code value="code"/>
+        <code value="string"/>
       </type>
-      <isModifier value="true"/>
       <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationStatus"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes providing the status of an observation."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-status"/>
-        </valueSetReference>
-      </binding>
       <mapping>
-        <identity value="workflow"/>
-        <map value="Event.status"/>
+        <identity value="v2"/>
+        <map value="C*E.7"/>
       </mapping>
       <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 445584004 |Report by finality status|"/>
+        <identity value="rim"/>
+        <map value="./codeSystemVersion"/>
       </mapping>
-<<<<<<< HEAD
-=======
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"/>
+      </mapping>
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1.code">
       <path value="Observation.category.coding.code"/>
@@ -1724,36 +1180,19 @@
       </type>
       <fixedCode value="54511-1"/>
       <isSummary value="true"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <mapping>
         <identity value="v2"/>
-        <map value="OBX-11"/>
+        <map value="C*E.1"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="status  Amended &amp; Final are differentiated by whether it is the subject of a ControlAct event with a type of &quot;revise&quot;"/>
+        <map value="./code"/>
       </mapping>
       <mapping>
-        <identity value="w5"/>
-        <map value="status"/>
+        <identity value="orim"/>
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category">
-      <path value="Observation.category"/>
-      <slicing id="66">
-        <discriminator>
-          <type value="value"/>
-          <path value="coding"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Classification of  type of observation"/>
-      <definition value="A code that classifies the general type of observation being made."/>
-      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
-      <requirements value="Used for filtering what observations are retrieved and displayed."/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1.display">
       <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
         <valueBoolean value="true"/>
@@ -1762,34 +1201,25 @@
       <short value="Representation defined by the system"/>
       <definition value="A representation of the meaning of the code in the system, following the rules of the system."/>
       <requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
-      <max value="*"/>
+      <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="string"/>
       </type>
-      <binding>
-        <strength value="extensible"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
-        </valueSetReference>
-      </binding>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.2 - but note this is not well followed"/>
+      </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;EVN&quot;].code"/>
+        <map value="CV.displayName"/>
       </mapping>
       <mapping>
-        <identity value="w5"/>
-        <map value="class"/>
+        <identity value="orim"/>
+        <map value="fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category:C024251">
-      <path value="Observation.category"/>
-      <sliceName value="C024251"/>
-      <min value="1"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.coding:Fixed_54511-1.userSelected">
       <path value="Observation.category.coding.userSelected"/>
       <short value="If this coding was chosen directly by the user"/>
@@ -1797,25 +1227,24 @@
       <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
       <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
       <min value="0"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="boolean"/>
       </type>
-      <fixedCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C024251"/>
-        </coding>
-      </fixedCodeableConcept>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Sometimes implied by being first"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CD.codingRationale"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\#true a [     fhir:source &quot;true&quot;;     fhir:target dt:CDCoding.codingRationale\#O   ]"/>
+      </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category:C0332157">
-      <path value="Observation.category"/>
-      <sliceName value="C0332157"/>
-      <min value="1"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.category:Includes_54511-1.text">
       <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
         <valueBoolean value="true"/>
@@ -1826,67 +1255,22 @@
       <comment value="Very often the text is the same as a displayName of one of the codings."/>
       <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
       <min value="0"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="string"/>
       </type>
-      <fixedCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0332157"/>
-        </coding>
-      </fixedCodeableConcept>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.code">
-      <path value="Observation.code"/>
-      <short value="Type of observation (code / type)"/>
-      <definition value="Describes what was observed. Sometimes this is called the observation &quot;name&quot;."/>
-      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
-      <alias value="Name"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0242566"/>
-        </coding>
-      </patternCodeableConcept>
       <isSummary value="true"/>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.code"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 363787002 |Observable entity| OR &lt; 386053000 |Evaluation procedure|"/>
-      </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX-3"/>
+        <map value="C*E.9. But note many systems use C*E.2 for this"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="code"/>
+        <map value="./originalText[mediaType/code=&quot;text/plain&quot;]/data"/>
       </mapping>
       <mapping>
-        <identity value="sct-attr"/>
-        <map value="116680003 |Is a|"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="what"/>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"/>
       </mapping>
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.code">
@@ -1942,11 +1326,23 @@
       <definition value="The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject."/>
       <comment value="One would expect this element to be a cardinality  of 1..1.  The only circumstance in which the subject can be missing is when the observation is made by a device that does not know the patient. In this case, the observation SHALL be matched to a patient through some context/channel matching technique, and at this point, the observation should be updated.&#xD;&#xD;If the target of the observation is different than the subject, the general extension [observation-focal-subject](extension-observation-focal-subject.html).  may be used.  However, the distinction between the patient&#39;s own value for an observation versus that of the fetus, or the donor or blood product unit, etc., are often specified in the observation code."/>
       <requirements value="Observations have no value if you don&#39;t know who or what they&#39;re about."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1977,7 +1373,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
       </type>
       <mapping>
         <identity value="workflow"/>
@@ -2010,7 +1406,6 @@
       </type>
       <type>
         <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -2063,15 +1458,19 @@
       <max value="*"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -2093,11 +1492,7 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.value[x]">
       <path value="Observation.value[x]"/>
-<<<<<<< HEAD
-      <slicing id="67">
-=======
       <slicing id="124">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="type"/>
           <path value="$this"/>
@@ -2113,10 +1508,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-<<<<<<< HEAD
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-=======
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <condition value="obs-7"/>
       <isSummary value="true"/>
@@ -2141,35 +1532,21 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.valueCodeableConcept"/>
-      <sliceName value="shr-core-CodeableConcept"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.valueCodeableConcept:CodeableConcept">
       <path value="Observation.valueCodeableConcept"/>
       <sliceName value="CodeableConcept"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-<<<<<<< HEAD
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-=======
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <isSummary value="true"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-<<<<<<< HEAD
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
-=======
           <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceOfAbuseVS"/>
->>>>>>> 92b20c342... 12/19/17 updates
         </valueSetReference>
       </binding>
     </element>
@@ -2183,17 +1560,12 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-6"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationValueAbsentReason"/>
-        </extension>
-        <strength value="extensible"/>
-        <description value="Codes specifying why the result (Observation.value[x]) is missing."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason"/>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -2219,7 +1591,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -2280,7 +1651,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <strength value="required"/>
@@ -2315,7 +1685,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -2345,7 +1714,7 @@
       <max value="0"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Specimen"/>
       </type>
       <mapping>
         <identity value="sct-concept"/>
@@ -2373,11 +1742,7 @@
       <max value="0"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceMetric"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
       </type>
       <mapping>
         <identity value="sct-concept"/>
@@ -2506,7 +1871,7 @@
       <max value="1"/>
       <type>
         <code value="Quantity"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
       </type>
       <condition value="obs-3"/>
       <mapping>
@@ -2526,7 +1891,7 @@
       <max value="1"/>
       <type>
         <code value="Quantity"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
       </type>
       <condition value="obs-3"/>
       <mapping>
@@ -2587,7 +1952,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRangeType"/>
         </extension>
-        <strength value="example"/>
+        <strength value="extensible"/>
         <description value="Codes identifying the population the reference range applies to."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/referencerange-appliesto"/>
@@ -2615,6 +1980,7 @@
       <max value="1"/>
       <type>
         <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2774,11 +2140,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-<<<<<<< HEAD
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
-=======
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2787,8 +2149,6 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component">
       <path value="Observation.component"/>
-<<<<<<< HEAD
-=======
       <slicing id="120">
         <discriminator>
           <type value="value"/>
@@ -2797,13 +2157,12 @@
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
->>>>>>> 92b20c342... 12/19/17 updates
       <short value="Component results"/>
       <definition value="Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations."/>
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
       <min value="0"/>
-      <max value="0"/>
+      <max value="*"/>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -2940,6 +2299,7 @@
       <max value="1"/>
       <type>
         <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
       </type>
       <type>
         <code value="CodeableConcept"/>
@@ -2949,12 +2309,11 @@
       </type>
       <type>
         <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
       </type>
       <type>
         <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
       </type>
       <type>
         <code value="Attachment"/>
@@ -2999,13 +2358,9 @@
       </type>
       <condition value="obs-6"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationValueAbsentReason"/>
-        </extension>
-        <strength value="extensible"/>
-        <description value="Codes specifying why the result (Observation.value[x]) is missing."/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason"/>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -3033,7 +2388,7 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
         </extension>
-        <strength value="extensible"/>
+        <strength value="required"/>
         <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
@@ -3064,7 +2419,9 @@
       <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
       <min value="0"/>
       <max value="*"/>
-      <contentReference value="#Observation.referenceRange"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
       <mapping>
         <identity value="v2"/>
         <map value="OBX.7"/>
@@ -3074,70 +2431,214 @@
         <map value="outboundRelationship[typeCode=REFV]/target[classCode=OBS, moodCode=EVN]"/>
       </mapping>
     </element>
-  </snapshot>
-  <differential>
-    <element id="Observation:shr-behavior-IntravenousDrugUse">
-      <path value="Observation"/>
-      <short value="SHR IntravenousDrugUse Profile"/>
-      <definition value="Records whether the subject injects recreational drugs."/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.id">
+      <path value="Observation.component.referenceRange.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:reason">
-      <path value="Observation.extension"/>
-      <sliceName value="reason"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.extension">
+      <path value="Observation.component.referenceRange.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.modifierExtension">
+      <path value="Observation.component.referenceRange.modifierExtension"/>
+      <short value="Extensions that cannot be ignored"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.low">
+      <path value="Observation.component.referenceRange.low"/>
+      <short value="Low Range, if relevant"/>
+      <definition value="The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is &lt;=2.3)."/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+        <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.low"/>
+      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:occurrencetime">
-      <path value="Observation.extension"/>
-      <sliceName value="occurrencetime"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.high">
+      <path value="Observation.component.referenceRange.high"/>
+      <short value="High Range, if relevant"/>
+      <definition value="The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3)."/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-OccurrenceTime-extension"/>
+        <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+      <condition value="obs-3"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:IVL_PQ.high"/>
+      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:associatedstudy">
-      <path value="Observation.extension"/>
-      <sliceName value="associatedstudy"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.type">
+      <path value="Observation.component.referenceRange.type"/>
+      <short value="Reference range qualifier"/>
+      <definition value="Codes to indicate the what part of the targeted reference population it applies to. For example, the normal or therapeutic range."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal range is assumed."/>
+      <requirements value="Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation."/>
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"/>
+        <code value="CodeableConcept"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeMeaning"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Code for the meaning of a reference range."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-meaning"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:observationqualifier">
-      <path value="Observation.extension"/>
-      <sliceName value="observationqualifier"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.appliesTo">
+      <path value="Observation.component.referenceRange.appliesTo"/>
+      <short value="Reference range population"/>
+      <definition value="Codes to indicate the target population this reference range applies to.  For example, a reference range may be based on the normal population or a particular sex or race."/>
+      <comment value="This SHOULD be populated if there is more than one range.  If this element is not present then the normal population is assumed."/>
+      <requirements value="Need to be able to identify the target population for proper interpretation."/>
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
+        <code value="CodeableConcept"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationRangeType"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes identifying the population the reference range applies to."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/referencerange-appliesto"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 260245000 |Findings values| OR  &#xD;&lt; 365860008 |General clinical state finding| &#xD;OR &#xD;&lt; 250171008 |Clinical history or observation findings| OR  &#xD;&lt; 415229000 |Racial group| OR &#xD;&lt; 365400002 |Finding of puberty stage| OR&#xD;&lt; 443938003 |Procedure carried out on subject|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-10"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="interpretationCode"/>
+      </mapping>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:referencerange">
-      <path value="Observation.extension"/>
-      <sliceName value="referencerange"/>
-=======
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.age">
+      <path value="Observation.component.referenceRange.age"/>
+      <short value="Applicable age range, if relevant"/>
+      <definition value="The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so."/>
+      <requirements value="Some analytes vary greatly over age."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Range"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=PRCN].targetObservationCriterion[code=&quot;age&quot;].value"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component.referenceRange.text">
+      <path value="Observation.component.referenceRange.text"/>
+      <short value="Text based reference range in an observation"/>
+      <definition value="Text based reference range in an observation which may be used when a quantitative range is not appropriate for an observation.  An example would be a reference value of &quot;Negative&quot; or a list or table of &#39;normals&#39;."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value:ST"/>
+      </mapping>
+    </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-behavior-FrequencyOfUse">
       <path value="Observation.component"/>
       <sliceName value="shr-behavior-FrequencyOfUse"/>
@@ -3145,14 +2646,9 @@
       <definition value="Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations."/>
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="1"/>
       <type>
-<<<<<<< HEAD
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ReferenceRange-extension"/>
-=======
         <code value="BackboneElement"/>
       </type>
       <constraint>
@@ -5152,26 +4648,8 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-behavior-ReadinessToChange-extension"/>
->>>>>>> 92b20c342... 12/19/17 updates
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:substance">
-      <path value="Observation.extension"/>
-      <sliceName value="substance"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Substance-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.extension:outcome">
       <path value="Observation.extension"/>
       <sliceName value="outcome"/>
@@ -5500,21 +4978,17 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component.interpretation">
       <path value="Observation.component.interpretation"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
         <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/behavior/vs/SubstanceOfAbuseVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
         </valueSetReference>
       </binding>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuresourceorvector">
-      <path value="Observation.extension"/>
-      <sliceName value="exposuresourceorvector"/>
-      <min value="0"/>
-      <max value="*"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-behavior-FrequencyOfUse">
       <path value="Observation.component"/>
       <sliceName value="shr-behavior-FrequencyOfUse"/>
@@ -5531,98 +5005,15 @@
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureSourceOrVector-extension"/>
+        <code value="CodeableConcept"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposurereason">
-      <path value="Observation.extension"/>
-      <sliceName value="exposurereason"/>
-      <min value="0"/>
-      <max value="1"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-behavior-FrequencyOfUse.valueCodeableConcept:CodeableConcept">
       <path value="Observation.component.valueCodeableConcept"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureReason-extension"/>
+        <code value="CodeableConcept"/>
       </type>
-<<<<<<< HEAD
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:exposuremethod">
-      <path value="Observation.extension"/>
-      <sliceName value="exposuremethod"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-ExposureMethod-extension"/>
-      </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0021494"/>
-        </coding>
-      </patternCodeableConcept>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:routeintobody">
-      <path value="Observation.extension"/>
-      <sliceName value="routeintobody"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-RouteIntoBody-extension"/>
-      </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C1522726"/>
-        </coding>
-      </patternCodeableConcept>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.extension:test">
-      <path value="Observation.extension"/>
-      <sliceName value="test"/>
-      <min value="0"/>
-      <max value="*"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-lab-Test-extension"/>
-      </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:nonoccurrencemodifier">
-      <path value="Observation.modifierExtension"/>
-      <sliceName value="nonoccurrencemodifier"/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-NonOccurrenceModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
-=======
       <binding>
         <strength value="example"/>
         <valueSetReference>
@@ -5641,55 +5032,36 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-behavior-FrequencyOfUse.interpretation">
       <path value="Observation.component.interpretation"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
         <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationNotMadeReasonVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
         </valueSetReference>
       </binding>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.modifierExtension:assertionnegationmodifier">
-      <path value="Observation.modifierExtension"/>
-      <sliceName value="assertionnegationmodifier"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureRoute">
       <path value="Observation.component"/>
       <sliceName value="shr-environment-ExposureRoute"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"/>
-      </type>
-      <mustSupport value="true"/>
-      <isModifier value="true"/>
-      <isSummary value="false"/>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category">
-      <path value="Observation.category"/>
-      <slicing id="66">
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureRoute.value[x]">
       <path value="Observation.component.value[x]"/>
       <slicing id="122">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
-          <type value="value"/>
-          <path value="coding"/>
+          <type value="type"/>
+          <path value="$this"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
       </slicing>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-<<<<<<< HEAD
-=======
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureRoute.valueCodeableConcept:CodeableConcept">
       <path value="Observation.component.valueCodeableConcept"/>
@@ -5714,169 +5086,6 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureRoute.interpretation">
       <path value="Observation.component.interpretation"/>
->>>>>>> 92b20c342... 12/19/17 updates
-      <binding>
-        <strength value="extensible"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/observation/vs/ObservationCategoryVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category:C024251">
-      <path value="Observation.category"/>
-      <sliceName value="C024251"/>
-      <min value="1"/>
-      <max value="1"/>
-<<<<<<< HEAD
-=======
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod.value[x]">
-      <path value="Observation.component.value[x]"/>
-      <slicing id="123">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
->>>>>>> 92b20c342... 12/19/17 updates
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <fixedCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C024251"/>
-        </coding>
-      </fixedCodeableConcept>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.category:C0332157">
-      <path value="Observation.category"/>
-      <sliceName value="C0332157"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <fixedCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0332157"/>
-        </coding>
-      </fixedCodeableConcept>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.code">
-      <path value="Observation.code"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <patternCodeableConcept>
-        <coding>
-          <system value="http://ncimeta.nci.nih.gov"/>
-          <code value="C0242566"/>
-        </coding>
-      </patternCodeableConcept>
-      <binding>
-        <strength value="preferred"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.subject">
-      <path value="Observation.subject"/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-    </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.context">
-      <path value="Observation.context"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Encounter"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.effective[x]">
-      <path value="Observation.effective[x]"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.issued">
-      <path value="Observation.issued"/>
-      <min value="1"/>
-      <max value="1"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.performer">
-      <path value="Observation.performer"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="67">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.valueCodeableConcept:shr-core-CodeableConcept">
-      <path value="Observation.valueCodeableConcept"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
-        </valueSetReference>
-      </binding>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.dataAbsentReason">
-      <path value="Observation.dataAbsentReason"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.interpretation">
-      <path value="Observation.interpretation"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
@@ -5888,13 +5097,54 @@
         </valueSetReference>
       </binding>
     </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.bodySite">
-      <path value="Observation.bodySite"/>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod">
+      <path value="Observation.component"/>
+      <sliceName value="shr-environment-ExposureMethod"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <slicing id="123">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
-=======
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod.valueCodeableConcept:CodeableConcept">
+      <path value="Observation.component.valueCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod.dataAbsentReason">
+      <path value="Observation.component.dataAbsentReason"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureMethod.interpretation">
+      <path value="Observation.component.interpretation"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationInterpretation"/>
+        </extension>
+        <strength value="required"/>
+        <description value="Codes identifying interpretations of observations."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
+        </valueSetReference>
+      </binding>
+    </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureAmount">
       <path value="Observation.component"/>
       <sliceName value="shr-environment-ExposureAmount"/>
@@ -5908,37 +5158,13 @@
     </element>
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureAmount.dataAbsentReason">
       <path value="Observation.component.dataAbsentReason"/>
->>>>>>> 92b20c342... 12/19/17 updates
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
         </valueSetReference>
       </binding>
     </element>
-<<<<<<< HEAD
-    <element id="Observation:shr-behavior-IntravenousDrugUse.method">
-      <path value="Observation.method"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.related">
-      <path value="Observation.related"/>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.related.target">
-      <path value="Observation.related.target"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
-      </type>
-    </element>
-    <element id="Observation:shr-behavior-IntravenousDrugUse.component">
-      <path value="Observation.component"/>
-      <min value="0"/>
-      <max value="0"/>
-=======
     <element id="Observation:shr-behavior-IntravenousDrugUse.component:shr-environment-ExposureAmount.interpretation">
       <path value="Observation.component.interpretation"/>
       <binding>
@@ -5951,7 +5177,6 @@
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
         </valueSetReference>
       </binding>
->>>>>>> 92b20c342... 12/19/17 updates
     </element>
   </differential>
 </StructureDefinition>

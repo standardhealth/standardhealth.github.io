@@ -13,7 +13,7 @@
     <sch:title>f:Extension</sch:title>
     <sch:rule context="f:Extension">
       <sch:assert test="count(f:extension) &lt;= 0">extension: maximum cardinality of 'extension' is 0</sch:assert>
-      <sch:assert test="count(f:valuePositiveInt) &gt;= 1">valuePositiveInt: minimum cardinality of 'valuePositiveInt' is 1</sch:assert>
+      <sch:assert test="count(f:value[x]) &gt;= 1">value[x]: minimum cardinality of 'value[x]' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

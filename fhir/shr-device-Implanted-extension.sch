@@ -13,7 +13,7 @@
     <sch:title>f:Extension</sch:title>
     <sch:rule context="f:Extension">
       <sch:assert test="count(f:extension) &lt;= 0">extension: maximum cardinality of 'extension' is 0</sch:assert>
-      <sch:assert test="count(f:valueBoolean) &gt;= 1">valueBoolean: minimum cardinality of 'valueBoolean' is 1</sch:assert>
+      <sch:assert test="count(f:valueCodeableConcept) &gt;= 1">valueCodeableConcept: minimum cardinality of 'valueCodeableConcept' is 1</sch:assert>
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

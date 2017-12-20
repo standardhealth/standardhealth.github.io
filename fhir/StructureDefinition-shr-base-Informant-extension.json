@@ -3,7 +3,7 @@
   "id": "shr-base-Informant-extension",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Informant Extension</b></p>\n  <p>The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.</p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Informant Extension</b></p>\n  <p>The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.</p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension",
   "identifier": [
@@ -16,23 +16,19 @@
   "name": "SHR Informant Extension",
   "title": "SHR Informant Extension",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:20.694Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+  "description": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
   "fhirVersion": "3.0.1",
   "kind": "complex-type",
   "abstract": false,
@@ -49,7 +45,7 @@
         "id": "Extension:informant",
         "path": "Extension",
         "short": "SHR Informant Extension",
-        "definition": "The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
         "min": 0,
         "max": "*",
         "base": {
@@ -76,6 +72,12 @@
             "expression": "extension.exists() != value.exists()",
             "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])",
             "source": "Extension"
+          },
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-base-Informant-extension SHALL have either extension('string') or extension('patient') or extension('group') or extension('device') or extension('participant') or extension('relatedperson') or extension('organization')",
+            "expression": "( extension('string').url | extension('patient').url | extension('group').url | extension('device').url | extension('participant').url | extension('relatedperson').url | extension('organization').url ).distinct().count() == 1"
           }
         ]
       },
@@ -107,13 +109,23 @@
         ]
       },
       {
-        "id": "Extension:informant.extension:extension",
+        "id": "Extension:informant.extension",
         "path": "Extension.extension",
-        "sliceName": "extension",
+        "slicing": {
+          "id": "2",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Extension",
         "definition": "An Extension",
         "min": 0,
-        "max": "0",
+        "max": "*",
         "base": {
           "path": "Element.extension",
           "min": 0,
@@ -126,8 +138,6 @@
         ]
       },
       {
-<<<<<<< HEAD
-=======
         "id": "Extension:informant.extension:string",
         "path": "Extension.extension",
         "sliceName": "string",
@@ -310,7 +320,6 @@
         ]
       },
       {
->>>>>>> 92b20c342... 12/19/17 updates
         "id": "Extension:informant.url",
         "path": "Extension.url",
         "representation": [
@@ -318,6 +327,7 @@
         ],
         "short": "identifies the meaning of the extension",
         "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
         "min": 1,
         "max": "1",
         "base": {
@@ -343,8 +353,8 @@
         "path": "Extension.value[x]",
         "short": "Value of extension",
         "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
-        "min": 1,
-        "max": "1",
+        "min": 0,
+        "max": "0",
         "base": {
           "path": "Extension.value[x]",
           "min": 0,
@@ -352,16 +362,118 @@
         },
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "code": "base64Binary"
           },
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "code": "boolean"
           },
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
           }
         ],
         "mapping": [
@@ -379,17 +491,77 @@
         "id": "Extension:informant",
         "path": "Extension",
         "short": "SHR Informant Extension",
-        "definition": "The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
         "min": 0,
-        "max": "*"
+        "max": "*",
+        "constraint": [
+          {
+            "key": "choice-1",
+            "severity": "error",
+            "human": "shr-base-Informant-extension SHALL have either extension('string') or extension('patient') or extension('group') or extension('device') or extension('participant') or extension('relatedperson') or extension('organization')",
+            "expression": "( extension('string').url | extension('patient').url | extension('group').url | extension('device').url | extension('participant').url | extension('relatedperson').url | extension('organization').url ).distinct().count() == 1"
+          }
+        ]
       },
       {
-        "id": "Extension:informant.extension:extension",
+        "id": "Extension:informant.extension:string",
         "path": "Extension.extension",
-<<<<<<< HEAD
-        "sliceName": "extension",
-        "max": "0"
-=======
+        "sliceName": "string",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/primitive-string-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:informant.extension:patient",
+        "path": "Extension.extension",
+        "sliceName": "patient",
+        "definition": "A person in the role of a patient, including extended demographic information about the subject of this health record.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:informant.extension:group",
+        "path": "Extension.extension",
+        "sliceName": "group",
+        "definition": "A set of entities (personnel, material, or places) to be considered together. May be a pool of like-type resources, a team, or combination of personnel, material and places.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:informant.extension:device",
+        "path": "Extension.extension",
+        "sliceName": "device",
+        "definition": "A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device-extension"
+          }
+        ]
+      },
+      {
+        "id": "Extension:informant.extension:participant",
+        "path": "Extension.extension",
         "sliceName": "participant",
         "definition": "An object (usually a Person, Party, or Organization but potentially a device or other Entity) that participates in a task or activity.",
         "min": 0,
@@ -428,7 +600,6 @@
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Organization-extension"
           }
         ]
->>>>>>> 92b20c342... 12/19/17 updates
       },
       {
         "id": "Extension:informant.url",
@@ -443,21 +614,8 @@
       {
         "id": "Extension:informant.value[x]",
         "path": "Extension.value[x]",
-        "min": 1,
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          }
-        ]
+        "min": 0,
+        "max": "0"
       }
     ]
   }

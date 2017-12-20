@@ -15,18 +15,14 @@
   "version": "0.0.1",
   "name": "SHR MedicationChange Profile",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:31.115Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
@@ -284,11 +280,7 @@
         "id": "Basic:shr-medication-MedicationChange.extension",
         "path": "Basic.extension",
         "slicing": {
-<<<<<<< HEAD
-          "id": "237",
-=======
           "id": "74",
->>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "value",
@@ -325,18 +317,8 @@
         ]
       },
       {
-        "id": "Basic:shr-medication-MedicationChange.extension:effectivedate",
+        "id": "Basic:shr-medication-MedicationChange.extension:relatedencounter",
         "path": "Basic.extension",
-<<<<<<< HEAD
-        "sliceName": "effectivedate",
-        "definition": "The date when something is to take effect.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-=======
         "sliceName": "relatedencounter",
         "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
         "min": 0,
@@ -1255,22 +1237,19 @@
         "sliceName": "relatedplan",
         "definition": "The plan that this action fulfills",
         "min": 0,
->>>>>>> 92b20c342... 12/19/17 updates
         "max": "1",
         "base": {
-          "path": "DomainResource.extension",
+          "path": "Extension.extension",
           "min": 0,
-          "max": "*"
+          "max": "1"
         },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-EffectiveDate-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-RelatedPlan-extension"
           }
         ],
-        "mustSupport": false,
         "isModifier": false,
-        "isSummary": false,
         "mapping": [
           {
             "identity": "rim",
@@ -1279,31 +1258,214 @@
         ]
       },
       {
-        "id": "Basic:shr-medication-MedicationChange.extension:typeofchange",
-        "path": "Basic.extension",
-        "sliceName": "typeofchange",
-        "definition": "Whether the change is a dose change, switch to a new medication, or discontinuation.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-        "max": "1",
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.extension:facility",
+        "path": "Basic.extension.extension",
+        "sliceName": "facility",
+        "definition": "Services and space and equipment provided for a particular purpose; a building or place that provides a particular service or is used for a particular industry. Could be a clinical site, community site, or a mobile facility.",
+        "min": 0,
+        "max": "*",
         "base": {
-          "path": "DomainResource.extension",
+          "path": "Extension.extension",
           "min": 0,
-          "max": "*"
+          "max": "1"
         },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-TypeOfChange-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Facility-extension"
           }
         ],
-        "mustSupport": false,
         "isModifier": false,
-        "isSummary": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.extension:outcome",
+        "path": "Basic.extension.extension",
+        "sliceName": "outcome",
+        "definition": "The result of performing an action or behavior, for example, an adverse reaction or new finding.",
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Extension.extension",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-Outcome-extension"
+          }
+        ],
+        "isModifier": false,
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.url",
+        "path": "Basic.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.value[x]",
+        "path": "Basic.extension.value[x]",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "base64Binary"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "code"
+          },
+          {
+            "code": "date"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "decimal"
+          },
+          {
+            "code": "id"
+          },
+          {
+            "code": "instant"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "markdown"
+          },
+          {
+            "code": "oid"
+          },
+          {
+            "code": "positiveInt"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "unsignedInt"
+          },
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Address"
+          },
+          {
+            "code": "Age"
+          },
+          {
+            "code": "Annotation"
+          },
+          {
+            "code": "Attachment"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "Coding"
+          },
+          {
+            "code": "ContactPoint"
+          },
+          {
+            "code": "Count"
+          },
+          {
+            "code": "Distance"
+          },
+          {
+            "code": "Duration"
+          },
+          {
+            "code": "HumanName"
+          },
+          {
+            "code": "Identifier"
+          },
+          {
+            "code": "Money"
+          },
+          {
+            "code": "Period"
+          },
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "Reference"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "Signature"
+          },
+          {
+            "code": "Timing"
+          },
+          {
+            "code": "Meta"
+          }
+        ],
         "mapping": [
           {
             "identity": "rim",
@@ -1316,31 +1478,12 @@
         "path": "Basic.extension",
         "sliceName": "medicationbeforechange",
         "definition": "The medication taken, prior to the change.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationBeforeChange-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -1348,32 +1491,13 @@
         "id": "Basic:shr-medication-MedicationChange.extension:medicationafterchange",
         "path": "Basic.extension",
         "sliceName": "medicationafterchange",
-        "definition": "A medication taken, after the change.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "definition": "The medication taken, prior to the change.",
         "min": 0,
         "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationAfterChange-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -1576,41 +1700,122 @@
         "definition": "Description of a modification or change of a medication or dosage."
       },
       {
-        "id": "Basic:shr-medication-MedicationChange.extension:effectivedate",
+        "id": "Basic:shr-medication-MedicationChange.extension:relatedencounter",
         "path": "Basic.extension",
-        "sliceName": "effectivedate",
-        "min": 1,
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
+        "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-EffectiveDate-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "Basic:shr-medication-MedicationChange.extension:typeofchange",
+        "id": "Basic:shr-medication-MedicationChange.extension:author",
         "path": "Basic.extension",
-        "sliceName": "typeofchange",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:informant",
+        "path": "Basic.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:type",
+        "path": "Basic.extension",
+        "sliceName": "type",
+        "definition": "The most specific code (lowest level term) describing the kind or sort of thing being represented.",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-TypeOfChange-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Type-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:type.valueCodeableConcept",
+        "path": "Basic.extension.valueCodeableConcept",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationChangeTypeVS"
+          }
+        }
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:category",
+        "path": "Basic.extension",
+        "sliceName": "category",
+        "definition": "A class or division of people or things having particular shared characteristics",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Category-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext",
+        "path": "Basic.extension",
+        "sliceName": "performedcontext",
+        "definition": "ActionContext indicating actual performance or execution of a healthcare-related action, e.g., 3rd dose of Hepatitis B vaccine administered on Dec 4th 2012, appendectomy performed today.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension"
+          }
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.extension:reason",
+        "path": "Basic.extension.extension"
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.extension:reason.extension:codeableconcept",
+        "path": "Basic.extension.extension.extension"
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.extension:performedcontext.extension:reason.extension:codeableconcept.valueCodeableConcept",
+        "path": "Basic.extension.extension.extension.valueCodeableConcept",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/medication/vs/MedicationChangeReasonVS"
+          }
+        }
       },
       {
         "id": "Basic:shr-medication-MedicationChange.extension:medicationbeforechange",
         "path": "Basic.extension",
         "sliceName": "medicationbeforechange",
+        "definition": "The medication taken, prior to the change.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1618,15 +1823,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationBeforeChange-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Basic:shr-medication-MedicationChange.extension:medicationafterchange",
         "path": "Basic.extension",
         "sliceName": "medicationafterchange",
+        "definition": "The medication taken, prior to the change.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1634,10 +1837,19 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-medication-MedicationAfterChange-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
+      },
+      {
+        "id": "Basic:shr-medication-MedicationChange.code",
+        "path": "Basic.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://standardhealthrecord.org/fhir/basic-resource-type",
+              "code": "shr-medication-MedicationChange"
+            }
+          ]
+        }
       }
     ]
   }

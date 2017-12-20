@@ -12,6 +12,7 @@
   Units.Coding.code maps to code
   Units.Coding.CodeSystem maps to system
   Units.Coding.DisplayText maps to unit
+  Comparator maps to comparator
 </pre></p>
 </div>
   </text>
@@ -23,16 +24,12 @@
   <version value="0.0.1"/>
   <name value="SHR Statistic Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:20.568Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
   <description value="A quantity that represents a statistic, e.g. maximum, minimum, mean, median, etc."/>
@@ -152,27 +149,12 @@
         <rules value="open"/>
       </slicing>
       <definition value="The type of statistic that is represented by the value."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="1"/>
       <max value="1"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-StatisticType-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
     </element>
     <element id="Quantity:shr-core-Statistic.value">
       <path value="Quantity.value"/>
@@ -303,15 +285,21 @@
     <element id="Quantity:shr-core-Statistic.extension:statistictype">
       <path value="Quantity.extension"/>
       <sliceName value="statistictype"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <definition value="The type of statistic that is represented by the value."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-StatisticType-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
     </element>
     <element id="Quantity:shr-core-Statistic.value">
       <path value="Quantity.value"/>

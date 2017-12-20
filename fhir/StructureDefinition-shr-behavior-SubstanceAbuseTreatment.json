@@ -3,7 +3,7 @@
   "id": "shr-behavior-SubstanceAbuseTreatment",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SubstanceAbuseTreatment Profile</b></p>\n  <p>The treatment program used to address a substance abuse problem.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.behavior.SubstanceAbuseTreatment maps to Procedure:\n  SpecificType maps to code\n  Status maps to status\n  NonOccurrenceModifier maps to notDone\n  NonOccurrenceModifier.Reason maps to notDoneReason\n  OccurrenceTime.dateTime maps to performed[x].dateTime\n  OccurrenceTime.TimePeriod maps to performed[x].Period\n  Participant maps to performer\n  Participant.PersonOfRecord maps to performer.actor\n  Participant.Practitioner maps to performer.actor\n  Participant.RelatedPerson maps to performer.actor\n  Participant.ParticipationType maps to performer.role\n  Facility maps to location\n  Reason maps to reasonCode\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SubstanceAbuseTreatment Profile</b></p>\n  <p>The treatment program used to address a substance abuse problem.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.behavior.SubstanceAbuseTreatment maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure:\n  RelatedEncounter maps to context\n  Type maps to code\n  Subject maps to subject\n  Category maps to category\n  PerformedContext.Reason maps to reasonCode\n  constrain notDone to 0..0\n  constrain notDoneReason to 0..0\n  BodySite maps to bodySite\n  PartOf maps to partOf\n  Annotation maps to note\n  PerformedContext.OccurrenceTimeOrPeriod.dateTime maps to performed[x].dateTime\n  PerformedContext.OccurrenceTimeOrPeriod.TimePeriod maps to performed[x].Period\n  PerformedContext.Participant maps to performer.actor\n  PerformedContext.Participant.ParticipationType maps to performer.role\n  PerformedContext.Participant.OnBehalfOf maps to performer.onBehalfOf\n  PerformedContext.Status maps to status\n  PerformedContext.RelatedRequest maps to basedOn\n  PerformedContext.RelatedPlan maps to definition\n  PerformedContext.Outcome maps to outcome\n  PerformedContext.Facility maps to location\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-behavior-SubstanceAbuseTreatment",
   "identifier": [
@@ -15,25 +15,37 @@
   "version": "0.0.1",
   "name": "SHR SubstanceAbuseTreatment Profile",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:26.183Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
   "description": "The treatment program used to address a substance abuse problem.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US",
+          "display": "United States Minor Outlying Islands (the)"
+        }
+      ]
+    }
+  ],
   "fhirVersion": "3.0.1",
   "mapping": [
+    {
+      "identity": "argonaut-dq-dstu2",
+      "uri": "http://unknown.org/Argonaut DQ DSTU2",
+      "name": "Argonaut DQ DSTU2"
+    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -53,7 +65,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Procedure",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -64,6 +76,11 @@
         "definition": "The treatment program used to address a substance abuse problem.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure",
+          "min": 0,
+          "max": "*"
+        },
         "constraint": [
           {
             "key": "dom-2",
@@ -102,9 +119,11 @@
             "severity": "error",
             "human": "Reason not done is only permitted if notDone indicator is true",
             "expression": "notDoneReason.empty() or notDone = true",
-            "xpath": "not(exists(f:notDoneReason)) or f:notDone/@value=true()"
+            "xpath": "not(exists(f:notDoneReason)) or f:notDone/@value=true()",
+            "source": "Procedure"
           }
         ],
+        "mustSupport": false,
         "mapping": [
           {
             "identity": "rim",
@@ -117,6 +136,10 @@
           {
             "identity": "w5",
             "map": "clinical.general"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Procedure"
           }
         ]
       },
@@ -290,11 +313,7 @@
         "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension",
         "path": "Procedure.extension",
         "slicing": {
-<<<<<<< HEAD
-          "id": "134",
-=======
           "id": "152",
->>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "value",
@@ -331,74 +350,58 @@
         ]
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:codeableconcept",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:author",
         "path": "Procedure.extension",
-        "sliceName": "codeableconcept",
-        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS"
-          }
-        },
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
           }
         ]
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:informant",
         "path": "Procedure.extension",
-        "sliceName": "category",
-        "definition": "A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
         "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
+        "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:performedcontext",
+        "path": "Procedure.extension",
+        "sliceName": "performedcontext",
+        "definition": "ActionContext indicating actual performance or execution of a healthcare-related action, e.g., 3rd dose of Hepatitis B vaccine administered on Dec 4th 2012, appendectomy performed today.",
+        "min": 1,
+        "max": "1",
+        "type": [
           {
-            "identity": "rim",
-            "map": "N/A"
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:associatedstudy",
+        "path": "Procedure.extension",
+        "sliceName": "associatedstudy",
+        "definition": "The clinical trial or other formal study related to this procedure.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-AssociatedStudy-extension"
           }
         ]
       },
@@ -440,6 +443,11 @@
         "requirements": "Need to allow connection to a wider workflow.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.identifier",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Identifier"
@@ -468,6 +476,11 @@
         "definition": "A protocol, guideline, orderset or other definition that was adhered to in whole or in part by this procedure.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.definition",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -500,6 +513,11 @@
         ],
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.basedOn",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -532,19 +550,16 @@
           "container"
         ],
         "min": 0,
-        "max": "*",
+        "max": "1",
+        "base": {
+          "path": "Procedure.partOf",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Procedure"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Observation"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/MedicationAdministration"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-ProcedurePerformed"
           }
         ],
         "isSummary": true,
@@ -563,22 +578,21 @@
         "comment": "The unknown code is not to be used to convey other statuses.  The unknown code should be used when one of the statuses applies, but the authoring system doesn't know the current state of the procedure.\n\nThis element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.status",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
           }
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "ProcedureStatus"
-            }
-          ],
           "strength": "required",
-          "description": "A code specifying the state of the procedure.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/event-status"
           }
@@ -591,6 +605,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Procedure.status"
           }
         ]
       },
@@ -601,7 +619,12 @@
         "definition": "Set this to true if the record is saying that the procedure was NOT performed.",
         "comment": "If true, it means the procedure did not occur as described.  Typically it would be accompanied by attributes describing the type of activity.  It might also be accompanied by body site information or time information (i.e. no procedure was done to the left arm or no procedure was done in this 2-year period).  Specifying additional information such as performer, outcome, etc. is generally inappropriate.  For example, it's not that useful to say \"There was no appendectomy done at 12:03pm June 6th by Dr. Smith with a successful outcome\" as it implies that there *could* have been an appendectomy done at any other time, by any other clinician or with any other outcome.\n\nThis element is labeled as a modifier because it indicates that a procedure didn't happen.",
         "min": 0,
-        "max": "1",
+        "max": "0",
+        "base": {
+          "path": "Procedure.notDone",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "boolean"
@@ -623,11 +646,15 @@
         "short": "Reason procedure was not performed",
         "definition": "A code indicating why the procedure was not performed.",
         "min": 0,
-        "max": "1",
+        "max": "0",
+        "base": {
+          "path": "Procedure.notDoneReason",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "condition": [
@@ -661,6 +688,11 @@
         "definition": "A code that classifies the procedure for searching, sorting and display purposes (e.g. \"Surgical Procedure\").",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.category",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -694,25 +726,30 @@
       {
         "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.code",
         "path": "Procedure.code",
-        "short": "Identification of the procedure",
+        "short": "SNOMED-CT | ICD-10 | CPT-4",
         "definition": "The specific procedure that is performed. Use text if the exact nature of the procedure cannot be coded (e.g. \"Laparoscopic Appendectomy\").",
         "requirements": "0..1 to account for primarily narrative only resources.",
         "alias": [
           "type"
         ],
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.code",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "binding": {
-          "strength": "preferred",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
+            "reference": "http://standardhealthrecord.org/shr/behavior/vs/SubstanceAbuseTreatmentTypeVS"
           }
         },
         "mapping": [
@@ -727,6 +764,10 @@
           {
             "identity": "w5",
             "map": "what"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Procedure.code"
           }
         ]
       },
@@ -740,16 +781,18 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.subject",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Group"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -763,6 +806,10 @@
           {
             "identity": "w5",
             "map": "who.focus"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Procedure.subject"
           }
         ]
       },
@@ -776,14 +823,15 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.context",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Encounter"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
           }
         ],
         "isSummary": true,
@@ -807,17 +855,22 @@
         "path": "Procedure.performed[x]",
         "short": "Date/Period the procedure was performed",
         "definition": "The date(time)/period over which the procedure was performed. Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured.",
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.performed[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Period"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -831,6 +884,10 @@
           {
             "identity": "w5",
             "map": "when.done"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Procedure.performed[x]"
           }
         ]
       },
@@ -841,6 +898,11 @@
         "definition": "Limited to 'real' people rather than equipment.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.performer",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -959,17 +1021,28 @@
         "definition": "For example: surgeon, anaethetist, endoscopist.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.performer.role",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "isSummary": true,
         "binding": {
-          "strength": "required",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "ProcedurePerformerRole"
+            }
+          ],
+          "strength": "example",
+          "description": "A code that identifies the role of a performer of the procedure.",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/v3-ParticipationType"
+            "reference": "http://hl7.org/fhir/ValueSet/performer-role"
           }
         },
         "mapping": [
@@ -991,18 +1064,31 @@
         "requirements": "A reference to Device supports use cases, such as pacemakers.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.performer.actor",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Practitioner"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Device"
           }
         ],
         "isSummary": true,
@@ -1029,6 +1115,11 @@
         "requirements": "Practitioners and Devices can be associated with multiple organizations.  This element indicates which organization they were acting on behalf of when performing the action.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.performer.onBehalfOf",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1050,10 +1141,15 @@
         "requirements": "Ties a procedure to where the records are likely kept.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.location",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility"
+            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Location"
           }
         ],
         "isSummary": true,
@@ -1075,10 +1171,14 @@
         "definition": "The coded reason why the procedure was performed. This may be coded entity of some type, or may simply be present as text.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.reasonCode",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
         "isSummary": true,
@@ -1114,6 +1214,11 @@
         "comment": "e.g. endoscopy for dilatation and biopsy, combination diagnosis and therapeutic.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.reasonReference",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1143,6 +1248,11 @@
         "definition": "Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.bodySite",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1150,16 +1260,9 @@
         ],
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "BodySite"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes describing anatomical locations. May include laterality.",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/body-site"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         },
         "mapping": [
@@ -1181,6 +1284,11 @@
         "comment": "If outcome contains narrative text only, it can be captured using the CodeableConcept.text.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.outcome",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1215,6 +1323,11 @@
         "comment": "There could potentially be multiple reports - e.g. if this was a procedure which took multiple biopsies resulting in a number of anatomical pathology reports.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.report",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1236,6 +1349,11 @@
         "comment": "If complications are only expressed by the narrative text, they can be captured using the CodeableConcept.text.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.complication",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1269,6 +1387,11 @@
         "requirements": "This is used to document a condition that is a result of the procedure, not the condition that was the reason for the procedure.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.complicationDetail",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1289,6 +1412,11 @@
         "definition": "If the procedure required specific follow up - e.g. removal of sutures. The followup may be represented as a simple note, or could potentially be more complex in which case the CarePlan resource can be used.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.followUp",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1321,9 +1449,15 @@
         "definition": "Any other notes about the procedure.  E.g. the operative notes.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
-            "code": "Annotation"
+            "code": "Annotation",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"
           }
         ],
         "mapping": [
@@ -1344,6 +1478,11 @@
         "definition": "A device that is implanted, removed or otherwise manipulated (calibration, battery replacement, fitting a prosthesis, attaching a wound-vac, etc.) as a focal portion of the Procedure.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.focalDevice",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1461,6 +1600,11 @@
         "definition": "The kind of change that happened to the device during the procedure.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Procedure.focalDevice.action",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1493,6 +1637,11 @@
         "definition": "The device that was manipulated (changed) during the procedure.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Procedure.focalDevice.manipulated",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1515,6 +1664,11 @@
         "requirements": "Used for tracking contamination, etc.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.usedReference",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1544,6 +1698,11 @@
         "comment": "For devices actually implanted or removed, use Procedure.device.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Procedure.usedCode",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1577,23 +1736,92 @@
         "id": "Procedure:shr-behavior-SubstanceAbuseTreatment",
         "path": "Procedure",
         "short": "SHR SubstanceAbuseTreatment Profile",
-        "definition": "The treatment program used to address a substance abuse problem."
+        "definition": "The treatment program used to address a substance abuse problem.",
+        "mustSupport": false
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:codeableconcept",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:author",
         "path": "Procedure.extension",
-        "sliceName": "codeableconcept",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:informant",
+        "path": "Procedure.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:performedcontext",
+        "path": "Procedure.extension",
+        "sliceName": "performedcontext",
+        "definition": "ActionContext indicating actual performance or execution of a healthcare-related action, e.g., 3rd dose of Hepatitis B vaccine administered on Dec 4th 2012, appendectomy performed today.",
         "min": 1,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-action-PerformedContext-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:associatedstudy",
+        "path": "Procedure.extension",
+        "sliceName": "associatedstudy",
+        "definition": "The clinical trial or other formal study related to this procedure.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-AssociatedStudy-extension"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.partOf",
+        "path": "Procedure.partOf",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-procedure-ProcedurePerformed"
+          }
+        ]
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.notDone",
+        "path": "Procedure.notDone",
+        "min": 0,
+        "max": "0"
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason",
+        "path": "Procedure.notDoneReason",
+        "min": 0,
+        "max": "0"
+      },
+      {
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.code",
+        "path": "Procedure.code",
         "binding": {
           "strength": "required",
           "valueSetReference": {
@@ -1602,115 +1830,42 @@
         }
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.extension:category",
-        "path": "Procedure.extension",
-        "sliceName": "category",
-        "min": 0,
-        "max": "*",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.subject",
+        "path": "Procedure.subject",
         "type": [
           {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Category-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.notDoneReason",
-        "path": "Procedure.notDoneReason",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ]
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.code",
-        "path": "Procedure.code",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.context",
+        "path": "Procedure.context",
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
-        "binding": {
-          "strength": "preferred",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/core/vs/SpecificTypeVS"
-          }
-        }
-      },
-      {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.performed[x]",
-        "path": "Procedure.performed[x]",
-        "type": [
-          {
-            "code": "dateTime"
-          },
-          {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"
           }
         ]
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.performer",
-        "path": "Procedure.performer"
-      },
-      {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.performer.role",
-        "path": "Procedure.performer.role",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.bodySite",
+        "path": "Procedure.bodySite",
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/v3-ParticipationType"
+            "reference": "http://standardhealthrecord.org/shr/core/vs/BodySiteVS"
           }
         }
       },
       {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.performer.actor",
-        "path": "Procedure.performer.actor",
+        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.note",
+        "path": "Procedure.note",
         "type": [
           {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.location",
-        "path": "Procedure.location",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-Facility"
-          }
-        ]
-      },
-      {
-        "id": "Procedure:shr-behavior-SubstanceAbuseTreatment.reasonCode",
-        "path": "Procedure.reasonCode",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "Annotation",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Annotation"
           }
         ]
       }

@@ -5,12 +5,18 @@
   <text>
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
   <p><b>SHR AdverseEvent Profile</b></p>
-  <p>Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): death, back pain, headache, pulmonary embolism, heart attack.</p>
+  <p>Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): back pain, headache, pulmonary embolism, death. The AdverseEvent may also document a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.adverse.AdverseEvent maps to AdverseEvent:
   CodeableConcept maps to type 
+  Details maps to description
+  Subject maps to subject
+  OccurrenceTime maps to date
   SeriousAdverseEvent maps to seriousness
-  AdverseEventOutcome maps to outcome
+  Outcome maps to outcome
+  Author maps to recorder 
+  AdverseEventAttribution maps to suspectEntity.instance
+  AdverseEventAttribution.Certainty maps to suspectEntity.causalityAssessment	
   AssociatedStudy maps to study
 </pre></p>
 </div>
@@ -23,19 +29,15 @@
   <version value="0.0.1"/>
   <name value="SHR AdverseEvent Profile"/>
   <status value="draft"/>
-<<<<<<< HEAD
-  <date value="2017-08-08T15:56:20.702Z"/>
-=======
   <date value="2017-12-19"/>
->>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
       <system value="url"/>
-      <value value="http://www.standardhealthrecord.org"/>
+      <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <description value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): death, back pain, headache, pulmonary embolism, heart attack."/>
+  <description value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): back pain, headache, pulmonary embolism, death. The AdverseEvent may also document a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out."/>
   <fhirVersion value="3.0.1"/>
   <mapping>
     <identity value="w5"/>
@@ -56,7 +58,7 @@
     <element id="AdverseEvent:shr-adverse-AdverseEvent">
       <path value="AdverseEvent"/>
       <short value="SHR AdverseEvent Profile"/>
-      <definition value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): death, back pain, headache, pulmonary embolism, heart attack."/>
+      <definition value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): back pain, headache, pulmonary embolism, death. The AdverseEvent may also document a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out."/>
       <alias value="AE"/>
       <min value="0"/>
       <max value="*"/>
@@ -236,11 +238,7 @@
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.extension">
       <path value="AdverseEvent.extension"/>
-<<<<<<< HEAD
-      <slicing id="19">
-=======
       <slicing id="75">
->>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -268,8 +266,6 @@
         <map value="N/A"/>
       </mapping>
     </element>
-<<<<<<< HEAD
-=======
     <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:relatedencounter">
       <path value="AdverseEvent.extension"/>
       <sliceName value="relatedencounter"/>
@@ -347,32 +343,38 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
       </type>
     </element>
->>>>>>> 92b20c342... 12/19/17 updates
     <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:adverseeventgrade">
       <path value="AdverseEvent.extension"/>
       <sliceName value="adverseeventgrade"/>
       <definition value="A coded value specifying the level of injury suffered by the subject for whom the event is reported, using the CTCAE coding system."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
       <min value="1"/>
       <max value="1"/>
-      <base>
-        <path value="DomainResource.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseEventGrade-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:causecategory">
+      <path value="AdverseEvent.extension"/>
+      <sliceName value="causecategory"/>
+      <definition value="Whether the adverse event is attributed to a treatment, course of the disease, unrelated to either, or unknown."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-CauseCategory-extension"/>
+      </type>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:actiontaken">
+      <path value="AdverseEvent.extension"/>
+      <sliceName value="actiontaken"/>
+      <definition value="The action taken as a result of the adverse reaction. May include changing or discontinuing medication, reducing dose, etc."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-ActionTaken-extension"/>
+      </type>
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.modifierExtension">
       <path value="AdverseEvent.modifierExtension"/>
@@ -441,7 +443,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -464,19 +465,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ResearchSubject"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Medication"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -531,13 +524,12 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/YesNoUnknownVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -549,7 +541,6 @@
       <max value="1"/>
       <type>
         <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -571,15 +562,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -709,23 +696,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Substance"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Medication"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationAdministration"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Substance"/>
       </type>
       <isSummary value="true"/>
     </element>
@@ -761,13 +732,9 @@
       </type>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="AdverseEventCausalityAssessment"/>
-        </extension>
-        <strength value="example"/>
-        <description value="TODO"/>
+        <strength value="required"/>
         <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/adverse-event-causality-assess"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/QualitativeValueScaleVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -892,7 +859,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Study"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-research-Study"/>
       </type>
       <isSummary value="true"/>
     </element>
@@ -901,9 +868,6 @@
     <element id="AdverseEvent:shr-adverse-AdverseEvent">
       <path value="AdverseEvent"/>
       <short value="SHR AdverseEvent Profile"/>
-<<<<<<< HEAD
-      <definition value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): death, back pain, headache, pulmonary embolism, heart attack."/>
-=======
       <definition value="Any unfavorable and unintended sign, symptom, disease, or other medical occurrence with a temporal association with the use of a medical product, procedure or other therapy, or in conjunction with a research study, regardless of causal relationship. EXAMPLE(S): back pain, headache, pulmonary embolism, death. The AdverseEvent may also document a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out."/>
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:relatedencounter">
@@ -982,29 +946,44 @@
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
       </type>
->>>>>>> 92b20c342... 12/19/17 updates
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:adverseeventgrade">
       <path value="AdverseEvent.extension"/>
       <sliceName value="adverseeventgrade"/>
+      <definition value="A coded value specifying the level of injury suffered by the subject for whom the event is reported, using the CTCAE coding system."/>
       <min value="1"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseEventGrade-extension"/>
       </type>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:causecategory">
+      <path value="AdverseEvent.extension"/>
+      <sliceName value="causecategory"/>
+      <definition value="Whether the adverse event is attributed to a treatment, course of the disease, unrelated to either, or unknown."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-CauseCategory-extension"/>
+      </type>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.extension:actiontaken">
+      <path value="AdverseEvent.extension"/>
+      <sliceName value="actiontaken"/>
+      <definition value="The action taken as a result of the adverse reaction. May include changing or discontinuing medication, reducing dose, etc."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-ActionTaken-extension"/>
+      </type>
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.type">
       <path value="AdverseEvent.type"/>
       <min value="1"/>
       <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -1012,25 +991,55 @@
         </valueSetReference>
       </binding>
     </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.subject">
+      <path value="AdverseEvent.subject"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+      </type>
+    </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.seriousness">
       <path value="AdverseEvent.seriousness"/>
-      <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
-      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/ThreeValueLogicVS"/>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/YesNoUnknownVS"/>
         </valueSetReference>
       </binding>
     </element>
-    <element id="AdverseEvent:shr-adverse-AdverseEvent.outcome">
-      <path value="AdverseEvent.outcome"/>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.recorder">
+      <path value="AdverseEvent.recorder"/>
       <type>
-        <code value="CodeableConcept"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
       </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"/>
+      </type>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.suspectEntity">
+      <path value="AdverseEvent.suspectEntity"/>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.suspectEntity.instance">
+      <path value="AdverseEvent.suspectEntity.instance"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Substance"/>
+      </type>
+    </element>
+    <element id="AdverseEvent:shr-adverse-AdverseEvent.suspectEntity.causalityAssessment">
+      <path value="AdverseEvent.suspectEntity.causalityAssessment"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/shr/core/vs/QualitativeValueScaleVS"/>
+        </valueSetReference>
+      </binding>
     </element>
     <element id="AdverseEvent:shr-adverse-AdverseEvent.study">
       <path value="AdverseEvent.study"/>
@@ -1038,7 +1047,7 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Study"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-research-Study"/>
       </type>
     </element>
   </differential>

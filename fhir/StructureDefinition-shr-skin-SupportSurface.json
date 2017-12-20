@@ -3,7 +3,7 @@
   "id": "shr-skin-SupportSurface",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SupportSurface Profile</b></p>\n  <p>A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.SupportSurface maps to Device:\n  CodeableConcept maps to type\n  DeviceUdi maps to udi.carrierHRF\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SupportSurface Profile</b></p>\n  <p>A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.skin.SupportSurface maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-device:\n  Type maps to type\n  DeviceUdi maps to udi.carrierHRF\n  VendorModelNumber maps to model\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurface",
   "identifier": [
@@ -15,26 +15,37 @@
   "version": "0.0.1",
   "name": "SHR SupportSurface Profile",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:38.322Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
   "description": "A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface.",
-  "purpose": "Allows institutions to track their devices.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US",
+          "display": "United States Minor Outlying Islands (the)"
+        }
+      ]
+    }
+  ],
   "fhirVersion": "3.0.1",
   "mapping": [
+    {
+      "identity": "argonaut-dq-dstu2",
+      "uri": "http://unknown.org/Argonaut DQ DSTU2",
+      "name": "Argonaut DQ DSTU2"
+    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -54,7 +65,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Device",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Device",
+  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-device",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -65,6 +76,11 @@
         "definition": "A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Device",
+          "min": 0,
+          "max": "*"
+        },
         "constraint": [
           {
             "key": "dom-2",
@@ -99,6 +115,7 @@
             "source": "DomainResource"
           }
         ],
+        "mustSupport": false,
         "mapping": [
           {
             "identity": "rim",
@@ -111,6 +128,10 @@
           {
             "identity": "w5",
             "map": "administrative.device"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Device"
           }
         ]
       },
@@ -284,11 +305,7 @@
         "id": "Device:shr-skin-SupportSurface.extension",
         "path": "Device.extension",
         "slicing": {
-<<<<<<< HEAD
-          "id": "423",
-=======
           "id": "546",
->>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "value",
@@ -325,35 +342,177 @@
         ]
       },
       {
-        "id": "Device:shr-skin-SupportSurface.extension:supportsurfacecategory",
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept",
         "path": "Device.extension",
-        "sliceName": "supportsurfacecategory",
-        "definition": "The category of support surface.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept.id",
+        "path": "Device.extension.id",
+        "representation": [
+          "xmlAttr"
         ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
         "min": 0,
         "max": "1",
         "base": {
-          "path": "DomainResource.extension",
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept.extension:extension",
+        "path": "Device.extension.extension",
+        "sliceName": "extension",
+        "short": "Extension",
+        "definition": "An Extension",
+        "min": 0,
+        "max": "0",
+        "base": {
+          "path": "Element.extension",
           "min": 0,
           "max": "*"
         },
         "type": [
           {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceCategory-extension"
+            "code": "Extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept.url",
+        "path": "Device.extension.url",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "identifies the meaning of the extension",
+        "definition": "Source of the definition for the extension code - a logical name or a URL.",
+        "comment": "The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension.",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.url",
+          "min": 1,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "uri"
           }
         ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
+        "fixedUri": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension",
         "mapping": [
           {
             "identity": "rim",
             "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept.valueCodeableConcept",
+        "path": "Device.extension.valueCodeableConcept",
+        "short": "Value of extension",
+        "definition": "Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list).",
+        "min": 1,
+        "max": "1",
+        "base": {
+          "path": "Extension.value[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/skin/vs/SupportSurfaceVS"
+          }
+        },
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:relatedencounter",
+        "path": "Device.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:author",
+        "path": "Device.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:informant",
+        "path": "Device.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:supportsurfacecategory",
+        "path": "Device.extension",
+        "sliceName": "supportsurfacecategory",
+        "definition": "The category of support surface.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceCategory-extension"
           }
         ]
       },
@@ -362,31 +521,12 @@
         "path": "Device.extension",
         "sliceName": "supportsurfacebodyposition",
         "definition": "What body positions the surface can be used for, specifically, sitting or lying.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceBodyPosition-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -395,31 +535,12 @@
         "path": "Device.extension",
         "sliceName": "supportsurfacecomponent",
         "definition": "A physical material, structure, or system used alone or in combination with other components to fashion a support surface.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceComponent-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
@@ -464,6 +585,11 @@
         ],
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Device.identifier",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Identifier"
@@ -490,8 +616,13 @@
         "short": "Unique Device Identifier (UDI) Barcode string",
         "definition": "[Unique device identifier (UDI)](device.html#5.11.3.2.2) assigned to device label or package.",
         "comment": "UDI may identify an unique instance of a device, or it may only identify the type of the device.  See [UDI mappings](device-mappings.html#udi) for a complete mapping of UDI parts to Device.",
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Device.udi",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -507,6 +638,7 @@
             "source": "Element"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -516,6 +648,10 @@
           {
             "identity": "w5",
             "map": "id"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Device.udi"
           }
         ]
       },
@@ -617,6 +753,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.deviceIdentifier",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -649,6 +790,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.name",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -678,6 +824,11 @@
         "requirements": "Allows a recipient of a UDI to know which database will contain the UDI-associated metadata.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.jurisdiction",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "uri"
@@ -697,15 +848,23 @@
         "definition": "The full UDI carrier as the human readable form (HRF) representation of the barcode string as printed on the packaging of the device.",
         "comment": "If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.",
         "alias": [
-          "Human Readable Form"
+          "Human Readable Form",
+          "UDI",
+          "Barcode String"
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.carrierHRF",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
           }
         ],
+        "mustSupport": false,
         "isSummary": true,
         "mapping": [
           {
@@ -715,6 +874,10 @@
           {
             "identity": "rim",
             "map": "Role.id.extension"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Device.udi"
           }
         ]
       },
@@ -725,15 +888,23 @@
         "definition": "The full UDI carrier of the Automatic Identification and Data Capture (AIDC) technology representation of the barcode string as printed on the packaging of the device - E.g a barcode or RFID.   Because of limitations on character sets in XML and the need to round-trip JSON data through XML, AIDC Formats *SHALL* be base64 encoded.",
         "comment": "The AIDC form of UDIs should be scanned or otherwise used for the identification of the device whenever possible to minimize errors in records resulting from manual transcriptions. If separate barcodes for DI and PI are present, concatenate the string with DI first and in order of human readable expression on label.",
         "alias": [
-          "Automatic Identification and Data Capture"
+          "Automatic Identification and Data Capture",
+          "UDI",
+          "Barcode String"
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.carrierAIDC",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "base64Binary"
           }
         ],
+        "mustSupport": false,
         "isSummary": true,
         "mapping": [
           {
@@ -743,6 +914,10 @@
           {
             "identity": "rim",
             "map": "Role.id.extension"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "NA (not Supoorted)"
           }
         ]
       },
@@ -756,6 +931,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.issuer",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "uri"
@@ -780,6 +960,11 @@
         "requirements": "Supports a way to distinguish hand entered from machine read data.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.udi.entryType",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -813,6 +998,11 @@
         "comment": "This element is labeled as a modifier because the status contains the codes inactive and entered-in-error that mark the device (record)as not currently valid.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.status",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -851,16 +1041,21 @@
         "definition": "Code or identifier to identify a kind of device.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "Device.type",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/skin/vs/SupportSurfaceVS"
+            "reference": "http://standardhealthrecord.org/shr/device/vs/DeviceVS"
           }
         },
         "mapping": [
@@ -875,6 +1070,10 @@
           {
             "identity": "w5",
             "map": "what"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Device.type"
           }
         ]
       },
@@ -885,6 +1084,11 @@
         "definition": "Lot number assigned by the manufacturer.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.lotNumber",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -912,6 +1116,11 @@
         "definition": "A name of the manufacturer.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.manufacturer",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -939,6 +1148,11 @@
         "definition": "The date and time when the device was manufactured.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.manufactureDate",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -966,6 +1180,11 @@
         "definition": "The date and time beyond which this device is no longer valid or should not be used (if applicable).",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.expirationDate",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -993,6 +1212,11 @@
         "definition": "The \"model\" is an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.model",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -1016,6 +1240,11 @@
         "definition": "The version of the device, if the device has multiple releases under the same model, or if the device is software or carries firmware.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.version",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -1038,14 +1267,20 @@
         "short": "Patient to whom Device is affixed",
         "definition": "Patient information, If the device is affixed to a person.",
         "requirements": "If the device is implanted in a patient, then need to associate the device to the patient.",
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "Device.patient",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
+            "targetProfile": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
           }
         ],
+        "mustSupport": true,
         "mapping": [
           {
             "identity": "rim",
@@ -1054,6 +1289,10 @@
           {
             "identity": "w5",
             "map": "who.focus"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "Device.patient"
           }
         ]
       },
@@ -1064,6 +1303,11 @@
         "definition": "An organization that is responsible for the provision and ongoing maintenance of the device.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.owner",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1089,6 +1333,11 @@
         "comment": "used for troubleshooting etc.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Device.contact",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "ContactPoint"
@@ -1113,6 +1362,11 @@
         "requirements": "Device.location can be used to track device location.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.location",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
@@ -1138,6 +1392,11 @@
         "comment": "If the device is running a FHIR server, the network address should  be the Base URL from which a conformance statement may be retrieved.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "Device.url",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "uri"
@@ -1161,6 +1420,11 @@
         "definition": "Descriptive information, usage information or implantation information that is not captured in an existing element.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Device.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Annotation"
@@ -1180,6 +1444,11 @@
         "definition": "Provides additional safety characteristics about a medical device.  For example devices containing latex.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "Device.safety",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1214,12 +1483,80 @@
         "id": "Device:shr-skin-SupportSurface",
         "path": "Device",
         "short": "SHR SupportSurface Profile",
-        "definition": "A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface."
+        "definition": "A specific instance of a support surface used to distribute pressure and support a patient. The value is coding of the type of support surface.",
+        "mustSupport": false
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept",
+        "path": "Device.extension",
+        "sliceName": "codeableconcept",
+        "definition": "A set of codes drawn from different coding systems, representing the same concept.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:codeableconcept.valueCodeableConcept",
+        "path": "Device.extension.valueCodeableConcept",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/skin/vs/SupportSurfaceVS"
+          }
+        }
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:relatedencounter",
+        "path": "Device.extension",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:author",
+        "path": "Device.extension",
+        "sliceName": "author",
+        "definition": "The person or organization who created the entry and is responsible for (and may certify) the content.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"
+          }
+        ]
+      },
+      {
+        "id": "Device:shr-skin-SupportSurface.extension:informant",
+        "path": "Device.extension",
+        "sliceName": "informant",
+        "definition": "The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"
+          }
+        ]
       },
       {
         "id": "Device:shr-skin-SupportSurface.extension:supportsurfacecategory",
         "path": "Device.extension",
         "sliceName": "supportsurfacecategory",
+        "definition": "The category of support surface.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1227,15 +1564,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceCategory-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Device:shr-skin-SupportSurface.extension:supportsurfacebodyposition",
         "path": "Device.extension",
         "sliceName": "supportsurfacebodyposition",
+        "definition": "What body positions the surface can be used for, specifically, sitting or lying.",
         "min": 0,
         "max": "1",
         "type": [
@@ -1243,15 +1578,13 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceBodyPosition-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Device:shr-skin-SupportSurface.extension:supportsurfacecomponent",
         "path": "Device.extension",
         "sliceName": "supportsurfacecomponent",
+        "definition": "A physical material, structure, or system used alone or in combination with other components to fashion a support surface.",
         "min": 0,
         "max": "*",
         "type": [
@@ -1259,26 +1592,15 @@
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-skin-SupportSurfaceComponent-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
         "id": "Device:shr-skin-SupportSurface.type",
         "path": "Device.type",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/skin/vs/SupportSurfaceVS"
+            "reference": "http://standardhealthrecord.org/shr/device/vs/DeviceVS"
           }
         }
       }

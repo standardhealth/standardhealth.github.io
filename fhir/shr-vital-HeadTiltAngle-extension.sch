@@ -23,4 +23,10 @@
       <sch:assert test="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])">Must have either extensions or value[x], not both</sch:assert>
     </sch:rule>
   </sch:pattern>
+  <sch:pattern>
+    <sch:title>f:Extension/f:valueQuantity</sch:title>
+    <sch:rule context="f:Extension/f:valueQuantity">
+      <sch:assert test="count(f:value) &gt;= 1">value: minimum cardinality of 'value' is 1</sch:assert>
+    </sch:rule>
+  </sch:pattern>
 </sch:schema>

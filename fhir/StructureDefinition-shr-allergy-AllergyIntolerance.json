@@ -3,11 +3,7 @@
   "id": "shr-allergy-AllergyIntolerance",
   "text": {
     "status": "generated",
-<<<<<<< HEAD
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AllergyIntolerance Profile</b></p>\n  <p>A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (AssertionNegationModifier = true).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.allergy.AllergyIntolerance maps to AllergyIntolerance:\n  Entry.Informant maps to asserter\n  Entry.Author maps to recorder\n  Entry.OriginalCreationDate maps to assertedDate\n  AllergenIrritant maps to code\n  AdverseReactionType maps to type\n  Criticality maps to criticality\n  SubstanceCategory maps to category\n  AllergyVerificationStatus maps to verificationStatus\n  Onset maps to onset[x]\n  MostRecentOccurrence maps to lastOccurrence\n</pre></p>\n</div>"
-=======
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AllergyIntolerance Profile</b></p>\n  <p>A finding related to the presence or absence of an individual's risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.allergy.AllergyIntolerance maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance:\n  Informant maps to asserter\n  Author maps to recorder\n  CodeableConcept maps to code\n  ClinicalStatus maps to clinicalStatus\n  Entry.CreationTime maps to assertedDate\n  Subject maps to patient\n  Type maps to type\n  Criticality maps to criticality\n  SubstanceCategory maps to category\n  VerificationStatus maps to verificationStatus\n  Onset maps to onset[x]\n  MostRecentOccurrenceTime maps to lastOccurrence\n  AdverseReaction.AllergenIrritant maps to reaction.substance\n  AdverseReaction.Manifestation maps to reaction.manifestation\n  AdverseReaction.Details maps to reaction.description\n  AdverseReaction.OccurrenceTime maps to reaction.onset\n  AdverseReaction.Severity maps to reaction.severity\n  AdverseReaction.RouteIntoBody maps to reaction.exposureRoute\n</pre></p>\n</div>"
->>>>>>> 92b20c342... 12/19/17 updates
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-allergy-AllergyIntolerance",
   "identifier": [
@@ -19,26 +15,37 @@
   "version": "0.0.1",
   "name": "SHR AllergyIntolerance Profile",
   "status": "draft",
-<<<<<<< HEAD
-  "date": "2017-08-08T15:56:20.779Z",
-=======
   "date": "2017-12-19",
->>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
       "telecom": [
         {
           "system": "url",
-          "value": "http://www.standardhealthrecord.org"
+          "value": "http://standardhealthrecord.org"
         }
       ]
     }
   ],
-  "description": "A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (AssertionNegationModifier = true).",
-  "purpose": "To record a clinical assessment of a propensity, or potential risk to an individual, of an adverse reaction upon future exposure to the specified substance, or class of substance.",
+  "description": "A finding related to the presence or absence of an individual's risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US",
+          "display": "United States Minor Outlying Islands (the)"
+        }
+      ]
+    }
+  ],
   "fhirVersion": "3.0.1",
   "mapping": [
+    {
+      "identity": "argonaut-dq-dstu2",
+      "uri": "http://unknown.org/Argonaut DQ DSTU2",
+      "name": "Argonaut DQ DSTU2"
+    },
     {
       "identity": "rim",
       "uri": "http://hl7.org/v3",
@@ -58,7 +65,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "AllergyIntolerance",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance",
   "derivation": "constraint",
   "snapshot": {
     "element": [
@@ -66,7 +73,7 @@
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance",
         "path": "AllergyIntolerance",
         "short": "SHR AllergyIntolerance Profile",
-        "definition": "A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (AssertionNegationModifier = true).",
+        "definition": "A finding related to the presence or absence of an individual's risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time.",
         "comment": "Substances include, but are not limited to: a therapeutic substance administered correctly at an appropriate dosage for the individual; food; material derived from plants or animals; or venom from insect stings.",
         "alias": [
           "Allergy",
@@ -75,6 +82,11 @@
         ],
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance",
+          "min": 0,
+          "max": "*"
+        },
         "constraint": [
           {
             "key": "dom-2",
@@ -113,16 +125,19 @@
             "severity": "error",
             "human": "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
             "expression": "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+            "xpath": "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)",
+            "source": "AllergyIntolerance"
           },
           {
             "key": "ait-2",
             "severity": "error",
             "human": "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
             "expression": "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
-            "xpath": "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
+            "xpath": "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))",
+            "source": "AllergyIntolerance"
           }
         ],
+        "mustSupport": false,
         "mapping": [
           {
             "identity": "rim",
@@ -135,6 +150,10 @@
           {
             "identity": "w5",
             "map": "clinical.general"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "AllergyIntolerance"
           }
         ]
       },
@@ -308,11 +327,7 @@
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension",
         "path": "AllergyIntolerance.extension",
         "slicing": {
-<<<<<<< HEAD
-          "id": "24",
-=======
           "id": "95",
->>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "value",
@@ -349,37 +364,28 @@
         ]
       },
       {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:manifestation",
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:relatedencounter",
         "path": "AllergyIntolerance.extension",
-        "sliceName": "manifestation",
-        "definition": "A complaint or observed indication that a person has a condition or disease. Some examples of symptoms are headache, fever, fatigue, nausea, vomiting, and pain.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
         "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
+        "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Manifestation-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:focalsubject",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
           {
-<<<<<<< HEAD
-            "identity": "rim",
-            "map": "N/A"
-=======
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"
           }
@@ -396,7 +402,48 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"
->>>>>>> 92b20c342... 12/19/17 updates
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:findingmethod",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical, lab test code, or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:findingstatus",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:evidence",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "evidence",
+        "definition": "A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"
           }
         ]
       },
@@ -405,81 +452,18 @@
         "path": "AllergyIntolerance.extension",
         "sliceName": "abatement",
         "definition": "The end, remission or resolution.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
         "min": 0,
         "max": "1",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
         "type": [
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:adversereaction",
-        "path": "AllergyIntolerance.extension",
-        "sliceName": "adversereaction",
-        "definition": "Any noxious and unintended response to a medical product, procedure, or other intervention, for which a causal relationship to an intervention is at least a reasonable possibility i.e., the relationship cannot be ruled out. The AssessmentFocus is one or more observations, typically the symptoms of the adverse reaction, such as severe nausea or elevated liver enyzmes.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 0,
-        "max": "*",
-        "base": {
-          "path": "DomainResource.extension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseReaction-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
           }
         ]
       },
       {
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.modifierExtension",
         "path": "AllergyIntolerance.modifierExtension",
-        "slicing": {
-          "id": "25",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
         "short": "Extensions that cannot be ignored",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -508,45 +492,17 @@
         ]
       },
       {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.modifierExtension:assertionnegationmodifier",
-        "path": "AllergyIntolerance.modifierExtension",
-        "sliceName": "assertionnegationmodifier",
-        "definition": "When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is 'allergy to peanuts' and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.",
-        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
-        "alias": [
-          "extensions",
-          "user content"
-        ],
-        "min": 1,
-        "max": "1",
-        "base": {
-          "path": "DomainResource.modifierExtension",
-          "min": 0,
-          "max": "*"
-        },
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false,
-        "mapping": [
-          {
-            "identity": "rim",
-            "map": "N/A"
-          }
-        ]
-      },
-      {
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.identifier",
         "path": "AllergyIntolerance.identifier",
         "short": "External ids for this item",
         "definition": "This records identifiers associated with this allergy/intolerance concern that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation).",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.identifier",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Identifier"
@@ -576,6 +532,11 @@
         "comment": "This element is labeled as a modifier because the status contains the codes inactive and resolved that mark the AllergyIntolerance as not currently valid.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.clinicalStatus",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -585,17 +546,11 @@
           "ait-1",
           "ait-2"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "AllergyIntoleranceClinicalStatus"
-            }
-          ],
           "strength": "required",
-          "description": "The clinical status of the allergy or intolerance.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/allergy-clinical-status"
           }
@@ -608,6 +563,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "AllergyIntolerance.status"
           }
         ]
       },
@@ -619,6 +578,11 @@
         "comment": "This element is labeled as a modifier because the status contains the codes refuted and entered-in-error that mark the AllergyIntolerance as not currently valid.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.verificationStatus",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -628,12 +592,13 @@
           "ait-1",
           "ait-2"
         ],
+        "mustSupport": true,
         "isModifier": true,
         "isSummary": true,
         "binding": {
           "strength": "required",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/allergy/vs/AllergyVerificationStatusVS"
+            "reference": "http://hl7.org/fhir/ValueSet/allergy-verification-status"
           }
         },
         "mapping": [
@@ -644,6 +609,10 @@
           {
             "identity": "w5",
             "map": "status"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "AllergyIntolerance.status"
           }
         ]
       },
@@ -659,6 +628,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.type",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -707,6 +681,11 @@
         ],
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.category",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "code"
@@ -755,6 +734,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.criticality",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -798,14 +782,19 @@
         "alias": [
           "Code"
         ],
-        "min": 0,
+        "min": 1,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.code",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
+            "code": "CodeableConcept"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "binding": {
           "strength": "required",
@@ -825,6 +814,10 @@
           {
             "identity": "w5",
             "map": "what"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "AllergyIntolerance.substance"
           }
         ]
       },
@@ -838,12 +831,18 @@
         ],
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.patient",
+          "min": 1,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ],
+        "mustSupport": true,
         "isSummary": true,
         "mapping": [
           {
@@ -857,6 +856,10 @@
           {
             "identity": "w5",
             "map": "who.focus"
+          },
+          {
+            "identity": "argonaut-dq-dstu2",
+            "map": "AllergyIntolerance.patient"
           }
         ]
       },
@@ -867,21 +870,21 @@
         "definition": "Estimated or actual date,  date-time, or age when allergy or intolerance was identified.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.onset[x]",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ],
         "mapping": [
@@ -902,6 +905,11 @@
         "definition": "The date on which the existance of the AllergyIntolerance was first asserted or acknowledged.",
         "min": 1,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.assertedDate",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -932,14 +940,15 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.recorder",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ],
         "mapping": [
@@ -965,18 +974,19 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.asserter",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ],
         "isSummary": true,
@@ -1003,6 +1013,11 @@
         "comment": "This date may be replicated by one of the Onset of Reaction dates. Where a textual representation of the date of last occurrence is required e.g. 'In Childhood, '10 years ago' the Comment element should be used.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.lastOccurrence",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -1023,6 +1038,11 @@
         "comment": "For example: including reason for flagging a seriousness of 'High Risk'; and instructions related to future exposure or administration of the substance, such as administration within an Intensive Care Unit or under corticosteroid cover. The notes should be related to an allergy or intolerance as a condition in general and not related to any particular episode of it. For episode notes and descriptions, use AllergyIntolerance.event.description and  AllergyIntolerance.event.notes.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Annotation"
@@ -1042,6 +1062,11 @@
         "definition": "Details about each adverse reaction event linked to exposure to the identified substance.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.reaction",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "BackboneElement"
@@ -1160,22 +1185,20 @@
         "comment": "Coding of the specific substance (or pharmaceutical product) with a terminology capable of triggering decision support should be used wherever possible.  The 'code' element allows for the use of a specific substance or pharmaceutical product, or a group or class of substances. In the case of an allergy or intolerance to a class of substances, (for example, \"penicillins\"), the 'reaction.substance' element could be used to code the specific substance that was identifed as having caused the reaction (for example, \"amoxycillin\"). Duplication of the value in the 'code' and 'reaction.substance' elements is acceptable when a specific substance has been recorded in 'code'.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.reaction.substance",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "CodeableConcept"
           }
         ],
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "SubstanceCode"
-            }
-          ],
-          "strength": "example",
-          "description": "Codes defining the type of the substance (including pharmaceutical products).",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/substance-code"
+            "reference": "http://standardhealthrecord.org/shr/allergy/vs/AllergenIrritantVS"
           }
         },
         "mapping": [
@@ -1197,22 +1220,20 @@
         ],
         "min": 1,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.reaction.manifestation",
+          "min": 1,
+          "max": "*"
+        },
         "type": [
           {
             "code": "CodeableConcept"
           }
         ],
         "binding": {
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-              "valueString": "Manifestation"
-            }
-          ],
-          "strength": "example",
-          "description": "Clinical symptoms and/or signs that are observed or associated with an Adverse Reaction Event.",
+          "strength": "required",
           "valueSetReference": {
-            "reference": "http://hl7.org/fhir/ValueSet/clinical-findings"
+            "reference": "http://standardhealthrecord.org/shr/allergy/vs/ManifestationVS"
           }
         },
         "mapping": [
@@ -1238,6 +1259,11 @@
         ],
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.reaction.description",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "string"
@@ -1257,6 +1283,11 @@
         "definition": "Record of the date and/or time of the onset of the Reaction.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.reaction.onset",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "dateTime"
@@ -1281,6 +1312,11 @@
         "comment": "It is acknowledged that this assessment is very subjective. There may be some some specific practice domains where objective scales have been applied. Objective scales can be included in this model as extensions.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.reaction.severity",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "code"
@@ -1314,6 +1350,11 @@
         "comment": "Coding of the route of exposure with a terminology should be used wherever possible.",
         "min": 0,
         "max": "1",
+        "base": {
+          "path": "AllergyIntolerance.reaction.exposureRoute",
+          "min": 0,
+          "max": "1"
+        },
         "type": [
           {
             "code": "CodeableConcept"
@@ -1326,7 +1367,7 @@
               "valueString": "RouteOfAdministration"
             }
           ],
-          "strength": "example",
+          "strength": "required",
           "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
           "valueSetReference": {
             "reference": "http://hl7.org/fhir/ValueSet/route-codes"
@@ -1347,6 +1388,11 @@
         "comment": "Use this field to record information indirectly related to a particular event and not captured in the description. For example: Clinical records are no longer available, recorded based on information provided to the patient by her mother and her mother is deceased.",
         "min": 0,
         "max": "*",
+        "base": {
+          "path": "AllergyIntolerance.reaction.note",
+          "min": 0,
+          "max": "*"
+        },
         "type": [
           {
             "code": "Annotation"
@@ -1367,36 +1413,33 @@
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance",
         "path": "AllergyIntolerance",
         "short": "SHR AllergyIntolerance Profile",
-        "definition": "A statement pertaining to an individual's allergies and intolerances to substances or classes of substances. Can be used to record that a substance does not pose an elevated risk to the subject (AssertionNegationModifier = true)."
+        "definition": "A finding related to the presence or absence of an individual's risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time.",
+        "mustSupport": false
       },
       {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:manifestation",
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:relatedencounter",
         "path": "AllergyIntolerance.extension",
-        "sliceName": "manifestation",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Manifestation-extension"
-          }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
-      },
-      {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:abatement",
-        "path": "AllergyIntolerance.extension",
-        "sliceName": "abatement",
+        "sliceName": "relatedencounter",
+        "definition": "If content was generated during a patient encounter, related encounter is the encounter where the information was gained.",
         "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-<<<<<<< HEAD
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension"
-=======
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension"
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:focalsubject",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "focalsubject",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"
           }
         ]
@@ -1412,70 +1455,84 @@
           {
             "code": "Extension",
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"
->>>>>>> 92b20c342... 12/19/17 updates
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:adversereaction",
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:findingmethod",
         "path": "AllergyIntolerance.extension",
-        "sliceName": "adversereaction",
+        "sliceName": "findingmethod",
+        "definition": "The technique used to create the finding, for example, the specific imaging technical, lab test code, or assessment vehicle.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingMethod-extension"
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:findingstatus",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "findingstatus",
+        "definition": "Indicates whether the finding is preliminary, amended, final, etc..",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FindingStatus-extension"
+          }
+        ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:evidence",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "evidence",
+        "definition": "A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment.",
         "min": 0,
         "max": "*",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-adverse-AdverseReaction-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"
           }
-        ],
-        "mustSupport": false,
-        "isModifier": false,
-        "isSummary": false
+        ]
       },
       {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.modifierExtension:assertionnegationmodifier",
-        "path": "AllergyIntolerance.modifierExtension",
-        "sliceName": "assertionnegationmodifier",
-        "min": 1,
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.extension:abatement",
+        "path": "AllergyIntolerance.extension",
+        "sliceName": "abatement",
+        "definition": "The end, remission or resolution.",
+        "min": 0,
         "max": "1",
         "type": [
           {
             "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-AssertionNegationModifier-extension"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension"
           }
-        ],
-        "mustSupport": true,
-        "isModifier": true,
-        "isSummary": false
-      },
-      {
-        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.verificationStatus",
-        "path": "AllergyIntolerance.verificationStatus",
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/allergy/vs/AllergyVerificationStatusVS"
-          }
-        }
+        ]
       },
       {
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.code",
         "path": "AllergyIntolerance.code",
-        "type": [
-          {
-            "code": "CodeableConcept",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
-          }
-        ],
         "binding": {
           "strength": "required",
           "valueSetReference": {
             "reference": "http://standardhealthrecord.org/shr/allergy/vs/AllergenIrritantVS"
           }
         }
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.patient",
+        "path": "AllergyIntolerance.patient",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
+          }
+        ]
       },
       {
         "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.onset[x]",
@@ -1486,15 +1543,10 @@
           },
           {
             "code": "Age",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-GestationalAge"
           },
           {
-            "code": "Period",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-TimePeriod"
-          },
-          {
-            "code": "Range",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-AgeRange"
+            "code": "Period"
           }
         ]
       },
@@ -1510,11 +1562,7 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           }
         ]
       },
@@ -1524,17 +1572,54 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-demographics-PersonOfRecord"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"
-          },
-          {
-            "code": "Reference",
-            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-Practitioner"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-RelatedPerson"
           }
         ]
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.reaction",
+        "path": "AllergyIntolerance.reaction"
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.reaction.substance",
+        "path": "AllergyIntolerance.reaction.substance",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/allergy/vs/AllergenIrritantVS"
+          }
+        }
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.reaction.manifestation",
+        "path": "AllergyIntolerance.reaction.manifestation",
+        "binding": {
+          "strength": "required",
+          "valueSetReference": {
+            "reference": "http://standardhealthrecord.org/shr/allergy/vs/ManifestationVS"
+          }
+        }
+      },
+      {
+        "id": "AllergyIntolerance:shr-allergy-AllergyIntolerance.reaction.exposureRoute",
+        "path": "AllergyIntolerance.reaction.exposureRoute",
+        "binding": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "RouteOfAdministration"
+            }
+          ],
+          "strength": "required",
+          "description": "A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject.",
+          "valueSetReference": {
+            "reference": "http://hl7.org/fhir/ValueSet/route-codes"
+          }
+        }
       }
     ]
   }
