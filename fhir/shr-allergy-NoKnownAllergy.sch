@@ -10,6 +10,7 @@
     single schematron that validates contained resources (if you have any) 
   -->
   <sch:pattern>
+<<<<<<< HEAD
     <sch:title>f:AllergyIntolerance</sch:title>
     <sch:rule context="f:AllergyIntolerance">
       <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-condition-Abatement-extension': maximum cardinality of 'extension' is 1</sch:assert>
@@ -18,6 +19,19 @@
       <sch:assert test="count(f:onset[x]) &lt;= 0">onset[x]: maximum cardinality of 'onset[x]' is 0</sch:assert>
       <sch:assert test="count(f:assertedDate) &gt;= 1">assertedDate: minimum cardinality of 'assertedDate' is 1</sch:assert>
       <sch:assert test="count(f:lastOccurrence) &lt;= 0">lastOccurrence: maximum cardinality of 'lastOccurrence' is 0</sch:assert>
+=======
+    <sch:title>f:Observation</sch:title>
+    <sch:rule context="f:Observation">
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:extension[@url = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-NegationFlag-extension']) &lt;= 1">extension with URL = 'http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-NegationFlag-extension': maximum cardinality of 'extension' is 1</sch:assert>
+      <sch:assert test="count(f:issued) &gt;= 1">issued: minimum cardinality of 'issued' is 1</sch:assert>
+      <sch:assert test="count(f:valueCodeableConcept) &gt;= 1">valueCodeableConcept: minimum cardinality of 'valueCodeableConcept' is 1</sch:assert>
+      <sch:assert test="count(f:dataAbsentReason) &lt;= 0">dataAbsentReason: maximum cardinality of 'dataAbsentReason' is 0</sch:assert>
+>>>>>>> 92b20c342... 12/19/17 updates
     </sch:rule>
   </sch:pattern>
   <sch:pattern>

@@ -31,9 +31,36 @@
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
   Interpretation maps to interpretation
+<<<<<<< HEAD
   Comment maps to comment
   constrain component to 0..0
   PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
+=======
+  Details maps to comment
+  ReferenceRange maps to referenceRange
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  fix related.type to #has-member
+  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  ObservationComponent.ObservationCode maps to component.code
+  ObservationComponent.Quantity maps to component.value[x]
+  ObservationComponent.CodeableConcept maps to component.value[x]
+  ObservationComponent.string maps to component.value[x]
+  ObservationComponent.Range maps to component.value[x]
+  ObservationComponent.Ratio maps to component.value[x]
+  ObservationComponent.Attachment maps to component.value[x]
+  ObservationComponent.time maps to component.value[x]
+  ObservationComponent.dateTime maps to component.value[x]
+  ObservationComponent.TimePeriod maps to component.value[x]
+  ObservationComponent.IntegerQuantity maps to component.value[x]
+  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  ObservationComponent.Interpretation maps to component.interpretation
+  ObservationComponent.ReferenceRange maps to component.referenceRange
+  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+>>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -45,7 +72,11 @@
   <version value="0.0.1"/>
   <name value="SHR PhysicalActivityLevel Profile"/>
   <status value="draft"/>
+<<<<<<< HEAD
   <date value="2017-08-08T15:56:25.802Z"/>
+=======
+  <date value="2017-12-19"/>
+>>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -309,7 +340,11 @@
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLevel.extension">
       <path value="Observation.extension"/>
+<<<<<<< HEAD
       <slicing id="127">
+=======
+      <slicing id="211">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -431,7 +466,22 @@
       </base>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -748,7 +798,53 @@
       </binding>
       <mapping>
         <identity value="rim"/>
+<<<<<<< HEAD
         <map value="N/A"/>
+=======
+        <map value="status  Amended &amp; Final are differentiated by whether it is the subject of a ControlAct event with a type of &quot;revise&quot;"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="status"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.category">
+      <path value="Observation.category"/>
+      <slicing id="209">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Classification of  type of observation"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what observations are retrieved and displayed."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationCategory"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes for high level observation categories."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-category"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;EVN&quot;].code"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="class"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </mapping>
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLevel.modifierExtension:nonoccurrencemodifier.url">
@@ -786,6 +882,30 @@
       <type>
         <code value="base64Binary"/>
       </type>
+<<<<<<< HEAD
+=======
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.category:Includes_exercise.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="208">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="boolean"/>
       </type>
@@ -1287,7 +1407,11 @@
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLevel.value[x]">
       <path value="Observation.value[x]"/>
+<<<<<<< HEAD
       <slicing id="126">
+=======
+      <slicing id="210">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="type"/>
           <path value="$this"/>
@@ -1920,6 +2044,7 @@
       <type>
         <code value="code"/>
       </type>
+      <fixedCode value="has-member"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRelationshipType"/>
@@ -1947,7 +2072,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
+<<<<<<< HEAD
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+=======
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2272,6 +2401,7 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"/>
       </type>
       <mustSupport value="false"/>
@@ -2286,6 +2416,20 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2330,6 +2474,7 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-behavior-PhysicalActivityLevel.modifierExtension:nonoccurrencemodifier">
       <path value="Observation.modifierExtension"/>
       <sliceName value="nonoccurrencemodifier"/>
@@ -2342,6 +2487,18 @@
       <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="false"/>
+=======
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.category">
+      <path value="Observation.category"/>
+      <slicing id="209">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -2362,8 +2519,28 @@
       <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-behavior-PhysicalActivityLevel.category">
       <path value="Observation.category"/>
+=======
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.category:Includes_exercise.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="208">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.category:Includes_exercise.coding:Fixed_exercise">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_exercise"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
@@ -2442,7 +2619,11 @@
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLevel.value[x]">
       <path value="Observation.value[x]"/>
+<<<<<<< HEAD
       <slicing id="126">
+=======
+      <slicing id="210">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="type"/>
           <path value="$this"/>
@@ -2524,6 +2705,20 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.related">
+      <path value="Observation.related"/>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.related.type">
+      <path value="Observation.related.type"/>
+      <fixedCode value="has-member"/>
+    </element>
+    <element id="Observation:shr-behavior-PhysicalActivityLevel.related.target">
+      <path value="Observation.related.target"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
       </type>
     </element>
     <element id="Observation:shr-behavior-PhysicalActivityLevel.component">

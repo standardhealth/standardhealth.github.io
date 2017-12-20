@@ -1,0 +1,310 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SampledData> a fhir:StructureDefinition;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "shr-core-SampledData"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR SampledData Profile</b></p>\n  <p>Data that comes from a series of measurements taken by a device, which may have upper and lower limits. The data type also supports more than one dimension in the data.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.SampledData maps to SampledData:\n  string maps to data\n  Origin maps to origin\n  MillisecondsBetweenSamples maps to period\n  CorrectionFactor maps to factor\n  LowerLimit maps to lowerLimit\n  UpperLimit maps to upperLimit\n  Dimensions maps to dimensions\n</pre></p>\n</div>"
+  ];
+  fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SampledData"];
+  fhir:StructureDefinition.identifier [
+     fhir:index 0;
+     fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
+     fhir:Identifier.value [ fhir:value "shr.core.SampledData" ]
+  ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
+  fhir:StructureDefinition.name [ fhir:value "SHR SampledData Profile"];
+  fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-19"^^xsd:date];
+  fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
+  fhir:StructureDefinition.contact [
+     fhir:index 0;
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "url" ];
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
+     ]
+  ];
+  fhir:StructureDefinition.description [ fhir:value "Data that comes from a series of measurements taken by a device, which may have upper and lower limits. The data type also supports more than one dimension in the data."];
+  fhir:StructureDefinition.purpose [ fhir:value "There is a need for a concise way to handle the data produced by devices that sample a physical state at a high frequency."];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
+  fhir:StructureDefinition.mapping [
+     fhir:index 0;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v2" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "HL7 v2 Mapping" ]
+  ], [
+     fhir:index 1;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v3" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "RIM Mapping" ]
+  ];
+  fhir:StructureDefinition.kind [ fhir:value "complex-type"];
+  fhir:StructureDefinition.abstract [ fhir:value "false"^^xsd:boolean];
+  fhir:StructureDefinition.type [ fhir:value "SampledData"];
+  fhir:StructureDefinition.baseDefinition [ fhir:value "http://hl7.org/fhir/StructureDefinition/SampledData"];
+  fhir:StructureDefinition.derivation [ fhir:value "constraint"];
+  fhir:StructureDefinition.snapshot [
+     fhir:StructureDefinition.snapshot.element [
+       fhir:index 0;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData" ];
+       fhir:ElementDefinition.short [ fhir:value "SHR SampledData Profile" ];
+       fhir:ElementDefinition.definition [ fhir:value "Data that comes from a series of measurements taken by a device, which may have upper and lower limits. The data type also supports more than one dimension in the data." ];
+       fhir:ElementDefinition.comment [ fhir:value "The data is not interpretable without at least origin, period, and dimensions, but these are optional to allow a separation between the template of measurement and the actual measurement, such as between DeviceCapabilities and DeviceLog.  When providing a summary view (for example with Observation.value[x]) SampledData should be represented with a brief display text such as \"Sampled Data\"." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.condition [
+         fhir:value "ele-1";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.constraint [
+         fhir:index 0;
+         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A (but see section 7.14 in v2.7)" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "SLIST + GLIST" ]
+       ]
+     ], [
+       fhir:index 1;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.id" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.id" ];
+       fhir:ElementDefinition.representation [
+         fhir:value "xmlAttr";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
+       fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.extension" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 3;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.origin" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.origin" ];
+       fhir:ElementDefinition.short [ fhir:value "Zero value and units" ];
+       fhir:ElementDefinition.definition [ fhir:value "The base quantity that a measured value of zero represents. In addition, this provides the units of the entire measurement series." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Quantity" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "SLIST.origin" ]
+       ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.period" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.period" ];
+       fhir:ElementDefinition.short [ fhir:value "Number of milliseconds between samples" ];
+       fhir:ElementDefinition.definition [ fhir:value "The length of time between sampling times, measured in milliseconds." ];
+       fhir:ElementDefinition.comment [ fhir:value "This is usually a whole number." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "GLIST.increment" ]
+       ]
+     ], [
+       fhir:index 5;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.factor" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.factor" ];
+       fhir:ElementDefinition.short [ fhir:value "Multiply data by this before adding to origin" ];
+       fhir:ElementDefinition.definition [ fhir:value "A correction factor that is applied to the sampled data points before they are added to the origin." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.defaultValueDecimal [ fhir:value "1"^^xsd:decimal ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "SLIST.factor" ]
+       ]
+     ], [
+       fhir:index 6;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.lowerLimit" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.lowerLimit" ];
+       fhir:ElementDefinition.short [ fhir:value "Lower limit of detection" ];
+       fhir:ElementDefinition.definition [ fhir:value "The lower limit of detection of the measured points. This is needed if any of the data points have the value \"L\" (lower than detection limit)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A (use SLIST.digits.nullFlavor)" ]
+       ]
+     ], [
+       fhir:index 7;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.upperLimit" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.upperLimit" ];
+       fhir:ElementDefinition.short [ fhir:value "Upper limit of detection" ];
+       fhir:ElementDefinition.definition [ fhir:value "The upper limit of detection of the measured points. This is needed if any of the data points have the value \"U\" (higher than detection limit)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A (use SLIST.digits.nullFlavor)" ]
+       ]
+     ], [
+       fhir:index 8;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.dimensions" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.dimensions" ];
+       fhir:ElementDefinition.short [ fhir:value "Number of sample points at each time point" ];
+       fhir:ElementDefinition.definition [ fhir:value "The number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once." ];
+       fhir:ElementDefinition.comment [ fhir:value "If there is more than one dimension, the code for the type of data will define the meaning of the dimensions (typically ECG data)." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "positiveInt" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A (fixed to 1)" ]
+       ]
+     ], [
+       fhir:index 9;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.data" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.data" ];
+       fhir:ElementDefinition.short [ fhir:value "Decimal values with spaces, or \"E\" | \"U\" | \"L\"" ];
+       fhir:ElementDefinition.definition [ fhir:value "A series of data points which are decimal values separated by a single space (character u20). The special values \"E\" (error), \"L\" (below detection limit) and \"U\" (above detection limit) can also be used in place of a decimal value." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "SLIST.digits" ]
+       ]
+     ]
+  ];
+  fhir:StructureDefinition.differential [
+     fhir:StructureDefinition.differential.element [
+       fhir:index 0;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData" ];
+       fhir:ElementDefinition.short [ fhir:value "SHR SampledData Profile" ];
+       fhir:ElementDefinition.definition [ fhir:value "Data that comes from a series of measurements taken by a device, which may have upper and lower limits. The data type also supports more than one dimension in the data." ]
+     ], [
+       fhir:index 1;
+       fhir:Element.id [ fhir:value "SampledData:shr-core-SampledData.origin" ];
+       fhir:ElementDefinition.path [ fhir:value "SampledData.origin" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Quantity" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity" ]
+       ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SampledData.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

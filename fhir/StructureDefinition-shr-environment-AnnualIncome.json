@@ -3,7 +3,11 @@
   "id": "shr-environment-AnnualIncome",
   "text": {
     "status": "generated",
+<<<<<<< HEAD
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AnnualIncome Profile</b></p>\n  <p>The amount of earnings made by a family unit in one year, estimated or self-reported.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.environment.AnnualIncome maps to Observation:\n  Entry.FocalSubject maps to subject\n  Entry.AssociatedEncounter maps to context\n  Entry.OriginalCreationDate maps to issued\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  SpecificType maps to code\n  Category maps to category\n  BodySite maps to bodySite\n  Status maps to status\n  Method maps to method\n  Participant maps to performer \t// TODO Participant includes any type of participation (not limited to performent (the code PRF)). It's unclear how to limit the mapping to performer only.\n  &lt;TBD &quot;Specimen&quot;&gt; maps to specimen\n  DataAbsentReason maps to dataAbsentReason\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period\n  ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime\n  Interpretation maps to interpretation\n  Comment maps to comment\n  constrain component to 0..0\n  PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member\n</pre></p>\n</div>"
+=======
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR AnnualIncome Profile</b></p>\n  <p>The amount of earnings made by a family unit in one year, estimated or self-reported.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.environment.AnnualIncome maps to Observation:\n  Entry.CreationTime maps to issued\n  RelatedEncounter maps to context\t\n  Subject maps to subject\n  Category maps to category\n  ClinicallyRelevantTime maps to effective[x]\n  FindingMethod maps to method\n  FindingStatus maps to status\n  Quantity maps to value[x]\n  CodeableConcept maps to value[x]\n  string maps to value[x]\n  boolean maps to value[x]\n  Range maps to value[x]\n  Ratio maps to value[x]\n  Attachment maps to value[x]\n  time maps to value[x]\n  dateTime maps to value[x]\n  TimePeriod maps to value[x]\n  IntegerQuantity maps to value[x]\n  ValueAbsentReason maps to dataAbsentReason\n  ObservationCode maps to code\n  BodySite maps to bodySite\n  Specimen maps to specimen\n  Device maps to device\n  Interpretation maps to interpretation\n  Details maps to comment\n  ReferenceRange maps to referenceRange\n  ReferenceRange.Range.LowerBound maps to referenceRange.low\n  ReferenceRange.Range.UpperBound maps to referenceRange.high\n  ReferenceRange.Type maps to referenceRange.type\n  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo\n  ReferenceRange.ApplicableAgeRange maps to referenceRange.age\n  fix related.type to #has-member\n  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)\n  ObservationComponent.ObservationCode maps to component.code\n  ObservationComponent.Quantity maps to component.value[x]\n  ObservationComponent.CodeableConcept maps to component.value[x]\n  ObservationComponent.string maps to component.value[x]\n  ObservationComponent.Range maps to component.value[x]\n  ObservationComponent.Ratio maps to component.value[x]\n  ObservationComponent.Attachment maps to component.value[x]\n  ObservationComponent.time maps to component.value[x]\n  ObservationComponent.dateTime maps to component.value[x]\n  ObservationComponent.TimePeriod maps to component.value[x]\n  ObservationComponent.IntegerQuantity maps to component.value[x]\n  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason\n  ObservationComponent.Interpretation maps to component.interpretation\n  ObservationComponent.ReferenceRange maps to component.referenceRange\n  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)\n</pre></p>\n</div>"
+>>>>>>> 92b20c342... 12/19/17 updates
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-environment-AnnualIncome",
   "identifier": [
@@ -15,7 +19,11 @@
   "version": "0.0.1",
   "name": "SHR AnnualIncome Profile",
   "status": "draft",
+<<<<<<< HEAD
   "date": "2017-08-08T15:56:27.686Z",
+=======
+  "date": "2017-12-19",
+>>>>>>> 92b20c342... 12/19/17 updates
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -328,7 +336,11 @@
         "id": "Observation:shr-environment-AnnualIncome.extension",
         "path": "Observation.extension",
         "slicing": {
+<<<<<<< HEAD
           "id": "152",
+=======
+          "id": "245",
+>>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "value",
@@ -967,8 +979,38 @@
             "code": "Reference"
           },
           {
+<<<<<<< HEAD
             "code": "SampledData"
           },
+=======
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.extension:focalsubjectreference",
+        "path": "Observation.extension",
+        "sliceName": "focalsubjectreference",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.extension:evidence",
+        "path": "Observation.extension",
+        "sliceName": "evidence",
+        "definition": "A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment.",
+        "min": 0,
+        "max": "*",
+        "type": [
+>>>>>>> 92b20c342... 12/19/17 updates
           {
             "code": "Signature"
           },
@@ -1259,6 +1301,384 @@
         ]
       },
       {
+        "id": "Observation:shr-environment-AnnualIncome.code.id",
+        "path": "Observation.code.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.extension",
+        "path": "Observation.code.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding",
+        "path": "Observation.code.coding",
+        "slicing": {
+          "id": "243",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "path"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "short": "Code defined by a terminology system",
+        "definition": "A reference to a code defined by a terminology system.",
+        "comment": "Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true.",
+        "requirements": "Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.1-8, C*E.10-22"
+          },
+          {
+            "identity": "rim",
+            "map": "union(., ./translation)"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163",
+        "path": "Observation.code.coding",
+        "sliceName": "Fixed_C0557163",
+        "definition": "A reference to a code defined by a terminology system.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.id",
+        "path": "Observation.code.coding.id",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xml:id (or equivalent in JSON)",
+        "definition": "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Element.id",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.extension",
+        "path": "Observation.code.coding.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "short": "Additional Content defined by implementations",
+        "definition": "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
+        "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
+        "alias": [
+          "extensions",
+          "user content"
+        ],
+        "min": 0,
+        "max": "*",
+        "base": {
+          "path": "Element.extension",
+          "min": 0,
+          "max": "*"
+        },
+        "type": [
+          {
+            "code": "Extension"
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.system",
+        "path": "Observation.code.coding.system",
+        "short": "Identity of the terminology system",
+        "definition": "The identification of the code system that defines the meaning of the symbol in the code.",
+        "comment": "The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously.",
+        "requirements": "Need to be unambiguous about the source of the definition of the symbol.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "uri"
+          }
+        ],
+        "fixedUri": "http://ncimeta.nci.nih.gov",
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.3"
+          },
+          {
+            "identity": "rim",
+            "map": "./codeSystem"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.version",
+        "path": "Observation.code.coding.version",
+        "short": "Version of the system - if relevant",
+        "definition": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged.",
+        "comment": "Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.7"
+          },
+          {
+            "identity": "rim",
+            "map": "./codeSystemVersion"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.code",
+        "path": "Observation.code.coding.code",
+        "short": "Symbol in syntax defined by the system",
+        "definition": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination).",
+        "requirements": "Need to refer to a particular code in the system.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "code"
+          }
+        ],
+        "fixedCode": "C0557163",
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.1"
+          },
+          {
+            "identity": "rim",
+            "map": "./code"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.display",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Observation.code.coding.display",
+        "short": "Representation defined by the system",
+        "definition": "A representation of the meaning of the code in the system, following the rules of the system.",
+        "requirements": "Need to be able to carry a human-readable meaning of the code for readers that do not know  the system.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.2 - but note this is not well followed"
+          },
+          {
+            "identity": "rim",
+            "map": "CV.displayName"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.userSelected",
+        "path": "Observation.code.coding.userSelected",
+        "short": "If this coding was chosen directly by the user",
+        "definition": "Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays).",
+        "comment": "Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely.",
+        "requirements": "This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "Sometimes implied by being first"
+          },
+          {
+            "identity": "rim",
+            "map": "CD.codingRationale"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\\#true a [     fhir:source \"true\";     fhir:target dt:CDCoding.codingRationale\\#O   ]"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.text",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable",
+            "valueBoolean": true
+          }
+        ],
+        "path": "Observation.code.text",
+        "short": "Plain text representation of the concept",
+        "definition": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user.",
+        "comment": "Very often the text is the same as a displayName of one of the codings.",
+        "requirements": "The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ],
+        "isSummary": true,
+        "mapping": [
+          {
+            "identity": "v2",
+            "map": "C*E.9. But note many systems use C*E.2 for this"
+          },
+          {
+            "identity": "rim",
+            "map": "./originalText[mediaType/code=\"text/plain\"]/data"
+          },
+          {
+            "identity": "orim",
+            "map": "fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"
+          }
+        ]
+      },
+      {
         "id": "Observation:shr-environment-AnnualIncome.subject",
         "path": "Observation.subject",
         "short": "Who and/or what this is about",
@@ -1446,7 +1866,11 @@
         "id": "Observation:shr-environment-AnnualIncome.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
+<<<<<<< HEAD
           "id": "151",
+=======
+          "id": "244",
+>>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "type",
@@ -2022,6 +2446,7 @@
             "code": "CodeableConcept"
           }
         ],
+        "fixedCode": "has-member",
         "binding": {
           "extension": [
             {
@@ -2060,6 +2485,7 @@
         "max": "1",
         "type": [
           {
+<<<<<<< HEAD
             "code": "Range"
           }
         ],
@@ -2080,6 +2506,10 @@
         "type": [
           {
             "code": "string"
+=======
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"
+>>>>>>> 92b20c342... 12/19/17 updates
           }
         ],
         "mapping": [
@@ -2668,7 +3098,25 @@
         "type": [
           {
             "code": "Extension",
+<<<<<<< HEAD
             "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-AssociatedStudy-extension"
+=======
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.extension:focalsubjectreference",
+        "path": "Observation.extension",
+        "sliceName": "focalsubjectreference",
+        "definition": "For use when FHIR's subject does not allow the desired type of Subject in the Finding.Subject field.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"
+>>>>>>> 92b20c342... 12/19/17 updates
           }
         ],
         "mustSupport": false,
@@ -2786,6 +3234,49 @@
         }
       },
       {
+        "id": "Observation:shr-environment-AnnualIncome.code",
+        "path": "Observation.code"
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding",
+        "path": "Observation.code.coding",
+        "slicing": {
+          "id": "243",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "path"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163",
+        "path": "Observation.code.coding",
+        "sliceName": "Fixed_C0557163",
+        "definition": "A reference to a code defined by a terminology system.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Coding"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.system",
+        "path": "Observation.code.coding.system",
+        "fixedUri": "http://ncimeta.nci.nih.gov"
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.code.coding:Fixed_C0557163.code",
+        "path": "Observation.code.coding.code",
+        "fixedCode": "C0557163"
+      },
+      {
         "id": "Observation:shr-environment-AnnualIncome.subject",
         "path": "Observation.subject",
         "min": 1,
@@ -2848,7 +3339,11 @@
         "id": "Observation:shr-environment-AnnualIncome.value[x]",
         "path": "Observation.value[x]",
         "slicing": {
+<<<<<<< HEAD
           "id": "151",
+=======
+          "id": "244",
+>>>>>>> 92b20c342... 12/19/17 updates
           "discriminator": [
             {
               "type": "type",
@@ -2939,6 +3434,28 @@
       {
         "id": "Observation:shr-environment-AnnualIncome.related",
         "path": "Observation.related"
+<<<<<<< HEAD
+=======
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.related.type",
+        "path": "Observation.related.type",
+        "fixedCode": "has-member"
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.related.target",
+        "path": "Observation.related.target",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"
+          }
+        ]
+      },
+      {
+        "id": "Observation:shr-environment-AnnualIncome.component",
+        "path": "Observation.component"
+>>>>>>> 92b20c342... 12/19/17 updates
       },
       {
         "id": "Observation:shr-environment-AnnualIncome.related.target",

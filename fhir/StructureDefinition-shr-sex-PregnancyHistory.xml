@@ -31,9 +31,36 @@
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.TimePeriod maps to effective[x].Period
   ClinicallyRelevantTime.GeneralizedTemporalContext.GeneralizedDateTime.dateTime maps to effective[x].dateTime
   Interpretation maps to interpretation
+<<<<<<< HEAD
   Comment maps to comment
   constrain component to 0..0
   PanelMembers.Observation maps to related.target  // IMPORTANT TODO - Constrain/fix the value of related.type to http://hl7.org/fhir/ValueSet/observation-relationshiptypes#has-member
+=======
+  Details maps to comment
+  ReferenceRange maps to referenceRange
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  fix related.type to #has-member
+  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  ObservationComponent.ObservationCode maps to component.code
+  ObservationComponent.Quantity maps to component.value[x]
+  ObservationComponent.CodeableConcept maps to component.value[x]
+  ObservationComponent.string maps to component.value[x]
+  ObservationComponent.Range maps to component.value[x]
+  ObservationComponent.Ratio maps to component.value[x]
+  ObservationComponent.Attachment maps to component.value[x]
+  ObservationComponent.time maps to component.value[x]
+  ObservationComponent.dateTime maps to component.value[x]
+  ObservationComponent.TimePeriod maps to component.value[x]
+  ObservationComponent.IntegerQuantity maps to component.value[x]
+  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  ObservationComponent.Interpretation maps to component.interpretation
+  ObservationComponent.ReferenceRange maps to component.referenceRange
+  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+>>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -45,7 +72,11 @@
   <version value="0.0.1"/>
   <name value="SHR PregnancyHistory Profile"/>
   <status value="draft"/>
+<<<<<<< HEAD
   <date value="2017-08-08T15:56:37.730Z"/>
+=======
+  <date value="2017-12-19"/>
+>>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -309,7 +340,11 @@
     </element>
     <element id="Observation:shr-sex-PregnancyHistory.extension">
       <path value="Observation.extension"/>
+<<<<<<< HEAD
       <slicing id="412">
+=======
+      <slicing id="545">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -431,7 +466,22 @@
       </base>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-ObservationQualifier-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -723,8 +773,57 @@
         <code value="Extension"/>
       </type>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-sex-PregnancyHistory.modifierExtension:nonoccurrencemodifier.extension:reason.url">
       <path value="Observation.modifierExtension.extension.url"/>
+=======
+    <element id="Observation:shr-sex-PregnancyHistory.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing id="536">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1-8, C*E.10-22"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="union(., ./translation)"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.code.coding:Fixed_10163-4">
+      <path value="Observation.code.coding"/>
+      <sliceName value="Fixed_10163-4"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.code.coding:Fixed_10163-4.id">
+      <path value="Observation.code.coding.id"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <representation value="xmlAttr"/>
       <short value="identifies the meaning of the extension"/>
       <definition value="Source of the definition for the extension code - a logical name or a URL."/>
@@ -1490,6 +1589,38 @@
         <identity value="workflow"/>
         <map value="Event.note"/>
       </mapping>
+<<<<<<< HEAD
+=======
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.related">
+      <path value="Observation.related"/>
+      <slicing id="537">
+        <discriminator>
+          <type value="profile"/>
+          <path value="target.reference.resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Resource related to this observation"/>
+      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
+      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
+      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isSummary value="true"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <mapping>
         <identity value="v2"/>
         <map value="NTE.3 (partner NTE to OBX, or sometimes another (child?) OBX)"/>
@@ -2015,7 +2146,7 @@
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
       <min value="0"/>
-      <max value="0"/>
+      <max value="*"/>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -2378,7 +2509,22 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-sex-NumberOfPreviousPregnancies-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2444,6 +2590,27 @@
     </element>
     <element id="Observation:shr-sex-PregnancyHistory.code">
       <path value="Observation.code"/>
+<<<<<<< HEAD
+=======
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing id="536">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.code.coding:Fixed_10163-4">
+      <path value="Observation.code.coding"/>
+      <sliceName value="Fixed_10163-4"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="CodeableConcept"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
@@ -2611,6 +2778,21 @@
     </element>
     <element id="Observation:shr-sex-PregnancyHistory.related">
       <path value="Observation.related"/>
+<<<<<<< HEAD
+=======
+      <slicing id="537">
+        <discriminator>
+          <type value="profile"/>
+          <path value="target.reference.resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-sex-PregnancyHistory.related.type">
+      <path value="Observation.related.type"/>
+      <fixedCode value="has-member"/>
+>>>>>>> 92b20c342... 12/19/17 updates
     </element>
     <element id="Observation:shr-sex-PregnancyHistory.related.target">
       <path value="Observation.related.target"/>
@@ -2621,8 +2803,6 @@
     </element>
     <element id="Observation:shr-sex-PregnancyHistory.component">
       <path value="Observation.component"/>
-      <min value="0"/>
-      <max value="0"/>
     </element>
   </differential>
 </StructureDefinition>

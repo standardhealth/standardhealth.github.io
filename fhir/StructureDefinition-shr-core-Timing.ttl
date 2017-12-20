@@ -1,0 +1,796 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Timing> a fhir:StructureDefinition;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "shr-core-Timing"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Timing Profile</b></p>\n  <p>A timing schedule that specifies an event that may occur multiple times. Timing offers a choice of multiple OccurrenceTime (used is used to specify specific times), or recurrence patterns.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.Timing maps to Timing:\n  OccurrenceTime maps to event\n  TimingCode maps to code\n  EventDuration.DurationRange.LowerBound maps to repeat.duration\n  EventDuration.DurationRange.UpperBound maps to repeat.durationMax\n  EventDuration.DurationRange.LowerBound.Quantity.Units.Coding.code maps to repeat.durationUnit\n  RecurrencePattern.RecurrenceInterval.Duration maps to repeat.period\n  constrain repeat.periodMax to 0..0\n  RecurrencePattern.RecurrenceInterval.Duration.Units.Coding.code maps to repeat.periodUnit\n  RecurrencePattern.DayOfWeek maps to repeat.dayOfWeek\n  RecurrencePattern.TimeOfDay maps to repeat.timeOfDay\n  RecurrencePattern.DailyLifeEvent maps to repeat.when\n  RecurrencePattern.LifeEventOffset maps to repeat.offset\n  RecurrencePattern.CountPerInterval.MinCount maps to repeat.frequency\n  RecurrencePattern.CountPerInterval.MaxCount maps to repeat.frequencyMax\n</pre></p>\n</div>"
+  ];
+  fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Timing"];
+  fhir:StructureDefinition.identifier [
+     fhir:index 0;
+     fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
+     fhir:Identifier.value [ fhir:value "shr.core.Timing" ]
+  ];
+  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
+  fhir:StructureDefinition.name [ fhir:value "SHR Timing Profile"];
+  fhir:StructureDefinition.status [ fhir:value "draft"];
+  fhir:StructureDefinition.date [ fhir:value "2017-12-19"^^xsd:date];
+  fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
+  fhir:StructureDefinition.contact [
+     fhir:index 0;
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "url" ];
+       fhir:ContactPoint.value [ fhir:value "http://standardhealthrecord.org" ]
+     ]
+  ];
+  fhir:StructureDefinition.description [ fhir:value "A timing schedule that specifies an event that may occur multiple times. Timing offers a choice of multiple OccurrenceTime (used is used to specify specific times), or recurrence patterns."];
+  fhir:StructureDefinition.purpose [ fhir:value "Need to able to track proposed timing schedules. There are several different ways to do this: one or more specified times, a simple rules like three times a day, or  before/after meals."];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "3.0.1"];
+  fhir:StructureDefinition.mapping [
+     fhir:index 0;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "v2" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v2" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "HL7 v2 Mapping" ]
+  ], [
+     fhir:index 1;
+     fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
+     fhir:StructureDefinition.mapping.uri [ fhir:value "http://hl7.org/v3" ];
+     fhir:StructureDefinition.mapping.name [ fhir:value "RIM Mapping" ]
+  ];
+  fhir:StructureDefinition.kind [ fhir:value "complex-type"];
+  fhir:StructureDefinition.abstract [ fhir:value "false"^^xsd:boolean];
+  fhir:StructureDefinition.type [ fhir:value "Timing"];
+  fhir:StructureDefinition.baseDefinition [ fhir:value "http://hl7.org/fhir/StructureDefinition/Timing"];
+  fhir:StructureDefinition.derivation [ fhir:value "constraint"];
+  fhir:StructureDefinition.snapshot [
+     fhir:StructureDefinition.snapshot.element [
+       fhir:index 0;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing" ];
+       fhir:ElementDefinition.short [ fhir:value "SHR Timing Profile" ];
+       fhir:ElementDefinition.definition [ fhir:value "A timing schedule that specifies an event that may occur multiple times. Timing offers a choice of multiple OccurrenceTime (used is used to specify specific times), or recurrence patterns." ];
+       fhir:ElementDefinition.comment [ fhir:value "A timing schedule can be either a list of events - intervals on which the event occurs, or a single event with repeating criteria or just repeating criteria with no actual event.  When both event and a repeating specification are provided, the list of events should be understood as an interpretation of the information in the repeat structure." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.condition [
+         fhir:value "ele-1";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.constraint [
+         fhir:index 0;
+         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "QSET<TS> (GTS)" ]
+       ]
+     ], [
+       fhir:index 1;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.id" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.id" ];
+       fhir:ElementDefinition.representation [
+         fhir:value "xmlAttr";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
+       fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.extension" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 3;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.extension:recurrencerange" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recurrencerange" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "The start and end of the overall recurrence pattern in terms of dates/times or in terms of number of repeats. Could also be an event, such as when all doses are taken." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-RecurrenceRange-extension" ]
+       ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.event" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.event" ];
+       fhir:ElementDefinition.short [ fhir:value "When the event occurs" ];
+       fhir:ElementDefinition.definition [ fhir:value "Identifies specific times when the event occurs." ];
+       fhir:ElementDefinition.requirements [ fhir:value "In an MAR, for instance, you need to take a general specification, and turn it into a precise specification." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "QLIST<TS>" ]
+       ]
+     ], [
+       fhir:index 5;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat" ];
+       fhir:ElementDefinition.short [ fhir:value "When the event is to occur" ];
+       fhir:ElementDefinition.definition [ fhir:value "A set of rules that describe when the event is scheduled." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Many timing schedules are determined by regular repetitions." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Element" ]
+       ];
+       fhir:ElementDefinition.constraint [
+         fhir:index 0;
+         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() | (children().count() > id.count())" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-9" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If there's an offset, there must be a when (and not C, CM, CD, CV)" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not()))" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:offset)) or exists(f:when)" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-5" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "period SHALL be a non-negative value" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "period.exists() implies period >= 0" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "f:period/@value >= 0 or not(f:period/@value)" ]
+       ], [
+         fhir:index 3;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-6" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If there's a periodMax, there must be a period" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "periodMax.empty() or period.exists()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:periodMax)) or exists(f:period)" ]
+       ], [
+         fhir:index 4;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-7" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If there's a durationMax, there must be a duration" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "durationMax.empty() or duration.exists()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:durationMax)) or exists(f:duration)" ]
+       ], [
+         fhir:index 5;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-8" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If there's a countMax, there must be a count" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "countMax.empty() or count.exists()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:countMax)) or exists(f:count)" ]
+       ], [
+         fhir:index 6;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-1" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "if there's a duration, there needs to be duration units" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "duration.empty() or durationUnit.exists()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:duration)) or exists(f:durationUnit)" ]
+       ], [
+         fhir:index 7;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-10" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If there's a timeOfDay, there cannot be be a when, or vice versa" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "timeOfDay.empty() or when.empty()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:timeOfDay)) or not(exists(f:when))" ]
+       ], [
+         fhir:index 8;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-2" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "if there's a period, there needs to be period units" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "period.empty() or periodUnit.exists()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:period)) or exists(f:periodUnit)" ]
+       ], [
+         fhir:index 9;
+         fhir:ElementDefinition.constraint.key [ fhir:value "tim-4" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "duration SHALL be a non-negative value" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "duration.exists() implies duration >= 0" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "f:duration/@value >= 0 or not(f:duration/@value)" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "Implies PIVL or EIVL" ]
+       ]
+     ], [
+       fhir:index 6;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.id" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.id" ];
+       fhir:ElementDefinition.representation [
+         fhir:value "xmlAttr";
+         fhir:index 0
+       ];
+       fhir:ElementDefinition.short [ fhir:value "xml:id (or equivalent in JSON)" ];
+       fhir:ElementDefinition.definition [ fhir:value "unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "1" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 7;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.extension" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
+       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
+       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
+       fhir:ElementDefinition.alias [
+         fhir:value "extensions";
+         fhir:index 0
+       ], [
+         fhir:value "user content";
+         fhir:index 1
+       ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.base [
+         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
+         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+         fhir:ElementDefinition.base.max [ fhir:value "*" ]
+       ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 8;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.bounds[x]" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.bounds[x]" ];
+       fhir:ElementDefinition.short [ fhir:value "Length/Range of lengths, or (Start and/or end) limits" ];
+       fhir:ElementDefinition.definition [ fhir:value "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Duration" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Range" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "IVL(TS) used in a QSI" ]
+       ]
+     ], [
+       fhir:index 9;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.count" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.count" ];
+       fhir:ElementDefinition.short [ fhir:value "Number of times to repeat" ];
+       fhir:ElementDefinition.definition [ fhir:value "A total count of the desired number of repetitions." ];
+       fhir:ElementDefinition.comment [ fhir:value "If you have both bounds and count, then this should be understood as within the bounds period, until count times happens." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Repetitions may be limited by end time or total occurrences." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "integer" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.count" ]
+       ]
+     ], [
+       fhir:index 10;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.countMax" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.countMax" ];
+       fhir:ElementDefinition.short [ fhir:value "Maximum number of times to repeat" ];
+       fhir:ElementDefinition.definition [ fhir:value "A maximum value for the count of the desired repetitions (e.g. do something 6-8 times)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "integer" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.count" ]
+       ]
+     ], [
+       fhir:index 11;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.duration" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.duration" ];
+       fhir:ElementDefinition.short [ fhir:value "How long when it happens" ];
+       fhir:ElementDefinition.definition [ fhir:value "How long this thing happens for when it happens." ];
+       fhir:ElementDefinition.comment [ fhir:value "For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it's part of the timing specification (e.g. exercise)." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Some activities are not instantaneous and need to be maintained for a period of time." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 12;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.durationMax" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.durationMax" ];
+       fhir:ElementDefinition.short [ fhir:value "How long when it happens (Max)" ];
+       fhir:ElementDefinition.definition [ fhir:value "The upper limit of how long this thing happens for when it happens." ];
+       fhir:ElementDefinition.comment [ fhir:value "For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it's part of the timing specification (e.g. exercise)." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Some activities are not instantaneous and need to be maintained for a period of time." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 13;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.durationUnit" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.durationUnit" ];
+       fhir:ElementDefinition.short [ fhir:value "s | min | h | d | wk | mo | a - unit of time (UCUM)" ];
+       fhir:ElementDefinition.definition [ fhir:value "The units of time for the duration, in UCUM units." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "code" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "UnitsOfTime" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "A unit of time (units from UCUM)." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/units-of-time>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/units-of-time" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase.unit" ]
+       ]
+     ], [
+       fhir:index 14;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.frequency" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.frequency" ];
+       fhir:ElementDefinition.short [ fhir:value "Event occurs frequency times per period" ];
+       fhir:ElementDefinition.definition [ fhir:value "The number of times to repeat the action within the specified period / period range (i.e. both period and periodMax provided)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "integer" ]
+       ];
+       fhir:ElementDefinition.defaultValueInteger [ fhir:value "1"^^xsd:integer ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 15;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.frequencyMax" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.frequencyMax" ];
+       fhir:ElementDefinition.short [ fhir:value "Event occurs up to frequencyMax times per period" ];
+       fhir:ElementDefinition.definition [ fhir:value "If present, indicates that the frequency is a range - so to repeat between [frequency] and [frequencyMax] times within the period or period range." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "integer" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 16;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.period" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.period" ];
+       fhir:ElementDefinition.short [ fhir:value "Event occurs frequency times per period" ];
+       fhir:ElementDefinition.definition [ fhir:value "Indicates the duration of time over which repetitions are to occur; e.g. to express \"3 times per day\", 3 would be the frequency and \"1 day\" would be the period." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 17;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.periodMax" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.periodMax" ];
+       fhir:ElementDefinition.short [ fhir:value "Upper limit of period (3-4 hours)" ];
+       fhir:ElementDefinition.definition [ fhir:value "If present, indicates that the period is a range from [period] to [periodMax], allowing expressing concepts such as \"do this once every 3-5 days." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "0" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "decimal" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase" ]
+       ]
+     ], [
+       fhir:index 18;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.periodUnit" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.periodUnit" ];
+       fhir:ElementDefinition.short [ fhir:value "s | min | h | d | wk | mo | a - unit of time (UCUM)" ];
+       fhir:ElementDefinition.definition [ fhir:value "The units of time for the period in UCUM units." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "code" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "UnitsOfTime" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "A unit of time (units from UCUM)." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/units-of-time>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/units-of-time" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "PIVL.phase.unit" ]
+       ]
+     ], [
+       fhir:index 19;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.dayOfWeek" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.dayOfWeek" ];
+       fhir:ElementDefinition.short [ fhir:value "mon | tue | wed | thu | fri | sat | sun" ];
+       fhir:ElementDefinition.definition [ fhir:value "If one or more days of week is provided, then the action happens only on the specified day(s)." ];
+       fhir:ElementDefinition.comment [ fhir:value "If no days are specified, the action is assumed to happen every day as otherwise specified. The elements frequency and period cannot be used as well as dayOfWeek." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "code" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "DayOfWeek" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/days-of-week>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/days-of-week" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 20;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.timeOfDay" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.timeOfDay" ];
+       fhir:ElementDefinition.short [ fhir:value "Time of day for action" ];
+       fhir:ElementDefinition.definition [ fhir:value "Specified time of day for action to take place." ];
+       fhir:ElementDefinition.comment [ fhir:value "When time of day is specified, it is inferred that the action happens every day (as filtered by dayofWeek) on the specified times. The elements when, frequency and period cannot be used as well as timeOfDay." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "time" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
+       ]
+     ], [
+       fhir:index 21;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.when" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.when" ];
+       fhir:ElementDefinition.short [ fhir:value "Regular life events the event is tied to" ];
+       fhir:ElementDefinition.definition [ fhir:value "Real world events that the occurrence of the event should be tied to." ];
+       fhir:ElementDefinition.comment [ fhir:value "When more than one event is listed, the event is tied to the union of the specified events." ];
+       fhir:ElementDefinition.requirements [ fhir:value "Timings are frequently determined by occurrences such as waking, eating and sleep." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "code" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "EventTiming" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Real world event relating to the schedule." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/event-timing>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/event-timing" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "EIVL.event" ]
+       ]
+     ], [
+       fhir:index 22;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.offset" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.offset" ];
+       fhir:ElementDefinition.short [ fhir:value "Minutes from event (before or after)" ];
+       fhir:ElementDefinition.definition [ fhir:value "The number of minutes from the event. If the event code does not indicate whether the minutes is before or after the event, then the offset is assumed to be after the event." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "unsignedInt" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "EIVL.offset" ]
+       ]
+     ], [
+       fhir:index 23;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.code" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.code" ];
+       fhir:ElementDefinition.short [ fhir:value "BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +" ];
+       fhir:ElementDefinition.definition [ fhir:value "A code for the timing schedule. Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code)." ];
+       fhir:ElementDefinition.comment [ fhir:value "BID etc are defined as 'at institutionally specified times'. For example, an institution may choose that BID is \"always at 7am and 6pm\".  If it is inappropriate for this choice to be made, the code BID should not be used. Instead, a distinct organization-specific code should be used in place of the HL7-defined BID code and/or the a structured representation should be used (in this case, specifying the two event times)." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+       ];
+       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "TimingAbbreviation" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Code for a known / defined timing pattern." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/timing-abbreviation>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/timing-abbreviation" ]
+         ]
+       ];
+       fhir:ElementDefinition.mapping [
+         fhir:index 0;
+         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
+         fhir:ElementDefinition.mapping.map [ fhir:value "QSC.code" ]
+       ]
+     ]
+  ];
+  fhir:StructureDefinition.differential [
+     fhir:StructureDefinition.differential.element [
+       fhir:index 0;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing" ];
+       fhir:ElementDefinition.short [ fhir:value "SHR Timing Profile" ];
+       fhir:ElementDefinition.definition [ fhir:value "A timing schedule that specifies an event that may occur multiple times. Timing offers a choice of multiple OccurrenceTime (used is used to specify specific times), or recurrence patterns." ]
+     ], [
+       fhir:index 1;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.extension:recurrencerange" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recurrencerange" ];
+       fhir:ElementDefinition.slicing [
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
+       fhir:ElementDefinition.definition [ fhir:value "The start and end of the overall recurrence pattern in terms of dates/times or in terms of number of repeats. Could also be an event, such as when all doses are taken." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-RecurrenceRange-extension" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat" ]
+     ], [
+       fhir:index 3;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.repeat.periodMax" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.repeat.periodMax" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "0" ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "Timing:shr-core-Timing.code" ];
+       fhir:ElementDefinition.path [ fhir:value "Timing.code" ];
+       fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "TimingAbbreviation" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "Code for a known / defined timing pattern." ];
+         fhir:ElementDefinition.binding.valueSetReference [
+           fhir:link <http://hl7.org/fhir/ValueSet/timing-abbreviation>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/timing-abbreviation" ]
+         ]
+       ]
+     ]
+  ] .
+
+<http://hl7.org/fhir/ValueSet/units-of-time> a fhir:ValueSet .
+
+<http://hl7.org/fhir/ValueSet/days-of-week> a fhir:ValueSet .
+
+<http://hl7.org/fhir/ValueSet/event-timing> a fhir:ValueSet .
+
+<http://hl7.org/fhir/ValueSet/timing-abbreviation> a fhir:ValueSet .
+
+# - ontology header ------------------------------------------------------------
+
+<http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Timing.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

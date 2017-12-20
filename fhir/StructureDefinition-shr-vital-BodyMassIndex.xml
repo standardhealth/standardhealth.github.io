@@ -37,8 +37,33 @@
   BodyPosition maps to http://hl7.org/fhir/StructureDefinition/observation-bodyPosition
   Device maps to device
   ReferenceRange maps to referenceRange
+<<<<<<< HEAD
   ChangeFlag maps to http://hl7.org/fhir/StructureDefinition/observation-delta
   TestRequest maps to basedOn
+=======
+  ReferenceRange.Range.LowerBound maps to referenceRange.low
+  ReferenceRange.Range.UpperBound maps to referenceRange.high
+  ReferenceRange.Type maps to referenceRange.type
+  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  fix related.type to #has-member
+  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  ObservationComponent.ObservationCode maps to component.code
+  ObservationComponent.Quantity maps to component.value[x]
+  ObservationComponent.CodeableConcept maps to component.value[x]
+  ObservationComponent.string maps to component.value[x]
+  ObservationComponent.Range maps to component.value[x]
+  ObservationComponent.Ratio maps to component.value[x]
+  ObservationComponent.Attachment maps to component.value[x]
+  ObservationComponent.time maps to component.value[x]
+  ObservationComponent.dateTime maps to component.value[x]
+  ObservationComponent.TimePeriod maps to component.value[x]
+  ObservationComponent.IntegerQuantity maps to component.value[x]
+  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
+  ObservationComponent.Interpretation maps to component.interpretation
+  ObservationComponent.ReferenceRange maps to component.referenceRange
+  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+>>>>>>> 92b20c342... 12/19/17 updates
 </pre></p>
 </div>
   </text>
@@ -50,7 +75,11 @@
   <version value="0.0.1"/>
   <name value="SHR BodyMassIndex Profile"/>
   <status value="draft"/>
+<<<<<<< HEAD
   <date value="2017-08-08T15:56:40.266Z"/>
+=======
+  <date value="2017-12-19"/>
+>>>>>>> 92b20c342... 12/19/17 updates
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -314,7 +343,11 @@
     </element>
     <element id="Observation:shr-vital-BodyMassIndex.extension">
       <path value="Observation.extension"/>
+<<<<<<< HEAD
       <slicing id="463">
+=======
+      <slicing id="625">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -410,7 +443,22 @@
       </base>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -627,9 +675,15 @@
         <map value="N/A"/>
       </mapping>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-BodyMassIndex.modifierExtension:nonoccurrencemodifier.extension">
       <path value="Observation.modifierExtension.extension"/>
       <slicing id="9">
+=======
+    <element id="Observation:shr-vital-BodyMassIndex.category">
+      <path value="Observation.category"/>
+      <slicing id="623">
+>>>>>>> 92b20c342... 12/19/17 updates
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -728,6 +782,7 @@
         <code value="Extension"/>
       </type>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-BodyMassIndex.modifierExtension:nonoccurrencemodifier.extension:reason.url">
       <path value="Observation.modifierExtension.extension.url"/>
       <representation value="xmlAttr"/>
@@ -740,6 +795,24 @@
         <min value="1"/>
         <max value="1"/>
       </base>
+=======
+    <element id="Observation:shr-vital-BodyMassIndex.category:Includes_vital-signs.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="622">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <type>
         <code value="uri"/>
       </type>
@@ -1275,7 +1348,228 @@
       </type>
       <type>
         <code value="Reference"/>
+<<<<<<< HEAD
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-actor-RelatedPerson"/>
+=======
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.performer"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.15 / (Practitioner)  OBX-16,  PRT-5:PRT-4=&#39;RO&#39; /  (Device)  OBX-18 , PRT-10:PRT-4=&#39;EQUIP&#39; / (Organization)  OBX-23,  PRT-8:PRT-4=&#39;PO&#39;"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="participation[typeCode=PRF]"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="who.actor"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="624">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity">
+      <path value="Observation.valueQuantity"/>
+      <sliceName value="shr-core-Quantity"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+      <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/ucum-vitals-common"/>
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.id">
+      <path value="Observation.valueQuantity.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.extension">
+      <path value="Observation.valueQuantity.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.value">
+      <path value="Observation.valueQuantity.value"/>
+      <short value="Numerical value (with implicit precision)"/>
+      <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
+      <comment value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)."/>
+      <requirements value="Precision is handled implicitly in almost all cases of measurement."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SN.2  / CQ - N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.comparator">
+      <path value="Observation.valueQuantity.comparator"/>
+      <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
+      <definition value="How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is &quot;&lt;&quot; , then the real value is &lt; stated value."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value."/>
+      <requirements value="Need a framework for handling measures where the value is &lt;5ug/L or &gt;400mg/L due to the limitations of measuring methodology."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <meaningWhenMissing value="If there is no comparator, then there is no modification of the value"/>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="QuantityComparator"/>
+        </extension>
+        <strength value="required"/>
+        <description value="How the Quantity should be understood and represented."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/quantity-comparator"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SN.1  / CQ.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="IVL properties"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.unit">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.valueQuantity.unit"/>
+      <short value="Unit representation"/>
+      <definition value="A human-readable form of the unit."/>
+      <requirements value="There are many representations for units of measure and in many contexts, particular representations are fixed and required. I.e. mcg for micrograms."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="(see OBX.6 etc.) / CQ.2"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="PQ.unit"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.valueQuantity:shr-core-Quantity.system">
+      <path value="Observation.valueQuantity.system"/>
+      <short value="System that defines coded unit form"/>
+      <definition value="The identification of the system that provides the coded form of the unit."/>
+      <requirements value="Need to know the system that defines the coded form of the unit."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="uri"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -1899,6 +2193,7 @@
       <type>
         <code value="code"/>
       </type>
+      <fixedCode value="has-member"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRelationshipType"/>
@@ -1926,7 +2221,11 @@
       <max value="1"/>
       <type>
         <code value="Reference"/>
+<<<<<<< HEAD
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+=======
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mapping>
         <identity value="rim"/>
@@ -2251,7 +2550,22 @@
       <max value="1"/>
       <type>
         <code value="Extension"/>
+<<<<<<< HEAD
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Reason-extension"/>
+=======
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.extension:focalsubjectreference">
+      <path value="Observation.extension"/>
+      <sliceName value="focalsubjectreference"/>
+      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -2296,6 +2610,7 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-BodyMassIndex.extension:bodyweight">
       <path value="Observation.extension"/>
       <sliceName value="bodyweight"/>
@@ -2334,6 +2649,20 @@
       <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="false"/>
+=======
+    <element id="Observation:shr-vital-BodyMassIndex.category">
+      <path value="Observation.category"/>
+      <slicing id="623">
+        <discriminator>
+          <type value="value"/>
+          <path value="coding"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <max value="*"/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -2354,8 +2683,26 @@
       <isModifier value="true"/>
       <isSummary value="false"/>
     </element>
+<<<<<<< HEAD
     <element id="Observation:shr-vital-BodyMassIndex.basedOn">
       <path value="Observation.basedOn"/>
+=======
+    <element id="Observation:shr-vital-BodyMassIndex.category:Includes_vital-signs.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="622">
+        <discriminator>
+          <type value="value"/>
+          <path value="path"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.category:Includes_vital-signs.coding:Fixed_vital-signs">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_vital-signs"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+>>>>>>> 92b20c342... 12/19/17 updates
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2446,6 +2793,17 @@
     </element>
     <element id="Observation:shr-vital-BodyMassIndex.value[x]">
       <path value="Observation.value[x]"/>
+<<<<<<< HEAD
+=======
+      <slicing id="624">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+>>>>>>> 92b20c342... 12/19/17 updates
       <min value="1"/>
       <max value="1"/>
       <type>
@@ -2517,6 +2875,20 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-observation-Observation"/>
+      </type>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.related">
+      <path value="Observation.related"/>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.related.type">
+      <path value="Observation.related.type"/>
+      <fixedCode value="has-member"/>
+    </element>
+    <element id="Observation:shr-vital-BodyMassIndex.related.target">
+      <path value="Observation.related.target"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
       </type>
     </element>
     <element id="Observation:shr-vital-BodyMassIndex.component">
