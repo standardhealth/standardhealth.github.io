@@ -139,36 +139,24 @@
             <div class="container markdown-body">
                 <div class="row">
                   <h1>Base</h1> 
-                  <h2 style="border: none;">The SHR Base domain contains definitions for elements that are widely shared in SHR, including the base Entry and associated metadata.</h2>
+                  <h2 style="border: none;">The SHR Base domain contains definitions for basic classes in SHR, including the base Entry and Any. The classes below Any are are Finding, Action, and Entity.</h2>
                   <div class="spec-data-elements">
                         <h3>
-                            <a class='paddedId' id="AccessTime"></a>AccessTime
+                            <a class='paddedId' id="Any"></a>Any
+                        			[Abstract]
                         </h3>
                         <p>
-                                Point in time when data was accessed.
+                                The top level class in the hierarchy
                         </p>
                         <table>
                           <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">dateTime</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="Action"></a>Action
+                            <a class='paddedId' id="Attribution"></a>Attribution
                         </h3>
                         <p>
-                                A deed or endeavor; an action taken to address a undesired health state, behavior, risk, or goal. An action can have various contexts: definitional, occurred/not occurred, ordered/not ordered, recommended/recommended against.
+                                Who the entry is attributed to, for example, the informer (information source), the recorder, the verifier, the responsible person, etc.
                         </p>
                         <table>
                           <tbody>
@@ -177,29 +165,14 @@
                         		      
                         		      
                         		      
-                        		      			<a href="/shr/core#SpecificType"> <code>SpecificType</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#Status"> <code>Status</code></a>
+                        		      			<a href="/shr/entity#Role"> <code>Role</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
                         		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	The position of affairs at a particular time
+                        		      	Abstract parent class for human parties, such as practitioners, patients, research subjects, and related persons. Role can also represent an object playing a specific role, such as a room playing the role of operating theater. The value contains the entity (party) playing the role.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -207,130 +180,23 @@
                         		      
                         		      
                         		      
-                        		      			<a href="/shr/base#Category"> <code>Category</code></a>
+                        		      			<a href="/shr/action#ParticipationType"> <code>ParticipationType</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
-                        		      <td>		0 or more
+                        		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.
+                        		      	The role played by the participant engaged in the action, for example, as the attending physician, surgical assistant, etc.
                         		      </td>
                         		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#NonOccurrenceModifier"> <code>NonOccurrenceModifier</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
-                        		      When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>		0 or more
-                        		      </td>
-                        		      <td>
-                        		      	The justification for an action or non-action, conclusion, opinion, etc.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#OccurrenceTime"> <code>OccurrenceTime</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The point in time or span of time in which something happens.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/actor#Participant"> <code>Participant</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>		0 or more
-                        		      </td>
-                        		      <td>
-                        		      	A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.
-                        		      </td>
-                        		    </tr>
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="AssertionNegationModifier"></a>AssertionNegationModifier
-                        </h3>
-                        <p>
-                                When true, this modifier indicates that the associated observation, assessment, or finding is false, the condition is absent. For example, if the assessment is &#x27;allergy to peanuts&#x27; and the AssertionNegationModifier is true, it means the subject does not have an allergy to peanuts.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="AssociatedEncounter"></a>AssociatedEncounter
-                        </h3>
-                        <p>
-                                The encounter or episode of care that led to creation of this entry.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a href="/shr/encounter#Encounter"> <code>Encounter</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	A statement about a planned or actual interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.
-                                    </td>
-                        
                           </tbody>
                         </table>
                         <h3>
                             <a class='paddedId' id="Author"></a>Author
                         </h3>
                         <p>
-                                The person or organization who created the entry and is responsible for (and may certify) its content.
+                                The person or organization who created the entry and is responsible for (and may certify) the content.
                         </p>
                         <table>
                           <tbody>
@@ -342,7 +208,8 @@
                                     </td>
                                     <td>
                                     </td>
-                                    <td></td>
+                                    <td>				required
+                                    </td>
                                     <td>
                                     	
                                     </td>
@@ -352,14 +219,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/demographics#PersonOfRecord"> <code>PersonOfRecord</code></a>
+                        						  			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	Extended demographic information about the subject of this SHR.
+                        						  	
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -367,14 +233,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/actor#Practitioner"> <code>Practitioner</code></a>
+                        						  			<a href="/shr/entity#Patient"> <code>Patient</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	A person who practices a healing art.
+                        						  	A person in the role of a patient, including extended demographic information about the subject of this health record.
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -382,29 +247,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/actor#RelatedPerson"> <code>RelatedPerson</code></a>
+                        						  			<a href="/shr/entity#Group"> <code>Group</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#Organization"> <code>Organization</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A social or legal structure formed by human beings.
+                        						  	A set of entities (personnel, material, or places) to be considered together. May be a pool of like-type resources, a team, or combination of personnel, material and places.
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -416,43 +265,123 @@
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
                         						  	A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/action#Participant"> <code>Participant</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	An object (usually a Person, Party, or Organization but potentially a device or other Entity) that participates in a task or activity.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#RelatedPerson"> <code>RelatedPerson</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A person in a role defined in relationship to a patient
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#Organization"> <code>Organization</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A social or legal structure formed by human beings.
                         						  </td>
                         						</tr>			
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="Category"></a>Category
+                            <a class='paddedId' id="Content"></a>Content
+                        			[Abstract]
                         </h3>
                         <p>
-                                A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.
+                                An item that can constitute the payload of an Entry, aka an EntryElement.
+                        </p>
+                        		<p>Based On 			<a href="/shr/base#Any"> <code>Any</code></a>
+                         <!-- namespace=namespace label=label -->
                         </p>
                         <table>
                           <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	A set of codes drawn from different coding systems, representing the same concept.
-                                    </td>
-                        
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#RelatedEncounter"> <code>RelatedEncounter</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	If content was generated during a patient encounter, related encounter is the encounter where the information was gained.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Author"> <code>Author</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or organization who created the entry and is responsible for (and may certify) the content.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#Informant"> <code>Informant</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.
+                        		      </td>
+                        		    </tr>
                           </tbody>
                         </table>
                         <h3>
                             <a class='paddedId' id="Entry"></a>Entry
                         </h3>
                         <p>
-                                An item inserted in an electronic record.
+                                Metadata attributes that apply to any item represented in the standard health record. An Entry may not belong exclusively to a single person&#x27;s health record, but could represent an entity that surfaces in multiple records, such as organizations or practitioners. If the entry belongs to a single person&#x27;s record, then the identity of the person of record must be recorded.
                                 <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1705654;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1705654">C1705654</a>
+                        </p>
+                        		<p>Based On 			<a href="/shr/base#Any"> <code>Any</code></a>
+                         <!-- namespace=namespace label=label -->
                         </p>
                         <table>
                           <tbody>
@@ -468,7 +397,7 @@
                         		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	A unique, persistent identifier for the Standard Health Record to which this entry belongs.
+                        		      	A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -483,7 +412,22 @@
                         		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	A unique, persistent, permanent identifier for an entry in a health record.
+                        		      	A persistent, permanent identifier for an entry in a health record, unique within the scope of the health record.
+                        		      </td>
+                        		    </tr>
+                        		    <tr>
+                        		      <td>
+                        		      
+                        		      
+                        		      
+                        		      			<a href="/shr/base#PersonOfRecord"> <code>PersonOfRecord</code></a>
+                        		      </td>
+                        		      <td>
+                        		      </td>
+                        		      <td>            optional
+                        		      </td>
+                        		      <td>
+                        		      	The person this record belongs to.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -513,7 +457,7 @@
                         		      <td>		1 or more
                         		      </td>
                         		      <td>
-                        		      	The SHR data element identifier, for example, http://standardhealthrecord.org/allergy/SubstanceRisk. The EntryType array includes the entire &#x27;based on&#x27; hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.
+                        		      	SHR data element identifier, as a URI. The EntryType array includes the entire &#x27;based on&#x27; hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -521,14 +465,14 @@
                         		      
                         		      
                         		      
-                        		      			<a href="/shr/base#FocalSubject"> <code>FocalSubject</code></a>
+                        		      			<a href="/shr/core#CreationTime"> <code>CreationTime</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
                         		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead).
+                        		      	The point in time when the information was recorded in the system of record.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -536,14 +480,14 @@
                         		      
                         		      
                         		      
-                        		      			<a href="/shr/base#SubjectIsThirdPartyFlag"> <code>SubjectIsThirdPartyFlag</code></a>
+                        		      			<a href="/shr/base#LastUpdated"> <code>LastUpdated</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
-                        		      <td>            optional
+                        		      <td>				required
                         		      </td>
                         		      <td>
-                        		      	If true, the subject of this entry is someone other than the Person of Record, for example, a family member.
+                        		      	The most recent date the entry was changed.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -566,81 +510,6 @@
                         		      
                         		      
                         		      
-                        		      			<a href="/shr/base#Informant"> <code>Informant</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#Author"> <code>Author</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The person or organization who created the entry and is responsible for (and may certify) its content.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#AssociatedEncounter"> <code>AssociatedEncounter</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The encounter or episode of care that led to creation of this entry.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#OriginalCreationDate"> <code>OriginalCreationDate</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>				required
-                        		      </td>
-                        		      <td>
-                        		      	The point in time when the information was recorded in the system of record.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#LastUpdateDate"> <code>LastUpdateDate</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>				required
-                        		      </td>
-                        		      <td>
-                        		      	A date that the entry was changed.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
                         		      			<a href="/shr/base#Language"> <code>Language</code></a>
                         		      </td>
                         		      <td>
@@ -656,15 +525,14 @@
                         		      
                         		      
                         		      
-                        		      				<a><code>SecurityLabel</code></a>
-                        		      (TBD)
+                        		      			<a href="/shr/base#SecurityLabel"> <code>SecurityLabel</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
                         		      <td>		0 or more
                         		      </td>
                         		      <td>
-                        		      	Description TBD
+                        		      	A code that connects the entry to a security policy. Security labels can be updated when the resource changes, or whenever the security sub-system chooses to.
                         		      </td>
                         		    </tr>
                         		    <tr>
@@ -672,15 +540,14 @@
                         		      
                         		      
                         		      
-                        		      				<a><code>Tag</code></a>
-                        		      (TBD)
+                        		      			<a href="/shr/base#Tag"> <code>Tag</code></a>
                         		      </td>
                         		      <td>
                         		      </td>
                         		      <td>		0 or more
                         		      </td>
                         		      <td>
-                        		      	Description TBD
+                        		      	A code used to relate entries to categories or workflows. Applications are not required to consider the tags when interpreting the meaning of an entry.
                         		      </td>
                         		    </tr>
                           </tbody>
@@ -689,7 +556,7 @@
                             <a class='paddedId' id="EntryId"></a>EntryId
                         </h3>
                         <p>
-                                A unique, persistent, permanent identifier for an entry in a health record.
+                                A persistent, permanent identifier for an entry in a health record, unique within the scope of the health record.
                                 <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0600091;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0600091">C0600091</a>
                         </p>
                         <table>
@@ -713,7 +580,7 @@
                             <a class='paddedId' id="EntryType"></a>EntryType
                         </h3>
                         <p>
-                                The SHR data element identifier, for example, http://standardhealthrecord.org/allergy/SubstanceRisk. The EntryType array includes the entire &#x27;based on&#x27; hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.
+                                SHR data element identifier, as a URI. The EntryType array includes the entire &#x27;based on&#x27; hierarchy to enable searching for classes of things, for example, searching for all vital signs, or all types of behavioral observations.
                         </p>
                         <table>
                           <tbody>
@@ -733,118 +600,10 @@
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="ExternalHealthRecord"></a>ExternalHealthRecord
-                        </h3>
-                        <p>
-                                A health record used to help populate the current health record.
-                        </p>
-                        <table>
-                          <tbody>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#OrganizationalIdentifier"> <code>OrganizationalIdentifier</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>				required
-                        		      </td>
-                        		      <td>
-                        		      	Unique identifier of something or someone, assigned by an organization, and potentially effective for only a limited time period.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#AccessTime"> <code>AccessTime</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>				required
-                        		      </td>
-                        		      <td>
-                        		      	Point in time when data was accessed.
-                        		      </td>
-                        		    </tr>
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="FocalSubject"></a>FocalSubject
-                        </h3>
-                        <p>
-                                The person or thing that this entry refers to, usually the Person of Record. However, not all entries refer to the Person of Record. The entry could refer to a fetus, care giver, or relative (living or dead).
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    				Choice
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/demographics#PersonOfRecord"> <code>PersonOfRecord</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	Extended demographic information about the subject of this SHR.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#Practitioner"> <code>Practitioner</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A person who practices a healing art.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#RelatedPerson"> <code>RelatedPerson</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.
-                        						  </td>
-                        						</tr>			
-                          </tbody>
-                        </table>
-                        <h3>
                             <a class='paddedId' id="Informant"></a>Informant
                         </h3>
                         <p>
-                                The person or entity that provided the information in the entry, as distinct from the actor creating the entry, e.g. the subject (patient), medical professional, family member, device or software program.
+                                The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program.
                                 <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0449416;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0449416">C0449416</a>
                         </p>
                         <table>
@@ -857,7 +616,8 @@
                                     </td>
                                     <td>
                                     </td>
-                                    <td></td>
+                                    <td>				required
+                                    </td>
                                     <td>
                                     	
                                     </td>
@@ -867,14 +627,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/demographics#PersonOfRecord"> <code>PersonOfRecord</code></a>
+                        						  			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	Extended demographic information about the subject of this SHR.
+                        						  	
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -882,14 +641,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/actor#Practitioner"> <code>Practitioner</code></a>
+                        						  			<a href="/shr/entity#Patient"> <code>Patient</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	A person who practices a healing art.
+                        						  	A person in the role of a patient, including extended demographic information about the subject of this health record.
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -897,14 +655,69 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/actor#RelatedPerson"> <code>RelatedPerson</code></a>
+                        						  			<a href="/shr/entity#Group"> <code>Group</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
+                        						  <td></td>
+                        						  <td>
+                        						  	A set of entities (personnel, material, or places) to be considered together. May be a pool of like-type resources, a team, or combination of personnel, material and places.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/device#Device"> <code>Device</code></a>
                         						  </td>
                         						  <td>
-                        						  	A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/action#Participant"> <code>Participant</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	An object (usually a Person, Party, or Organization but potentially a device or other Entity) that participates in a task or activity.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#RelatedPerson"> <code>RelatedPerson</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A person in a role defined in relationship to a patient
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#Organization"> <code>Organization</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A social or legal structure formed by human beings.
                         						  </td>
                         						</tr>			
                           </tbody>
@@ -925,8 +738,8 @@
                                     			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
                                     </td>
                                     <td>
-                                    							must be 
-                                    								from <a href="http://hl7.org/fhir/ValueSet/languages"><code>http://hl7.org/fhir/ValueSet/languages</code></a>
+                                    								from <a href="http://hl7.org/fhir/ValueSet/languages"><code>http://hl7.org/fhir/ValueSet/languages</code></a> <br>
+                                    							(if covered) <br>
                                     </td>
                                     <td></td>
                                     <td>
@@ -936,10 +749,10 @@
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="LastUpdateDate"></a>LastUpdateDate
+                            <a class='paddedId' id="LastUpdated"></a>LastUpdated
                         </h3>
                         <p>
-                                A date that the entry was changed.
+                                The most recent date the entry was changed.
                         </p>
                         <table>
                           <tbody>
@@ -947,38 +760,13 @@
                                     
                                     Value:&nbsp;
                                     
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">dateTime</code></a>
+                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">instant</code></a>
                                     </td>
                                     <td>
                                     </td>
                                     <td></td>
                                     <td>
                                     	
-                                    </td>
-                        
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="MissingValueReason"></a>MissingValueReason
-                        </h3>
-                        <p>
-                                The reason a required element, complex type, or primitive value is missing. Missing value reason can be substituted for any value. By convention in SHR, any required element or value can be substituted with a missing value reason.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
-                                    </td>
-                                    <td>
-                                    							must be 
-                                    									from <a href="/shr/base/vs/#MissingValueReasonVS"><code>MissingValueReasonVS</code></a>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	A set of codes drawn from different coding systems, representing the same concept.
                                     </td>
                         
                           </tbody>
@@ -1037,7 +825,7 @@
                                     </td>
                                     <td>
                                     							must be 
-                                    								from <a href="http://hl7.org/fhir/ValueSet/narrative-status"><code>http://hl7.org/fhir/ValueSet/narrative-status</code></a>
+                                    								from <a href="http://hl7.org/fhir/ValueSet/narrative-status"><code>http://hl7.org/fhir/ValueSet/narrative-status</code></a> <br>
                                     </td>
                                     <td></td>
                                     <td>
@@ -1047,11 +835,10 @@
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="NonOccurrenceModifier"></a>NonOccurrenceModifier
+                            <a class='paddedId' id="PersonOfRecord"></a>PersonOfRecord
                         </h3>
                         <p>
-                                When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
-                        When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.
+                                The person this record belongs to.
                         </p>
                         <table>
                           <tbody>
@@ -1059,38 +846,22 @@
                                     
                                     Value:&nbsp;
                                     
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    			<a href="/shr/entity#Patient"> <code>Patient</code></a>
                                     </td>
                                     <td>
                                     </td>
                                     <td></td>
                                     <td>
-                                    	
+                                    	A person in the role of a patient, including extended demographic information about the subject of this health record.
                                     </td>
                         
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The justification for an action or non-action, conclusion, opinion, etc.
-                        		      </td>
-                        		    </tr>
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="OriginalCreationDate"></a>OriginalCreationDate
+                            <a class='paddedId' id="RelatedEncounter"></a>RelatedEncounter
                         </h3>
                         <p>
-                                The point in time when the information was recorded in the system of record.
-                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C3669169;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C3669169">C3669169</a>
+                                If content was generated during a patient encounter, related encounter is the encounter where the information was gained.
                         </p>
                         <table>
                           <tbody>
@@ -1098,7 +869,7 @@
                                     
                                     Value:&nbsp;
                                     
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">dateTime</code></a>
+                                    			<a href="/shr/encounter#EncounterPerformed"> <code>EncounterPerformed</code></a>
                                     </td>
                                     <td>
                                     </td>
@@ -1110,10 +881,10 @@
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="PatientInstructions"></a>PatientInstructions
+                            <a class='paddedId' id="SecurityLabel"></a>SecurityLabel
                         </h3>
                         <p>
-                                Information for the patient, such as, where to get the test, how to prepare for the test, etc.
+                                A code that connects the entry to a security policy. Security labels can be updated when the resource changes, or whenever the security sub-system chooses to.
                         </p>
                         <table>
                           <tbody>
@@ -1121,485 +892,13 @@
                                     
                                     Value:&nbsp;
                                     
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
+                                    			<a href="/shr/core#Coding"> <code>Coding</code></a>
                                     </td>
                                     <td>
                                     </td>
                                     <td></td>
                                     <td>
-                                    	
-                                    </td>
-                        
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="PerformerInstructions"></a>PerformerInstructions
-                        </h3>
-                        <p>
-                                Information for the performer of the test, if needed.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">string</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="PriorityOfRequest"></a>PriorityOfRequest
-                        </h3>
-                        <p>
-                                Urgency level for which results must be reported to the requestor or responsible individual.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">code</code></a>
-                                    </td>
-                                    <td>
-                                    							must be 
-                                    								from <a href="http://hl7.org/fhir/ValueSet/request-priority"><code>http://hl7.org/fhir/ValueSet/request-priority</code></a>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="Request"></a>Request
-                        </h3>
-                        <p>
-                                An order for something to take place.
-                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C1705178;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C1705178">C1705178</a>
-                        </p>
-                        		<p>Based On 			<a href="/shr/base#Action"> <code>Action</code></a>
-                         <!-- namespace=namespace label=label -->
-                        </p>
-                        <table>
-                          <tbody>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#Status"> <code>Status</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      							must be 
-                        		      								from <a href="http://hl7.org/fhir/ValueSet/request-status"><code>http://hl7.org/fhir/ValueSet/request-status</code></a>
-                        		      </td>
-                        		      <td>				required
-                        		      </td>
-                        		      <td>
-                        		      	The position of affairs at a particular time
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#RequestedPerformanceTime"> <code>RequestedPerformanceTime</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#Reason"> <code>Reason</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The justification for an action or non-action, conclusion, opinion, etc.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#PriorityOfRequest"> <code>PriorityOfRequest</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	Urgency level for which results must be reported to the requestor or responsible individual.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      				Choice
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	
-                        		      </td>
-                        		    </tr>
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/base#RequestedPerformerType"> <code>RequestedPerformerType</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	What type of actor should carry out the testing.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/base#RequestedPerformer"> <code>RequestedPerformer</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	Who should carry out the tests. For example, the patient or caregiver.
-                        						  </td>
-                        						</tr>			
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#PerformerInstructions"> <code>PerformerInstructions</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	Information for the performer of the test, if needed.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#PatientInstructions"> <code>PatientInstructions</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	Information for the patient, such as, where to get the test, how to prepare for the test, etc.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#SpecificType"> <code>SpecificType</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	A code or description representing the concept represented by the instance at a specific level. For example, for a Condition, the concept is MTH#C0348080 (Condition) but the Value is the SpecificType, i.e. MTH#C0011849 (Diabetes Mellitus). For an observation, the SpecificType defines what is being observed, measured, or asked, as specifically as possible. The SpecificType should always align with the concept of the element, for example, a blood pressure observation can be coded as a sitting blood pressure or standing blood pressure, and may be from a different code system (e.g. LOINC versus MTH). In other cases, the SpecificType is the specific question being asked, or the specific goal being pursued.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#Category"> <code>Category</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>		0 or more
-                        		      </td>
-                        		      <td>
-                        		      	A categorization of the action according its type, often a code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This can be used for searching, sorting and display purposes.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/base#NonOccurrenceModifier"> <code>NonOccurrenceModifier</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	When true, indicates either that the event or action documented in the entry did not occur. For example, if immunization is not given, the NonOccurrenceModifier=true will indicate this.
-                        		      When applied to a recommendation, the modifier indicates the action mentioned in the topic should not take place. For example, a request to NOT elevate the head of a bed using the code for elevating the bed, and setting ProhibitedModifier to true. Other examples include do not ambulate, do not flush NG tube, do not take blood pressure on a certain arm, etc. If the SpecificType contains negation and ProhibitedModifier is true, that will reinforce the prohibition, and should not be interpreted as a double negative that equals a positive.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#OccurrenceTime"> <code>OccurrenceTime</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	The point in time or span of time in which something happens.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/actor#Participant"> <code>Participant</code></a>
-                        		                  <a data-toggle="tooltip" data-placement="right" title="Found in Action" data-original-title="Found in Action" href="/shr/base#Action" aria-label='Visit this dataelement'><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>		0 or more
-                        		      </td>
-                        		      <td>
-                        		      	A statement about an actor who did (or did not) participate in a certain task or activity. Unlike a HealthcareInvolvement which continues over period of time, the participant is associated with doing or not doing a specific task, such admitting a patient, performing a procedure, or taking a measurement.
-                        		      </td>
-                        		    </tr>
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="RequestedPerformanceTime"></a>RequestedPerformanceTime
-                        </h3>
-                        <p>
-                                When an action should be done. If the action is a series or recurs (e.g. daily blood sugar testing in the morning) then a Timing can be used to describe the periodicity.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    				Choice
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">dateTime</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">date</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/core#TimePeriod"> <code>TimePeriod</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A period of time defined by a start and end time, date, or year.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  				<a><code>Timing</code></a>
-                        						  (TBD)
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	Description TBD
-                        						  </td>
-                        						</tr>			
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="RequestedPerformer"></a>RequestedPerformer
-                        </h3>
-                        <p>
-                                Who should carry out the tests. For example, the patient or caregiver.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    				Choice
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	
-                                    </td>
-                        
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/demographics#PersonOfRecord"> <code>PersonOfRecord</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	Extended demographic information about the subject of this SHR.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#Practitioner"> <code>Practitioner</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A person who practices a healing art.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#RelatedPerson"> <code>RelatedPerson</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A person, other than a practitioner or the patient (the person of record) who is relevant to the health or social situation of the subject.
-                        						  </td>
-                        						</tr>			
-                        						<tr>
-                        						  <td>
-                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        						  |&nbsp;
-                        						  
-                        						  			<a href="/shr/actor#Organization"> <code>Organization</code></a>
-                        						  </td>
-                        						  <td>
-                        						  </td>
-                        						  <td>				required
-                        						  </td>
-                        						  <td>
-                        						  	A social or legal structure formed by human beings.
-                        						  </td>
-                        						</tr>			
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="RequestedPerformerType"></a>RequestedPerformerType
-                        </h3>
-                        <p>
-                                What type of actor should carry out the testing.
-                        </p>
-                        <table>
-                          <tbody>
-                                    <td>
-                                    
-                                    Value:&nbsp;
-                                    
-                                    			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td></td>
-                                    <td>
-                                    	A set of codes drawn from different coding systems, representing the same concept.
+                                    	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.
                                     </td>
                         
                           </tbody>
@@ -1608,8 +907,7 @@
                             <a class='paddedId' id="ShrId"></a>ShrId
                         </h3>
                         <p>
-                                A unique, persistent identifier for the Standard Health Record to which this entry belongs.
-                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0600091;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0600091">C0600091</a>
+                                A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord.
                         </p>
                         <table>
                           <tbody>
@@ -1629,11 +927,10 @@
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="Status"></a>Status
+                            <a class='paddedId' id="Subject"></a>Subject
                         </h3>
                         <p>
-                                The position of affairs at a particular time
-                                <a href="https://uts.nlm.nih.gov/metathesaurus.html#C0449438;0;1;CUI;2016AB;EXACT_MATCH;CUI;*;" title="http://ncimeta.nci.nih.gov:C0449438">C0449438</a>
+                                The person or thing that this entry relates to, usually the Person of Record. However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, finding, condition, or intervention.
                         </p>
                         <table>
                           <tbody>
@@ -1645,7 +942,8 @@
                                     </td>
                                     <td>
                                     </td>
-                                    <td></td>
+                                    <td>				required
+                                    </td>
                                     <td>
                                     	
                                     </td>
@@ -1655,14 +953,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">code</code></a>
+                        						  			<a href="/shr/entity#Patient"> <code>Patient</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	
+                        						  	A person in the role of a patient, including extended demographic information about the subject of this health record.
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -1670,14 +967,13 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/core#Coding"> <code>Coding</code></a>
+                        						  			<a href="/shr/entity#Group"> <code>Group</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
-                        						  </td>
+                        						  <td></td>
                         						  <td>
-                        						  	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.
+                        						  	A set of entities (personnel, material, or places) to be considered together. May be a pool of like-type resources, a team, or combination of personnel, material and places.
                         						  </td>
                         						</tr>			
                         						<tr>
@@ -1685,64 +981,64 @@
                         						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         						  |&nbsp;
                         						  
-                        						  			<a href="/shr/core#CodeableConcept"> <code>CodeableConcept</code></a>
+                        						  			<a href="/shr/device#Device"> <code>Device</code></a>
                         						  </td>
                         						  <td>
                         						  </td>
-                        						  <td>				required
+                        						  <td></td>
+                        						  <td>
+                        						  	A specific durable physical device used in diagnosis or treatment. The value is the coding for a type of device, for example, a CPAP machine. The same device might be used on multiple patients.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/core#Location"> <code>Location</code></a>
                         						  </td>
                         						  <td>
-                        						  	A set of codes drawn from different coding systems, representing the same concept.
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A position, site, or point in space where something can be found.
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#RelatedPerson"> <code>RelatedPerson</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A person in a role defined in relationship to a patient
+                        						  </td>
+                        						</tr>			
+                        						<tr>
+                        						  <td>
+                        						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        						  |&nbsp;
+                        						  
+                        						  			<a href="/shr/entity#Organization"> <code>Organization</code></a>
+                        						  </td>
+                        						  <td>
+                        						  </td>
+                        						  <td></td>
+                        						  <td>
+                        						  	A social or legal structure formed by human beings.
                         						  </td>
                         						</tr>			
                           </tbody>
                         </table>
                         <h3>
-                            <a class='paddedId' id="Study"></a>Study
-                        		[<a href="/shr/base/index.html#Entry">Entry</a>]
+                            <a class='paddedId' id="Tag"></a>Tag
                         </h3>
                         <p>
-                                A clinical trial or other formal study.
-                        </p>
-                        <table>
-                          <tbody>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#Title"> <code>Title</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	A distinguishing word or group of words naming an item.
-                        		      </td>
-                        		    </tr>
-                        		    <tr>
-                        		      <td>
-                        		      
-                        		      
-                        		      
-                        		      			<a href="/shr/core#Identifier"> <code>Identifier</code></a>
-                        		      </td>
-                        		      <td>
-                        		      </td>
-                        		      <td>            optional
-                        		      </td>
-                        		      <td>
-                        		      	A unique string that identifies a specific person or thing.
-                        		      </td>
-                        		    </tr>
-                          </tbody>
-                        </table>
-                        <h3>
-                            <a class='paddedId' id="SubjectIsThirdPartyFlag"></a>SubjectIsThirdPartyFlag
-                        </h3>
-                        <p>
-                                If true, the subject of this entry is someone other than the Person of Record, for example, a family member.
+                                A code used to relate entries to categories or workflows. Applications are not required to consider the tags when interpreting the meaning of an entry.
                         </p>
                         <table>
                           <tbody>
@@ -1750,13 +1046,13 @@
                                     
                                     Value:&nbsp;
                                     
-                                    			<a><code data-toggle="tooltip" data-placement="right" title="Primitive dataelement" data-original-title="Primitive dataelement">boolean</code></a>
+                                    			<a href="/shr/core#Coding"> <code>Coding</code></a>
                                     </td>
                                     <td>
                                     </td>
                                     <td></td>
                                     <td>
-                                    	
+                                    	Coding of a concept, drawn from a controlled vocabulary. Includes the vocabulary and version, if applicable. May include a display text, and a descriptor expressing the intended interpretation of the code.
                                     </td>
                         
                           </tbody>
