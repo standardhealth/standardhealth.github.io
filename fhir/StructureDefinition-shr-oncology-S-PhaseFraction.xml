@@ -8,7 +8,7 @@
   <p>An expression of the number of mitoses found in a stated number of cells. The S-phase fraction number tells you what percentage of cells in the tissue sample are in the process of copying their genetic information (DNA). This S-phase, short for synthesis phase, happens just before a cell divides into two new cells. ReferenceRange: Low &lt;6, Intermediate 6-10, &gt;10 High.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.oncology.S-PhaseFraction maps to Observation:
-  Entry.CreationTime maps to issued
+  _Entry.CreationTime maps to issued
   RelatedEncounter maps to context	
   Subject maps to subject
   Category maps to category
@@ -16,16 +16,6 @@
   FindingMethod maps to method
   FindingStatus maps to status
   Quantity maps to value[x]
-  CodeableConcept maps to value[x]
-  string maps to value[x]
-  boolean maps to value[x]
-  Range maps to value[x]
-  Ratio maps to value[x]
-  Attachment maps to value[x]
-  time maps to value[x]
-  dateTime maps to value[x]
-  TimePeriod maps to value[x]
-  IntegerQuantity maps to value[x]
   ValueAbsentReason maps to dataAbsentReason
   ObservationCode maps to code
   BodySite maps to bodySite
@@ -67,7 +57,7 @@
   <version value="0.0.1"/>
   <name value="SHR S-PhaseFraction Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -331,7 +321,7 @@
     </element>
     <element id="Observation:shr-oncology-S-PhaseFraction.extension">
       <path value="Observation.extension"/>
-      <slicing id="486">
+      <slicing id="3">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -713,10 +703,10 @@
     </element>
     <element id="Observation:shr-oncology-S-PhaseFraction.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="484">
+      <slicing id="1">
         <discriminator>
           <type value="value"/>
-          <path value="path"/>
+          <path value="code"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
@@ -1130,63 +1120,24 @@
         <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="485">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Actual result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
-      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
-      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Quantity"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
-      </type>
-      <condition value="obs-7"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 441742003 |Evaluation finding|"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="OBX.2, OBX.5, OBX.6"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="value"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-attr"/>
-        <map value="363714003 |Interprets|"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity">
       <path value="Observation.valueQuantity"/>
-      <sliceName value="shr-core-Quantity"/>
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
       <isSummary value="true"/>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.id">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.id">
       <path value="Observation.valueQuantity.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -1206,7 +1157,7 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.extension">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.extension">
       <path value="Observation.valueQuantity.extension"/>
       <slicing>
         <discriminator>
@@ -1236,10 +1187,10 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.value">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.value">
       <path value="Observation.valueQuantity.value"/>
       <short value="Numerical value (with implicit precision)"/>
-      <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
+      <definition value="Decimal representing a quantity with units, whose value may be bounded from above or below, as defined in FHIR"/>
       <comment value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)."/>
       <requirements value="Precision is handled implicitly in almost all cases of measurement."/>
       <min value="1"/>
@@ -1257,7 +1208,7 @@
         <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.comparator">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.comparator">
       <path value="Observation.valueQuantity.comparator"/>
       <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
       <definition value="How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is &quot;&lt;&quot; , then the real value is &lt; stated value."/>
@@ -1290,7 +1241,7 @@
         <map value="IVL properties"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.unit">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.unit">
       <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
         <valueBoolean value="true"/>
       </extension>
@@ -1313,7 +1264,7 @@
         <map value="PQ.unit"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.system">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.system">
       <path value="Observation.valueQuantity.system"/>
       <short value="System that defines coded unit form"/>
       <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -1335,7 +1286,7 @@
         <map value="CO.codeSystem, PQ.translation.codeSystem"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.code">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.code">
       <path value="Observation.valueQuantity.code"/>
       <short value="Coded form of the unit"/>
       <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -2098,6 +2049,10 @@
       <max value="1"/>
       <type>
         <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+      <type>
+        <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
       </type>
       <type>
@@ -2540,10 +2495,10 @@
     </element>
     <element id="Observation:shr-oncology-S-PhaseFraction.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="484">
+      <slicing id="1">
         <discriminator>
           <type value="value"/>
-          <path value="path"/>
+          <path value="code"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
@@ -2599,35 +2554,18 @@
       <min value="1"/>
       <max value="1"/>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="485">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Quantity"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity">
       <path value="Observation.valueQuantity"/>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.system">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.system">
       <path value="Observation.valueQuantity.system"/>
       <fixedUri value="http://unitsofmeasure.org"/>
     </element>
-    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity:shr-core-Quantity.code">
+    <element id="Observation:shr-oncology-S-PhaseFraction.valueQuantity.code">
       <path value="Observation.valueQuantity.code"/>
       <fixedCode value="%"/>
     </element>
@@ -2732,6 +2670,10 @@
     </element>
     <element id="Observation:shr-oncology-S-PhaseFraction.component.value[x]">
       <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>

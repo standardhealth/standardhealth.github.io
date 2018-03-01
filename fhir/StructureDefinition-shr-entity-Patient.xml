@@ -38,7 +38,7 @@
   <version value="0.0.1"/>
   <name value="SHR Patient Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -434,25 +434,6 @@
       <type>
         <code value="Extension"/>
         <profile value="http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName"/>
-      </type>
-    </element>
-    <element id="Patient:shr-entity-Patient.extension:person">
-      <path value="Patient.extension"/>
-      <sliceName value="person"/>
-      <slicing id="1">
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <definition value="A person relevant to the health or social situation of the subject (including the person of record him or herself)."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person-extension"/>
       </type>
     </element>
     <element id="Patient:shr-entity-Patient.extension:relatedencounter">
@@ -1379,6 +1360,14 @@
     </element>
     <element id="Patient:shr-entity-Patient.deceased[x]">
       <path value="Patient.deceased[x]"/>
+      <slicing id="1">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Indicates if the individual is deceased or not"/>
       <definition value="Indicates if the individual is deceased or not."/>
       <comment value="If there&#39;s no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive.&#xA;&#xA;This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different."/>
@@ -1410,6 +1399,40 @@
         <identity value="cda"/>
         <map value="n/a"/>
       </mapping>
+    </element>
+    <element id="Patient:shr-entity-Patient.deceasedDateTime:dateTime">
+      <path value="Patient.deceasedDateTime"/>
+      <sliceName value="dateTime"/>
+      <short value="Indicates if the individual is deceased or not"/>
+      <definition value="Indicates if the individual is deceased or not."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Patient.deceased[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Patient:shr-entity-Patient.deceasedBoolean:boolean">
+      <path value="Patient.deceasedBoolean"/>
+      <sliceName value="boolean"/>
+      <short value="Indicates if the individual is deceased or not"/>
+      <definition value="Indicates if the individual is deceased or not."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Patient.deceased[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
     </element>
     <element id="Patient:shr-entity-Patient.address">
       <path value="Patient.address"/>
@@ -1484,6 +1507,14 @@
     </element>
     <element id="Patient:shr-entity-Patient.multipleBirth[x]">
       <path value="Patient.multipleBirth[x]"/>
+      <slicing id="2">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Whether patient is part of a multiple birth"/>
       <definition value="Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer)."/>
       <comment value="Where the valueInteger is provided, the number is the birth number in the sequence.&#xA;E.g. The middle birth in tripplets would be valueInteger=2 and the third born would have valueInteger=3&#xA;If a bool value was provided for this tripplets examle, then all 3 patient records would have valueBool=true (the ordering is not indicated)."/>
@@ -1513,6 +1544,38 @@
         <identity value="cda"/>
         <map value="n/a"/>
       </mapping>
+    </element>
+    <element id="Patient:shr-entity-Patient.multipleBirthInteger:integer">
+      <path value="Patient.multipleBirthInteger"/>
+      <sliceName value="integer"/>
+      <short value="Whether patient is part of a multiple birth"/>
+      <definition value="Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Patient.multipleBirth[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <element id="Patient:shr-entity-Patient.multipleBirthBoolean:boolean">
+      <path value="Patient.multipleBirthBoolean"/>
+      <sliceName value="boolean"/>
+      <short value="Whether patient is part of a multiple birth"/>
+      <definition value="Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Patient.multipleBirth[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="boolean"/>
+      </type>
     </element>
     <element id="Patient:shr-entity-Patient.photo">
       <path value="Patient.photo"/>
@@ -2588,25 +2651,6 @@
         <profile value="http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName"/>
       </type>
     </element>
-    <element id="Patient:shr-entity-Patient.extension:person">
-      <path value="Patient.extension"/>
-      <sliceName value="person"/>
-      <slicing id="1">
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <definition value="A person relevant to the health or social situation of the subject (including the person of record him or herself)."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person-extension"/>
-      </type>
-    </element>
     <element id="Patient:shr-entity-Patient.extension:relatedencounter">
       <path value="Patient.extension"/>
       <sliceName value="relatedencounter"/>
@@ -2759,6 +2803,29 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-PassportNumber-extension"/>
       </type>
     </element>
+    <element id="Patient:shr-entity-Patient.deceased[x]">
+      <path value="Patient.deceased[x]"/>
+      <slicing id="1">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Patient:shr-entity-Patient.deceasedDateTime:dateTime">
+      <path value="Patient.deceasedDateTime"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="Patient:shr-entity-Patient.deceasedBoolean:boolean">
+      <path value="Patient.deceasedBoolean"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+    </element>
     <element id="Patient:shr-entity-Patient.maritalStatus">
       <path value="Patient.maritalStatus"/>
       <min value="1"/>
@@ -2776,6 +2843,29 @@
           <reference value="http://hl7.org/fhir/ValueSet/marital-status"/>
         </valueSetReference>
       </binding>
+    </element>
+    <element id="Patient:shr-entity-Patient.multipleBirth[x]">
+      <path value="Patient.multipleBirth[x]"/>
+      <slicing id="2">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Patient:shr-entity-Patient.multipleBirthInteger:integer">
+      <path value="Patient.multipleBirthInteger"/>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <element id="Patient:shr-entity-Patient.multipleBirthBoolean:boolean">
+      <path value="Patient.multipleBirthBoolean"/>
+      <type>
+        <code value="boolean"/>
+      </type>
     </element>
   </differential>
 </StructureDefinition>
