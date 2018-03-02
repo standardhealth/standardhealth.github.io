@@ -8,24 +8,14 @@
   <p>Immunohistochemistry (IHC) assessment for estrogen receptor (ER) and progesterone receptor (PR) as well as IHC or in situ hybridization (ISH) determination of human epidermal growth factor receptor 2 (HER2) status</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.oncology.BreastCancerBiomarkerPanel maps to Observation:
-  Entry.CreationTime maps to issued
+  _Entry.CreationTime maps to issued
   RelatedEncounter maps to context	
   Subject maps to subject
   Category maps to category
   ClinicallyRelevantTime maps to effective[x]
   FindingMethod maps to method
   FindingStatus maps to status
-  Quantity maps to value[x]
   CodeableConcept maps to value[x]
-  string maps to value[x]
-  boolean maps to value[x]
-  Range maps to value[x]
-  Ratio maps to value[x]
-  Attachment maps to value[x]
-  time maps to value[x]
-  dateTime maps to value[x]
-  TimePeriod maps to value[x]
-  IntegerQuantity maps to value[x]
   ValueAbsentReason maps to dataAbsentReason
   ObservationCode maps to code
   BodySite maps to bodySite
@@ -67,7 +57,7 @@
   <version value="0.0.1"/>
   <name value="SHR BreastCancerBiomarkerPanel Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -331,7 +321,7 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.extension">
       <path value="Observation.extension"/>
-      <slicing id="461">
+      <slicing id="4">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -713,10 +703,10 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="405">
+      <slicing id="1">
         <discriminator>
           <type value="value"/>
-          <path value="path"/>
+          <path value="code"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
@@ -1130,55 +1120,17 @@
         <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="460">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Actual result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
-      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
-      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <condition value="obs-7"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-concept"/>
-        <map value="&lt; 441742003 |Evaluation finding|"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="OBX.2, OBX.5, OBX.6"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="value"/>
-      </mapping>
-      <mapping>
-        <identity value="sct-attr"/>
-        <map value="363714003 |Interprets|"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.valueCodeableConcept:CodeableConcept">
+    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.valueCodeableConcept">
       <path value="Observation.valueCodeableConcept"/>
-      <sliceName value="CodeableConcept"/>
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
       </type>
@@ -1647,7 +1599,7 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related">
       <path value="Observation.related"/>
-      <slicing id="406">
+      <slicing id="2">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -1682,126 +1634,11 @@
         <map value="outBoundRelationship"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.id">
-      <path value="Observation.related.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.extension">
-      <path value="Observation.related.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.modifierExtension">
-      <path value="Observation.related.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.type">
-      <path value="Observation.related.type"/>
-      <short value="has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by"/>
-      <definition value="A code specifying the kind of relationship that exists with the target resource."/>
-      <comment value="The &quot;derived-from&quot; type is the only logical choice when referencing the QuestionnaireAnswer resource."/>
-      <requirements value="A relationship type SHOULD be provided."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="code"/>
-      </type>
-      <fixedCode value="has-member"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationRelationshipType"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes specifying how two observations are related."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="N/A"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".typeCode"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.target">
-      <path value="Observation.related.target"/>
-      <short value="Resource that is related to this one"/>
-      <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".targetObservation"/>
-      </mapping>
-    </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-EstrogenReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-EstrogenReceptorStatus"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="EstrogenReceptorStatus"/>
+      <definition value="Estrogen receptor alpha is the predominant estrogen receptor expressed in breast tissue and is overexpressed in around 50% of breast carcinomas. ER status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -1941,10 +1778,8 @@
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-ProgesteroneReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-ProgesteroneReceptorStatus"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="ProgesteroneReceptorStatus"/>
+      <definition value="Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2084,10 +1919,8 @@
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-HER2ReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-HER2ReceptorStatus"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="HER2ReceptorStatus"/>
+      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2366,6 +2199,10 @@
       <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
@@ -2810,10 +2647,10 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="405">
+      <slicing id="1">
         <discriminator>
           <type value="value"/>
-          <path value="path"/>
+          <path value="code"/>
         </discriminator>
         <ordered value="false"/>
         <rules value="open"/>
@@ -2869,23 +2706,7 @@
       <min value="1"/>
       <max value="1"/>
     </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.value[x]">
-      <path value="Observation.value[x]"/>
-      <slicing id="460">
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.valueCodeableConcept:CodeableConcept">
+    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.valueCodeableConcept">
       <path value="Observation.valueCodeableConcept"/>
       <type>
         <code value="CodeableConcept"/>
@@ -2981,7 +2802,7 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related">
       <path value="Observation.related"/>
-      <slicing id="406">
+      <slicing id="2">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -2990,20 +2811,11 @@
         <rules value="open"/>
       </slicing>
     </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.type">
-      <path value="Observation.related.type"/>
-      <fixedCode value="has-member"/>
-    </element>
-    <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related.target">
-      <path value="Observation.related.target"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Observation"/>
-      </type>
-    </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-EstrogenReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-EstrogenReceptorStatus"/>
+      <short value="EstrogenReceptorStatus"/>
+      <definition value="Estrogen receptor alpha is the predominant estrogen receptor expressed in breast tissue and is overexpressed in around 50% of breast carcinomas. ER status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3021,6 +2833,8 @@
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-ProgesteroneReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-ProgesteroneReceptorStatus"/>
+      <short value="ProgesteroneReceptorStatus"/>
+      <definition value="Progesterone receptor is expressed in 65% of breast carcinomas. PR status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3038,6 +2852,8 @@
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.related:shr-oncology-HER2ReceptorStatus">
       <path value="Observation.related"/>
       <sliceName value="shr-oncology-HER2ReceptorStatus"/>
+      <short value="HER2ReceptorStatus"/>
+      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3057,6 +2873,10 @@
     </element>
     <element id="Observation:shr-oncology-BreastCancerBiomarkerPanel.component.value[x]">
       <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>

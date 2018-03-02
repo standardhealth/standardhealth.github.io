@@ -21,7 +21,7 @@
   <version value="0.0.1"/>
   <name value="SHR Frequency Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -149,6 +149,177 @@
         <map value=".numerator"/>
       </mapping>
     </element>
+    <element id="Ratio:shr-core-Frequency.numerator.id">
+      <path value="Ratio.numerator.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.extension">
+      <path value="Ratio.numerator.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.value">
+      <path value="Ratio.numerator.value"/>
+      <short value="Numerical value (with implicit precision)"/>
+      <definition value="Decimal representing a quantity with units, whose value may be bounded from above or below, as defined in FHIR"/>
+      <comment value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)."/>
+      <requirements value="Precision is handled implicitly in almost all cases of measurement."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="decimal"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SN.2  / CQ - N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.comparator">
+      <path value="Ratio.numerator.comparator"/>
+      <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
+      <definition value="How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is &quot;&lt;&quot; , then the real value is &lt; stated value."/>
+      <comment value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value."/>
+      <requirements value="Need a framework for handling measures where the value is &lt;5ug/L or &gt;400mg/L due to the limitations of measuring methodology."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <meaningWhenMissing value="If there is no comparator, then there is no modification of the value"/>
+      <isModifier value="true"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="QuantityComparator"/>
+        </extension>
+        <strength value="required"/>
+        <description value="How the Quantity should be understood and represented."/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/quantity-comparator"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="v2"/>
+        <map value="SN.1  / CQ.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="IVL properties"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.unit">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Ratio.numerator.unit"/>
+      <short value="Unit representation"/>
+      <definition value="A human-readable form of the unit."/>
+      <requirements value="There are many representations for units of measure and in many contexts, particular representations are fixed and required. I.e. mcg for micrograms."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="(see OBX.6 etc.) / CQ.2"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="PQ.unit"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.system">
+      <path value="Ratio.numerator.system"/>
+      <short value="System that defines coded unit form"/>
+      <definition value="The identification of the system that provides the coded form of the unit."/>
+      <requirements value="Need to know the system that defines the coded form of the unit."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://unitsofmeasure.org"/>
+      <condition value="qty-3"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="(see OBX.6 etc.) / CQ.2"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CO.codeSystem, PQ.translation.codeSystem"/>
+      </mapping>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.code">
+      <path value="Ratio.numerator.code"/>
+      <short value="Coded form of the unit"/>
+      <definition value="A computer processable form of the unit in some unit representation system."/>
+      <comment value="The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system."/>
+      <requirements value="Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="1"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="(see OBX.6 etc.) / CQ.2"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="PQ.code, MO.currency, PQ.translation.code"/>
+      </mapping>
+    </element>
     <element id="Ratio:shr-core-Frequency.denominator">
       <path value="Ratio.denominator"/>
       <short value="Denominator value"/>
@@ -160,6 +331,12 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
       <isSummary value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/units-of-time"/>
+        </valueSetReference>
+      </binding>
       <mapping>
         <identity value="rim"/>
         <map value=".denominator"/>
@@ -181,6 +358,14 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
     </element>
+    <element id="Ratio:shr-core-Frequency.numerator.system">
+      <path value="Ratio.numerator.system"/>
+      <fixedUri value="http://unitsofmeasure.org"/>
+    </element>
+    <element id="Ratio:shr-core-Frequency.numerator.code">
+      <path value="Ratio.numerator.code"/>
+      <fixedCode value="1"/>
+    </element>
     <element id="Ratio:shr-core-Frequency.denominator">
       <path value="Ratio.denominator"/>
       <min value="1"/>
@@ -189,6 +374,12 @@
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
+      <binding>
+        <strength value="required"/>
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/units-of-time"/>
+        </valueSetReference>
+      </binding>
     </element>
   </differential>
 </StructureDefinition>

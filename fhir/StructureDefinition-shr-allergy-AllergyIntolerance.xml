@@ -12,7 +12,7 @@
   Author maps to recorder
   CodeableConcept maps to code
   ClinicalStatus maps to clinicalStatus
-  Entry.CreationTime maps to assertedDate
+  _Entry.CreationTime maps to assertedDate
   Subject maps to patient
   Type maps to type
   Criticality maps to criticality
@@ -37,7 +37,7 @@
   <version value="0.0.1"/>
   <name value="SHR AllergyIntolerance Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -296,7 +296,7 @@
     </element>
     <element id="AllergyIntolerance:shr-allergy-AllergyIntolerance.extension">
       <path value="AllergyIntolerance.extension"/>
-      <slicing id="95">
+      <slicing id="1">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -660,7 +660,7 @@
     <element id="AllergyIntolerance:shr-allergy-AllergyIntolerance.code">
       <path value="AllergyIntolerance.code"/>
       <short value="Code that identifies the allergy or intolerance"/>
-      <definition value="Code for an allergy or intolerance statement (either a positive or a negated/excluded statement).  This may be a code for a substance or pharmaceutical product that is considered to be responsible for the adverse reaction risk (e.g., &quot;Latex&quot;), an allergy or intolerance condition (e.g., &quot;Latex allergy&quot;), or a negated/excluded code for a specific substance or class (e.g., &quot;No latex allergy&quot;) or a general or categorical negated statement (e.g.,  &quot;No known allergy&quot;, &quot;No known drug allergies&quot;)."/>
+      <definition value="Code representing a finding related to the presence or absence of an individual&#39;s risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time."/>
       <comment value="It is strongly recommended that this element be populated using a terminology, where possible. For example, some terminologies used include RxNorm, SNOMED CT, DM+D, NDFRT, ICD-9, IDC-10, UNI, ATC and CPT. Plain text should only be used if there is no appropriate terminology available. Additional details can be specified in the text.&#xD;&#xD;When a substance or product code is specified for the &#39;code&#39; element, the &quot;default&quot; semantic context is that this is a positive statement of an allergy or intolerance (depending on the value of the &#39;type&#39; element, if present) condition to the specified substance/product.  In the corresponding SNOMED CT allergy model, the specified substance/product is the target (destination) of the &quot;Causative agent&quot; relationship.&#xD;&#xD;The &#39;substanceExposureRisk&#39; extension is available as a structured and more flexible alternative to the &#39;code&#39; element for making positive or negative allergy or intolerance statements.  This extension provides the capability to make &quot;no known allergy&quot; (or &quot;no risk of adverse reaction&quot;) statements regarding any coded substance/product (including cases when a pre-coordinated &quot;no allergy to x&quot; concept for that substance/product does not exist).  If the &#39;substanceExposureRisk&#39; extension is present, the AllergyIntolerance.code element SHALL be omitted."/>
       <alias value="Code"/>
       <min value="1"/>
@@ -746,6 +746,10 @@
       </base>
       <type>
         <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
       </type>
       <type>
         <code value="Age"/>
@@ -1255,6 +1259,7 @@
     </element>
     <element id="AllergyIntolerance:shr-allergy-AllergyIntolerance.code">
       <path value="AllergyIntolerance.code"/>
+      <definition value="Code representing a finding related to the presence or absence of an individual&#39;s risk or sensitivity to a substance or class of substances. A finding can be taken as tantamount to a representation of an allergic condition, allowing it to be tracked over time."/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
@@ -1273,6 +1278,10 @@
       <path value="AllergyIntolerance.onset[x]"/>
       <type>
         <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Age"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Age"/>
       </type>
       <type>
         <code value="Age"/>

@@ -37,9 +37,6 @@ anonymous resourcescontained resources","",0,*,"","","","Resource
 "Patient.extension","mothersmaidenname","","",1,1,"","","","Extension {http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName}
 ","","The name of the mother as it was or likely to have been recorded on the birth certificate of the subject. This is most likely the name prior to marriage of the mother (aka the maiden name).","","","","","","","","","",,,,,"","value:url}
 ","",,"open","",0,null,"",""
-"Patient.extension","person","","",1,1,"","","","Extension {http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person-extension}
-","","A person relevant to the health or social situation of the subject (including the person of record him or herself).","","","","","","","","","",,,,,"","value:url}
-","",,"open","",0,null,"",""
 "Patient.extension","relatedencounter","","",0,1,"","","","Extension {http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-RelatedEncounter-extension}
 ","","If content was generated during a patient encounter, related encounter is the encounter where the information was gained.","","","","","","","","","",,,,,"","value:url}
 ","",,"open","",0,null,"",""
@@ -126,7 +123,12 @@ middle name","",1,*,"Y","","Y","string
 "Patient.deceased[x]","","","",0,1,"","Y","Y","boolean
 dateTime","Indicates if the individual is deceased or not","Indicates if the individual is deceased or not.","If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive.
 
-This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different.","The fact that a patient is deceased influences the clinical process. Also, in human communication and relation management it is necessary to know whether the person is alive.","","","","","","","",,,,,"",,,,"Patient.deceased[x]",0,1,"","","player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedInd, player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedTime","n/a","PID-30  (bool) and PID-29 (datetime)"
+This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different.","The fact that a patient is deceased influences the clinical process. Also, in human communication and relation management it is necessary to know whether the person is alive.","","","","","","","",,,,,"","type:$this}
+","",,"open","Patient.deceased[x]",0,1,"","","player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedInd, player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedTime","n/a","PID-30  (bool) and PID-29 (datetime)"
+"Patient.deceasedDateTime","dateTime","","",0,1,"","","Y","dateTime
+","Indicates if the individual is deceased or not","Indicates if the individual is deceased or not.","","","","","","","","","",,,,,"",,,,"Patient.deceased[x]",0,1,"",""
+"Patient.deceasedBoolean","boolean","","",0,1,"","","Y","boolean
+","Indicates if the individual is deceased or not","Indicates if the individual is deceased or not.","","","","","","","","","",,,,,"",,,,"Patient.deceased[x]",0,1,"",""
 "Patient.address","","","",0,*,"","","Y","Address
 ","Addresses for the individual","Addresses for the individual.","Patient may have multiple addresses with different uses or applicable periods.","May need to keep track of patient addresses for contacting, billing or reporting requirements and also to help with identification.","","","","","","","",,,,,"",,,,"Patient.address",0,*,"","","addr",".addr","PID-11"
 "Patient.maritalStatus","","","",1,1,"","","","CodeableConcept
@@ -134,7 +136,12 @@ This element is labeled as a modifier because once a patient is marked as deceas
 "Patient.multipleBirth[x]","","","",0,1,"","","","boolean
 integer","Whether patient is part of a multiple birth","Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).","Where the valueInteger is provided, the number is the birth number in the sequence.
 E.g. The middle birth in tripplets would be valueInteger=2 and the third born would have valueInteger=3
-If a bool value was provided for this tripplets examle, then all 3 patient records would have valueBool=true (the ordering is not indicated).","For disambiguation of multiple-birth children, especially relevant where the care provider doesn't meet the patient, such as labs.","","","","","","","",,,,,"",,,,"Patient.multipleBirth[x]",0,1,"","","player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthInd,  player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthOrderNumber","n/a","PID-24 (bool), PID-25 (integer)"
+If a bool value was provided for this tripplets examle, then all 3 patient records would have valueBool=true (the ordering is not indicated).","For disambiguation of multiple-birth children, especially relevant where the care provider doesn't meet the patient, such as labs.","","","","","","","",,,,,"","type:$this}
+","",,"open","Patient.multipleBirth[x]",0,1,"","","player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthInd,  player[classCode=PSN|ANM and determinerCode=INSTANCE]/multipleBirthOrderNumber","n/a","PID-24 (bool), PID-25 (integer)"
+"Patient.multipleBirthInteger","integer","","",0,1,"","","","integer
+","Whether patient is part of a multiple birth","Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).","","","","","","","","","",,,,,"",,,,"Patient.multipleBirth[x]",0,1,"",""
+"Patient.multipleBirthBoolean","boolean","","",0,1,"","","","boolean
+","Whether patient is part of a multiple birth","Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).","","","","","","","","","",,,,,"",,,,"Patient.multipleBirth[x]",0,1,"",""
 "Patient.photo","","","",0,*,"","","","Attachment
 ","Image of the patient","Image of the patient.","","Many EHR systems have the capability to capture an image of the patient. Fits with newer social media usage too.","","","","","","","",,,,,"",,,,"Patient.photo",0,*,"","","player[classCode=PSN|ANM and determinerCode=INSTANCE]/desc","n/a","OBX-5 - needs a profile"
 "Patient.contact","","","",0,*,"","","","BackboneElement

@@ -15,7 +15,7 @@
   "version": "0.0.1",
   "name": "SHR Patient Profile",
   "status": "draft",
-  "date": "2017-12-20",
+  "date": "2018-02-27",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -500,31 +500,6 @@
           {
             "code": "Extension",
             "profile": "http://hl7.org/fhir/StructureDefinition/patient-mothersMaidenName"
-          }
-        ]
-      },
-      {
-        "id": "Patient:shr-entity-Patient.extension:person",
-        "path": "Patient.extension",
-        "sliceName": "person",
-        "slicing": {
-          "id": "1",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "definition": "A person relevant to the health or social situation of the subject (including the person of record him or herself).",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person-extension"
           }
         ]
       },
@@ -1653,6 +1628,17 @@
       {
         "id": "Patient:shr-entity-Patient.deceased[x]",
         "path": "Patient.deceased[x]",
+        "slicing": {
+          "id": "1",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Indicates if the individual is deceased or not",
         "definition": "Indicates if the individual is deceased or not.",
         "comment": "If there's no value in the instance it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive.\n\nThis element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different.",
@@ -1688,6 +1674,46 @@
             "map": "n/a"
           }
         ]
+      },
+      {
+        "id": "Patient:shr-entity-Patient.deceasedDateTime:dateTime",
+        "path": "Patient.deceasedDateTime",
+        "sliceName": "dateTime",
+        "short": "Indicates if the individual is deceased or not",
+        "definition": "Indicates if the individual is deceased or not.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Patient.deceased[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ],
+        "isSummary": true
+      },
+      {
+        "id": "Patient:shr-entity-Patient.deceasedBoolean:boolean",
+        "path": "Patient.deceasedBoolean",
+        "sliceName": "boolean",
+        "short": "Indicates if the individual is deceased or not",
+        "definition": "Indicates if the individual is deceased or not.",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Patient.deceased[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "isSummary": true
       },
       {
         "id": "Patient:shr-entity-Patient.address",
@@ -1777,6 +1803,17 @@
       {
         "id": "Patient:shr-entity-Patient.multipleBirth[x]",
         "path": "Patient.multipleBirth[x]",
+        "slicing": {
+          "id": "2",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Whether patient is part of a multiple birth",
         "definition": "Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).",
         "comment": "Where the valueInteger is provided, the number is the birth number in the sequence.\nE.g. The middle birth in tripplets would be valueInteger=2 and the third born would have valueInteger=3\nIf a bool value was provided for this tripplets examle, then all 3 patient records would have valueBool=true (the ordering is not indicated).",
@@ -1808,6 +1845,44 @@
           {
             "identity": "cda",
             "map": "n/a"
+          }
+        ]
+      },
+      {
+        "id": "Patient:shr-entity-Patient.multipleBirthInteger:integer",
+        "path": "Patient.multipleBirthInteger",
+        "sliceName": "integer",
+        "short": "Whether patient is part of a multiple birth",
+        "definition": "Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Patient.multipleBirth[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "integer"
+          }
+        ]
+      },
+      {
+        "id": "Patient:shr-entity-Patient.multipleBirthBoolean:boolean",
+        "path": "Patient.multipleBirthBoolean",
+        "sliceName": "boolean",
+        "short": "Whether patient is part of a multiple birth",
+        "definition": "Indicates whether the patient is part of a multiple (bool) or indicates the actual birth order (integer).",
+        "min": 0,
+        "max": "1",
+        "base": {
+          "path": "Patient.multipleBirth[x]",
+          "min": 0,
+          "max": "1"
+        },
+        "type": [
+          {
+            "code": "boolean"
           }
         ]
       },
@@ -3139,31 +3214,6 @@
         ]
       },
       {
-        "id": "Patient:shr-entity-Patient.extension:person",
-        "path": "Patient.extension",
-        "sliceName": "person",
-        "slicing": {
-          "id": "1",
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        },
-        "definition": "A person relevant to the health or social situation of the subject (including the person of record him or herself).",
-        "min": 1,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person-extension"
-          }
-        ]
-      },
-      {
         "id": "Patient:shr-entity-Patient.extension:relatedencounter",
         "path": "Patient.extension",
         "sliceName": "relatedencounter",
@@ -3364,6 +3414,39 @@
         ]
       },
       {
+        "id": "Patient:shr-entity-Patient.deceased[x]",
+        "path": "Patient.deceased[x]",
+        "slicing": {
+          "id": "1",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient:shr-entity-Patient.deceasedDateTime:dateTime",
+        "path": "Patient.deceasedDateTime",
+        "type": [
+          {
+            "code": "dateTime"
+          }
+        ]
+      },
+      {
+        "id": "Patient:shr-entity-Patient.deceasedBoolean:boolean",
+        "path": "Patient.deceasedBoolean",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ]
+      },
+      {
         "id": "Patient:shr-entity-Patient.maritalStatus",
         "path": "Patient.maritalStatus",
         "min": 1,
@@ -3385,6 +3468,39 @@
             "reference": "http://hl7.org/fhir/ValueSet/marital-status"
           }
         }
+      },
+      {
+        "id": "Patient:shr-entity-Patient.multipleBirth[x]",
+        "path": "Patient.multipleBirth[x]",
+        "slicing": {
+          "id": "2",
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient:shr-entity-Patient.multipleBirthInteger:integer",
+        "path": "Patient.multipleBirthInteger",
+        "type": [
+          {
+            "code": "integer"
+          }
+        ]
+      },
+      {
+        "id": "Patient:shr-entity-Patient.multipleBirthBoolean:boolean",
+        "path": "Patient.multipleBirthBoolean",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ]
       }
     ]
   }

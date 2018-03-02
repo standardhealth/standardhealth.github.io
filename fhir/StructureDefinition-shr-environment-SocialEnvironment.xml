@@ -8,7 +8,7 @@
   <p>Factors affecting the health of the subject in their daily living environment.</p>
   <p><b>SHR Mapping Summary</b></p>
   <p><pre>shr.environment.SocialEnvironment maps to Observation:
-  Entry.CreationTime maps to issued
+  _Entry.CreationTime maps to issued
   RelatedEncounter maps to context	
   Subject maps to subject
   Category maps to category
@@ -67,7 +67,7 @@
   <version value="0.0.1"/>
   <name value="SHR SocialEnvironment Profile"/>
   <status value="draft"/>
-  <date value="2017-12-20"/>
+  <date value="2018-02-27"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -331,7 +331,7 @@
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.extension">
       <path value="Observation.extension"/>
-      <slicing id="310">
+      <slicing id="2">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -834,11 +834,15 @@
     <element id="Observation:shr-environment-SocialEnvironment.value[x]">
       <path value="Observation.value[x]"/>
       <short value="Actual result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <definition value="Choice of types representing factors affecting the health of the subject in their daily living environment."/>
       <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
       <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="0"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
@@ -1352,7 +1356,7 @@
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.related">
       <path value="Observation.related"/>
-      <slicing id="297">
+      <slicing id="1">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -1387,126 +1391,11 @@
         <map value="outBoundRelationship"/>
       </mapping>
     </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.id">
-      <path value="Observation.related.id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.extension">
-      <path value="Observation.related.extension"/>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.modifierExtension">
-      <path value="Observation.related.modifierExtension"/>
-      <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <alias value="modifiers"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="BackboneElement.modifierExtension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.type">
-      <path value="Observation.related.type"/>
-      <short value="has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by"/>
-      <definition value="A code specifying the kind of relationship that exists with the target resource."/>
-      <comment value="The &quot;derived-from&quot; type is the only logical choice when referencing the QuestionnaireAnswer resource."/>
-      <requirements value="A relationship type SHOULD be provided."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="code"/>
-      </type>
-      <fixedCode value="has-member"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationRelationshipType"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes specifying how two observations are related."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-relationshiptypes"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="N/A"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".typeCode"/>
-      </mapping>
-    </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.target">
-      <path value="Observation.related.target"/>
-      <short value="Resource that is related to this one"/>
-      <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
-      <min value="1"/>
-      <max value="1"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".targetObservation"/>
-      </mapping>
-    </element>
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-TransportationAvailability">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-TransportationAvailability"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="TransportationAvailability"/>
+      <definition value="Whether the subject has reliable transportation to bring him or her to medical appointments and to get medications."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -1646,10 +1535,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-HousingSecurity">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-HousingSecurity"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="HousingSecurity"/>
+      <definition value="Whether the subject is at-risk of losing their housing or in a stable housing situation."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -1789,10 +1676,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-PhysicalSafety">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-PhysicalSafety"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="PhysicalSafety"/>
+      <definition value="How often the subject feels physically safe in the subject&#39;s home environment."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -1932,10 +1817,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-EmotionalSafety">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-EmotionalSafety"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="EmotionalSafety"/>
+      <definition value="Whether the subject feels physically safe in the subject&#39;s home environment."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2075,10 +1958,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-DomesticViolence">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-DomesticViolence"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="DomesticViolence"/>
+      <definition value="Whether the subject experiences domestic violence."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -2218,10 +2099,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-HomeEnvironmentRisk">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-HomeEnvironmentRisk"/>
-      <short value="Resource related to this observation"/>
-      <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
-      <comment value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
-      <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
+      <short value="HomeEnvironmentRisk"/>
+      <definition value="A risk experienced in the home environment."/>
       <min value="0"/>
       <max value="*"/>
       <type>
@@ -2500,6 +2379,10 @@
       <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
@@ -2972,8 +2855,13 @@
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.value[x]">
       <path value="Observation.value[x]"/>
+      <definition value="Choice of types representing factors affecting the health of the subject in their daily living environment."/>
       <min value="0"/>
       <max value="0"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
@@ -3098,7 +2986,7 @@
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.related">
       <path value="Observation.related"/>
-      <slicing id="297">
+      <slicing id="1">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -3107,20 +2995,11 @@
         <rules value="open"/>
       </slicing>
     </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.type">
-      <path value="Observation.related.type"/>
-      <fixedCode value="has-member"/>
-    </element>
-    <element id="Observation:shr-environment-SocialEnvironment.related.target">
-      <path value="Observation.related.target"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-QuestionAnswer"/>
-      </type>
-    </element>
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-TransportationAvailability">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-TransportationAvailability"/>
+      <short value="TransportationAvailability"/>
+      <definition value="Whether the subject has reliable transportation to bring him or her to medical appointments and to get medications."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3138,6 +3017,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-HousingSecurity">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-HousingSecurity"/>
+      <short value="HousingSecurity"/>
+      <definition value="Whether the subject is at-risk of losing their housing or in a stable housing situation."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3155,6 +3036,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-PhysicalSafety">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-PhysicalSafety"/>
+      <short value="PhysicalSafety"/>
+      <definition value="How often the subject feels physically safe in the subject&#39;s home environment."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3172,6 +3055,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-EmotionalSafety">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-EmotionalSafety"/>
+      <short value="EmotionalSafety"/>
+      <definition value="Whether the subject feels physically safe in the subject&#39;s home environment."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3189,6 +3074,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-DomesticViolence">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-DomesticViolence"/>
+      <short value="DomesticViolence"/>
+      <definition value="Whether the subject experiences domestic violence."/>
       <min value="0"/>
       <max value="1"/>
     </element>
@@ -3206,6 +3093,8 @@
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-HomeEnvironmentRisk">
       <path value="Observation.related"/>
       <sliceName value="shr-environment-HomeEnvironmentRisk"/>
+      <short value="HomeEnvironmentRisk"/>
+      <definition value="A risk experienced in the home environment."/>
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.related:shr-environment-HomeEnvironmentRisk.type">
       <path value="Observation.related.type"/>
@@ -3223,6 +3112,10 @@
     </element>
     <element id="Observation:shr-environment-SocialEnvironment.component.value[x]">
       <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-IntegerQuantity"/>
