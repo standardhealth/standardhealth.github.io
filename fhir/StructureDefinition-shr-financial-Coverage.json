@@ -3,7 +3,7 @@
   "id": "shr-financial-Coverage",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coverage Profile</b></p>\n  <p>Health insurance coverage available (even if not used for payment for a given encounter).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.financial.Coverage maps to Coverage:\n  Type maps to type\n  InsuranceMemberId maps to subscriberId\n  EffectiveTimePeriod maps to period\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coverage Profile</b></p>\n  <p>Health insurance coverage available (even if not used for payment for a given encounter).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.financial.Coverage maps to Coverage:\n  Status maps to status\n  Type maps to type\n  InsuranceMemberId maps to subscriberId\n  EffectiveTimePeriod maps to period\n  PolicyHolder maps to policyHolder\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-financial-Coverage",
   "identifier": [
@@ -12,10 +12,11 @@
       "value": "shr.financial.Coverage"
     }
   ],
-  "version": "0.0.1",
-  "name": "SHR Coverage Profile",
+  "version": "0.1.0",
+  "name": "CoverageProfile",
+  "title": "SHR Coverage Profile",
   "status": "draft",
-  "date": "2018-02-27",
+  "date": "2018-08-21T00:00:00-04:00",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -298,6 +299,17 @@
       {
         "id": "Coverage:shr-financial-Coverage.extension",
         "path": "Coverage.extension",
+        "slicing": {
+          "id": "1",
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
         "short": "Additional Content defined by implementations",
         "definition": "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.",
         "comment": "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.",
@@ -321,6 +333,118 @@
           {
             "identity": "rim",
             "map": "N/A"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:subjectofinformation",
+        "path": "Coverage.extension",
+        "sliceName": "subjectofinformation",
+        "definition": "The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.\nCIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There's no action to participate in. Participant has extra unnecessary attributes, such as 'onBehalfOf'.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:sourceofinformation",
+        "path": "Coverage.extension",
+        "sliceName": "sourceofinformation",
+        "definition": "The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:annotation",
+        "path": "Coverage.extension",
+        "sliceName": "annotation",
+        "definition": "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:recordstatus",
+        "path": "Coverage.extension",
+        "sliceName": "recordstatus",
+        "definition": "Concept indicating the state of this record, e.g., 'entered in error'.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:recorded",
+        "path": "Coverage.extension",
+        "sliceName": "recorded",
+        "definition": "The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:signed",
+        "path": "Coverage.extension",
+        "sliceName": "signed",
+        "definition": "Provenance information specific to the signing of the clinical statement.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:cosigned",
+        "path": "Coverage.extension",
+        "sliceName": "cosigned",
+        "definition": "Provenance information specific to the cosigning of the clinical statement.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:verified",
+        "path": "Coverage.extension",
+        "sliceName": "verified",
+        "definition": "Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension"
           }
         ]
       },
@@ -440,14 +564,22 @@
         "max": "1",
         "type": [
           {
-            "code": "CodeableConcept"
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
         ],
         "isSummary": true,
         "binding": {
-          "strength": "required",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+              "valueString": "CoverageType"
+            }
+          ],
+          "strength": "preferred",
+          "description": "The type of insurance: public health, worker compensation; private accident, auto, private health, etc.) or a direct payment by an individual or organization.",
           "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS"
+            "reference": "http://hl7.org/fhir/ValueSet/coverage-type"
           }
         },
         "mapping": [
@@ -471,15 +603,15 @@
         "type": [
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Patient"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Patient"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-RelatedPerson"
           },
           {
             "code": "Reference",
-            "targetProfile": "http://hl7.org/fhir/StructureDefinition/Organization"
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Organization"
           }
         ],
         "isSummary": true,
@@ -1237,16 +1369,146 @@
         "definition": "Health insurance coverage available (even if not used for payment for a given encounter)."
       },
       {
+        "id": "Coverage:shr-financial-Coverage.extension:subjectofinformation",
+        "path": "Coverage.extension",
+        "sliceName": "subjectofinformation",
+        "definition": "The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.\nCIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There's no action to participate in. Participant has extra unnecessary attributes, such as 'onBehalfOf'.",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:sourceofinformation",
+        "path": "Coverage.extension",
+        "sliceName": "sourceofinformation",
+        "definition": "The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:annotation",
+        "path": "Coverage.extension",
+        "sliceName": "annotation",
+        "definition": "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:recordstatus",
+        "path": "Coverage.extension",
+        "sliceName": "recordstatus",
+        "definition": "Concept indicating the state of this record, e.g., 'entered in error'.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:recorded",
+        "path": "Coverage.extension",
+        "sliceName": "recorded",
+        "definition": "The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:signed",
+        "path": "Coverage.extension",
+        "sliceName": "signed",
+        "definition": "Provenance information specific to the signing of the clinical statement.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:cosigned",
+        "path": "Coverage.extension",
+        "sliceName": "cosigned",
+        "definition": "Provenance information specific to the cosigning of the clinical statement.",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension"
+          }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.extension:verified",
+        "path": "Coverage.extension",
+        "sliceName": "verified",
+        "definition": "Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension"
+          }
+        ]
+      },
+      {
         "id": "Coverage:shr-financial-Coverage.type",
         "path": "Coverage.type",
         "min": 1,
         "max": "1",
-        "binding": {
-          "strength": "required",
-          "valueSetReference": {
-            "reference": "http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS"
+        "type": [
+          {
+            "code": "CodeableConcept",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"
           }
-        }
+        ]
+      },
+      {
+        "id": "Coverage:shr-financial-Coverage.policyHolder",
+        "path": "Coverage.policyHolder",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Patient"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-RelatedPerson"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Organization"
+          }
+        ]
       }
     ]
   }

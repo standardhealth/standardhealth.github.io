@@ -25,10 +25,11 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.base.Entry"/>
   </identifier>
-  <version value="0.0.1"/>
-  <name value="SHR Entry Profile"/>
+  <version value="0.1.0"/>
+  <name value="EntryProfile"/>
+  <title value="SHR Entry Profile"/>
   <status value="draft"/>
-  <date value="2018-02-27"/>
+  <date value="2018-08-21T00:00:00-04:00"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -216,6 +217,7 @@
       <max value="*"/>
       <type>
         <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -241,6 +243,7 @@
       <max value="*"/>
       <type>
         <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -381,7 +384,7 @@
         <rules value="open"/>
       </slicing>
       <definition value="A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
@@ -399,7 +402,7 @@
         <description value="Extensions are always sliced by (at least) url"/>
         <rules value="open"/>
       </slicing>
-      <definition value="The person this record belongs to."/>
+      <definition value="The person this entry belongs to."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -424,6 +427,25 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension"/>
+      </type>
+    </element>
+    <element id="DomainResource:shr-base-Entry.extension:derivedfrom">
+      <path value="DomainResource.extension"/>
+      <sliceName value="derivedfrom"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <definition value="Indicates the source of information in the case the Entry has been created by logical extension or modification of one or more source entries."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-DerivedFrom-extension"/>
       </type>
     </element>
     <element id="DomainResource:shr-base-Entry.modifierExtension">
@@ -479,6 +501,20 @@
       <min value="1"/>
       <max value="1"/>
     </element>
+    <element id="DomainResource:shr-base-Entry.meta.security">
+      <path value="DomainResource.meta.security"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+    </element>
+    <element id="DomainResource:shr-base-Entry.meta.tag">
+      <path value="DomainResource.meta.tag"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+    </element>
     <element id="DomainResource:shr-base-Entry.extension:shrid">
       <path value="DomainResource.extension"/>
       <sliceName value="shrid"/>
@@ -491,7 +527,7 @@
         <rules value="open"/>
       </slicing>
       <definition value="A unique, persistent, permanent identifier for the overall health record belonging to the PersonOfRecord."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
@@ -509,7 +545,7 @@
         <description value="Extensions are always sliced by (at least) url"/>
         <rules value="open"/>
       </slicing>
-      <definition value="The person this record belongs to."/>
+      <definition value="The person this entry belongs to."/>
       <min value="0"/>
       <max value="1"/>
       <type>
@@ -534,6 +570,25 @@
       <type>
         <code value="Extension"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CreationTime-extension"/>
+      </type>
+    </element>
+    <element id="DomainResource:shr-base-Entry.extension:derivedfrom">
+      <path value="DomainResource.extension"/>
+      <sliceName value="derivedfrom"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <definition value="Indicates the source of information in the case the Entry has been created by logical extension or modification of one or more source entries."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-DerivedFrom-extension"/>
       </type>
     </element>
   </differential>

@@ -1,26 +1,29 @@
 "Path","Slice Name","Alias(s)","Label","Min","Max","Must Support?","Is Modifier?","Is Summary?","Type(s)","Short","Definition","Comments","Requirements","Default Value","Meaning When Missing","Fixed Value","Pattern","Example","Minimum Value","Maximum Value","Maximum Length","Binding Strength","Binding Description","Binding Value Set","Code","Slicing Discriminator","Slicing Description","Slicing Ordered","Slicing Rules","Base Path","Base Min","Base Max","Condition(s)","Constraint(s)","Mapping: HL7 v2 Mapping","Mapping: RIM Mapping","Mapping: ServD"
-"HumanName","","","",0,*,"","","","","SHR HumanName Profile","A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).","Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.","","","","","","","","",,,,,"",,,,"",0,null,"ele-1
+"HumanName","","","",0,*,"","","","","SHR HumanName Profile","The CIMI person name, constrained to map correctly to FHIR.","Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.","","","","","","","","",,,,,"",,,,"",0,null,"ele-1
 ","ele-1:All FHIR elements must have a @value or children {hasValue() | (children().count() > id.count())}
 ","XPN","n/a","EN (actually, PN)","ProviderName"
-"HumanName.id","","","",0,1,"","","","string
+"HumanName.id","","","",0,1,"","","","string {[]} {[]}
 ","xml:id (or equivalent in JSON)","unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces.","","","","","","","","","",,,,,"",,,,"Element.id",0,1,"","","n/a"
 "HumanName.extension","","extensions
-user content","",0,*,"","","","Extension
+user content","",0,*,"","","","Extension {[]} {[]}
 ","Additional Content defined by implementations","May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.","There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.","","","","","","","","",,,,,"","value:url}
 ","Extensions are always sliced by (at least) url",,"open","Element.extension",0,*,"","","n/a"
-"HumanName.use","","","",0,1,"","Y","Y","code
+"HumanName.extension","preferredflag","","",0,1,"","","","Extension {[CanonicalType[http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-PreferredFlag-extension]]} {[]}
+","","Code indicating the preference associated with the use of this name.","","","","","","","","","",,,,,"","value:url}
+","Extensions are always sliced by (at least) url",,"open","",0,null,"",""
+"HumanName.use","","","",0,1,"","Y","Y","code {[]} {[]}
 ","usual | official | temp | nickname | anonymous | old | maiden","Identifies the purpose for this name.","This is labeled as ""Is Modifier"" because applications should not mistake a temporary or old name etc.for a current/permanent one. Applications can assume that a name is current unless it explicitly says that it is temporary or old.","Allows the appropriate name for a particular context of use to be selected from among a set of names.","","","","","","","",,"required","The use of a human name","http://hl7.org/fhir/ValueSet/name-use","",,,,"",0,null,"","","XPN.7, but often indicated by which field contains the name","unique(./use)","./NamePurpose"
-"HumanName.text","","","",1,1,"","","Y","string
-","Text representation of the full name","String representing a name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).","Can provide both a text representation and structured parts.","A renderable, unencoded form.","","","","","","","",,,,,"",,,,"",0,null,"","","implied by XPN.11","./formatted"
+"HumanName.text","","","",0,1,"","","Y","string {[]} {[]}
+","Text representation of the full name","A full text representation of the name.","Can provide both a text representation and structured parts.","A renderable, unencoded form.","","","","","","","",,,,,"",,,,"",0,null,"","","implied by XPN.11","./formatted"
 "HumanName.family","","surname
-","",0,1,"","","Y","string
+","",0,1,"","","Y","string {[]} {[]}
 ","Family name (often called 'Surname')","The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father.","Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures).","","","","","","","","",,,,,"",,,,"",0,null,"","","XPN.1/FN.1","./part[partType = FAM]","./FamilyName"
 "HumanName.given","","first name
-middle name","",0,*,"","","Y","string
+middle name","",0,*,"","","Y","string {[]} {[]}
 ","Given names (not always 'first'). Includes middle names","Given name.","If only initials are recorded, they may be used in place of the full name.  Not called ""first name"" since given names do not always come first.","","","","","","","","",,,,,"",,,,"",0,null,"","","XPN.2 + XPN.3","./part[partType = GIV]","./GivenNames"
-"HumanName.prefix","","","",0,1,"","","Y","string
+"HumanName.prefix","","","",0,*,"","","Y","string {[]} {[]}
 ","Parts that come before the name","Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name.","","","","","","","","","",,,,,"",,,,"",0,null,"","","XPN.5","./part[partType = PFX]","./TitleCode"
-"HumanName.suffix","","","",0,*,"","","Y","string
+"HumanName.suffix","","","",0,*,"","","Y","string {[]} {[]}
 ","Parts that come after the name","Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the end of the name.","","","","","","","","","",,,,,"",,,,"",0,null,"","","XPN/4","./part[partType = SFX]"
-"HumanName.period","","","",0,1,"","","Y","Period
+"HumanName.period","","","",0,1,"","","Y","Period {[]} {[]}
 ","Time period when name was/is in use","Indicates the period of time when this name was valid for the named person.","","Allows names to be placed in historical context.","","","","","","","",,,,,"",,,,"",0,null,"","","XPN.13 + XPN.14","./usablePeriod[type=""IVL<TS>""]","./StartDate and ./EndDate"

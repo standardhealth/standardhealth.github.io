@@ -10,7 +10,7 @@
   fhir:Resource.id [ fhir:value "shr-financial-Coverage"];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coverage Profile</b></p>\n  <p>Health insurance coverage available (even if not used for payment for a given encounter).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.financial.Coverage maps to Coverage:\n  Type maps to type\n  InsuranceMemberId maps to subscriberId\n  EffectiveTimePeriod maps to period\n</pre></p>\n</div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR Coverage Profile</b></p>\n  <p>Health insurance coverage available (even if not used for payment for a given encounter).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.financial.Coverage maps to Coverage:\n  Status maps to status\n  Type maps to type\n  InsuranceMemberId maps to subscriberId\n  EffectiveTimePeriod maps to period\n  PolicyHolder maps to policyHolder\n</pre></p>\n</div>"
   ];
   fhir:StructureDefinition.url [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-financial-Coverage"];
   fhir:StructureDefinition.identifier [
@@ -18,10 +18,11 @@
      fhir:Identifier.system [ fhir:value "http://standardhealthrecord.org" ];
      fhir:Identifier.value [ fhir:value "shr.financial.Coverage" ]
   ];
-  fhir:StructureDefinition.version [ fhir:value "0.0.1"];
-  fhir:StructureDefinition.name [ fhir:value "SHR Coverage Profile"];
+  fhir:StructureDefinition.version [ fhir:value "0.1.0"];
+  fhir:StructureDefinition.name [ fhir:value "CoverageProfile"];
+  fhir:StructureDefinition.title [ fhir:value "SHR Coverage Profile"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
-  fhir:StructureDefinition.date [ fhir:value "2018-02-27"^^xsd:date];
+  fhir:StructureDefinition.date [ fhir:value "2018-08-21T00:00:00-04:00"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "The MITRE Corporation: Standard Health Record Collaborative"];
   fhir:StructureDefinition.contact [
      fhir:index 0;
@@ -305,6 +306,16 @@
        fhir:index 7;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.slicing [
+         fhir:Element.id [ fhir:value "1" ];
+         fhir:ElementDefinition.slicing.discriminator [
+           fhir:index 0;
+           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
+           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
+         ];
+         fhir:ElementDefinition.slicing.ordered [ fhir:value "false"^^xsd:boolean ];
+         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
+       ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
        fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
        fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
@@ -333,6 +344,110 @@
        ]
      ], [
        fhir:index 8;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:subjectofinformation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "subjectofinformation" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.\nCIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There's no action to participate in. Participant has extra unnecessary attributes, such as 'onBehalfOf'." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension" ]
+       ]
+     ], [
+       fhir:index 9;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:sourceofinformation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "sourceofinformation" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension" ]
+       ]
+     ], [
+       fhir:index 10;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:annotation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "annotation" ];
+       fhir:ElementDefinition.definition [ fhir:value "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension" ]
+       ]
+     ], [
+       fhir:index 11;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:recordstatus" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recordstatus" ];
+       fhir:ElementDefinition.definition [ fhir:value "Concept indicating the state of this record, e.g., 'entered in error'." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension" ]
+       ]
+     ], [
+       fhir:index 12;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:recorded" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recorded" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension" ]
+       ]
+     ], [
+       fhir:index 13;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:signed" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "signed" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the signing of the clinical statement." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension" ]
+       ]
+     ], [
+       fhir:index 14;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:cosigned" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "cosigned" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the cosigning of the clinical statement." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension" ]
+       ]
+     ], [
+       fhir:index 15;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:verified" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "verified" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension" ]
+       ]
+     ], [
+       fhir:index 16;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -363,7 +478,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 9;
+       fhir:index 17;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.identifier" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.identifier" ];
        fhir:ElementDefinition.short [ fhir:value "The primary coverage ID" ];
@@ -398,7 +513,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "id" ]
        ]
      ], [
-       fhir:index 10;
+       fhir:index 18;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.status" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.status" ];
        fhir:ElementDefinition.short [ fhir:value "active | cancelled | draft | entered-in-error" ];
@@ -435,7 +550,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "status" ]
        ]
      ], [
-       fhir:index 11;
+       fhir:index 19;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.type" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.type" ];
        fhir:ElementDefinition.short [ fhir:value "Type of coverage such as medical or accident" ];
@@ -445,14 +560,21 @@
        fhir:ElementDefinition.max [ fhir:value "1" ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "CoverageType" ]
+         ];
+         fhir:ElementDefinition.binding.strength [ fhir:value "preferred" ];
+         fhir:ElementDefinition.binding.description [ fhir:value "The type of insurance: public health, worker compensation; private accident, auto, private health, etc.) or a direct payment by an individual or organization." ];
          fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS" ]
+           fhir:link <http://hl7.org/fhir/ValueSet/coverage-type>;
+           fhir:Reference.reference [ fhir:value "http://hl7.org/fhir/ValueSet/coverage-type" ]
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -465,7 +587,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "class" ]
        ]
      ], [
-       fhir:index 12;
+       fhir:index 20;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.policyHolder" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.policyHolder" ];
        fhir:ElementDefinition.short [ fhir:value "Owner of the policy" ];
@@ -475,15 +597,15 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Patient" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Patient" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/RelatedPerson" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-RelatedPerson" ]
        ], [
          fhir:index 2;
          fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
-         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://hl7.org/fhir/StructureDefinition/Organization" ]
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Organization" ]
        ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -504,7 +626,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 13;
+       fhir:index 21;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.subscriber" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.subscriber" ];
        fhir:ElementDefinition.short [ fhir:value "Subscriber to the policy" ];
@@ -539,7 +661,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 14;
+       fhir:index 22;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.subscriberId" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.subscriberId" ];
        fhir:ElementDefinition.short [ fhir:value "ID assigned to the Subscriber" ];
@@ -569,7 +691,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 15;
+       fhir:index 23;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.beneficiary" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.beneficiary" ];
        fhir:ElementDefinition.short [ fhir:value "Plan Beneficiary" ];
@@ -604,7 +726,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.focus" ]
        ]
      ], [
-       fhir:index 16;
+       fhir:index 24;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.relationship" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.relationship" ];
        fhir:ElementDefinition.short [ fhir:value "Beneficiary relationship to the Subscriber" ];
@@ -635,7 +757,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "C03" ]
        ]
      ], [
-       fhir:index 17;
+       fhir:index 25;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.period" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.period" ];
        fhir:ElementDefinition.short [ fhir:value "Coverage start and end dates" ];
@@ -661,7 +783,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "when.done" ]
        ]
      ], [
-       fhir:index 18;
+       fhir:index 26;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.payor" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.payor" ];
        fhir:ElementDefinition.short [ fhir:value "Identifier for the plan or agreement issuer" ];
@@ -701,7 +823,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "who.author" ]
        ]
      ], [
-       fhir:index 19;
+       fhir:index 27;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping" ];
        fhir:Element.extension [
          fhir:index 0;
@@ -727,7 +849,7 @@
          fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ]
      ], [
-       fhir:index 20;
+       fhir:index 28;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.id" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.id" ];
        fhir:ElementDefinition.representation [
@@ -753,7 +875,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 21;
+       fhir:index 29;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional Content defined by implementations" ];
@@ -783,7 +905,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 22;
+       fhir:index 30;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored" ];
@@ -818,7 +940,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 23;
+       fhir:index 31;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.group" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.group" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the group" ];
@@ -844,7 +966,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "C.31" ]
        ]
      ], [
-       fhir:index 24;
+       fhir:index 32;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.groupDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.groupDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for an identifier for the group" ];
@@ -870,7 +992,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "C.31" ]
        ]
      ], [
-       fhir:index 25;
+       fhir:index 33;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subGroup" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subGroup" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the subsection of the group" ];
@@ -888,7 +1010,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-8" ]
        ]
      ], [
-       fhir:index 26;
+       fhir:index 34;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subGroupDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subGroupDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for the subsection of the group" ];
@@ -906,7 +1028,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-8" ]
        ]
      ], [
-       fhir:index 27;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.plan" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.plan" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the plan" ];
@@ -928,7 +1050,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 28;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.planDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.planDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for the plan" ];
@@ -950,7 +1072,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 29;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subPlan" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subPlan" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the subsection of the plan" ];
@@ -968,7 +1090,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-10" ]
        ]
      ], [
-       fhir:index 30;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subPlanDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subPlanDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for the subsection of the plan" ];
@@ -986,7 +1108,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-10" ]
        ]
      ], [
-       fhir:index 31;
+       fhir:index 39;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.class" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.class" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the class" ];
@@ -1008,7 +1130,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 32;
+       fhir:index 40;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.classDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.classDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for the class" ];
@@ -1030,7 +1152,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 33;
+       fhir:index 41;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subClass" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subClass" ];
        fhir:ElementDefinition.short [ fhir:value "An identifier for the subsection of the class" ];
@@ -1052,7 +1174,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 34;
+       fhir:index 42;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.grouping.subClassDisplay" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.grouping.subClassDisplay" ];
        fhir:ElementDefinition.short [ fhir:value "Display text for the subsection of the subclass" ];
@@ -1074,7 +1196,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "IN1-35" ]
        ]
      ], [
-       fhir:index 35;
+       fhir:index 43;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.dependent" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.dependent" ];
        fhir:ElementDefinition.short [ fhir:value "Dependent number" ];
@@ -1097,7 +1219,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "- No exact HL7 v2 equivalent concept seems to exist;" ]
        ]
      ], [
-       fhir:index 36;
+       fhir:index 44;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.sequence" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.sequence" ];
        fhir:ElementDefinition.short [ fhir:value "The plan instance or sequence counter" ];
@@ -1120,7 +1242,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "No HL7 v2 equivalent concept seems to exist" ]
        ]
      ], [
-       fhir:index 37;
+       fhir:index 45;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.order" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.order" ];
        fhir:ElementDefinition.short [ fhir:value "Relative order of the coverage" ];
@@ -1138,7 +1260,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "- No exact HL7 v2 equivalent concept seems to exist;" ]
        ]
      ], [
-       fhir:index 38;
+       fhir:index 46;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.network" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.network" ];
        fhir:ElementDefinition.short [ fhir:value "Insurer network" ];
@@ -1156,7 +1278,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "D10" ]
        ]
      ], [
-       fhir:index 39;
+       fhir:index 47;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.contract" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.contract" ];
        fhir:ElementDefinition.short [ fhir:value "Contract details" ];
@@ -1192,16 +1314,135 @@
        fhir:ElementDefinition.definition [ fhir:value "Health insurance coverage available (even if not used for payment for a given encounter)." ]
      ], [
        fhir:index 1;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:subjectofinformation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "subjectofinformation" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.\nCIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There's no action to participate in. Participant has extra unnecessary attributes, such as 'onBehalfOf'." ];
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension" ]
+       ]
+     ], [
+       fhir:index 2;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:sourceofinformation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "sourceofinformation" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension" ]
+       ]
+     ], [
+       fhir:index 3;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:annotation" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "annotation" ];
+       fhir:ElementDefinition.definition [ fhir:value "An added or follow-up note, often after the fact, that contains metadata about who made the statement and when." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension" ]
+       ]
+     ], [
+       fhir:index 4;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:recordstatus" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recordstatus" ];
+       fhir:ElementDefinition.definition [ fhir:value "Concept indicating the state of this record, e.g., 'entered in error'." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension" ]
+       ]
+     ], [
+       fhir:index 5;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:recorded" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "recorded" ];
+       fhir:ElementDefinition.definition [ fhir:value "The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension" ]
+       ]
+     ], [
+       fhir:index 6;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:signed" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "signed" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the signing of the clinical statement." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension" ]
+       ]
+     ], [
+       fhir:index 7;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:cosigned" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "cosigned" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the cosigning of the clinical statement." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension" ]
+       ]
+     ], [
+       fhir:index 8;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.extension:verified" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.extension" ];
+       fhir:ElementDefinition.sliceName [ fhir:value "verified" ];
+       fhir:ElementDefinition.definition [ fhir:value "Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)" ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Extension" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension" ]
+       ]
+     ], [
+       fhir:index 9;
        fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.type" ];
        fhir:ElementDefinition.path [ fhir:value "Coverage.type" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
        fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.valueSetReference [
-           fhir:link <http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS>;
-           fhir:Reference.reference [ fhir:value "http://standardhealthrecord.org/shr/financial/vs/InsuranceProviderTypeVS" ]
-         ]
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ];
+         fhir:ElementDefinition.type.profile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept" ]
+       ]
+     ], [
+       fhir:index 10;
+       fhir:Element.id [ fhir:value "Coverage:shr-financial-Coverage.policyHolder" ];
+       fhir:ElementDefinition.path [ fhir:value "Coverage.policyHolder" ];
+       fhir:ElementDefinition.type [
+         fhir:index 0;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Patient" ]
+       ], [
+         fhir:index 1;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-RelatedPerson" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.type.code [ fhir:value "Reference" ];
+         fhir:ElementDefinition.type.targetProfile [ fhir:value "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-entity-Organization" ]
        ]
      ]
   ] .
@@ -1211,6 +1452,8 @@
 <http://hl7.org/fhir/ValueSet/languages> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/fm-status> a fhir:ValueSet .
+
+<http://hl7.org/fhir/ValueSet/coverage-type> a fhir:ValueSet .
 
 <http://hl7.org/fhir/ValueSet/policyholder-relationship> a fhir:ValueSet .
 

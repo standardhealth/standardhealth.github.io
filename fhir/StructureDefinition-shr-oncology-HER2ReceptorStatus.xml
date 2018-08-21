@@ -5,47 +5,35 @@
   <text>
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
   <p><b>SHR HER2ReceptorStatus Profile</b></p>
-  <p>HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.</p>
+  <p>HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors, and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.
+
+We are seeking feedback if it is better to put the positive/negative status in Value or Interpretation. The current approach is that positive/negative designation is a value, even though that value is (in fact) an interpretation of evidence from HER2 by IHC and/or HER2 by ISH tests, not a direct observation.</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.oncology.HER2ReceptorStatus maps to Observation:
-  _Entry.CreationTime maps to issued
-  RelatedEncounter maps to context	
-  Subject maps to subject
-  Category maps to category
-  ClinicallyRelevantTime maps to effective[x]
-  SpecificLaboratoryTest maps to method
-  FindingStatus maps to status
-  CodeableConcept maps to value[x]
-  ValueAbsentReason maps to dataAbsentReason
-  ObservationCode maps to code
-  BodySite maps to bodySite
-  Specimen maps to specimen
-  Device maps to device
-  Interpretation maps to interpretation
-  Details maps to comment
-  ReferenceRange maps to referenceRange
-  ReferenceRange.Range.LowerBound maps to referenceRange.low
-  ReferenceRange.Range.UpperBound maps to referenceRange.high
-  ReferenceRange.Type maps to referenceRange.type
-  ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
-  ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  <p><pre>shr.oncology.HER2ReceptorStatus maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults:
+  PanelTopic.Category maps to category
+  PanelTopic.FindingMethod maps to method
+  PanelTopic.TopicCode maps to code
+  PanelTopic.AnatomicalLocation maps to bodySite
+  PanelTopic.Specimen maps to specimen
+  EvaluationResultRecordedContext.ResultValue maps to value[x]
+  EvaluationResultRecordedContext.ExceptionValue maps to dataAbsentReason
+  EvaluationResultRecordedContext.Interpretation maps to interpretation
+  EvaluationResultRecordedContext.RelevantTime maps to effective[x]
+  EvaluationResultRecordedContext.FindingStatus maps to status
+  PanelTopic.ReferenceRange maps to referenceRange
+  PanelTopic.ReferenceRange.Range.LowerBound maps to referenceRange.low
+  PanelTopic.ReferenceRange.Range.UpperBound maps to referenceRange.high
+  PanelTopic.ReferenceRange.Type maps to referenceRange.type
+  PanelTopic.ReferenceRange.ApplicableSubpopulation maps to referenceRange.appliesTo
+  PanelTopic.ReferenceRange.ApplicableAgeRange maps to referenceRange.age
+  PanelTopic.EvaluationComponent maps to component (slice on = coding.code; slice strategy = includes)
+  PanelTopic.EvaluationComponent._Concept maps to component.code
+  PanelTopic.EvaluationComponent.ComponentResultValue maps to component.value[x]
+  PanelTopic.EvaluationComponent.ExceptionValue maps to component.dataAbsentReason
+  PanelTopic.EvaluationComponent.Interpretation maps to component.interpretation
+  PanelTopic.EvaluationComponent.ReferenceRange maps to component.referenceRange
   fix related.type to #has-member
-  ObservationComponent maps to component (slice on = coding.code; slice strategy = includes)
-  ObservationComponent.ObservationCode maps to component.code
-  ObservationComponent.Quantity maps to component.value[x]
-  ObservationComponent.CodeableConcept maps to component.value[x]
-  ObservationComponent.string maps to component.value[x]
-  ObservationComponent.Range maps to component.value[x]
-  ObservationComponent.Ratio maps to component.value[x]
-  ObservationComponent.Attachment maps to component.value[x]
-  ObservationComponent.time maps to component.value[x]
-  ObservationComponent.dateTime maps to component.value[x]
-  ObservationComponent.TimePeriod maps to component.value[x]
-  ObservationComponent.IntegerQuantity maps to component.value[x]
-  ObservationComponent.ValueAbsentReason maps to component.dataAbsentReason
-  ObservationComponent.Interpretation maps to component.interpretation
-  ObservationComponent.ReferenceRange maps to component.referenceRange
-  Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
+  PanelTopic.PanelMembers.EvaluationResultRecorded maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)
 </pre></p>
 </div>
   </text>
@@ -54,10 +42,11 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.oncology.HER2ReceptorStatus"/>
   </identifier>
-  <version value="0.0.1"/>
-  <name value="SHR HER2ReceptorStatus Profile"/>
+  <version value="0.1.0"/>
+  <name value="HER2ReceptorStatusProfile"/>
+  <title value="SHR HER2ReceptorStatus Profile"/>
   <status value="draft"/>
-  <date value="2018-02-27"/>
+  <date value="2018-08-21T00:00:00-04:00"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -65,9 +54,20 @@
       <value value="http://standardhealthrecord.org"/>
     </telecom>
   </contact>
-  <description value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
-  <purpose value="Observations are a key aspect of healthcare.  This resource is used to capture those that do not require more sophisticated mechanisms."/>
+  <description value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors, and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.&#xA;&#xA;We are seeking feedback if it is better to put the positive/negative status in Value or Interpretation. The current approach is that positive/negative designation is a value, even though that value is (in fact) an interpretation of evidence from HER2 by IHC and/or HER2 by ISH tests, not a direct observation."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+      <display value="United States of America"/>
+    </coding>
+  </jurisdiction>
   <fhirVersion value="3.0.1"/>
+  <mapping>
+    <identity value="argonaut-dq-dstu2"/>
+    <uri value="http://unknown.org/Argonaut%20DQ%20DSTU2"/>
+    <name value="Argonaut DQ DSTU2"/>
+  </mapping>
   <mapping>
     <identity value="workflow"/>
     <uri value="http://hl7.org/fhir/workflow"/>
@@ -101,20 +101,26 @@
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Observation"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults"/>
   <derivation value="constraint"/>
   <snapshot>
     <element id="Observation:shr-oncology-HER2ReceptorStatus">
       <path value="Observation"/>
       <short value="SHR HER2ReceptorStatus Profile"/>
-      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
+      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors, and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.&#xA;&#xA;We are seeking feedback if it is better to put the positive/negative status in Value or Interpretation. The current approach is that positive/negative designation is a value, even though that value is (in fact) an interpretation of evidence from HER2 by IHC and/or HER2 by ISH tests, not a direct observation."/>
       <comment value="Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as lab reports, etc."/>
       <alias value="Vital Signs"/>
       <alias value="Measurement"/>
       <alias value="Results"/>
       <alias value="Tests"/>
+      <alias value="Obs"/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <constraint>
         <key value="dom-2"/>
         <severity value="error"/>
@@ -153,6 +159,7 @@
         <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
         <expression value="value.empty() or code!=component.code"/>
         <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"/>
+        <source value="Observation"/>
       </constraint>
       <constraint>
         <key value="obs-6"/>
@@ -160,7 +167,16 @@
         <human value="dataAbsentReason SHALL only be present if Observation.value[x] is not present"/>
         <expression value="dataAbsentReason.empty() or value.empty()"/>
         <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
+        <source value="Observation"/>
       </constraint>
+      <constraint>
+        <key value="us-core-2"/>
+        <severity value="error"/>
+        <human value="If there is no component or related element then either a value[x] or a data absent reason must be present"/>
+        <expression value="(component.empty() and related.empty()) implies (dataAbsentReason or value)"/>
+        <xpath value="exists(f:component) or exists(f:related) or exists(f:*[starts-with(local-name(.), &#39;value)]) or exists(f:dataAbsentReason)"/>
+      </constraint>
+      <mustSupport value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="Entity. Role, or Act"/>
@@ -184,6 +200,10 @@
       <mapping>
         <identity value="w5"/>
         <map value="clinical.diagnostics"/>
+      </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation"/>
       </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.id">
@@ -321,7 +341,7 @@
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.extension">
       <path value="Observation.extension"/>
-      <slicing id="4">
+      <slicing id="6">
         <discriminator>
           <type value="value"/>
           <path value="url"/>
@@ -349,82 +369,489 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:author">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:subjectofinformation">
       <path value="Observation.extension"/>
-      <sliceName value="author"/>
-      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <sliceName value="subjectofinformation"/>
+      <definition value="The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.&#xA;CIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There&#39;s no action to participate in. Participant has extra unnecessary attributes, such as &#39;onBehalfOf&#39;."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:sourceofinformation">
+      <path value="Observation.extension"/>
+      <sliceName value="sourceofinformation"/>
+      <definition value="The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:informant">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:annotation">
       <path value="Observation.extension"/>
-      <sliceName value="informant"/>
-      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:focalsubject">
-      <path value="Observation.extension"/>
-      <sliceName value="focalsubject"/>
-      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:focalsubjectreference">
-      <path value="Observation.extension"/>
-      <sliceName value="focalsubjectreference"/>
-      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:evidence">
-      <path value="Observation.extension"/>
-      <sliceName value="evidence"/>
-      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <sliceName value="annotation"/>
+      <definition value="An added or follow-up note, often after the fact, that contains metadata about who made the statement and when."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:changeflag">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:recordstatus">
       <path value="Observation.extension"/>
-      <sliceName value="changeflag"/>
-      <definition value="Indicator of significant change (delta) from the last or previous measurement."/>
+      <sliceName value="recordstatus"/>
+      <definition value="Concept indicating the state of this record, e.g., &#39;entered in error&#39;."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:observationqualifier">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:recorded">
       <path value="Observation.extension"/>
-      <sliceName value="observationqualifier"/>
-      <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
+      <sliceName value="recorded"/>
+      <definition value="The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:signed">
+      <path value="Observation.extension"/>
+      <sliceName value="signed"/>
+      <definition value="Provenance information specific to the signing of the clinical statement."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:cosigned">
+      <path value="Observation.extension"/>
+      <sliceName value="cosigned"/>
+      <definition value="Provenance information specific to the cosigning of the clinical statement."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationQualifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension"/>
       </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:verified">
+      <path value="Observation.extension"/>
+      <sliceName value="verified"/>
+      <definition value="Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice">
+      <path value="Observation.extension"/>
+      <sliceName value="diagnosticservice"/>
+      <definition value="A code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This is used for searching, sorting and display purposes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-statement-DiagnosticService-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.id">
+      <path value="Observation.extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.extension:extension">
+      <path value="Observation.extension.extension"/>
+      <sliceName value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.url">
+      <path value="Observation.extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comment value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition SHALL be a URI for the Structure Definition defining the extension."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-statement-DiagnosticService-extension"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept">
+      <path value="Observation.extension.valueCodeableConcept"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="extensible"/>
+        <valueSetReference>
+          <reference value="http://standardhealthrecord.org/cimi/statement/vs/DiagnosticServiceVS"/>
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.id">
+      <path value="Observation.extension.valueCodeableConcept.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.extension">
+      <path value="Observation.extension.valueCodeableConcept.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding">
+      <path value="Observation.extension.valueCodeableConcept.coding"/>
+      <slicing id="5">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1-8, C*E.10-22"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="union(., ./translation)"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology">
+      <path value="Observation.extension.valueCodeableConcept.coding"/>
+      <sliceName value="Fixed_pathology"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.id">
+      <path value="Observation.extension.valueCodeableConcept.coding.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.extension">
+      <path value="Observation.extension.valueCodeableConcept.coding.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.system">
+      <path value="Observation.extension.valueCodeableConcept.coding.system"/>
+      <short value="Identity of the terminology system"/>
+      <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously."/>
+      <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://standardhealthrecord.org/cimi/statement/cs/DiagnosticServiceCS"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystem"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.version">
+      <path value="Observation.extension.valueCodeableConcept.coding.version"/>
+      <short value="Version of the system - if relevant"/>
+      <definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."/>
+      <comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystemVersion"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.code">
+      <path value="Observation.extension.valueCodeableConcept.coding.code"/>
+      <short value="Symbol in syntax defined by the system"/>
+      <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
+      <requirements value="Need to refer to a particular code in the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="pathology"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./code"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.extension.valueCodeableConcept.coding.display"/>
+      <short value="Representation defined by the system"/>
+      <definition value="A representation of the meaning of the code in the system, following the rules of the system."/>
+      <requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.2 - but note this is not well followed"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CV.displayName"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.userSelected">
+      <path value="Observation.extension.valueCodeableConcept.coding.userSelected"/>
+      <short value="If this coding was chosen directly by the user"/>
+      <definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)."/>
+      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
+      <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Sometimes implied by being first"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CD.codingRationale"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\#true a [     fhir:source &quot;true&quot;;     fhir:target dt:CDCoding.codingRationale\#O   ]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.extension.valueCodeableConcept.text"/>
+      <short value="Plain text representation of the concept"/>
+      <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
+      <comment value="Very often the text is the same as a displayName of one of the codings."/>
+      <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.9. But note many systems use C*E.2 for this"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./originalText[mediaType/code=&quot;text/plain&quot;]/data"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"/>
+      </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.modifierExtension">
       <path value="Observation.modifierExtension"/>
@@ -456,6 +883,11 @@
       <requirements value="Allows observations to be distinguished and referenced."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Identifier"/>
       </type>
@@ -485,6 +917,11 @@
       <alias value="Fulfills"/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.basedOn"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
@@ -538,17 +975,19 @@
       <requirements value="Need to track the status of individual results. Some results are finalized before the whole report is finalized."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.status"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationStatus"/>
-        </extension>
         <strength value="required"/>
-        <description value="Codes providing the status of an observation."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-status"/>
         </valueSetReference>
@@ -573,6 +1012,10 @@
         <identity value="w5"/>
         <map value="status"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.status"/>
+      </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.category">
       <path value="Observation.category"/>
@@ -580,11 +1023,25 @@
       <definition value="A code that classifies the general type of observation being made."/>
       <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
       <requirements value="Used for filtering what observations are retrieved and displayed."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.category"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
+      <constraint>
+        <key value="us-core-5"/>
+        <severity value="error"/>
+        <human value="Must have a category of &#39;laboratory&#39; and a code system &#39;http://hl7.org/fhir/observation-category&#39;"/>
+        <expression value="where(coding.system=&#39;http://hl7.org/fhir/observation-category&#39; and coding.code=&#39;laboratory&#39;).exists()"/>
+        <xpath value="exists(f:coding/code[@value=&#39;laboratory&#39;]) and exists(f:coding/system[@value=&#39;http://hl7.org/fhir/observation-category&#39;])"/>
+      </constraint>
+      <mustSupport value="true"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationCategory"/>
@@ -603,25 +1060,337 @@
         <identity value="w5"/>
         <map value="class"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.category"/>
+      </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.code">
-      <path value="Observation.code"/>
-      <short value="Type of observation (code / type)"/>
-      <definition value="Describes what was observed. Sometimes this is called the observation &quot;name&quot;."/>
-      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
-      <alias value="Name"/>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.id">
+      <path value="Observation.category.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.extension">
+      <path value="Observation.category.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="1">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Code defined by a terminology system"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
+      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1-8, C*E.10-22"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="union(., ./translation)"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_laboratory"/>
+      <definition value="A reference to a code defined by a terminology system."/>
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="CodeableConcept"/>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.id">
+      <path value="Observation.category.coding.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.extension">
+      <path value="Observation.category.coding.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <description value="Extensions are always sliced by (at least) url"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.system">
+      <path value="Observation.category.coding.system"/>
+      <short value="Identity of the terminology system"/>
+      <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously."/>
+      <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://hl7.org/fhir/observation-category"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.3"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystem"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.version">
+      <path value="Observation.category.coding.version"/>
+      <short value="Version of the system - if relevant"/>
+      <definition value="The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured. and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."/>
+      <comment value="Where the terminology does not clearly define what string should be used to identify code system versions, the recommendation is to use the date (expressed in FHIR date format) on which that version was officially published as the version date."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.7"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./codeSystemVersion"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.version rdfs:subPropertyOf dt:CDCoding.codeSystemVersion"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.code">
+      <path value="Observation.category.coding.code"/>
+      <short value="Symbol in syntax defined by the system"/>
+      <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
+      <requirements value="Need to refer to a particular code in the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="laboratory"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.1"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./code"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.category.coding.display"/>
+      <short value="Representation defined by the system"/>
+      <definition value="A representation of the meaning of the code in the system, following the rules of the system."/>
+      <requirements value="Need to be able to carry a human-readable meaning of the code for readers that do not know  the system."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.2 - but note this is not well followed"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CV.displayName"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.display rdfs:subPropertyOf dt:CDCoding.displayName"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.userSelected">
+      <path value="Observation.category.coding.userSelected"/>
+      <short value="If this coding was chosen directly by the user"/>
+      <definition value="Indicates that this coding was chosen by a user directly - i.e. off a pick list of available items (codes or displays)."/>
+      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
+      <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="Sometimes implied by being first"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="CD.codingRationale"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:Coding.userSelected fhir:mapsTo dt:CDCoding.codingRationale. fhir:Coding.userSelected fhir:hasMap fhir:Coding.userSelected.map. fhir:Coding.userSelected.map a fhir:Map;   fhir:target dt:CDCoding.codingRationale. fhir:Coding.userSelected\#true a [     fhir:source &quot;true&quot;;     fhir:target dt:CDCoding.codingRationale\#O   ]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.category.text"/>
+      <short value="Plain text representation of the concept"/>
+      <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
+      <comment value="Very often the text is the same as a displayName of one of the codings."/>
+      <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="C*E.9. But note many systems use C*E.2 for this"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="./originalText[mediaType/code=&quot;text/plain&quot;]/data"/>
+      </mapping>
+      <mapping>
+        <identity value="orim"/>
+        <map value="fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.code">
+      <path value="Observation.code"/>
+      <short value="Laboratory Test Name"/>
+      <definition value="The test that was performed.  A LOINC **SHALL** be used if the concept is present in LOINC."/>
+      <comment value="The typical patterns for codes are:  1)  a LOINC code either as a  translation from a &quot;local&quot; code or as a primary code, or 2)  a local code only if no suitable LOINC exists,  or 3)  both the local and the LOINC translation.   Systems SHALL be capable of sending the local code if one exists.  When using LOINC , Use either the SHORTNAME or LONG_COMMON_NAME field for the display."/>
+      <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
+      <alias value="Name"/>
+      <alias value="Test Name"/>
+      <alias value="Observation Identifer"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.code"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationCode"/>
-        </extension>
-        <strength value="example"/>
-        <description value="Codes identifying names of simple observations."/>
+        <strength value="extensible"/>
+        <description value="LOINC codes"/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
         </valueSetReference>
@@ -649,6 +1418,10 @@
       <mapping>
         <identity value="w5"/>
         <map value="what"/>
+      </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.code"/>
       </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code.id">
@@ -703,7 +1476,7 @@
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="1">
+      <slicing id="2">
         <discriminator>
           <type value="value"/>
           <path value="code"/>
@@ -719,6 +1492,7 @@
       <max value="*"/>
       <type>
         <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -737,11 +1511,13 @@
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code.coding:Fixed_48676-1">
       <path value="Observation.code.coding"/>
       <sliceName value="Fixed_48676-1"/>
-      <definition value="A reference to a code defined by a terminology system."/>
-      <min value="0"/>
-      <max value="*"/>
+      <short value="HER2 [Interpretation] in Tissue"/>
+      <definition value="HER2 [Interpretation] in Tissue"/>
+      <min value="1"/>
+      <max value="1"/>
       <type>
         <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
     </element>
@@ -956,24 +1732,18 @@
       <definition value="The patient, or group of patients, location, or device whose characteristics (direct or indirect) are described by the observation and into whose record the observation is placed.  Comments: Indirect characteristics may be those of a specimen, fetus, donor,  other observer (for example a relative or EMT), or any observation made about the subject."/>
       <comment value="One would expect this element to be a cardinality  of 1..1.  The only circumstance in which the subject can be missing is when the observation is made by a device that does not know the patient. In this case, the observation SHALL be matched to a patient through some context/channel matching technique, and at this point, the observation should be updated.&#xD;&#xD;If the target of the observation is different than the subject, the general extension [observation-focal-subject](extension-observation-focal-subject.html).  may be used.  However, the distinction between the patient&#39;s own value for an observation versus that of the fetus, or the donor or blood product unit, etc., are often specified in the observation code."/>
       <requirements value="Observations have no value if you don&#39;t know who or what they&#39;re about."/>
-      <min value="0"/>
+      <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.subject"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+        <targetProfile value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"/>
       </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
-      </type>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"/>
-      </type>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -991,6 +1761,10 @@
         <identity value="w5"/>
         <map value="who.focus"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.subject"/>
+      </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.context">
       <path value="Observation.context"/>
@@ -1001,9 +1775,18 @@
       <alias value="Encounter"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.context"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <mapping>
         <identity value="workflow"/>
@@ -1025,18 +1808,31 @@
     <element id="Observation:shr-oncology-HER2ReceptorStatus.effective[x]">
       <path value="Observation.effective[x]"/>
       <short value="Clinically relevant time/time-period for observation"/>
-      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
+      <definition value="For lab tests this is the specimen collection date.  For Ask at Order Entry Questions (AOE)&#39;s this is the date the question was asked."/>
       <comment value="At least a date should be present unless this observation is a historical report."/>
       <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
       <alias value="Occurrence"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.effective[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="dateTime"/>
       </type>
       <type>
         <code value="Period"/>
       </type>
+      <constraint>
+        <key value="us-core-1"/>
+        <severity value="error"/>
+        <human value="Datetime must be at least to day."/>
+        <expression value="($this as dateTime).toString().length() &gt;= 8"/>
+        <xpath value="f:matches(effectiveDateTime,/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/)"/>
+      </constraint>
+      <mustSupport value="true"/>
       <isSummary value="true"/>
       <mapping>
         <identity value="workflow"/>
@@ -1054,14 +1850,23 @@
         <identity value="w5"/>
         <map value="when.done"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.effective[x]"/>
+      </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.issued">
       <path value="Observation.issued"/>
       <short value="Date/Time this was made available"/>
       <definition value="The date and time this observation was made available to providers, typically after the results have been reviewed and verified."/>
       <comment value="Updated when the result is updated."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.issued"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="instant"/>
       </type>
@@ -1086,6 +1891,11 @@
       <requirements value="May give a degree of confidence in the observation and also indicates where follow-up questions should be directed."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.performer"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
@@ -1120,25 +1930,124 @@
         <map value="who.actor"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.valueCodeableConcept">
-      <path value="Observation.valueCodeableConcept"/>
-      <short value="Actual result"/>
-      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
-      <min value="1"/>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="4">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Result Value"/>
+      <definition value="The Laboratory result value.  If a coded value,  the valueCodeableConcept.code **SHOULD**  be selected from [SNOMED CT](http://hl7.org/fhir/ValueSet/uslab-obs-codedresults).  If a numeric value, valueQuantity.code **SHALL** be selected from [UCUM](http://unitsofmeasure.org).  A FHIR [UCUM Codes value set](http://hl7.org/fhir/STU3/valueset-ucum-units.html) that defines all UCUM codes is in the FHIR specification."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;&#39;value&#39; + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Observation.value[x]"/>
-        <min value="1"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <type>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <condition value="obs-7"/>
+      <constraint>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice">
+          <valueBoolean value="true"/>
+        </extension>
+        <key value="us-core-4"/>
+        <severity value="warning"/>
+        <human value="SHOULD use Snomed CT for coded Results"/>
+        <expression value="valueCodeableConcept.coding.system.empty() or valueCodeableConcept.coding.system = &#39;http://snomed.info/sct&#39;"/>
+        <xpath value="not(exists(f:valueCodeableConcept/f:coding/f:system) ) or  f:valueCodeableConcept/f:coding/f:system[@value=&#39;http://snomed.info/sct&#39;]"/>
+      </constraint>
+      <constraint>
+        <key value="us-core-3"/>
+        <severity value="error"/>
+        <human value="SHALL use UCUM for coded quantity units."/>
+        <expression value="valueQuantity.system.empty() or valueQuantity.system = &#39;http://unitsofmeasure.org&#39;"/>
+        <xpath value="not(exists(f:valueQuantity/f:system) ) or  f:valueQuantity/f:system[@value=&#39;http://unitsofmeasure.org&#39;]"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.value[x]"/>
+      </mapping>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.valueCodeableConcept:shr-core-CodeableConcept">
+      <path value="Observation.valueCodeableConcept"/>
+      <sliceName value="shr-core-CodeableConcept"/>
+      <short value="Result Value"/>
+      <definition value="The Laboratory result value.  If a coded value,  the valueCodeableConcept.code **SHOULD**  be selected from [SNOMED CT](http://hl7.org/fhir/ValueSet/uslab-obs-codedresults).  If a numeric value, valueQuantity.code **SHALL** be selected from [UCUM](http://unitsofmeasure.org).  A FHIR [UCUM Codes value set](http://hl7.org/fhir/STU3/valueset-ucum-units.html) that defines all UCUM codes is in the FHIR specification."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/oncology/vs/HER2StatusVS"/>
+          <reference value="http://standardhealthrecord.org/shr/oncology/vs/PositiveNegativeEquivocalVS"/>
         </valueSetReference>
       </binding>
     </element>
@@ -1150,14 +2059,21 @@
       <requirements value="For many results it is necessary to handle exceptional values in measurements."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.dataAbsentReason"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-6"/>
+      <mustSupport value="true"/>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+          <reference value="http://standardhealthrecord.org/cimi/context/vs/ExceptionValueVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1172,6 +2088,10 @@
         <identity value="rim"/>
         <map value="value.nullFlavor"/>
       </mapping>
+      <mapping>
+        <identity value="argonaut-dq-dstu2"/>
+        <map value="Observation.dataAbsentReason"/>
+      </mapping>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.interpretation">
       <path value="Observation.interpretation"/>
@@ -1181,14 +2101,20 @@
       <alias value="Abnormal Flag"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.interpretation"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
         </extension>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
@@ -1218,6 +2144,11 @@
       <requirements value="Need to be able to provide free text additional information."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.comment"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
@@ -1240,14 +2171,20 @@
       <definition value="Indicates the site on the subject&#39;s body where the observation was made (i.e. the target site)."/>
       <comment value="Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   If the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ body-site-instance](extension-body-site-instance.html)."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="0"/>
+      <base>
+        <path value="Observation.bodySite"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/cimi/element/vs/AnatomicalLocationVS"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1274,14 +2211,20 @@
       <comment value="Only used if not implicit in code for Observation.code."/>
       <requirements value="In some cases, method can impact results and is thus used for determining whether results can be compared or determining significance of results."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="0"/>
+      <base>
+        <path value="Observation.method"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/oncology/vs/HER2MethodVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -1300,9 +2243,14 @@
       <comment value="Should only be used if not implicit in code found in `Observation.code`.  Observations are not made on specimens themselves; they are made on a subject, but in many cases by the means of a specimen. Note that although specimens are often involved, they are not always tracked and reported explicitly. Also note that observation resources may be used in contexts that track the specimen explicitly (e.g. Diagnostic Report)."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.specimen"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Specimen"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-BreastSpecimen"/>
       </type>
       <mapping>
         <identity value="sct-concept"/>
@@ -1328,9 +2276,18 @@
       <comment value="An extension should be used if further typing of the device is needed.  Devices used to support obtaining an observation can be represented using either an extension or through the Observation.related element."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.device"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceMetric"/>
       </type>
       <mapping>
         <identity value="sct-concept"/>
@@ -1356,7 +2313,12 @@
       <comment value="Most observations only have one generic reference range. Systems MAY choose to restrict to only supplying the relevant reference range based on knowledge about the patient (e.g., specific to the patient&#39;s age, gender, weight and other factors), but this may not be possible or appropriate. Whenever more than one reference range is supplied, the differences between them SHOULD be provided in the reference range and/or age properties."/>
       <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
+      <base>
+        <path value="Observation.referenceRange"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1457,6 +2419,11 @@
       <definition value="The value of the low bound of the reference range.  The low bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the low bound is omitted,  it is assumed to be meaningless (e.g. reference range is &lt;=2.3)."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.referenceRange.low"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
@@ -1477,6 +2444,11 @@
       <definition value="The value of the high bound of the reference range.  The high bound of the reference range endpoint is inclusive of the value (e.g.  reference range is &gt;=5 - &lt;=9).   If the high bound is omitted,  it is assumed to be meaningless (e.g. reference range is &gt;= 2.3)."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.referenceRange.high"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
@@ -1499,8 +2471,14 @@
       <requirements value="Need to be able to say what kind of reference range this is - normal, recommended, therapeutic, etc,  - for proper interpretation."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.referenceRange.type"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -1533,8 +2511,14 @@
       <requirements value="Need to be able to identify the target population for proper interpretation."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.referenceRange.appliesTo"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -1566,6 +2550,11 @@
       <requirements value="Some analytes vary greatly over age."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.referenceRange.age"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Range"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
@@ -1581,6 +2570,11 @@
       <definition value="Text based reference range in an observation which may be used when a quantitative range is not appropriate for an observation.  An example would be a reference value of &quot;Negative&quot; or a list or table of &#39;normals&#39;."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.referenceRange.text"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
@@ -1595,7 +2589,7 @@
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.related">
       <path value="Observation.related"/>
-      <slicing id="2">
+      <slicing id="3">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -1609,6 +2603,11 @@
       <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes a QuestionnaireResponse from which the measure is derived."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.related"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1630,13 +2629,18 @@
         <map value="outBoundRelationship"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC">
       <path value="Observation.related"/>
-      <sliceName value="shr-oncology-HER2byImmunohistochemistry"/>
-      <short value="HER2byImmunohistochemistry"/>
-      <definition value="HER2 status as determined by Immunohistochemistry (IHC)"/>
+      <sliceName value="shr-oncology-HER2byIHC"/>
+      <short value="HER2byIHC"/>
+      <definition value="HER2 receptor status as determined by Immunohistochemistry (IHC)."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="Observation.related"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1658,7 +2662,7 @@
         <map value="outBoundRelationship"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.id">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.id">
       <path value="Observation.related.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -1678,7 +2682,7 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.extension">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.extension">
       <path value="Observation.related.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -1700,7 +2704,7 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.modifierExtension">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.modifierExtension">
       <path value="Observation.related.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
@@ -1725,7 +2729,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.type">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.type">
       <path value="Observation.related.type"/>
       <short value="has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by"/>
       <definition value="A code specifying the kind of relationship that exists with the target resource."/>
@@ -1733,6 +2737,11 @@
       <requirements value="A relationship type SHOULD be provided."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.related.type"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
@@ -1756,28 +2765,38 @@
         <map value=".typeCode"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.target">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.target">
       <path value="Observation.related.target"/>
       <short value="Resource that is related to this one"/>
       <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.related.target"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byImmunohistochemistry"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byIHC"/>
       </type>
       <mapping>
         <identity value="rim"/>
         <map value=".targetObservation"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH">
       <path value="Observation.related"/>
-      <sliceName value="shr-oncology-HER2byInSituHybridization"/>
-      <short value="HER2byInSituHybridization"/>
-      <definition value="HER2 status as determined by In Situ HybridizationISH."/>
+      <sliceName value="shr-oncology-HER2byISH"/>
+      <short value="HER2byISH"/>
+      <definition value="HER2 receptor status as determined by In Situ Hybridization (ISH)."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="Observation.related"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -1799,7 +2818,7 @@
         <map value="outBoundRelationship"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.id">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.id">
       <path value="Observation.related.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
@@ -1819,7 +2838,7 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.extension">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.extension">
       <path value="Observation.related.extension"/>
       <short value="Additional Content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -1841,7 +2860,7 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.modifierExtension">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.modifierExtension">
       <path value="Observation.related.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
@@ -1866,7 +2885,7 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.type">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.type">
       <path value="Observation.related.type"/>
       <short value="has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by"/>
       <definition value="A code specifying the kind of relationship that exists with the target resource."/>
@@ -1874,6 +2893,11 @@
       <requirements value="A relationship type SHOULD be provided."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.related.type"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
@@ -1897,15 +2921,20 @@
         <map value=".typeCode"/>
       </mapping>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.target">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.target">
       <path value="Observation.related.target"/>
       <short value="Resource that is related to this one"/>
       <definition value="A reference to the observation or [QuestionnaireResponse](questionnaireresponse.html#) resource that is related to this observation."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.related.target"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byInSituHybridization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byISH"/>
       </type>
       <mapping>
         <identity value="rim"/>
@@ -1919,7 +2948,12 @@
       <comment value="For a discussion on the ways Observations can be assembled in groups together see [Notes](observation.html#notes) below."/>
       <requirements value="Component observations share the same attributes in the Observation resource as the primary observation and are always treated a part of a single observation (they are not separable).   However, the reference range for the primary observation value is not inherited by the component values and is required when appropriate for each component observation."/>
       <min value="0"/>
-      <max value="*"/>
+      <max value="0"/>
+      <base>
+        <path value="Observation.component"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -2015,8 +3049,14 @@
       <requirements value="Knowing what kind of observation is being made is essential to understanding the observation."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.component.code"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <isSummary value="true"/>
       <binding>
@@ -2054,6 +3094,11 @@
       <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.component.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="Quantity"/>
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
@@ -2064,6 +3109,7 @@
       </type>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <type>
         <code value="string"/>
@@ -2114,14 +3160,24 @@
       <requirements value="For many results it is necessary to handle exceptional values in measurements."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.component.dataAbsentReason"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <condition value="obs-6"/>
       <binding>
-        <strength value="required"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ObservationValueAbsentReason"/>
+        </extension>
+        <strength value="extensible"/>
+        <description value="Codes specifying why the result (Observation.value[x]) is missing."/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-valueabsentreason"/>
         </valueSetReference>
       </binding>
       <mapping>
@@ -2142,14 +3198,20 @@
       <alias value="Abnormal Flag"/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Observation.component.interpretation"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationInterpretation"/>
         </extension>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <description value="Codes identifying interpretations of observations."/>
         <valueSetReference>
           <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
@@ -2180,6 +3242,11 @@
       <requirements value="Knowing what values are considered &quot;normal&quot; can help evaluate the significance of a particular result. Need to be able to provide multiple reference ranges for different contexts."/>
       <min value="0"/>
       <max value="*"/>
+      <base>
+        <path value="Observation.component.referenceRange"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
       <type>
         <code value="BackboneElement"/>
       </type>
@@ -2405,87 +3472,148 @@
     <element id="Observation:shr-oncology-HER2ReceptorStatus">
       <path value="Observation"/>
       <short value="SHR HER2ReceptorStatus Profile"/>
-      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors,10 and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options."/>
+      <definition value="HER2 receptor status. HER2 is a member of the human epidermal growth factor receptor family of proteins and is encoded by the ERBB2 oncogene. HER2 is overexpressed in 20-30% of breast tumors, and is associated with an aggressive clinical course and poor prognosis. HER2 status (positive=present or overexpressed; negative=absent) is a factor in determining prognosis and treatment options.&#xA;&#xA;We are seeking feedback if it is better to put the positive/negative status in Value or Interpretation. The current approach is that positive/negative designation is a value, even though that value is (in fact) an interpretation of evidence from HER2 by IHC and/or HER2 by ISH tests, not a direct observation."/>
+      <mustSupport value="false"/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:author">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:subjectofinformation">
       <path value="Observation.extension"/>
-      <sliceName value="author"/>
-      <definition value="The person or organization who created the entry and is responsible for (and may certify) the content."/>
+      <sliceName value="subjectofinformation"/>
+      <definition value="The person or thing that this entry relates to, usually the Person of Record (see Entry). However, not all entries have health information specifically about the patient, but in different contexts, could refer to a fetus, family member (living or dead), device, location, organization, behavior, finding, condition, wound, or intervention.&#xA;CIMI alignment: SubjectOfInformation is not a Participation -- unlike CIMI. There&#39;s no action to participate in. Participant has extra unnecessary attributes, such as &#39;onBehalfOf&#39;."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SubjectOfInformation-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:sourceofinformation">
+      <path value="Observation.extension"/>
+      <sliceName value="sourceofinformation"/>
+      <definition value="The person or entity that provided the information in the entry, e.g. the subject (patient), medical professional, family member, device or software program, as distinct from who recorded the entry."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Author-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-SourceOfInformation-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:informant">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:annotation">
       <path value="Observation.extension"/>
-      <sliceName value="informant"/>
-      <definition value="The person or entity that provided the information in the entry, as distinct from who created the entry, e.g. the subject (patient), medical professional, family member, device or software program."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-base-Informant-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:focalsubject">
-      <path value="Observation.extension"/>
-      <sliceName value="focalsubject"/>
-      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubject-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:focalsubjectreference">
-      <path value="Observation.extension"/>
-      <sliceName value="focalsubjectreference"/>
-      <definition value="For use when FHIR&#39;s subject does not allow the desired type of Subject in the Finding.Subject field."/>
-      <min value="0"/>
-      <max value="1"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-FocalSubjectReference-extension"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:evidence">
-      <path value="Observation.extension"/>
-      <sliceName value="evidence"/>
-      <definition value="A symptom, observation, or other item, for example, a radiology report, that serves as evidence for the current assessment."/>
+      <sliceName value="annotation"/>
+      <definition value="An added or follow-up note, often after the fact, that contains metadata about who made the statement and when."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-Evidence-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-Annotation-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:changeflag">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:recordstatus">
       <path value="Observation.extension"/>
-      <sliceName value="changeflag"/>
-      <definition value="Indicator of significant change (delta) from the last or previous measurement."/>
+      <sliceName value="recordstatus"/>
+      <definition value="Concept indicating the state of this record, e.g., &#39;entered in error&#39;."/>
       <min value="0"/>
       <max value="1"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ChangeFlag-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-RecordStatus-extension"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:observationqualifier">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:recorded">
       <path value="Observation.extension"/>
-      <sliceName value="observationqualifier"/>
-      <definition value="A description of the conditions or context of an observation, for example, under sedation, fasting or post-exercise. Body position and body site are also qualifiers, but handled separately. A qualifier cannot modify the measurement type; for example, a fasting blood sugar is still a blood sugar."/>
+      <sliceName value="recorded"/>
+      <definition value="The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Recorded-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:signed">
+      <path value="Observation.extension"/>
+      <sliceName value="signed"/>
+      <definition value="Provenance information specific to the signing of the clinical statement."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Signed-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:cosigned">
+      <path value="Observation.extension"/>
+      <sliceName value="cosigned"/>
+      <definition value="Provenance information specific to the cosigning of the clinical statement."/>
       <min value="0"/>
       <max value="*"/>
       <type>
         <code value="Extension"/>
-        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-finding-ObservationQualifier-extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Cosigned-extension"/>
       </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:verified">
+      <path value="Observation.extension"/>
+      <sliceName value="verified"/>
+      <definition value="Provenance information specific to the verification process associated with this statement (e.g., verifier, when verified, etc.)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-core-Verified-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice">
+      <path value="Observation.extension"/>
+      <sliceName value="diagnosticservice"/>
+      <definition value="A code that classifies the clinical discipline, department or diagnostic service that created the report (e.g. cardiology, biochemistry, hematology, MRI). This is used for searching, sorting and display purposes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/cimi-statement-DiagnosticService-extension"/>
+      </type>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept">
+      <path value="Observation.extension.valueCodeableConcept"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding">
+      <path value="Observation.extension.valueCodeableConcept.coding"/>
+      <slicing id="5">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology">
+      <path value="Observation.extension.valueCodeableConcept.coding"/>
+      <sliceName value="Fixed_pathology"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.system">
+      <path value="Observation.extension.valueCodeableConcept.coding.system"/>
+      <fixedUri value="http://standardhealthrecord.org/cimi/statement/cs/DiagnosticServiceCS"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.extension:diagnosticservice.valueCodeableConcept.coding:Fixed_pathology.code">
+      <path value="Observation.extension.valueCodeableConcept.coding.code"/>
+      <fixedCode value="pathology"/>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.category">
       <path value="Observation.category"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationCategory"/>
@@ -2497,12 +3625,47 @@
         </valueSetReference>
       </binding>
     </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding">
+      <path value="Observation.category.coding"/>
+      <slicing id="1">
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory">
+      <path value="Observation.category.coding"/>
+      <sliceName value="Fixed_laboratory"/>
+      <definition value="A reference to a code defined by a terminology system."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
+      </type>
+      <isSummary value="true"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.system">
+      <path value="Observation.category.coding.system"/>
+      <fixedUri value="http://hl7.org/fhir/observation-category"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.category.coding:Fixed_laboratory.code">
+      <path value="Observation.category.coding.code"/>
+      <fixedCode value="laboratory"/>
+    </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code">
       <path value="Observation.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code.coding">
       <path value="Observation.code.coding"/>
-      <slicing id="1">
+      <slicing id="2">
         <discriminator>
           <type value="value"/>
           <path value="code"/>
@@ -2514,11 +3677,13 @@
     <element id="Observation:shr-oncology-HER2ReceptorStatus.code.coding:Fixed_48676-1">
       <path value="Observation.code.coding"/>
       <sliceName value="Fixed_48676-1"/>
-      <definition value="A reference to a code defined by a terminology system."/>
-      <min value="0"/>
-      <max value="*"/>
+      <short value="HER2 [Interpretation] in Tissue"/>
+      <definition value="HER2 [Interpretation] in Tissue"/>
+      <min value="1"/>
+      <max value="1"/>
       <type>
         <code value="Coding"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Coding"/>
       </type>
       <isSummary value="true"/>
     </element>
@@ -2530,86 +3695,108 @@
       <path value="Observation.code.coding.code"/>
       <fixedCode value="48676-1"/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.subject">
-      <path value="Observation.subject"/>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing id="4">
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Patient"/>
+        <code value="Quantity"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Quantity"/>
       </type>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Group"/>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+        <code value="string"/>
       </type>
       <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Geoposition"/>
+        <code value="boolean"/>
+      </type>
+      <type>
+        <code value="Range"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Range"/>
+      </type>
+      <type>
+        <code value="Ratio"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-Ratio"/>
+      </type>
+      <type>
+        <code value="time"/>
+      </type>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.context">
-      <path value="Observation.context"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-encounter-EncounterPerformed"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.issued">
-      <path value="Observation.issued"/>
-      <min value="1"/>
-      <max value="1"/>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.valueCodeableConcept">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.valueCodeableConcept:shr-core-CodeableConcept">
       <path value="Observation.valueCodeableConcept"/>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/oncology/vs/HER2StatusVS"/>
+          <reference value="http://standardhealthrecord.org/shr/oncology/vs/PositiveNegativeEquivocalVS"/>
         </valueSetReference>
       </binding>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.dataAbsentReason">
       <path value="Observation.dataAbsentReason"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <binding>
-        <strength value="required"/>
+        <strength value="extensible"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
+          <reference value="http://standardhealthrecord.org/cimi/context/vs/ExceptionValueVS"/>
         </valueSetReference>
       </binding>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.interpretation">
       <path value="Observation.interpretation"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationInterpretation"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes identifying interpretations of observations."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
-        </valueSetReference>
-      </binding>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.bodySite">
       <path value="Observation.bodySite"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <binding>
         <strength value="required"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/core/vs/BodySiteVS"/>
+          <reference value="http://standardhealthrecord.org/cimi/element/vs/AnatomicalLocationVS"/>
         </valueSetReference>
       </binding>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.method">
       <path value="Observation.method"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <binding>
-        <strength value="required"/>
+        <strength value="preferred"/>
         <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/oncology/vs/HER2MethodVS"/>
+          <reference value="http://hl7.org/fhir/ValueSet/observation-codes"/>
         </valueSetReference>
       </binding>
     </element>
@@ -2617,18 +3804,13 @@
       <path value="Observation.specimen"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Specimen"/>
-      </type>
-    </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.device">
-      <path value="Observation.device"/>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-device-Device"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-BreastSpecimen"/>
       </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.referenceRange">
       <path value="Observation.referenceRange"/>
+      <min value="0"/>
+      <max value="0"/>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.referenceRange.low">
       <path value="Observation.referenceRange.low"/>
@@ -2644,8 +3826,19 @@
         <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-SimpleQuantity"/>
       </type>
     </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.referenceRange.type">
+      <path value="Observation.referenceRange.type"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
+    </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.referenceRange.appliesTo">
       <path value="Observation.referenceRange.appliesTo"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="ObservationRangeType"/>
@@ -2666,7 +3859,7 @@
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.related">
       <path value="Observation.related"/>
-      <slicing id="2">
+      <slicing id="3">
         <discriminator>
           <type value="profile"/>
           <path value="target.reference.resolve()"/>
@@ -2675,46 +3868,51 @@
         <rules value="open"/>
       </slicing>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC">
       <path value="Observation.related"/>
-      <sliceName value="shr-oncology-HER2byImmunohistochemistry"/>
-      <short value="HER2byImmunohistochemistry"/>
-      <definition value="HER2 status as determined by Immunohistochemistry (IHC)"/>
-      <min value="0"/>
-      <max value="1"/>
+      <sliceName value="shr-oncology-HER2byIHC"/>
+      <short value="HER2byIHC"/>
+      <definition value="HER2 receptor status as determined by Immunohistochemistry (IHC)."/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.type">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.type">
       <path value="Observation.related.type"/>
       <fixedCode value="has-member"/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byImmunohistochemistry.target">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byIHC.target">
       <path value="Observation.related.target"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byImmunohistochemistry"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byIHC"/>
       </type>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH">
       <path value="Observation.related"/>
-      <sliceName value="shr-oncology-HER2byInSituHybridization"/>
-      <short value="HER2byInSituHybridization"/>
-      <definition value="HER2 status as determined by In Situ HybridizationISH."/>
-      <min value="0"/>
-      <max value="1"/>
+      <sliceName value="shr-oncology-HER2byISH"/>
+      <short value="HER2byISH"/>
+      <definition value="HER2 receptor status as determined by In Situ Hybridization (ISH)."/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.type">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.type">
       <path value="Observation.related.type"/>
       <fixedCode value="has-member"/>
     </element>
-    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byInSituHybridization.target">
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.related:shr-oncology-HER2byISH.target">
       <path value="Observation.related.target"/>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byInSituHybridization"/>
+        <targetProfile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-oncology-HER2byISH"/>
       </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.component">
       <path value="Observation.component"/>
+      <min value="0"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation:shr-oncology-HER2ReceptorStatus.component.code">
+      <path value="Observation.component.code"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.component.value[x]">
       <path value="Observation.component.value[x]"/>
@@ -2728,6 +3926,7 @@
       </type>
       <type>
         <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
       </type>
       <type>
         <code value="string"/>
@@ -2755,25 +3954,17 @@
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.component.dataAbsentReason">
       <path value="Observation.component.dataAbsentReason"/>
-      <binding>
-        <strength value="required"/>
-        <valueSetReference>
-          <reference value="http://standardhealthrecord.org/shr/finding/vs/ValueAbsentReasonVS"/>
-        </valueSetReference>
-      </binding>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
     <element id="Observation:shr-oncology-HER2ReceptorStatus.component.interpretation">
       <path value="Observation.component.interpretation"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationInterpretation"/>
-        </extension>
-        <strength value="required"/>
-        <description value="Codes identifying interpretations of observations."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/observation-interpretation"/>
-        </valueSetReference>
-      </binding>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-CodeableConcept"/>
+      </type>
     </element>
   </differential>
 </StructureDefinition>
