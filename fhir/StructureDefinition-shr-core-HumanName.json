@@ -3,7 +3,7 @@
   "id": "shr-core-HumanName",
   "text": {
     "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR HumanName Profile</b></p>\n  <p>A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.HumanName maps to HumanName:\n  string maps to text\n  HumanNamePrefix maps to prefix\n  GivenName maps to given\n  FamilyName maps to family\n  HumanNameSuffix maps to suffix\n  Purpose maps to use\n  EffectiveTimePeriod maps to period\n</pre></p>\n</div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n  <p><b>SHR HumanName Profile</b></p>\n  <p>The CIMI person name, constrained to map correctly to FHIR.</p>\n  <p><b>SHR Mapping Summary</b></p>\n  <p><pre>shr.core.HumanName maps to HumanName:\n  NameAsText maps to text\n  Prefix maps to prefix\n  GivenName maps to given\n  FamilyName maps to family\n  Suffix maps to suffix\n  Purpose maps to use\n  EffectiveTimePeriod maps to period\n</pre></p>\n</div>"
   },
   "url": "http://standardhealthrecord.org/fhir/StructureDefinition/shr-core-HumanName",
   "identifier": [
@@ -12,10 +12,11 @@
       "value": "shr.core.HumanName"
     }
   ],
-  "version": "0.0.1",
-  "name": "SHR HumanName Profile",
+  "version": "0.1.0",
+  "name": "HumanNameProfile",
+  "title": "SHR HumanName Profile",
   "status": "draft",
-  "date": "2018-02-27",
+  "date": "2018-08-22T00:00:00-04:00",
   "publisher": "The MITRE Corporation: Standard Health Record Collaborative",
   "contact": [
     {
@@ -27,7 +28,7 @@
       ]
     }
   ],
-  "description": "A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
+  "description": "The CIMI person name, constrained to map correctly to FHIR.",
   "purpose": "Need to be able to record names, along with notes about their use.",
   "fhirVersion": "3.0.1",
   "mapping": [
@@ -58,7 +59,7 @@
         "id": "HumanName:shr-core-HumanName",
         "path": "HumanName",
         "short": "SHR HumanName Profile",
-        "definition": "A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
+        "definition": "The CIMI person name, constrained to map correctly to FHIR.",
         "comment": "Names may be changed, or repudiated, or people may have different names in different contexts. Names may be divided into parts of different type that have variable significance depending on context, though the division into parts does not always matter. With personal names, the different parts may or may not be imbued with some implicit meaning; various cultures associate different importance with the name parts and the degree to which systems must care about name parts around the world varies widely.",
         "min": 0,
         "max": "*",
@@ -161,6 +162,30 @@
         ]
       },
       {
+        "id": "HumanName:shr-core-HumanName.extension:preferredflag",
+        "path": "HumanName.extension",
+        "sliceName": "preferredflag",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "Code indicating the preference associated with the use of this name.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-PreferredFlag-extension"
+          }
+        ]
+      },
+      {
         "id": "HumanName:shr-core-HumanName.use",
         "path": "HumanName.use",
         "short": "usual | official | temp | nickname | anonymous | old | maiden",
@@ -208,10 +233,10 @@
         "id": "HumanName:shr-core-HumanName.text",
         "path": "HumanName.text",
         "short": "Text representation of the full name",
-        "definition": "String representing a name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
+        "definition": "A full text representation of the name.",
         "comment": "Can provide both a text representation and structured parts.",
         "requirements": "A renderable, unencoded form.",
-        "min": 1,
+        "min": 0,
         "max": "1",
         "type": [
           {
@@ -302,7 +327,7 @@
         "short": "Parts that come before the name",
         "definition": "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name.",
         "min": 0,
-        "max": "1",
+        "max": "*",
         "type": [
           {
             "code": "string"
@@ -387,20 +412,31 @@
         "id": "HumanName:shr-core-HumanName",
         "path": "HumanName",
         "short": "SHR HumanName Profile",
-        "definition": "A name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.)."
+        "definition": "The CIMI person name, constrained to map correctly to FHIR."
       },
       {
-        "id": "HumanName:shr-core-HumanName.text",
-        "path": "HumanName.text",
-        "definition": "String representing a name used by a human being, written as it would be typically expressed. May include a breakdown of the various elements of the name (family name, given name, etc.).",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "HumanName:shr-core-HumanName.prefix",
-        "path": "HumanName.prefix",
+        "id": "HumanName:shr-core-HumanName.extension:preferredflag",
+        "path": "HumanName.extension",
+        "sliceName": "preferredflag",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "description": "Extensions are always sliced by (at least) url",
+          "rules": "open"
+        },
+        "definition": "Code indicating the preference associated with the use of this name.",
         "min": 0,
-        "max": "1"
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": "http://standardhealthrecord.org/fhir/StructureDefinition/cimi-element-PreferredFlag-extension"
+          }
+        ]
       }
     ]
   }

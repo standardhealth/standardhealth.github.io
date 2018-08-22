@@ -7,7 +7,7 @@
   <p><b>SHR IntegerQuantity Profile</b></p>
   <p>A Quantity that is an integer.</p>
   <p><b>SHR Mapping Summary</b></p>
-  <p><pre>shr.core.IntegerQuantity maps to Quantity:
+  <p><pre>shr.core.IntegerQuantity maps to Count:
   decimal maps to value
   Units.Coding.code maps to code
   Units.Coding.CodeSystem maps to system
@@ -21,10 +21,11 @@
     <system value="http://standardhealthrecord.org"/>
     <value value="shr.core.IntegerQuantity"/>
   </identifier>
-  <version value="0.0.1"/>
-  <name value="SHR IntegerQuantity Profile"/>
+  <version value="0.1.0"/>
+  <name value="IntegerQuantityProfile"/>
+  <title value="SHR IntegerQuantity Profile"/>
   <status value="draft"/>
-  <date value="2018-02-27"/>
+  <date value="2018-08-22T00:00:00-04:00"/>
   <publisher value="The MITRE Corporation: Standard Health Record Collaborative"/>
   <contact>
     <telecom>
@@ -47,37 +48,32 @@
   </mapping>
   <kind value="complex-type"/>
   <abstract value="false"/>
-  <type value="Quantity"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Quantity"/>
+  <type value="Count"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Count"/>
   <derivation value="constraint"/>
   <snapshot>
-    <element id="Quantity:shr-core-IntegerQuantity">
-      <path value="Quantity"/>
+    <element id="Count:shr-core-IntegerQuantity">
+      <path value="Count"/>
       <short value="SHR IntegerQuantity Profile"/>
       <definition value="A Quantity that is an integer."/>
       <comment value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
       <min value="0"/>
       <max value="*"/>
-      <condition value="ele-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="Element"/>
-      </constraint>
       <constraint>
         <key value="qty-3"/>
         <severity value="error"/>
         <human value="If a code for the unit is present, the system SHALL also be present"/>
         <expression value="code.empty() or system.exists()"/>
         <xpath value="not(exists(f:code)) or exists(f:system)"/>
+        <source value="Quantity"/>
       </constraint>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
+      <constraint>
+        <key value="cnt-3"/>
+        <severity value="error"/>
+        <human value="There SHALL be a code with a value of &quot;1&quot; if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number."/>
+        <expression value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.toString().contains(&#39;.&#39;).not())"/>
+        <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or (f:system/@value=&#39;http://unitsofmeasure.org&#39; and f:code/@value=&#39;1&#39;)) and not(contains(f:value/@value, &#39;.&#39;))"/>
+      </constraint>
       <mapping>
         <identity value="v2"/>
         <map value="SN (see also Range) or CQ"/>
@@ -87,8 +83,8 @@
         <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.id">
-      <path value="Quantity.id"/>
+    <element id="Count:shr-core-IntegerQuantity.id">
+      <path value="Count.id"/>
       <representation value="xmlAttr"/>
       <short value="xml:id (or equivalent in JSON)"/>
       <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
@@ -107,8 +103,8 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.extension">
-      <path value="Quantity.extension"/>
+    <element id="Count:shr-core-IntegerQuantity.extension">
+      <path value="Count.extension"/>
       <slicing>
         <discriminator>
           <type value="value"/>
@@ -137,14 +133,19 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.value">
-      <path value="Quantity.value"/>
+    <element id="Count:shr-core-IntegerQuantity.value">
+      <path value="Count.value"/>
       <short value="Numerical value (with implicit precision)"/>
       <definition value="Decimal representing a Quantity that is an integer."/>
       <comment value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)."/>
       <requirements value="Precision is handled implicitly in almost all cases of measurement."/>
       <min value="1"/>
       <max value="1"/>
+      <base>
+        <path value="Quantity.value"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="decimal"/>
       </type>
@@ -158,14 +159,19 @@
         <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.comparator">
-      <path value="Quantity.comparator"/>
+    <element id="Count:shr-core-IntegerQuantity.comparator">
+      <path value="Count.comparator"/>
       <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
       <definition value="How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is &quot;&lt;&quot; , then the real value is &lt; stated value."/>
       <comment value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value."/>
       <requirements value="Need a framework for handling measures where the value is &lt;5ug/L or &gt;400mg/L due to the limitations of measuring methodology."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Quantity.comparator"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
@@ -191,16 +197,21 @@
         <map value="IVL properties"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.unit">
+    <element id="Count:shr-core-IntegerQuantity.unit">
       <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
         <valueBoolean value="true"/>
       </extension>
-      <path value="Quantity.unit"/>
+      <path value="Count.unit"/>
       <short value="Unit representation"/>
       <definition value="A human-readable form of the unit."/>
       <requirements value="There are many representations for units of measure and in many contexts, particular representations are fixed and required. I.e. mcg for micrograms."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Quantity.unit"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="string"/>
       </type>
@@ -214,13 +225,18 @@
         <map value="PQ.unit"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.system">
-      <path value="Quantity.system"/>
+    <element id="Count:shr-core-IntegerQuantity.system">
+      <path value="Count.system"/>
       <short value="System that defines coded unit form"/>
       <definition value="The identification of the system that provides the coded form of the unit."/>
       <requirements value="Need to know the system that defines the coded form of the unit."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Quantity.system"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="uri"/>
       </type>
@@ -235,14 +251,19 @@
         <map value="CO.codeSystem, PQ.translation.codeSystem"/>
       </mapping>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.code">
-      <path value="Quantity.code"/>
+    <element id="Count:shr-core-IntegerQuantity.code">
+      <path value="Count.code"/>
       <short value="Coded form of the unit"/>
       <definition value="A computer processable form of the unit in some unit representation system."/>
       <comment value="The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system."/>
       <requirements value="Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest."/>
       <min value="0"/>
       <max value="1"/>
+      <base>
+        <path value="Quantity.code"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
       <type>
         <code value="code"/>
       </type>
@@ -258,13 +279,13 @@
     </element>
   </snapshot>
   <differential>
-    <element id="Quantity:shr-core-IntegerQuantity">
-      <path value="Quantity"/>
+    <element id="Count:shr-core-IntegerQuantity">
+      <path value="Count"/>
       <short value="SHR IntegerQuantity Profile"/>
       <definition value="A Quantity that is an integer."/>
     </element>
-    <element id="Quantity:shr-core-IntegerQuantity.value">
-      <path value="Quantity.value"/>
+    <element id="Count:shr-core-IntegerQuantity.value">
+      <path value="Count.value"/>
       <definition value="Decimal representing a Quantity that is an integer."/>
       <min value="1"/>
       <max value="1"/>
