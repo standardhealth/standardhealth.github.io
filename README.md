@@ -1,5 +1,4 @@
-# StandardHealthRecord.org 
-
+# StandardHealthRecord.org
 
 ## Making Contributions:
 To make contributions to Standardhealthrecord.org, individuals can:
@@ -51,7 +50,7 @@ After making changes to the website, one should run a local instance of the proj
 - [ ] View on Firefox.
 - [ ] View on Android.
 - [ ] View on IOS.
-- [ ] Go through this [Section 508 Checklist](http://www.hhs.gov/web/section-508/making-files-accessible/checklist/html/index.html) to confirm compliance	
+- [ ] Go through this [Section 508 Checklist](http://www.hhs.gov/web/section-508/making-files-accessible/checklist/html/index.html) to confirm compliance
 - [ ] Check colors used for [proper contrasting](http://webaim.org/resources/contrastchecker/) if they have been changed
 - [ ] Perform accessibility testing using the [WAVE chrome extension](http://wave.webaim.org/extension/) and [Code Sniffer](http://squizlabs.github.io/HTML_CodeSniffer/).
 
@@ -65,6 +64,8 @@ After making changes to the website, one should run a local instance of the proj
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
+
+*NOTE: If http://standardhealthrecord.org returns `404` after merging in the request, ensure that the CNAME file has been added back!*
 
 
 ## Technologies Used:
