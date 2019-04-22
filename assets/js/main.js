@@ -7,7 +7,7 @@ function updateActiveOnPage(page) {
         updateActive(".faq-nav", 200, 30);
     } else if (page == "/evidence.html") {
         updateActive(".evid-nav", 200, 30);
-    } else if (page == "/spec_terminology.html") {
+    } else if (page == "/spec_definitions.html") {
         updateActive(".term-nav", 200, 30);
     } else { 
         return
