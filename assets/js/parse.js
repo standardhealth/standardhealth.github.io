@@ -31,27 +31,11 @@ function parseSectionActive() {
         case ("collaborative.html"):
             setActive("ABOUT");
             break;
-        //  Separate Evid and collab
-        // case ("evidence.html"):
-        //     setActive("EVIDENCE");
-        //     break;
-        // case ("collaborative.html"):
-        //     setActive("INITIATIVES");
-        //     break;
 		case ("spec_definitions.html"):
-			setActive("SPEC");
+			setActive("CIMPL");
 			break;
         case ("spec.html"):
-            setActive("SPEC");
-            break;
-        case ("shr"):
-            setActive("SPEC");
-            break;
-        case ("vs"):
-            setActive("SPEC");
-            break;
-        case ("cs"):
-            setActive("SPEC");
+            setActive("CIMPL");
             break;
         case ("faq.html"):
             setActive("FAQ");
