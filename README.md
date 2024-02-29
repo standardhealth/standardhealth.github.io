@@ -75,7 +75,7 @@ Below you will find a comprehensive list of the technologies and tools the Colla
 - [Bundler](http://bundler.io/), a consistent environment for Ruby projects that tracks/installs needed gems, used to bundle together dependencies needed to run jekyll.
 - [Jekyll](https://jekyllrb.com/), a static site generator that pairs neatly with Github, used to generate our static site locally and remotely on github.
 - [SASS](http://sass-lang.com/), a powerful style sheet language, extending CSS to allow for variables, nesting and parametrized styles, used for simplifying and modularizing our style sheets.
-- [Bootstrap Material Design](http://fezvrasta.github.io/bootstrap-material-design/), a material design inspired, bootstrap compatible styling library, used to style our HTML front end.
+- [Bootstrap Material Design](https://mdbootstrap.com/), a material design inspired, bootstrap compatible styling library, used to style our HTML front end.
 - [jQuery](https://jquery.com/), a JavaScript library enabling quick navigation and manipulation of HTML, used to interact with our website and make any dynamic changes.
 - [FontAwesome](http://fontawesome.io/), a library of scalable vector icons that can instantly be customized, responsible for the icons we use on the page.
 
