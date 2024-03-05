@@ -1,7 +1,7 @@
-# StandardHealthRecord.org
+# standardhealth.github.io
 
 ## Making Contributions:
-To make contributions to Standardhealthrecord.org, individuals can:
+To make contributions to standardhealth.github.io, individuals can:
 
 1. Lodge any issues or comments you have on the [issue page here](https://github.com/standardhealth/standardhealth.github.io/issues). This will help the collaborative know about content you see missing from the site, weird styling bugs you notice, and ways the Standard Health Record can be improved.
 2. [Fork the project](https://help.github.com/articles/fork-a-repo/) on GitHub, make changes to your copy of the files, and [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) to the main repository. Note: *Never push changes directly to the repository without issuing a pull request*. This step is key in allowing individuals to review changes prior to merging with any live versions of the website. For a detailed guide on doing this, see below.
@@ -60,12 +60,12 @@ After making changes to the website, one should run a local instance of the proj
 1. Run browser tests mentioned above on localhost.
 2. Push changes to your GitHub Fork of the repository.
 3. Run tests on mobile devices when `your-account-name.github.io` has been updated.
-4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealthrecord.org`.
+4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealth.github.io`.
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
 
-*NOTE: If http://standardhealthrecord.org returns `404` after merging in the request, ensure that the CNAME file has been added back!*
+*NOTE: If http://standardhealth.github.io returns `404` after merging in the request, ensure that the CNAME file has been added back!*
 
 
 ## Technologies Used:

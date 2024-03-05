@@ -1,4 +1,4 @@
-package http://standardhealthrecord.org/fhir/ImplementationGuide/1;
+package http://standardhealth.github.io/fhir/ImplementationGuide/1;
 
 import org.hl7.fhir.r4.model.ProfilingWrapper;
 
