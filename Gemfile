@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby '2.3.3' 
+# ruby '>=2.6' 
 
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -24,3 +24,5 @@ group :jekyll_plugins do
 end
 
 # For path redirecting, use this gem
+
+gem "webrick", "~> 1.8"

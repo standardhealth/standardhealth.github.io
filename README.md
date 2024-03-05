@@ -21,7 +21,7 @@ Once the technology stack is downloaded, you can follow [this command line guide
 
 In the local version of your repository, run the following command to get all of the appropriate Ruby Gems downloaded.
 ```
-$ bundle install
+bundle install
 ```
 Finally, delete the CNAME file from your fork of the repository. This file will be added back later when you are making a pull request, but should be removed until then.
 
