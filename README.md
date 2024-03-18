@@ -64,7 +64,6 @@ After making changes to the website, one should run a local instance of the proj
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
 
-*NOTE: If http://standardhealth.github.io returns `404` after merging in the request, ensure that the CNAME file has been added back!*
 
 
 ## Technologies Used:
