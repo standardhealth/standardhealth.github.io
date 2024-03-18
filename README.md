@@ -12,7 +12,7 @@ Before getting started on any development, ensure the following are installed:
 
 - [Git](https://git-scm.com/), our version controlling tool.
 	- If you have never used git or github before, you should check out [this tutorial](https://try.github.io/levels/1/challenges/1) and/or [this reference sheet](http://gitref.org/index.html).
-- [Ruby v2.3.3](https://www.ruby-lang.org/en/news/2016/11/21/ruby-2-3-3-released/), the language that Bundler and Jekyll use. The specific version is needed for a gem used in Jekyll.
+- [Ruby](https://www.ruby-lang.org/), the language that Bundler and Jekyll use.
 - [Bundler](http://bundler.io/), which can be installed with `gem install bundler` once Ruby is available for use.
 - [Jekyll](https://jekyllrb.com/), which can be installed with `gem install jekyll bundler`.
 - For Windows users, [Cmder](http://cmder.net/) is a powerful command line emulator to serve as alternative to powershell. This has been helpful for some developers on the team.
