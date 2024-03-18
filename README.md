@@ -1,7 +1,7 @@
-# StandardHealthRecord.org
+# standardhealth.github.io
 
 ## Making Contributions:
-To make contributions to Standardhealthrecord.org, individuals can:
+To make contributions to standardhealth.github.io, individuals can:
 
 1. Lodge any issues or comments you have on the [issue page here](https://github.com/standardhealth/standardhealth.github.io/issues). This will help the collaborative know about content you see missing from the site, weird styling bugs you notice, and ways the Standard Health Record can be improved.
 2. [Fork the project](https://help.github.com/articles/fork-a-repo/) on GitHub, make changes to your copy of the files, and [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) to the main repository. Note: *Never push changes directly to the repository without issuing a pull request*. This step is key in allowing individuals to review changes prior to merging with any live versions of the website. For a detailed guide on doing this, see below.
@@ -12,7 +12,7 @@ Before getting started on any development, ensure the following are installed:
 
 - [Git](https://git-scm.com/), our version controlling tool.
 	- If you have never used git or github before, you should check out [this tutorial](https://try.github.io/levels/1/challenges/1) and/or [this reference sheet](http://gitref.org/index.html).
-- [Ruby v2.3.3](https://www.ruby-lang.org/en/news/2016/11/21/ruby-2-3-3-released/), the language that Bundler and Jekyll use. The specific version is needed for a gem used in Jekyll.
+- [Ruby](https://www.ruby-lang.org/), the language that Bundler and Jekyll use.
 - [Bundler](http://bundler.io/), which can be installed with `gem install bundler` once Ruby is available for use.
 - [Jekyll](https://jekyllrb.com/), which can be installed with `gem install jekyll bundler`.
 - For Windows users, [Cmder](http://cmder.net/) is a powerful command line emulator to serve as alternative to powershell. This has been helpful for some developers on the team.
@@ -21,7 +21,7 @@ Once the technology stack is downloaded, you can follow [this command line guide
 
 In the local version of your repository, run the following command to get all of the appropriate Ruby Gems downloaded.
 ```
-$ bundle install
+bundle install
 ```
 Finally, delete the CNAME file from your fork of the repository. This file will be added back later when you are making a pull request, but should be removed until then.
 
@@ -60,12 +60,10 @@ After making changes to the website, one should run a local instance of the proj
 1. Run browser tests mentioned above on localhost.
 2. Push changes to your GitHub Fork of the repository.
 3. Run tests on mobile devices when `your-account-name.github.io` has been updated.
-4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealthrecord.org`.
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
 
-*NOTE: If http://standardhealthrecord.org returns `404` after merging in the request, ensure that the CNAME file has been added back!*
 
 
 ## Technologies Used:
