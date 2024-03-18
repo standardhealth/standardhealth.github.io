@@ -60,7 +60,6 @@ After making changes to the website, one should run a local instance of the proj
 1. Run browser tests mentioned above on localhost.
 2. Push changes to your GitHub Fork of the repository.
 3. Run tests on mobile devices when `your-account-name.github.io` has been updated.
-4. Replace the CNAME file you deleted when you first pulled the repository; the file should be named CNAME and have in it `standardhealth.github.io`.
 5. If everything checks out, [issue a pull request](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) with the main repository.
 6. Wait for someone in the collaborative to review your changes, merge to master, and see your contributions go live!
 7. After your pull request has been merged, remove the CNAME file from your local repo again. Make sure to put this off until the changes have merged; pull requests continue to monitor changes you make even after you make the request.
